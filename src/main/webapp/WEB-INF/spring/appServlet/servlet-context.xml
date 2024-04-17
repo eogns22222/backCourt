@@ -47,7 +47,6 @@
    				<beans:value>classpath:com/back/official/dao/*.xml</beans:value>
    				<beans:value>classpath:com/back/team/dao/*.xml</beans:value>
    				<beans:value>classpath:com/back/teammate/dao/*.xml</beans:value>
-   				
    				<beans:value>classpath:com/back/admin/dao/*.xml</beans:value>
    				<beans:value>classpath:com/back/header/dao/*.xml</beans:value>
    			</beans:list>
