@@ -5,12 +5,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import com.back.admin.service.TeamService;
+import com.back.admin.service.AdminReportService;
 
 @Controller
-public class TeamController {
+public class AdminReportController {
 
 	Logger logger = LoggerFactory.getLogger(getClass());
-	@Autowired TeamService teamService;
+	@Autowired AdminReportService reportService;
 	
 }

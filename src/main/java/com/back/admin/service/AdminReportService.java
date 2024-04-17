@@ -5,12 +5,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.back.admin.dao.WriteDAO;
+import com.back.admin.dao.AdminReportDAO;
 
 @Service
-public class WriteService {
+public class AdminReportService {
 
 	Logger logger = LoggerFactory.getLogger(getClass());
-	@Autowired WriteDAO writeDAO;
+	@Autowired AdminReportDAO reportDAO;
 	
 }

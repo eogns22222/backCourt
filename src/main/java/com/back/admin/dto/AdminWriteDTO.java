@@ -1,5 +1,5 @@
 package com.back.admin.dto;
 
-public class ReportDTO {
+public class AdminWriteDTO {
 
 }
