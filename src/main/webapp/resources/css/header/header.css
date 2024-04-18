@@ -69,7 +69,6 @@ img{width:100%;}
 .popup .popWrap h1{margin:10px 0 25px;font-size:25px;}
 
 .popup .popWrap .listCont{overflow-y:scroll;height:500px;padding:0 10px;}
-.popup .popWrap .listCont p{font-size:27px;margin:0 auto;padding:150px 0;text-align:center;}
 .popup .popWrap .listCont ul{}
 .popup .popWrap .listCont ul li{background:gray;padding:20px;margin-bottom:10px;}
 .popup .popWrap .listCont ul li a{display:block;}
@@ -77,3 +76,4 @@ img{width:100%;}
 .popup .popWrap .listCont ul li a .logo img{width:90px;}
 .popup .popWrap .listCont ul li a .teamNik{display: inline-block;float:right;line-height:92px;}
 .popup .popWrap .listCont ul li a .teamNik img{}
+.popup .popWrap .listCont ul li.noTeam{background:#fff;margin:150px 0;text-align:center;font-size:30px;}

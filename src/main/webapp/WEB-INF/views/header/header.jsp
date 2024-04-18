@@ -37,27 +37,12 @@
                         <div class="noticeBox">
                             <a href="#" class="close"><img src="../resources/img/icon/close.png" alt=""></a>
                             <h2>알림</h2>
-                            <ul>
-                                <li class="cont">
+                            <ul id="noticeCont">
+<!--                                 <li class="cont">
                                     <p class="date">2020.10.10</p>
                                     <p class="content">내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</p>
                                     <button class="btn">확인</button>
-                                </li>
-                                <li class="cont">
-                                    <p class="date">2020.10.10</p>
-                                    <p class="content">내용내용내용</p>
-                                    <button class="btn">확인</button>
-                                </li>
-                                <li class="cont">
-                                    <p class="date">2020.10.10</p>
-                                    <p class="content">내용내용내용내용내용내용</p>
-                                    <button class="btn">확인</button>
-                                </li>
-                                <li class="cont">
-                                    <p class="date">2020.10.10</p>
-                                    <p class="content">내용내용내용내용내용내용내용내용내용</p>
-                                    <button class="btn">확인</button>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                     </li>
@@ -110,65 +95,32 @@
     <div class="popup teamPop type01">
         <a href="#" class="close"><img src="../resources/img/icon/close.png" alt=""></a>
         <div class="popWrap">
-            <a href="#" class="btnTeam">팀 만들기</a>
+            <a href="../team/write.go" class="btnTeam">팀 만들기</a>
             <h1>내 팀 리스트</h1>
             <div class="listCont">
-                <ul>
-                    <li>
+                <ul id="listCont">
+                    <!-- <li>
                         <a href="#">
                             <span class="logo"><img src="../resources/img/icon/img01.jpg" alt="로고"></span>
                             <span class="teamNik">팀1</span>
                         </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="logo"><img src="../resources/img/icon/img02.jpg" alt="로고"></span>
-                            <span class="teamNik">팀2</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="logo"><img src="../resources/img/icon/img03.jpg" alt="로고"></span>
-                            <span class="teamNik">팀3</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="logo"><img src="../resources/img/icon/img04.jpg" alt="로고"></span>
-                            <span class="teamNik">팀4</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="logo"><img src="../resources/img/icon/img01.jpg" alt="로고"></span>
-                            <span class="teamNik">팀5</span>
-                        </a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
         </div>
     </div>
 
-    <!-- 팀 정보 팝업 - 팀이 없는 경우 -->
-    <div class="popup teamPop type02">
-        <a href="#" class="close"><img src="../resources/img/icon/close.png" alt=""></a>
-        <div class="popWrap">
-            <a href="#" class="btnTeam">팀 만들기</a>
-            <h1>내 팀 리스트</h1>
-            <div class="listCont">
-                <p>팀이 없습니다.</p>
-            </div>
-        </div>
-    </div>
 </body>
 <script>
-
+	// 프론트
     $(function(){
         // 팀 정보 팝업
         $('#teamInfo').on('click',function(){
             $('.popup.type01').addClass('on');
             $('.curtain').addClass('on');
             $('html').addClass('on');
+            
+            teamListCall();
         });
         $('.close').on('click',function(){
             $('.popup.type01').removeClass('on');
@@ -179,6 +131,8 @@
         // 알림
         $('#notice').on('click',function(){
             $('.noticeBox').addClass('on');
+            
+            noticeListCall();
         });
         $('.noticeBox .close').on('click',function(){
             $('.noticeBox').removeClass('on');
@@ -199,8 +153,116 @@
         });
 
     })
-
+    
+	// 팀 페이지 ajax
+    function teamListCall(){
+		$.ajax({
+			type : 'get', 
+			url : './team/list.ajax',
+			data : {},
+			dataType : 'json',
+			success : function(data){ 
+				
+				if(data.list != null){
+					drawTeamList(data.list);
+				}else{
+					drawTeamList02();
+				}
+				
+				
+			}, 
+			error : function(error){
+				console.log(error);
+			}, 
+		});
+	}
+	
+ 	// 팀 리스트
+	function drawTeamList(list){
+		var content = '';
+		
+		for(item of list){
+			content += '<li>';
+			content += '<a href="#">';
+			content += '<span class="logo"><img src="../resources/img/teamLogo/' + item.logo + '.jpg" alt="로고"></span>';
+			content += '<span class="teamNik">' + item.team_name + '</span>';
+			content += '</a>';
+			content += '</li>';
+		}
+		
+		$('#listCont').html(content);
+	}
+	function drawTeamList02(){
+		var content = '';
+		
+		content += '<ul>';
+		content += '<li class="noTeam">팀이 없습니다.</li>';
+		content += '</ul>';
+		
+		$('#listCont').html(content);
+	}
+	
+	// 알림 ajax
+    function noticeListCall(){
+		$.ajax({
+			type : 'get', 
+			url : './notice/list.ajax',
+			data : {},
+			dataType : 'json',
+			success : function(data){ 
+				
+				drawNoticeList(data.list);
+				
+			}, 
+			error : function(error){
+				console.log(error);
+			}, 
+		});
+	}
+	
+ 	// 알림 리스트
+	function drawNoticeList(list){
+		var content = '';
+		
+		for(item of list){
+			
+			content += '<li class="cont">';
+			
+			var date = new Date(item.notice_time);
+		    var dateStr = date.toLocaleDateString("ko-KR");
+			
+			content += '<p class="date">' + dateStr + '</p>';
+			content += '<p class="content">' + item.notice_content + '</p>';
+			content += '<button class="btn" onclick = "location.href=\'del.do?idx=' + item.notice_idx + '\'">확인</button>';
+			content += '</li>';
+        	
+		}
+		
+		$('#noticeCont').html(content);
+	}
 
 </script>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

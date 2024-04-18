@@ -4,6 +4,25 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
 >
 <!-- 이 xml 은 어떤 interface를 참조해서 사용해야 하는가? -->
-<mapper namespace="come.back.header.dao.HeaderDAO">
-
+<mapper namespace="com.back.header.dao.HeaderDAO">
+	
+	<select id="teamList" resultType="com.back.header.dto.HeaderDTO">
+		SELECT 
+			logo, 
+			team_name
+			FROM team WHERE id = #{param1}
+	</select>
+	
+	<select id="noticeList" resultType="com.back.header.dto.HeaderDTO">
+		SELECT 
+			notice_idx,
+			notice_time, 
+			notice_content
+			FROM notice where id = #{param1}
+	</select>
+	
+	<delete id="delete">
+		DELETE FROM notice where notice_idx = #{param1}
+	</delete>
+	
 </mapper>
