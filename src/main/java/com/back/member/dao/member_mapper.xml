@@ -4,7 +4,24 @@
 >
 
 <mapper namespace="com.back.member.dao.MemberDAO">
-
+	
+	<select id="loginId" resultType="String">
+		SELECT id FROM member WHERE id=#{param1} and pw=#{param2}
+	</select>
+	
+	<insert id="Join" parameterType="map">
+		INSERT INTO member(id,
+			pw,
+			name,
+			address,
+			gender,position,level)
+		values(#{id},#{pw},#{name},#{address},#{gender},#{position},#{level})
+	</insert>
+	
+	<select id="overlay" resultType="int">
+	SELECT COUNT(id) FROM member where id=#{param1}
+	</select>
+	
 </mapper>
 
 
