@@ -23,7 +23,7 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.back" />
+	<context:component-scan base-package="com.back.*" />
 	
 	
 	<!-- DB 접속을 위한 접속 정보 -->
