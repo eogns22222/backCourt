@@ -9,6 +9,12 @@ public class TeammateDTO {
 	private String join_to_level;
 	private String join_to_gender;
 	private String join_to_position;
+
+	
+	private String team_name;
+	private String id;
+	private String team_address;
+	
 	
 	public int getJoin_team_idx() {
 		return join_team_idx;
@@ -51,5 +57,23 @@ public class TeammateDTO {
 	}
 	public void setJoin_to_position(String join_to_position) {
 		this.join_to_position = join_to_position;
+	}
+	public String getTeam_name() {
+		return team_name;
+	}
+	public void setTeam_name(String team_name) {
+		this.team_name = team_name;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getTeam_address() {
+		return team_address;
+	}
+	public void setTeam_address(String team_address) {
+		this.team_address = team_address;
 	}
 }

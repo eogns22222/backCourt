@@ -6,9 +6,14 @@ import com.back.teammate.dto.TeammateDTO;
 
 public interface TeammateDAO {
 
-	List<TeammateDTO> list(int pagePerCnt, int start);
+	List<TeammateDTO> teamJoinList();
+
+	List<TeammateDTO> pageList(int pagePerCnt, int start);
 
 	int allCount(int pagePerCnt);
+
+	List<TeammateDTO> listFilterAddress(String address);
+
 
 	
 
