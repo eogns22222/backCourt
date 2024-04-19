@@ -1,105 +1,105 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-    <!-- 블라인드 -->
-    <div class="curtain"></div>
-    <!-- header -->
-    <header class="header">
-        <div class="inner">
-            <!-- header 상단 -->
-            <div class="top">
-                <h1><a href="#"><img src="resources/img/icon/img04.jpg" alt=""></a></h1>
-                <ul class="icoCont">
-                    <!-- 팀 정보 -->
-                    <li>
-                        <a href="javascript:;" id="teamInfo">
-                            <span class="icon"><img src="resources/img/icon/img03.jpg" alt=""></span>
-                            <span class="txt">팀정보</span>
-                        </a>
-                    </li>
-                    <!-- 알림 -->
-                    <li>
-                        <a href="javascript:;" id="notice">
-                            <span class="icon"><img src="resources/img/icon/img01.jpg" alt=""></span>
-                            <span class="txt">알림</span>
-                            <span class="num" id="noticeNum"></span>
-                        </a>
-                        <!-- 알림창 -->
-                        <div class="noticeBox">
-                            <a href="#" class="close"><img src="resources/img/icon/close.png" alt=""></a>
-                            <h2>알림</h2>
-                            <ul id="noticeCont">
+<!-- 블라인드 -->
+<div class="curtain"></div>
+<!-- header -->
+<header class="header">
+    <div class="inner">
+        <!-- header 상단 -->
+        <div class="top">
+            <h1><a href="#"><img src="resources/img/icon/img04.jpg" alt=""></a></h1>
+            <ul class="icoCont">
+                <!-- 팀 정보 -->
+                <li>
+                    <a href="javascript:;" id="teamInfo">
+                        <span class="icon"><img src="resources/img/icon/img03.jpg" alt=""></span>
+                        <span class="txt">팀정보</span>
+                    </a>
+                </li>
+                <!-- 알림 -->
+                <li>
+                    <a href="javascript:;" id="notice">
+                        <span class="icon"><img src="resources/img/icon/img01.jpg" alt=""></span>
+                        <span class="txt">알림</span>
+                        <span class="num" id="noticeNum"></span>
+                    </a>
+                    <!-- 알림창 -->
+                    <div class="noticeBox">
+                        <a href="#" class="close"><img src="resources/img/icon/close.png" alt=""></a>
+                        <h2>알림</h2>
+                        <ul id="noticeCont">
 <!--                                 <li class="cont">
                                     <p class="date">2020.10.10</p>
                                     <p class="content">내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</p>
                                     <button class="btn">확인</button>
                                 </li> -->
-                            </ul>
-                        </div>
-                    </li>
-                    <!-- 마이페이지 -->
-                    <li>
-                        <a href="${login}" id="myPage" onclick=${msg}>
-                            <span class="icon"><img src="resources/img/icon/img02.jpg" alt=""></span>
-                            <span class="txt">내정보</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            
-            <!-- header 하단 -->
-            <ul class="menu">
-                <li><a href="#">공식 경기</a></li>
-                <li><a href="#">팀 서비스</a></li>
-                <li><a href="#">구장 대여</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <!-- 마이페이지 -->
+                <li>
+                    <a href="${login}" id="myPage" onclick=${msg}>
+                        <span class="icon"><img src="resources/img/icon/img02.jpg" alt=""></span>
+                        <span class="txt">내정보</span>
+                    </a>
+                </li>
             </ul>
         </div>
-    </header>
-
-    <!-- 내정보 nav -->
-    <div class="nav">
-        <a href="#" class="close"><img src="resources/img/icon/close.png" alt=""></a>
-        <ul>
-            <li class="topCont">
-                <div class="profile">
-                    <p class="nik"><a href="#" onclick="location.href='mypage/profile_detail?id=${member.id}'">${member.id}</a></p>
-                    <span class="photo"><img src="resources/img/icon/img01.jpg" alt=""></span>
-                </div>
-                <div class="point">
-                    <p>포인트<span><a href="#" onclick="location.href='mypage/point?id=${member.id}'">${member.point}</a></span></p>
-                    <a href="../logout.do">로그아웃</button>
-                </div>
-            </li>
-            <li class="cont" onclick="location.href='mypage/match_ask_list?id=${member.id}'">
-                <a href="#">신청 내역</a>
-            </li>
-            <li class="cont" onclick="location.href='mypage/report_list?id=${member.id}'">
-                <a href="#">신고 내역</a>
-            </li>
-            <li class="cont" onclick="location.href='mypage/like?id=${member.id}'">
-                <a href="#">찜 목록</a>
-            </li>
+        
+        <!-- header 하단 -->
+        <ul class="menu">
+            <li><a href="#">공식 경기</a></li>
+            <li><a href="#">팀 서비스</a></li>
+            <li><a href="#">구장 대여</a></li>
         </ul>
     </div>
+</header>
 
-    <!-- 팀 정보 팝업 -->
-    <div class="popup teamPop type01">
-        <a href="#" class="close"><img src="resources/img/icon/close.png" alt=""></a>
-        <div class="popWrap">
-            <a href="team/write.go" class="btnTeam">팀 만들기</a>
-            <h1>내 팀 리스트</h1>
-            <div class="listCont">
-                <ul id="listCont">
-                    <!-- <li>
-                        <a href="#">
-                            <span class="logo"><img src="../resources/img/icon/img01.jpg" alt="로고"></span>
-                            <span class="teamNik">팀1</span>
-                        </a>
-                    </li> -->
-                </ul>
+<!-- 내정보 nav -->
+<div class="nav">
+    <a href="#" class="close"><img src="resources/img/icon/close.png" alt=""></a>
+    <ul>
+        <li class="topCont">
+            <div class="profile">
+                <p class="nik"><a href="#" onclick="location.href='mypage/profile_detail?id=${member.id}'">${member.id}</a></p>
+                <span class="photo"><img src="resources/img/icon/img01.jpg" alt=""></span>
             </div>
+            <div class="point">
+                <p>포인트<span><a href="#" onclick="location.href='mypage/point?id=${member.id}'">${member.point}</a></span></p>
+                <a href="../logout.do">로그아웃</button>
+            </div>
+        </li>
+        <li class="cont" onclick="location.href='mypage/match_ask_list?id=${member.id}'">
+            <a href="#">신청 내역</a>
+        </li>
+        <li class="cont" onclick="location.href='mypage/report_list?id=${member.id}'">
+            <a href="#">신고 내역</a>
+        </li>
+        <li class="cont" onclick="location.href='mypage/like?id=${member.id}'">
+            <a href="#">찜 목록</a>
+        </li>
+    </ul>
+</div>
+
+<!-- 팀 정보 팝업 -->
+<div class="popup teamPop type01">
+    <a href="#" class="close"><img src="resources/img/icon/close.png" alt=""></a>
+    <div class="popWrap">
+        <a href="team/write.go" class="btnTeam">팀 만들기</a>
+        <h1>내 팀 리스트</h1>
+        <div class="listCont">
+            <ul id="listCont">
+                <!-- <li>
+                    <a href="#">
+                        <span class="logo"><img src="../resources/img/icon/img01.jpg" alt="로고"></span>
+                        <span class="teamNik">팀1</span>
+                    </a>
+                </li> -->
+            </ul>
         </div>
     </div>
+</div>
 
 <script>
 
@@ -187,8 +187,8 @@
 		
 		for(item of list){
 			content += '<li>';
-			content += '<a href="../team/info_list?team_idx=' + item.team_idx + '">';
-			content += '<span class="logo"><img src="../resources/img/teamLogo/' + item.logo + '.jpg" alt="로고"></span>';
+			content += '<a href="team/info_list?team_idx=' + item.team_idx + '">';
+			content += '<span class="logo"><img src="resources/img/teamLogo/' + item.logo + '.jpg" alt="로고"></span>';
 			content += '<span class="teamNik">' + item.team_name + '</span>';
 			content += '</a>';
 			content += '</li>';
