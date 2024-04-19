@@ -6,9 +6,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.back.header.dao.HeaderDAO;
 import com.back.header.dto.HeaderDTO;
+import com.back.member.dto.MemberDTO;
 
 @Service
 public class HeaderService {
@@ -26,9 +28,17 @@ public class HeaderService {
 		return headerdao.noticeList(id);
 	}
 
-	public void delete(String idx) {
+	public int del(String idx) {
+		return headerdao.del(idx);
+	}
+
+	public HeaderDTO count(String id) {
+		return headerdao.count(id);
+	}
+
+	public MemberDTO nav(String id) {
 		
-		headerdao.delete(idx);
+		return headerdao.nav(id);
 	}
 	
 }

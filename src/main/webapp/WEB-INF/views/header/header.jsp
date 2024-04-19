@@ -31,7 +31,7 @@
                         <a href="javascript:;" id="notice">
                             <span class="icon"><img src="../resources/img/icon/img01.jpg" alt=""></span>
                             <span class="txt">알림</span>
-                            <span class="num">0</span>
+                            <span class="num" id="noticeNum"></span>
                         </a>
                         <!-- 알림창 -->
                         <div class="noticeBox">
@@ -48,7 +48,7 @@
                     </li>
                     <!-- 마이페이지 -->
                     <li>
-                        <a href="javascript:;" id="myPage">
+                        <a href="${login}" id="myPage" onclick=${msg}>
                             <span class="icon"><img src="../resources/img/icon/img02.jpg" alt=""></span>
                             <span class="txt">내정보</span>
                         </a>
@@ -71,11 +71,11 @@
         <ul>
             <li class="topCont">
                 <div class="profile">
-                    <p class="nik"><a href="#">admin</a></p>
+                    <p class="nik"><a href="#" onclick="location.href='../mypage/profile_detail?id=${member.id}'">${member.id}</a></p>
                     <span class="photo"><img src="../resources/img/icon/img01.jpg" alt=""></span>
                 </div>
                 <div class="point">
-                    <p>포인트<span><a href="#">50,000</a></span></p>
+                    <p>포인트<span><a href="#">${member.point}</a></span></p>
                     <button>로그아웃</button>
                 </div>
             </li>
@@ -112,26 +112,21 @@
 
 </body>
 <script>
+
 	// 프론트
     $(function(){
         // 팀 정보 팝업
         $('#teamInfo').on('click',function(){
-            $('.popup.type01').addClass('on');
-            $('.curtain').addClass('on');
-            $('html').addClass('on');
-            
             teamListCall();
         });
         $('.close').on('click',function(){
-            $('.popup.type01').removeClass('on');
+            $('.popup').removeClass('on');
             $('.curtain').removeClass('on');
             $('html').removeClass('on');
         });
 
         // 알림
         $('#notice').on('click',function(){
-            $('.noticeBox').addClass('on');
-            
             noticeListCall();
         });
         $('.noticeBox .close').on('click',function(){
@@ -153,6 +148,16 @@
         });
 
     })
+	
+	function loginMsg(){
+		alert('로그인이 필요한 서비스입니다.');
+	}
+	
+	var noticeCheck = 'on';
+	
+	$(document).ready(function(){
+		noticeListCall(noticeCheck);
+	});
     
 	// 팀 페이지 ajax
     function teamListCall(){
@@ -164,10 +169,19 @@
 			success : function(data){ 
 				
 				if(data.list != null){
+					$('.popup').addClass('on');
+		            $('.curtain').addClass('on');
+		            $('html').addClass('on');
 					drawTeamList(data.list);
-				}else{
+				}else if(data.check != 1){
+					$('.popup').addClass('on');
+		            $('.curtain').addClass('on');
+		            $('html').addClass('on');
 					drawTeamList02();
+				}else if(data.check == 1){
+					alert(data.msg);
 				}
+				
 				
 				
 			}, 
@@ -203,7 +217,7 @@
 	}
 	
 	// 알림 ajax
-    function noticeListCall(){
+    function noticeListCall(on){
 		$.ajax({
 			type : 'get', 
 			url : './notice/list.ajax',
@@ -211,7 +225,19 @@
 			dataType : 'json',
 			success : function(data){ 
 				
-				drawNoticeList(data.list);
+				if(data.check != 1){
+					drawNoticeList(data.list);
+					drawCountList(data.count);
+					
+					if(on != 'on'){
+						$('.noticeBox').addClass('on');
+						
+					}
+				}else if(on != 'on'){
+					alert(data.msg);
+					
+				}
+				
 				
 			}, 
 			error : function(error){
@@ -223,6 +249,7 @@
  	// 알림 리스트
 	function drawNoticeList(list){
 		var content = '';
+
 		
 		for(item of list){
 			
@@ -233,12 +260,36 @@
 			
 			content += '<p class="date">' + dateStr + '</p>';
 			content += '<p class="content">' + item.notice_content + '</p>';
-			content += '<button class="btn" onclick = "location.href=\'del.do?idx=' + item.notice_idx + '\'">확인</button>';
+			content += '<button class="btn" onclick ="del(' + item.notice_idx + ');">확인</button>';
 			content += '</li>';
-        	
+			
 		}
 		
 		$('#noticeCont').html(content);
+	}
+	function drawCountList(count){
+		var content = '';
+	
+		content = count.notice_count;
+	
+		$('#noticeNum').html(content);
+	}
+ 	
+	function del(idx){
+		
+		$.ajax({
+			type: 'post',
+			url: './notice/delete.ajax',
+			data: {'idx' : idx},
+			dataType: 'json',
+			success: function(data){
+				noticeListCall();
+			},
+			error: function(error){
+				console.log(error);
+			}
+		});
+		
 	}
 
 </script>
