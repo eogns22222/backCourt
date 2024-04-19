@@ -19,25 +19,28 @@ public class CourtService {
 	@Autowired
 	CourtDAO courtDAO;
 
-	public Map<String, Object> list(String address) {
+	public Map<String, Object> list(int page, String address) {
 
 		Map<String, Object> result = new HashMap<String, Object>();
 		List<CourtDTO> list;
+		List<CourtDTO> allList = courtDAO.allList();
+
+		int start = (page - 1) * 10;
 
 		if (address.equals("") == true) {
-			logger.info("servcie.list / address = {} /",address);
-			list = courtDAO.list();
+//			logger.info("servcie.list / address = {} /", address);
+			list = courtDAO.list(start);
 			result.put("totalPage", courtDAO.allCourtCount());
 
 		} else {
-			logger.info("servcie.list / address = {} /",address);
-			list = courtDAO.listFilterAddress(address);
+//			logger.info("servcie.list / address = {} /", address);
+			list = courtDAO.listFilterAddress(start, address);
 			result.put("totalPage", courtDAO.addressFilteringCourtCount(address));
 
 		}
 
 		result.put("list", list);
-
+		result.put("allList", allList);
 		return result;
 	}
 
@@ -58,5 +61,31 @@ public class CourtService {
 		}
 		return true;
 	}
+
+	public Map<String, Object> searchList(String courtSearchCategory, String courtSearchWord, int page,String address) {
+
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<CourtDTO> list;
+		List<CourtDTO> allList = courtDAO.allList();
+		
+		int start = (page - 1) * 10;
+		
+		if (address.equals("") == true) {
+//			logger.info("servcie.list / address = {} /", address);
+//			list = courtDAO.SearchList(courtSearchCategory,courtSearchWord,start);
+			result.put("totalPage", courtDAO.allCourtCount());
+
+		} else {
+//			logger.info("servcie.list / address = {} /", address);
+			list = courtDAO.listFilterAddress(start, address);
+			result.put("totalPage", courtDAO.addressFilteringCourtCount(address));
+
+		}
+
+//		result.put("list", list);
+		result.put("allList", allList);
+		return result;
+	}
+
 
 }

@@ -74,20 +74,21 @@
         <option value="courtLocation">지역 명</option>
     </select>
     
-    <input type="text" name="searchInput" />
+    <input type="text" name="searchInput" placeholder="검색단어입력" maxlength="20"/>
     <!-- 이거 누르면 아작스 하는걸로 -->
-    <button onclick="callList()">d</button>
-    <div id="paging">페이징처리 여기로</div>
+    <button onclick="searchList(1)">검색</button>
 </body>
 <script>
+	var currentPage = 1;
 	var filterFlag = false;
 	
 	$(document).ready(function() {
-	    callList();
+	    callList(currentPage);
 	});
 	
 	$('#address').on('change',function(){
-		callList();
+		$('#pagination').twbsPagination('destroy');
+		callList(currentPage);
 	});
 	
 	/*찜 아이콘 눌렀을때 처리 */
@@ -99,7 +100,7 @@
 	    
 	    if (currentJjimImg.indexOf('/jjim.png') != -1) {
 	        $.ajax({
-	        	type:'get'
+	        	type:'POST'
 	        	,url:'./noJjim.ajax'
 	        	,data:{
 	        		"courtIdx":$(this).data('courtidx')
@@ -119,7 +120,7 @@
 	    } else {
 	    	
 	        $.ajax({
-	        	type:'get'
+	        	type:'POST'
 	        	,url:'./jjim.ajax'
 	        	,data:{
 	        		"courtIdx":$(this).data('courtidx')
@@ -140,13 +141,17 @@
 	    }
 	});
 	
-	function callList() {
+	function callList(currentPage) {
 		
 		$.ajax({
-			type:'get'
+			type:'POST'
 			,url:'./list.ajax'
 			,data:{
-				'address':$('#address').val()
+
+				'courtSearchCategory':$('select[name="search"]').val()
+				,'courtSearchWord':$('select[name="searchInput"]').val()
+				,'currentPage':currentPage
+				,'address':$('#address').val()
 			}
 			,dataType:'json'
 			,success:function(data){
@@ -154,21 +159,58 @@
 				console.log(data.totalPage);
 				showList(data.list);
 				if(filterFlag == false){
-					showFilterList(data.list);
+					showFilterList(data.allList);
 					filterFlag = true;
 				}
-
-   				$('#pagination').twbsPagination({
-   					startPage:1
-   					,totalPage:data.totalPage
-   					,visiblePages:5
-   					
-   				});
+				var totalPage = data.totalPage/10 > 1 ? data.totalPage/10:1;
+				showPagination(totalPage);
 				
 			}
 			,error:function(error){
 				console.log(error);
 			}
+		});
+	}
+	function searchList(currentPage) {
+		
+		$.ajax({
+			type:'POST'
+			,url:'./searchList.ajax'
+			,data:{
+				'courtSearchCategory':$('select[name="search"]').val()
+				,'courtSearchWord':$('select[name="searchInput"]').val()
+				,'currentPage':currentPage
+				,'address':$('#address').val()
+			}
+			,dataType:'json'
+			,success:function(data){
+				/* console.log(data.list); */
+				console.log(data.totalPage);
+				showList(data.list);
+				if(filterFlag == false){
+					showFilterList(data.allList);
+					filterFlag = true;
+				}
+				var totalPage = data.totalPage/10 > 1 ? data.totalPage/10:1;
+				showPagination(totalPage);
+				
+			}
+			,error:function(error){
+				console.log(error);
+			}
+		});
+	}
+	function showPagination(totalPage) {
+		$('#pagination').twbsPagination({
+				startPage:1
+				,totalPages:totalPage
+				,visiblePages:5
+				,onPageClick:function(evt,pg){
+					console.log(pg);
+					currentPage = pg;
+					callList(currentPage);
+				}
+				
 		});
 	}
 	function showList(list){
@@ -205,6 +247,11 @@
 
 		$('#address').html(content);
 		
+	}
+
+	function searchList() {
+		currentPage = 1;
+		callList(currentPage);
 	}
 </script>
 </html>

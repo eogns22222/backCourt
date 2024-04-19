@@ -31,17 +31,29 @@ public class CourtController {
 		return "court/list";
 	}
 
-	@RequestMapping(value = "/court/list.ajax", method = RequestMethod.GET)
+	@RequestMapping(value = "/court/list.ajax", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> callList(String address) {
-		logger.info("listCall / address = {} / ", address);
-
-		Map<String, Object> map = courtService.list(address);
+	public Map<String, Object> callList(String currentPage, String address) {
+		logger.info("listCall / currentPage = {} / address = {} / ", currentPage, address);
+		int page = Integer.parseInt(currentPage);
+		Map<String, Object> map = courtService.list(page, address);
 
 		return map;
 	}
 
-	@RequestMapping(value = "/court/jjim.ajax", method = RequestMethod.GET)
+	@RequestMapping(value = "/court/searchList.ajax", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> searchList(String courtSearchCategory, String courtSearchWord, String currentPage,
+			String address) {
+		logger.info("listCall / currentPage = {} / address = {} / ", currentPage, address);
+		logger.info("listCall / searchCategory = {} / SearchWord = {} / ", courtSearchCategory, courtSearchWord);
+		int page = Integer.parseInt(currentPage);
+		Map<String, Object> map = courtService.searchList(courtSearchCategory, courtSearchWord, page, address);
+
+		return map;
+	}
+
+	@RequestMapping(value = "/court/jjim.ajax", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Boolean> jjimAdd(String courtIdx) {
 		logger.info("jjimAdd / courtIdx = {}", courtIdx);
@@ -54,7 +66,7 @@ public class CourtController {
 		return map;
 	}
 
-	@RequestMapping(value = "/court/noJjim.ajax", method = RequestMethod.GET)
+	@RequestMapping(value = "/court/noJjim.ajax", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Boolean> jjimRemove(String courtIdx) {
 		logger.info("jjimAdd / courtIdx = {}", courtIdx);
