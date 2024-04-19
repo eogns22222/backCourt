@@ -1,7 +1,9 @@
 package com.back.mypage.dao;
 
+import java.util.Map;
+
 public interface MypageDAO {
 
-	String report(String id);
-
+	int report(Map<String, Object> map);
+	
 }

@@ -4,9 +4,10 @@
 >
 
 <mapper namespace="com.back.mypage.dao.MypageDAO">
-	<select id="report" resultType="String">
-		select id from report where id = #{param1}
-	</select>
+	<insert id="report" parameterType="map">
+	INSERT INTO report (id, report_tit, report_content, report_write_idx, report_write_type)
+		VALUES (#{id},#{report_tit}, #{report_content}, #{report_write_idx}, #{report_write_type});
+	</insert>
 </mapper>
 
 
