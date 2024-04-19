@@ -8,6 +8,7 @@
 	
 	<select id="teamList" resultType="com.back.header.dto.HeaderDTO">
 		SELECT 
+			team_idx,
 			logo, 
 			team_name
 			FROM team WHERE id = #{param1}

@@ -75,17 +75,17 @@
                     <span class="photo"><img src="../resources/img/icon/img01.jpg" alt=""></span>
                 </div>
                 <div class="point">
-                    <p>포인트<span><a href="#">${member.point}</a></span></p>
-                    <button>로그아웃</button>
+                    <p>포인트<span><a href="#" onclick="location.href='../mypage/point?id=${member.id}'">${member.point}</a></span></p>
+                    <a href="../logout.do">로그아웃</button>
                 </div>
             </li>
-            <li class="cont">
+            <li class="cont" onclick="location.href='../mypage/match_ask_list?id=${member.id}'">
                 <a href="#">신청 내역</a>
             </li>
-            <li class="cont">
+            <li class="cont" onclick="location.href='../mypage/report_list?id=${member.id}'">
                 <a href="#">신고 내역</a>
             </li>
-            <li class="cont">
+            <li class="cont" onclick="location.href='../mypage/like?id=${member.id}'">
                 <a href="#">찜 목록</a>
             </li>
         </ul>
@@ -197,7 +197,7 @@
 		
 		for(item of list){
 			content += '<li>';
-			content += '<a href="#">';
+			content += '<a href="../team/info_list?team_idx=' + item.team_idx + '">';
 			content += '<span class="logo"><img src="../resources/img/teamLogo/' + item.logo + '.jpg" alt="로고"></span>';
 			content += '<span class="teamNik">' + item.team_name + '</span>';
 			content += '</a>';

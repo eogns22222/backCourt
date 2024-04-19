@@ -109,6 +109,15 @@ public class HeaderController {
 		return map;
 	}
 	
+	@RequestMapping(value = "/logout.do")
+	public String logout(HttpSession session) {
+		logger.info("로그아웃 시도");
+		String page = "redirect:/login.do";
+		session.removeAttribute("loginInfo");
+		
+		return page;
+	}
+	
 }
 
 
