@@ -19,13 +19,13 @@
             </a>
         </h1>
         <br/><br/>
-        <form id="reportForm" action="mypage/report.do" method="post">
+        <form id="reportForm" action="report.do" method="post">
             <label class="title">제목</label>
             <br/>
-            <input type="text" id="name" name="name" class="zz" placeholder=" 제목을 입력해 주세요.(글자수 제한: 30자)" maxlength="30">
+            <input type="text" id="name" name="title" class="zz" placeholder=" 제목을 입력해 주세요.(글자수 제한: 30자)" maxlength="30">
             <br/><br/>
             <label class="title">내용</label>
-            <textarea id="message" name="message" class="text" placeholder="내용을 입력해 주세요.(글자수 제한: 500자)" maxlength="500"></textarea>
+            <textarea id="message" name="contents" class="text" placeholder="내용을 입력해 주세요.(글자수 제한: 500자)" maxlength="500"></textarea>
             <br/>
             <div class="but">
                 <input type="submit" value="취소" id="cancel" class="submit">
@@ -45,7 +45,7 @@
 	    }
 	}); */
     
-	document.getElementById("reportForm").addEventListener("submit", function(event) {
+	document.querySelector('input[type="submit"][value="제출"]').addEventListener("click", function(event) {
 	    var name = document.getElementById("name").value;
 	    var message = document.getElementById("message").value;
 	
@@ -55,16 +55,23 @@
 	    }else{
 	    	var confirmed = confirm("정말로 제출하시겠습니까?"); // 확인 창을 띄움
 	    	
-	    	if (confirmed) {
-	             // 사용자가 확인을 눌렀을 경우 폼을 제출
-	             this.submit();
-	         } else {
-	             // 사용자가 취소를 눌렀을 경우 아무 동작도 하지 않음
-	         }
+	    	if (!confirmed) {
+	            event.preventDefault(	); // 확인 버튼을 누르지 않은 경우에만 폼 제출 동작을 중지함
+	        }
 	    }
 	});
 
-	
-	
+	// 취소(submit) 버튼 클릭 시 처리
+	document.querySelector('input[type="submit"][value="취소"]').addEventListener("click", function(event) {
+	    var cancelConfirmed = confirm("작성한 내용을 취소하시겠습니까?"); // 취소 확인 창을 띄움
+
+	    if (!cancelConfirmed) {
+	        event.preventDefault(); // 사용자가 확인을 눌렀을 경우에만 기본 동작을 중지함
+	    }
+	 // 사용자가 확인을 누른 경우에는 이전 페이지로 이동
+	    else {
+	        history.back();
+	    }
+	});
 </script>
 </html>
