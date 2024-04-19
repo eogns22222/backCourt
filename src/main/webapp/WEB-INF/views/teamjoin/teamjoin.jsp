@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="../resources/css/header/header.css" type ="text/css">
 <link rel="stylesheet" href="../resources/css/teamjoin/teamjoin.css" type ="text/css">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
+<script src="../resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 </head>
 <body>
     <div class="team_join_list">
@@ -200,7 +200,7 @@ function showList(list){
 		 cosole.log(item.join_team_idx);
 	    content +=
 	    	'<tr>'
-	    +'<td><img class="teamLogo" src="../resources/img/teamLogo/' + img + '" alt="ImageCheck"/></td>'
+	    +'<td><img class="teamLogo" src="../resources/img/teamLogo/test_logo2.jpg" alt="ImageCheck"/></td>'
 	    + '<td>' + item.team_name +'</td>'
 	    + '<td>' + item.id + '</td>'
 	    + '<td>' + item.team_address + '</td>'
@@ -265,6 +265,7 @@ function showFilterList3(list) {
 	$('#teamjoinlevel').html(content);
 	
 }
+
 
 </script>
 </html>

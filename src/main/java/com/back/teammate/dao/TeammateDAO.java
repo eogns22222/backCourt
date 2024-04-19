@@ -2,7 +2,6 @@ package com.back.teammate.dao;
 
 import java.util.List;
 
-import com.back.court.dto.CourtDTO;
 import com.back.teammate.dto.TeammateDTO;
 
 public interface TeammateDAO {

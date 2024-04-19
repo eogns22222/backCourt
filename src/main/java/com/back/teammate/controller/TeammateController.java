@@ -27,7 +27,7 @@ public class TeammateController {
 	@RequestMapping(value = "/teamjoin/teamjoin.go")
 	public String listGo() {
 		logger.info("list.go /");
-		return "teamjoin/list";
+		return "teamjoin/teamjoin";
 	}
 	
 	// 팀원 리스트 페이징 처리
