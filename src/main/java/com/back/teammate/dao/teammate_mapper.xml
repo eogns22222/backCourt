@@ -4,8 +4,16 @@
 >
 
 <mapper namespace="com.back.teammate.dao.TeammateDAO">
-	<select id="list" resultType="com.back.teammate.dto.TeammateDTO">
+	<select id="teamJoinList" resultType="com.back.teammate.dto.TeammateDTO">
+	SELECT t.team_name, t.id, t.team_address, tj.join_team_level, tj.join_team_level
+	FROM team t, team_join tj
+	WHERE t.team_idx = tj.team_idx;
+	</select>
 	
+	<select id="listFilterAddress" resultType="com.back.teammate.dto.TeammateDTO">
+	SELECT t.team_name, t.id, t.team_address, tj.join_team_level, tj.join_team_level
+	FROM team t, team_join tj
+	WHERE t.team_idx = tj.team_idx;
 	</select>
 
 </mapper>

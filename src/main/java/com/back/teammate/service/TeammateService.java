@@ -16,16 +16,37 @@ import com.back.teammate.dto.TeammateDTO;
 public class TeammateService {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired TeammateDAO teammateDAO;
-	public Map<String, Object> list(int currPage, int pagePerCnt) {
+	
+	public Map<String, Object> pageList(int currPage, int pagePerCnt) {
 
 	int start = (currPage-1) * pagePerCnt;
 		
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<TeammateDTO> list= teammateDAO.list(pagePerCnt,start);
-		logger.info("list size : "+list.size());
-		result.put("list", list);
+		List<TeammateDTO> pageList= teammateDAO.pageList(pagePerCnt,start);
+		logger.info("팀원모집 list size : "+pageList.size());
+		result.put("pageList", pageList);
 		result.put("currPage", currPage);
 		result.put("totalPages", teammateDAO.allCount(pagePerCnt));
+		
+		return result;
+	}
+	
+	public Map<String, Object> teamJoinList() {
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<TeammateDTO> teamJoinList = teammateDAO.teamJoinList();
+		
+		result.put("teamJoinList", teamJoinList);
+		
+		return result;
+	}
+	
+	public Map<String, Object> addrList(String address) {
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<TeammateDTO> addrList = teammateDAO.listFilterAddress(address);
+		
+		result.put("addrlist", addrList);
 		
 		return result;
 	}
