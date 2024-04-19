@@ -15,4 +15,8 @@ public interface CourtDAO {
 
 	List<CourtDTO> listFilterAddress(String address);
 
+	int allCourtCount();
+
+	int addressFilteringCourtCount(String address);
+
 }

@@ -15,58 +15,57 @@ import com.back.court.service.CourtService;
 
 @Controller
 public class CourtController {
-	
+
 	Logger logger = LoggerFactory.getLogger(getClass());
-	@Autowired CourtService courtService;
-	
+	@Autowired
+	CourtService courtService;
+
 	@RequestMapping(value = "/")
 	public String home() {
 		return "redirect:/court/list.go";
 	}
-	
+
 	@RequestMapping(value = "/court/list.go")
 	public String listGo() {
 		logger.info("list.go /");
 		return "court/list";
 	}
-	
-	@RequestMapping(value = "/court/list.ajax", method=RequestMethod.GET)
+
+	@RequestMapping(value = "/court/list.ajax", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> callList(String address){
-		logger.info("listCall / address = {}",address);
-		Map<String, Object> map;
-		if(address.equals("")) {
-			map = courtService.list();		
-		}else {
-			map = courtService.list(address);			
-		}
-		
+	public Map<String, Object> callList(String address) {
+		logger.info("listCall / address = {} / ", address);
+
+		Map<String, Object> map = courtService.list(address);
+
 		return map;
 	}
-	
-	@RequestMapping(value = "/court/jjim.ajax", method=RequestMethod.GET)
+
+	@RequestMapping(value = "/court/jjim.ajax", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Boolean> jjimAdd(String courtIdx){
-		logger.info("jjimAdd / courtIdx = {}",courtIdx);
-		
+	public Map<String, Boolean> jjimAdd(String courtIdx) {
+		logger.info("jjimAdd / courtIdx = {}", courtIdx);
+
 		Map<String, Boolean> map = new HashMap<String, Boolean>();
 //		세션 아이디 받아오
 		String id = "admin";
-		map.put("result", courtService.jjim(id,Integer.parseInt(courtIdx)));
-		
+		map.put("result", courtService.jjim(id, Integer.parseInt(courtIdx)));
+
 		return map;
 	}
-	@RequestMapping(value = "/court/noJjim.ajax", method=RequestMethod.GET)
+
+	@RequestMapping(value = "/court/noJjim.ajax", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Boolean> jjimRemove(String courtIdx){
-		logger.info("jjimAdd / courtIdx = {}",courtIdx);
-		
+	public Map<String, Boolean> jjimRemove(String courtIdx) {
+		logger.info("jjimAdd / courtIdx = {}", courtIdx);
+
 		Map<String, Boolean> map = new HashMap<String, Boolean>();
 
 //		세션 아이디 받아오
 		String id = "admin";
-		map.put("result", courtService.jjimRemove(id,Integer.parseInt(courtIdx)));
-		
+		map.put("result", courtService.jjimRemove(id, Integer.parseInt(courtIdx)));
+
 		return map;
 	}
+
 }

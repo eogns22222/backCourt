@@ -16,33 +16,34 @@ import com.back.court.dto.CourtDTO;
 public class CourtService {
 
 	Logger logger = LoggerFactory.getLogger(getClass());
-	@Autowired CourtDAO courtDAO;
-	
-	public Map<String, Object> list() {
-		// TODO Auto-generated method stub
-		
-		Map<String, Object> result = new HashMap<String, Object>();
-		List<CourtDTO> list = courtDAO.list();
-		
-		result.put("list", list);
-		
-		return result;
-	}
-	
-	
+	@Autowired
+	CourtDAO courtDAO;
+
 	public Map<String, Object> list(String address) {
-		
+
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<CourtDTO> list = courtDAO.listFilterAddress(address);
-		
+		List<CourtDTO> list;
+
+		if (address.equals("") == true) {
+			logger.info("servcie.list / address = {} /",address);
+			list = courtDAO.list();
+			result.put("totalPage", courtDAO.allCourtCount());
+
+		} else {
+			logger.info("servcie.list / address = {} /",address);
+			list = courtDAO.listFilterAddress(address);
+			result.put("totalPage", courtDAO.addressFilteringCourtCount(address));
+
+		}
+
 		result.put("list", list);
-		
+
 		return result;
 	}
-	
+
 	public boolean jjim(String id, int courtIdx) {
 		try {
-			courtDAO.jjim(id,courtIdx);
+			courtDAO.jjim(id, courtIdx);
 		} catch (Exception e) {
 			return false;
 		}
@@ -51,13 +52,11 @@ public class CourtService {
 
 	public Boolean jjimRemove(String id, int courtIdx) {
 		try {
-			courtDAO.jjimRemove(id,courtIdx);
-			} catch (Exception e) {
-				return false;
+			courtDAO.jjimRemove(id, courtIdx);
+		} catch (Exception e) {
+			return false;
 		}
 		return true;
 	}
-	
 
-	
 }

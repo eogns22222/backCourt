@@ -4,8 +4,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
+<script src="../resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style>
         table{
             border: 2px solid;
@@ -79,6 +81,7 @@
 </body>
 <script>
 	var filterFlag = false;
+	
 	$(document).ready(function() {
 	    callList();
 	});
@@ -138,9 +141,8 @@
 	});
 	
 	function callList() {
-		console.log('sd');
+		
 		$.ajax({
-			
 			type:'get'
 			,url:'./list.ajax'
 			,data:{
@@ -148,12 +150,21 @@
 			}
 			,dataType:'json'
 			,success:function(data){
-				console.log(data.list);
+				/* console.log(data.list); */
+				console.log(data.totalPage);
 				showList(data.list);
 				if(filterFlag == false){
 					showFilterList(data.list);
 					filterFlag = true;
 				}
+
+   				$('#pagination').twbsPagination({
+   					startPage:1
+   					,totalPage:data.totalPage
+   					,visiblePages:5
+   					
+   				});
+				
 			}
 			,error:function(error){
 				console.log(error);
@@ -163,7 +174,7 @@
 	function showList(list){
 		var content = '';
 		for(item of list){
-			console.log(item.court_idx);
+			/* console.log(item.court_idx); */
 			var img = item.first_img_name != null ? item.first_img_name+'.png':'no_image.png';
 			var jjim = item.jjim > 0 ? 'jjim.png':'no_jjim.png';
 			content +=

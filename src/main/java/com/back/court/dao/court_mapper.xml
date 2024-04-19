@@ -58,6 +58,22 @@
 
 	</select>
 	
+	<select id="allCourtCount" resultType="int">
+	
+		SELECT COUNT(court_idx) AS totalPage
+		FROM court 
+	
+	</select>
+	
+	
+	<select id="addressFilteringCourtCount" resultType="int">
+	
+		SELECT COUNT(court_idx) AS totalPage 
+		FROM court 
+		WHERE court_address LIKE CONCAT('%', #{param1}, '%')
+	
+	</select>
+	
 	<insert id="jjim">
 	
 		INSERT INTO 
