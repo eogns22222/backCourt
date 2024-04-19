@@ -4,7 +4,9 @@
 >
 
 <mapper namespace="com.back.mypage.dao.MypageDAO">
-
+	<select id="report" resultType="String">
+		select id from report where id = #{param1}
+	</select>
 </mapper>
 
 

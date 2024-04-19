@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 <link rel="icon" href="resources/img/icon/logo.png">
 <link rel="stylesheet" href="resources/css/login/login.css" type="text/css">
-<link rel="stylesheet" href="resources/css/common/common.css" type ="text/css">
+<link rel="stylesheet" href="resources/css/common/common.css" type ="text/css">	
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
