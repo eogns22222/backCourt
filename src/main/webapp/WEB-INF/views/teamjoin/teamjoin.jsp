@@ -146,6 +146,7 @@ function callList1() {
 			console.log(error);
 		}
 	});
+}
 function callList2() {
 	console.log('가즈아');
 	$.ajax({
