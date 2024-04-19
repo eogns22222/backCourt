@@ -4,6 +4,9 @@
 >
 
 <mapper namespace="com.back.teammate.dao.TeammateDAO">
+	<select id="list" resultType="com.back.teammate.dto.TeammateDTO">
+	
+	</select>
 
 </mapper>
 
