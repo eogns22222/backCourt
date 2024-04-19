@@ -21,8 +21,47 @@
 			FROM notice where id = #{param1}
 	</select>
 	
-	<delete id="delete">
+	<delete id="del">
 		DELETE FROM notice where notice_idx = #{param1}
 	</delete>
 	
+	<select id="count" resultType="com.back.header.dto.HeaderDTO">
+		SELECT 
+			count(notice_content) as notice_count
+			FROM notice where id = #{param1}
+	</select>
+	
+	<select id="nav" resultType="com.back.member.dto.MemberDTO">
+		SELECT 
+			id,
+			point
+			FROM member where id = #{param1};	
+	</select>
+	
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

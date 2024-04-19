@@ -57,9 +57,10 @@ public class HeaderDTO {
 	}
 	
 	// notice
-	public int notice_idx;
-	public String notice_content;
-	public Date notice_time;
+	private int notice_idx;
+	private String notice_content;
+	private Date notice_time;
+	private int notice_count;
 
 	public int getNotice_idx() {
 		return notice_idx;
@@ -78,6 +79,12 @@ public class HeaderDTO {
 	}
 	public void setNotice_time(Date notice_time) {
 		this.notice_time = notice_time;
+	}
+	public int getNotice_count() {
+		return notice_count;
+	}
+	public void setNotice_count(int notice_count) {
+		this.notice_count = notice_count;
 	}
 	
 	
