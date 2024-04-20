@@ -32,6 +32,9 @@
         	height: 50px;
         	width: auto;
         }
+        tr:hover {
+   			background-color: lightgray;
+		}
 
     </style>
 </head>
@@ -87,6 +90,16 @@
 	var currentPage = 1;
 	var filterFlag = false;
 	var searchFlag = false;
+	
+	$(document).on('click', 'tr', function() {
+	    // 해당 행의 courtIdx 값을 가져옴
+	    var courtIdx = $(this).find('.courtJjim').data('courtidx');
+	    
+	    console.log(courtIdx);
+	    
+	    window.location.href = './detail.go?court_idx='+courtIdx;
+	});
+
 	$(document).ready(function() {
 	    // 페이지 로드 시 callList 호출
 	    callList(currentPage);
