@@ -25,10 +25,18 @@
 .table tr td span{}
 .table tr td .present{}
 .table tr td .Recruitment{}
-.table tr .state{}
-.table tr .state.finish{}
+.table tr .state{background:greenyellow;}
+.table tr .state.finish{background:orangered;}
+
+.table tr.end .address:hover{background:#fff;}
+.table tr.end td a{cursor:inherit;}
+.table tr.end td a{position:relative;color:gray;text-decoration: none;}
+.table tr.end td a:before{content:"";position:absolute;top:0;left:0;width:100%;height:100%;background:gray;opacity:.5;}
 
 /* 검색 */
 .searchBox{text-align:center;}
 .searchBox input{}
 .searchBox button{}
+
+
+

@@ -4,13 +4,13 @@
 <div class="adminBody">
     <header class="adminHeader">
         <div class="headerCont">
-            <a href="admin_logout.do" class="logout">로그아웃</a>
+            <a href="../admin_logout.do" class="logout">로그아웃</a>
             <ul class="menu">
-                <li><a href="admin/member_list">회원 관리</a></li>
-                <li><a href="admin/team_list">팀 관리</a></li>
-                <li><a href="admin/court_list">구장 관리</a></li>
-                <li><a href="admin/writing_list">글 관리</a></li>
-                <li><a href="admin/report_list">신고 관리</a></li>
+                <li><a href="../admin/member_list">회원 관리</a></li>
+                <li><a href="../admin/team_list">팀 관리</a></li>
+                <li><a href="../admin/court_list">구장 관리</a></li>
+                <li><a href="../admin/writing_list">글 관리</a></li>
+                <li><a href="../admin/report_list">신고 관리</a></li>
             </ul>
         </div>
     </header>

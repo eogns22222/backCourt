@@ -5,6 +5,124 @@
 
 <mapper namespace="com.back.official.dao.OfficialDAO">
 
+	<select id="list" resultType="com.back.official.dto.OfficialDTO">
+		SELECT
+		   	official_match_idx
+		  	,official_match_date
+		  	,(SELECT court_address FROM court c WHERE c.court_idx = o.court_idx) AS court_address
+		  	,official_match_level
+		  	,(SELECT count(official_match_idx) FROM offcial_match_ask_list f 
+		  	WHERE f.official_match_idx = o.official_match_idx) AS currentCount
+		  	,official_match_to
+			FROM official_match o
+			JOIN court t
+			ON o.court_idx = t.court_idx
+		WHERE t.court_state = 'true'
+		AND o.official_match_post_state = '공개'
+		ORDER BY court_address asc LIMIT #{param1}, 10
+	</select>
+	
+	<select id="listFilterAddress" resultType="com.back.official.dto.OfficialDTO">
+		SELECT
+		   	official_match_idx
+		  	,official_match_date
+		  	,(SELECT court_address FROM court c WHERE c.court_idx = o.court_idx) AS court_address
+		  	,official_match_level
+		  	,(SELECT count(official_match_idx) FROM offcial_match_ask_list f 
+		  	WHERE f.official_match_idx = o.official_match_idx) AS currentCount
+		  	,official_match_to
+			FROM official_match o
+			JOIN court t
+			ON o.court_idx = t.court_idx
+		WHERE t.court_state = 'true'
+		AND o.official_match_post_state = '공개'
+		AND t.court_address LIKE CONCAT('%', #{param2}, '%')
+		ORDER BY court_address asc LIMIT #{param1}, 10
+	</select>
+	
+	<select id="listFilterLevel" resultType="com.back.official.dto.OfficialDTO">
+		SELECT
+		   	official_match_idx
+		  	,official_match_date
+		  	,(SELECT court_address FROM court c WHERE c.court_idx = o.court_idx) AS court_address
+		  	,official_match_level
+		  	,(SELECT count(official_match_idx) FROM offcial_match_ask_list f 
+		  	WHERE f.official_match_idx = o.official_match_idx) AS currentCount
+		  	,official_match_to
+			FROM official_match o
+			JOIN court t
+			ON o.court_idx = t.court_idx
+		WHERE t.court_state = 'true'
+		AND o.official_match_post_state = '공개'
+		AND o.official_match_level LIKE CONCAT('%', #{param2}, '%')
+		ORDER BY court_address asc LIMIT #{param1}, 10
+	</select>
+	
+	<select id="listFilterAll" resultType="com.back.official.dto.OfficialDTO">
+		SELECT
+		   	official_match_idx
+		  	,official_match_date
+		  	,(SELECT court_address FROM court c WHERE c.court_idx = o.court_idx) AS court_address
+		  	,official_match_level
+		  	,(SELECT count(official_match_idx) FROM offcial_match_ask_list f 
+		  	WHERE f.official_match_idx = o.official_match_idx) AS currentCount
+		  	,official_match_to
+			FROM official_match o
+			JOIN court t
+			ON o.court_idx = t.court_idx
+		WHERE t.court_state = 'true'
+		AND o.official_match_post_state = '공개'
+		AND t.court_address LIKE CONCAT('%', #{param2}, '%')
+		AND o.official_match_level LIKE CONCAT('%', #{param3}, '%')
+		ORDER BY court_address asc LIMIT #{param1}, 10
+	</select>
+	
+	<select id="allList" resultType="com.back.official.dto.OfficialDTO">
+		SELECT
+		   	official_match_idx
+		  	,official_match_date
+		  	,(SELECT court_address FROM court c WHERE c.court_idx = o.court_idx) AS court_address
+		  	,official_match_level
+		  	,(SELECT count(official_match_idx) FROM offcial_match_ask_list f 
+		  	WHERE f.official_match_idx = o.official_match_idx) AS currentCount
+		  	,official_match_to
+			FROM official_match o
+			JOIN court t
+			ON o.court_idx = t.court_idx
+		WHERE t.court_state = 'true'
+		AND o.official_match_post_state = '공개'
+	</select>
+	
+	<select id="allMatchCount" resultType="int">
+		SELECT CEIL(COUNT(official_match_idx)/10) AS totalPage
+		FROM official_match
+	</select>
+	
+	<select id="addressFilteringMatchCount" resultType="int">
+		SELECT CEIL(COUNT(official_match_idx)/10) AS totalPage 
+		FROM official_match o
+		JOIN court t
+		ON o.court_idx = t.court_idx
+		WHERE court_address LIKE CONCAT('%', #{param1}, '%')
+	</select>
+	
+	<select id="levelFilteringMatchCount" resultType="int">
+		SELECT CEIL(COUNT(official_match_idx)/10) AS totalPage 
+		FROM official_match o
+		JOIN court t
+		ON o.court_idx = t.court_idx
+		WHERE official_match_level LIKE CONCAT('%', #{param1}, '%')
+	</select>
+	
+	<select id="allFilteringMatchCount" resultType="int">
+		SELECT CEIL(COUNT(official_match_idx)/10) AS totalPage 
+		FROM official_match o
+		JOIN court t
+		ON o.court_idx = t.court_idx
+		WHERE court_address LIKE CONCAT('%', #{param1}, '%')
+		AND official_match_level LIKE CONCAT('%', #{param2}, '%');
+	</select>
+	
 </mapper>
 
 
