@@ -24,6 +24,10 @@ public interface OfficialDAO {
 
 	int allFilteringMatchCount(String address, String level);
 
+	List<OfficialDTO> searchList(int start, String courtSearchWord);
+
+	Object searchMatchCount(String courtSearchWord);
+
 
 
 }

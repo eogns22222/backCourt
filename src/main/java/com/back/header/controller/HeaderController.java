@@ -26,78 +26,64 @@ public class HeaderController {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired HeaderService headerserivce;
 	
-	@RequestMapping(value = "/header")
-	public String header(HttpSession session, Model model) {
+	@RequestMapping(value = "*/session.ajax")
+	@ResponseBody 
+	public Map<String, Object> sessionChk(HttpSession session, Model model) {
 		logger.info("접속");
-		session.setAttribute("loginInfo", "testID2");
-//		session.removeAttribute("loginInfo");
-		String id = (String) session.getAttribute("loginInfo");
-		
-		if(session.getAttribute("loginInfo") != null) {
-			MemberDTO dto = headerserivce.nav(id);
-			model.addAttribute("member", dto);
-			model.addAttribute("login", "javascript:;");
-		}else {
-			model.addAttribute("login", "../login");
-			model.addAttribute("msg", "loginMsg()");
+
+		String id = (String) session.getAttribute("loginId");
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberDTO dto = new MemberDTO();
+		boolean sessionCk = false;
+		if(id != null) {
+			sessionCk = true;
+			dto = headerserivce.nav(id);
 		}
+		map.put("sessionCk", sessionCk);
+		map.put("info", dto);
 		
-		return "header/header";
+		return map;
 	}
 	
-	@RequestMapping(value = "/header/team/list.ajax", method = RequestMethod.GET)
+	@RequestMapping(value = "*/header/list.ajax", method = RequestMethod.GET)
 	@ResponseBody 
 	public Map<String, Object> teamListCall(HttpSession session, Model model) {
 		logger.info("team팝업 list 출력");
-		// 임의의 아이디 값
-		session.setAttribute("loginInfo", "testID2");
-//		session.removeAttribute("loginInfo");
 		
 		String id = "";
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		if(session.getAttribute("loginInfo") != null) {
-			id = (String) session.getAttribute("loginInfo");
+		if(session.getAttribute("loginId") != null) {
+			id = (String) session.getAttribute("loginId");
 			
 			List<HeaderDTO> list = headerserivce.teamList(id);
 			map.put("list", list);
-		}else {
-			map.put("check", 1);
-			map.put("msg", "로그인이 필요한 서비스입니다.");
-			
 		}
 		
 		return map; 
 	}
 	
-	@RequestMapping(value = "/header/notice/list.ajax", method = RequestMethod.GET)
+	@RequestMapping(value = "*/notice/list.ajax", method = RequestMethod.GET)
 	@ResponseBody 
 	public Map<String, Object> noticeListCall(HttpSession session) {
 		logger.info("notice list 출력");
-		// 임의의 아이디 값
-//		session.setAttribute("loginInfo", "testID2");
-//		session.removeAttribute("loginInfo");
 		
-		String id = (String) session.getAttribute("loginInfo");
+		String id = (String) session.getAttribute("loginId");
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<HeaderDTO> list = new ArrayList<HeaderDTO>();
 		
-		if(session.getAttribute("loginInfo") != null) {
-			list = headerserivce.noticeList(id);
-			HeaderDTO dto = headerserivce.count(id);
-			map.put("list", list);
-			map.put("count", dto);
-		}else {
-			map.put("check", 1);
-			map.put("msg", "로그인이 필요한 서비스입니다.");
-			
-		}
+		
+		list = headerserivce.noticeList(id);
+		HeaderDTO dto = headerserivce.count(id);
+		map.put("list", list);
+		map.put("count", dto);
+		
 		
 		return map; 
 	}
 	
-	@RequestMapping(value = "/header/notice/delete.ajax", method = RequestMethod.POST)
+	@RequestMapping(value = "*/notice/delete.ajax", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> del(String idx){
 		logger.info("idx : " + idx);

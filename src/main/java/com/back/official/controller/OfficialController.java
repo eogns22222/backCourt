@@ -18,8 +18,13 @@ public class OfficialController {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired OfficialService officialService;
 	
-	@RequestMapping(value = "/official")
+	@RequestMapping(value = "/")
 	public String home() {
+		return "redirect:/official";
+	}
+	
+	@RequestMapping(value = "/official")
+	public String official() {
 		return "redirect:/official/match_list.go";
 	}
 	
@@ -36,6 +41,16 @@ public class OfficialController {
 		logger.info("listCall / level = {} / ", level);
 		int page = Integer.parseInt(currentPage);
 		Map<String, Object> map = officialService.list(page, address, level);
+
+		return map;
+	}
+	
+	@RequestMapping(value = "/official/searchList.ajax", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> searchList(String courtSearchWord, String currentPage) {
+		logger.info("listCall / courtSearchWord = {} ", courtSearchWord);
+		int page = Integer.parseInt(currentPage);
+		Map<String, Object> map = officialService.searchList(page, courtSearchWord);
 
 		return map;
 	}

@@ -17,7 +17,7 @@
 </head>
 <body>
 	<jsp:include page="../header/header.jsp"/>
-	<div class="content">
+	<div class="official content">
         <div class="filterCont">
             <!-- 지역 -->
             <select id="address">
@@ -99,7 +99,7 @@
     
         <div class="searchBox">
             <input type="text" name="searchInput" placeholder="지역명을 입력해주세요." maxlength="20"/>
-            <button onclick="searchList(1)">d</button>
+            <button onclick="searchList(1)">검색</button>
         </div>
     
     </div>
@@ -127,6 +127,11 @@
 	$('#address').on('change',function(){
 		$('#pagination').twbsPagination('destroy');
 		callList(currentPage);
+	});
+	
+	$('.searchBox button').on('click',function(){
+		$('#pagination').twbsPagination('destroy');
+		searchList(currentPage);
 	});
     
     // list
@@ -160,14 +165,12 @@
 		});
 	}
 	function searchList(currentPage) {
-		
 		$.ajax({
 			type:'POST'
 			,url:'./searchList.ajax'
 			,data:{
-				'courtSearchWord':$('select[name="searchInput"]').val()
+				'courtSearchWord':$('input[name="searchInput"]').val()
 				,'currentPage':currentPage
-				,'address':$('#address').val()
 			}
 			,dataType:'json'
 			,success:function(data){
@@ -179,8 +182,7 @@
 					filterFlag = true;
 				}
 				var totalPage = data.totalPage;
-				showPagination(totalPage);
-				
+				showPagination2(totalPage);
 			}
 			,error:function(error){
 				console.log(error);
@@ -196,6 +198,20 @@
 					console.log(pg);
 					currentPage = pg;
 					callList(currentPage);
+					
+				}
+				
+		});
+	}
+	function showPagination2(totalPage) {
+		$('#pagination').twbsPagination({
+				startPage:1
+				,totalPages:totalPage
+				,visiblePages:5
+				,onPageClick:function(evt,pg){
+					console.log(pg);
+					currentPage = pg;
+					searchList(currentPage);
 				}
 				
 		});
@@ -251,10 +267,10 @@
 		
 	}
     
-	function searchList() {
+	/* function searchList() {
 		currentPage = 1;
 		callList(currentPage);
-	}
+	} */
 
 </script>
 </html>

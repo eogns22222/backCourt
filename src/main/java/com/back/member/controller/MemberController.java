@@ -41,7 +41,7 @@ public class MemberController {
 		
 		if (loginId!=null) {
 			session.setAttribute("loginId",loginId);
-			page = "redirect:/oficial/match_list";
+			page = "redirect:/official"; // redirect:/oficial/match_list -> 경로 수정
 		}
 		model.addAttribute("msg","아이디 또는 비빌번호를 확인 해주세요");	
 		

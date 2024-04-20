@@ -20,7 +20,7 @@ public class CourtController {
 	@Autowired
 	CourtService courtService;
 
-	@RequestMapping(value = "/")
+	@RequestMapping(value = "/court") // / -> /court 로 수정
 	public String home() {
 		return "redirect:/court/list.go";
 	}

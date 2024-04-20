@@ -67,7 +67,7 @@ img{width:100%;}
 .popup .close img{width:50px;}
 
 .popup .popWrap{position:relative;width:500px;border:1px solid #010101;padding:30px;background:#fff;box-sizing:border-box;}
-.popup .popWrap .btnTeam{display:block;position:absolute;top:28px;right:20px;font-size:20px;width:100px;line-height:50px;text-align:center;background:blue;}
+.popup .popWrap .btnTeam{display:block;position:absolute;top:28px;right:20px;font-size:20px;width:100px;line-height:50px;text-align:center;background:skyblue;}
 .popup .popWrap h1{margin:10px 0 25px;font-size:25px;}
 
 .popup .popWrap .listCont{overflow-y:scroll;height:500px;padding:0 10px;}

@@ -52,6 +52,23 @@ public class OfficialService {
 		result.put("allList", allList);
 		return result;
 	}
+
+	public Map<String, Object> searchList(int page, String courtSearchWord) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<OfficialDTO> list = null;
+		List<OfficialDTO> allList = officialDAO.allList();
+
+		int start = (page - 1) * 10;
+		
+//		logger.info("servcie.list / address = {} /", address);
+		list = officialDAO.searchList(start, courtSearchWord);
+		result.put("totalPage", officialDAO.searchMatchCount(courtSearchWord));
+
+
+		result.put("list", list);
+		result.put("allList", allList);
+		return result;
+	}
 	
 }
 
