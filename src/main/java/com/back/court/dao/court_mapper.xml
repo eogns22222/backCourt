@@ -32,7 +32,7 @@
 	
 	</select>
 	
-<!-- 		<select id="listFilterAddress" resultType="com.back.court.dto.CourtDTO">
+	<select id="addressSearchList" resultType="com.back.court.dto.CourtDTO">
 		
 		
 		SELECT
@@ -55,9 +55,37 @@
 		FROM court c 
 		WHERE c.court_state = 'true' 
 		AND c.court_official = 'false'
-		AND c.court_address LIKE CONCAT('%', #{param2}, '%')
-		ORDER BY court_address asc LIMIT #{param1}, 10
-	</select> -->
+		AND c.court_address LIKE CONCAT('%', #{param1}, '%')
+		ORDER BY court_address asc LIMIT #{param2}, 10
+	</select>
+	
+	
+	<select id="nameSearchList" resultType="com.back.court.dto.CourtDTO">
+		
+		
+		SELECT
+			(SELECT ci.file_name 
+			FROM court_image ci 
+		 	WHERE ci.court_idx = c.court_idx 
+		 	ORDER BY ci.photo_idx ASC 
+		 	LIMIT 1) AS first_img_name
+		   	, c.court_name
+		  	,c.court_address
+		  	,c.court_info
+		  	,c.court_price
+		  	,c.court_state
+		  	,c.court_official
+		  	,(SELECT COUNT(j.court_idx)
+			from jjim j 
+			where j.court_idx = c.court_idx
+			and j.id = 'admin') as jjim
+			,c.court_idx
+		FROM court c 
+		WHERE c.court_state = 'true' 
+		AND c.court_official = 'false'
+		AND c.court_name LIKE CONCAT('%', #{param1}, '%')
+		ORDER BY court_address asc LIMIT #{param2}, 10
+	</select>
 	
 	<select id="listFilterAddress" resultType="com.back.court.dto.CourtDTO">
 		
@@ -128,6 +156,14 @@
 	
 	</select>
 	
+	<select id="nameFilteringCourtCount" resultType="int">
+	
+		SELECT COUNT(court_idx) AS totalPage 
+		FROM court 
+		WHERE court_name LIKE CONCAT('%', #{param1}, '%')
+	
+	</select>
+	
 	<insert id="jjim">
 	
 		INSERT INTO 
@@ -144,29 +180,3 @@
 	</delete>
 
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

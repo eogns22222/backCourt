@@ -9,6 +9,9 @@
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="../resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style>
+		div{
+			height: 150;
+		}
         table{
             border: 2px solid;
             border-collapse: collapse;
@@ -69,34 +72,51 @@
     </table>
     <br/>
 
-    <select name="search" >
+    <select id="searchCategory" >
         <option value="courtName">코트 명</option>
-        <option value="courtLocation">지역 명</option>
+        <option value="courtAddress">지역 명</option>
     </select>
     
-    <input type="text" name="searchInput" placeholder="검색단어입력" maxlength="20"/>
+    <input type="text" id="searchWord" placeholder="검색단어입력" maxlength="20"/>
     <!-- 이거 누르면 아작스 하는걸로 -->
-    <button onclick="searchList(1)">검색</button>
+	<input type="button" id="searchBtn" value="검색" />
+	
+	<div></div>
 </body>
 <script>
 	var currentPage = 1;
 	var filterFlag = false;
-	
+	var searchFlag = false;
 	$(document).ready(function() {
+	    // 페이지 로드 시 callList 호출
 	    callList(currentPage);
 	});
+	$('#searchBtn').on('click', function(){
+	    if($('#searchWord').val() == ''){
+	        alert('검색단어를 입력해주세요');
+	        return;
+	    }
+	    currentPage = 1;
+
+	    $('#pagination').twbsPagination('destroy');
+	    searchFlag = true;
+	    callList(currentPage);
+
+	});	
 	
 	$('#address').on('change',function(){
 		$('#pagination').twbsPagination('destroy');
+		searchFlag = false;
 		callList(currentPage);
+		
 	});
 	
 	/*찜 아이콘 눌렀을때 처리 */
 	$('#list').on('click', '.courtJjim', function() {
 	    var currentJjimImg = $(this).attr('src');
 		var imgThis = $(this);
-	    console.log($(this));
-	    console.log($(this).data('courtidx'));
+// 	    console.log($(this));
+// 	    console.log($(this).data('courtidx'));
 	    
 	    if (currentJjimImg.indexOf('/jjim.png') != -1) {
 	        $.ajax({
@@ -107,8 +127,8 @@
 	        	}
 	   			,dataType:'json'
 	   			,success:function(data){
-	   				console.log(data.result);
-	   				console.log($(this));
+// 	   				console.log(data.result);
+// 	   				console.log($(this));
 	   				if(data.result){
 	   					imgThis.attr('src', '../resources/img/court/no_jjim.png');
 	   				}
@@ -127,9 +147,9 @@
 	        	}
 	   			,dataType:'json'
 	   			,success:function(data){
-	   				console.log(data.result);
+// 	   				console.log(data.result);
 
-	   				console.log($(this));
+// 	   				console.log($(this));
 	   				if(data.result){
 	   					imgThis.attr('src', '../resources/img/court/jjim.png');
 	   				}
@@ -147,45 +167,16 @@
 			type:'POST'
 			,url:'./list.ajax'
 			,data:{
-
-				'courtSearchCategory':$('select[name="search"]').val()
-				,'courtSearchWord':$('select[name="searchInput"]').val()
-				,'currentPage':currentPage
+				'currentPage':currentPage
 				,'address':$('#address').val()
+				,'searchCategory':$('#searchCategory').val()
+				,'searchWord':$('#searchWord').val()
+				,'searchFlag':searchFlag
 			}
 			,dataType:'json'
 			,success:function(data){
-				/* console.log(data.list); */
-				console.log(data.totalPage);
-				showList(data.list);
-				if(filterFlag == false){
-					showFilterList(data.allList);
-					filterFlag = true;
-				}
-				var totalPage = data.totalPage/10 > 1 ? data.totalPage/10:1;
-				showPagination(totalPage);
-				
-			}
-			,error:function(error){
-				console.log(error);
-			}
-		});
-	}
-	function searchList(currentPage) {
-		
-		$.ajax({
-			type:'POST'
-			,url:'./searchList.ajax'
-			,data:{
-				'courtSearchCategory':$('select[name="search"]').val()
-				,'courtSearchWord':$('select[name="searchInput"]').val()
-				,'currentPage':currentPage
-				,'address':$('#address').val()
-			}
-			,dataType:'json'
-			,success:function(data){
-				/* console.log(data.list); */
-				console.log(data.totalPage);
+				console.log(data.list);
+// 				console.log(data.totalPage);
 				showList(data.list);
 				if(filterFlag == false){
 					showFilterList(data.allList);
@@ -206,7 +197,8 @@
 				,totalPages:totalPage
 				,visiblePages:5
 				,onPageClick:function(evt,pg){
-					console.log(pg);
+// 					console.log(pg);
+				
 					currentPage = pg;
 					callList(currentPage);
 				}
@@ -216,7 +208,7 @@
 	function showList(list){
 		var content = '';
 		for(item of list){
-			/* console.log(item.court_idx); */
+// 			console.log(item.court_idx);
 			var img = item.first_img_name != null ? item.first_img_name+'.png':'no_image.png';
 			var jjim = item.jjim > 0 ? 'jjim.png':'no_jjim.png';
 			content +=
@@ -247,11 +239,6 @@
 
 		$('#address').html(content);
 		
-	}
-
-	function searchList() {
-		currentPage = 1;
-		callList(currentPage);
 	}
 </script>
 </html>

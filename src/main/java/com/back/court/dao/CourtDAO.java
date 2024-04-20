@@ -21,6 +21,12 @@ public interface CourtDAO {
 
 	List<CourtDTO> allList();
 
-	List<CourtDTO> SearchList(String courtSearchCategory, String courtSearchWord, int start);
+
+	List<CourtDTO> addressSearchList(String courtSearchWord, int start);
+
+	List<CourtDTO> nameSearchList(String courtSearchWord, int start);
+
+
+	int nameFilteringCourtCount(String courtSearchWord);
 
 }

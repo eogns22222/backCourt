@@ -33,25 +33,19 @@ public class CourtController {
 
 	@RequestMapping(value = "/court/list.ajax", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> callList(String currentPage, String address) {
+	public Map<String, Object> callList(String currentPage, String address,String searchCategory, String searchWord, String searchFlag) {
 		logger.info("listCall / currentPage = {} / address = {} / ", currentPage, address);
+		logger.info(searchFlag);
 		int page = Integer.parseInt(currentPage);
-		Map<String, Object> map = courtService.list(page, address);
+		if(searchFlag.equals("true")) {
+			return courtService.searchList(searchCategory, searchWord, page, address);
+		}else {
+			return courtService.list(page, address);			
+		}
 
-		return map;
 	}
 
-	@RequestMapping(value = "/court/searchList.ajax", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> searchList(String courtSearchCategory, String courtSearchWord, String currentPage,
-			String address) {
-		logger.info("listCall / currentPage = {} / address = {} / ", currentPage, address);
-		logger.info("listCall / searchCategory = {} / SearchWord = {} / ", courtSearchCategory, courtSearchWord);
-		int page = Integer.parseInt(currentPage);
-		Map<String, Object> map = courtService.searchList(courtSearchCategory, courtSearchWord, page, address);
 
-		return map;
-	}
 
 	@RequestMapping(value = "/court/jjim.ajax", method = RequestMethod.POST)
 	@ResponseBody

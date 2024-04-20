@@ -70,19 +70,30 @@ public class CourtService {
 		
 		int start = (page - 1) * 10;
 		
-		if (address.equals("") == true) {
-//			logger.info("servcie.list / address = {} /", address);
-//			list = courtDAO.SearchList(courtSearchCategory,courtSearchWord,start);
-			result.put("totalPage", courtDAO.allCourtCount());
-
-		} else {
-//			logger.info("servcie.list / address = {} /", address);
-			list = courtDAO.listFilterAddress(start, address);
-			result.put("totalPage", courtDAO.addressFilteringCourtCount(address));
-
+		if(courtSearchCategory.equals("courtAddress")) {
+			list = courtDAO.addressSearchList(courtSearchWord,start);
+			logger.info("서치리스트 코트어드레스 ");
+			result.put("list", list);
+			result.put("totalPage", courtDAO.addressFilteringCourtCount(courtSearchWord));
+		}else if(courtSearchCategory.equals("courtName")) {
+			list = courtDAO.nameSearchList(courtSearchWord,start);
+			logger.info("서치리스트 코트네임 ");
+			result.put("list", list);
+			result.put("totalPage", courtDAO.nameFilteringCourtCount(courtSearchWord));
 		}
-
-//		result.put("list", list);
+		
+//		if (address.equals("") == true) {
+////			logger.info("servcie.list / address = {} /", address);
+//			list = courtDAO.SearchList(courtSearchCategory,courtSearchWord,start);
+//			result.put("totalPage", courtDAO.allCourtCount());
+//
+//		} else {
+////			logger.info("servcie.list / address = {} /", address);
+//			list = courtDAO.listFilterAddress(start, address);
+//			result.put("totalPage", courtDAO.addressFilteringCourtCount(address));
+//
+//		}
+		
 		result.put("allList", allList);
 		return result;
 	}
