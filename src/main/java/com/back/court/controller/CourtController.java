@@ -21,11 +21,6 @@ public class CourtController {
 	@Autowired
 	CourtService courtService;
 
-	@RequestMapping(value = "/")
-	public String home() {
-		return "redirect:/court/list.go";
-	}
-
 	@RequestMapping(value = "/court/list.go")
 	public String listGo() {
 		logger.info("list.go /");

@@ -3,8 +3,96 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
 >
 
-<mapper namespace="com.back.admin.dao.CourtDAO">
-
+<mapper namespace="com.back.admin.dao.AdminCourtDAO">
+	
+	<select id="list" resultType="com.back.admin.dto.AdminCourtDTO">
+		
+		
+		SELECT
+			court_idx AS courtIdx
+			, court_name AS courtName
+			, court_address AS courtAddress
+			, court_state AS courtState
+		FROM court
+		ORDER BY court_address asc LIMIT #{param1}, 10
+	
+	</select>
+	
+	<select id="addressSearchList" resultType="com.back.admin.dto.AdminCourtDTO">
+		
+		
+		SELECT
+			court_idx AS courtIdx
+			, court_name AS courtName
+			, court_address AS courtAddress
+			, court_state AS courtState
+		FROM court
+		WHERE court_address LIKE CONCAT('%', #{param1}, '%')
+		ORDER BY court_address asc LIMIT #{param2}, 10
+	</select>
+	
+	
+	<select id="nameSearchList" resultType="com.back.admin.dto.AdminCourtDTO">
+		
+		
+		SELECT
+			court_idx AS courtIdx
+			, court_name AS courtName
+			, court_address AS courtAddress
+			, court_state AS courtState
+		FROM court
+		WHERE court_name LIKE CONCAT('%', #{param1}, '%')
+		ORDER BY court_address asc LIMIT #{param2}, 10
+	</select>
+	
+	<select id="listFilterAddress" resultType="com.back.admin.dto.AdminCourtDTO">
+		
+		
+		SELECT
+			court_idx AS courtIdx
+			, court_name AS courtName
+			, court_address AS courtAddress
+			, court_state AS courtState
+		FROM court
+		WHERE court_address LIKE CONCAT('%', #{param2}, '%')
+		ORDER BY court_address asc LIMIT #{param1}, 10
+	</select>
+	
+	<select id="allList" resultType="com.back.admin.dto.AdminCourtDTO">
+		
+		
+		SELECT
+			court_idx AS courtIdx
+			, court_name AS courtName
+			, court_address AS courtAddress
+			, court_state AS courtState
+		FROM court
+		
+	</select>
+	
+	<select id="allCourtCount" resultType="int">
+	
+		SELECT COUNT(court_idx) AS totalPage
+		FROM court 
+	
+	</select>
+	
+	
+	<select id="addressFilteringCourtCount" resultType="int">
+	
+		SELECT COUNT(court_idx) AS totalPage 
+		FROM court 
+		WHERE court_address LIKE CONCAT('%', #{param1}, '%')
+	
+	</select>
+	
+	<select id="nameFilteringCourtCount" resultType="int">
+	
+		SELECT COUNT(court_idx) AS totalPage 
+		FROM court 
+		WHERE court_name LIKE CONCAT('%', #{param1}, '%')
+	
+	</select>
 </mapper>
 
 

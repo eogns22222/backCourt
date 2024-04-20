@@ -9,32 +9,32 @@
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="../resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style>
-		div{
-			height: 150;
-		}
-        table{
-            border: 2px solid;
-            border-collapse: collapse;
-        }
-        th{
-            background-color: gainsboro;
-        }
-        th,td{
-            border: 2px solid;
-            padding: 10px 30px;
-            text-align: center;
-        }
-        .courtImage{
-        	height: 50px;
-        	width: auto;
-        }
-       .courtJjim{
-        	height: 50px;
-        	width: auto;
-        }
-        tr:hover {
-   			background-color: lightgray;
-		}
+	div{
+		height: 150;
+	}
+    table{
+        border: 2px solid;
+        border-collapse: collapse;
+    }
+    th{
+        background-color: gainsboro;
+    }
+    th,td{
+        border: 2px solid;
+    padding: 10px 30px;
+    text-align: center;
+    }
+    .courtImage{
+    	height: 50px;
+    	width: auto;
+    }
+   .courtJjim{
+    	height: 50px;
+	width: auto;
+    }
+	    tr:hover {
+		background-color: lightgray;
+	}
 
     </style>
 </head>
@@ -62,17 +62,13 @@
 		<tbody id="list">
 			
 		</tbody>
-        <!-- 여기 원래는 데이터 받아와서 반복문 돌려야됨 -->
-		<tr>
-			<td colspan="5">
+
+    </table>
 				<div class="container">                           
 				  <nav aria-label="Page navigation" style="text-align:center">
 					  <ul class="pagination" id="pagination"></ul>
 				  </nav>               
 				 </div>
-			</td>
-		</tr>
-    </table>
     <br/>
 
     <select id="searchCategory" >
