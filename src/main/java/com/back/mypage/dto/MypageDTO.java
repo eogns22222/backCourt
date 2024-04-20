@@ -8,6 +8,11 @@ public class MypageDTO {
 	private String id;
 	private String report_tit;
 	
+	//jjim 
+	private int jjimIdx;
+	private String courtName;
+	private String courtAddress;
+	private String courtPrice;
 	
 	public int getReport_write_idx() {
 		return report_write_idx;
@@ -40,6 +45,31 @@ public class MypageDTO {
 		this.report_tit = report_tit;
 	}
 	
+	//jjim
+	public int getJjimIdx() {
+		return jjimIdx;
+	}
+	public void setJjimIdx(int jjimIdx) {
+		this.jjimIdx = jjimIdx;
+	}
+	public String getCourtName() {
+		return courtName;
+	}
+	public void setCourtName(String courtName) {
+		this.courtName = courtName;
+	}
+	public String getCourtAddress() {
+		return courtAddress;
+	}
+	public void setCourtAddress(String courtAddress) {
+		this.courtAddress = courtAddress;
+	}
+	public String getCourtPrice() {
+		return courtPrice;
+	}
+	public void setCourtPrice(String courtPrice) {
+		this.courtPrice = courtPrice;
+	}
 	
 	
 }

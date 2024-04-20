@@ -4,34 +4,38 @@
 >
 
 <mapper namespace="com.back.mypage.dao.MypageDAO">
+
 	<insert id="report" parameterType="map">
 	INSERT INTO report (id, report_tit, report_content, report_write_idx, report_write_type)
-		VALUES (#{id},#{report_tit}, #{report_content}, #{report_write_idx}, #{report_write_type});
+		VALUES (#{id},#{report_tit}, #{report_content}, #{report_write_idx}, #{report_write_type})
 	</insert>
+	
+	<select id="jjimList" resultType="com.back.mypage.dto.MypageDTO">
+		SELECT
+			j.like_idx AS jjimIdx
+			, c.court_name AS courtName
+			, c.court_address AS courtAddress
+			, c.court_price AS courtPrice
+		FROM jjim j 
+		JOIN court c 
+		ON j.court_idx = c.court_idx 
+		WHERE j.id = #{param1}
+	</select>
+	
+	<select id="jjimListCount" resultType="int">
+		SELECT
+			COUNT(j.like_idx) AS jjimIdx
+		FROM jjim j 
+		JOIN court c 
+		ON j.court_idx = c.court_idx 
+		WHERE j.id = #{param1}
+	</select>
+	
+	<delete id="jjimDel">
+		
+		DELETE FROM jjim
+		WHERE like_idx = #{param1}
+	
+	</delete>
+	
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

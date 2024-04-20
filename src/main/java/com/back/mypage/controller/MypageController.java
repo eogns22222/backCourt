@@ -1,6 +1,7 @@
 package com.back.mypage.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.back.mypage.service.MypageService;
 
@@ -50,5 +53,26 @@ public class MypageController {
 		}
 		
 		return page;
+	}
+	
+	@RequestMapping(value = "/mypage/jjim.go")
+	public String jjimGo() {
+		return "/mypage/jjim";
+	}
+	
+	@RequestMapping(value = "/mypage/jjimList.ajax")
+	@ResponseBody
+	public Map<String, Object> jjimList(){
+		logger.info("mypage/jjimList ");
+		// session check 필요
+		String id = "admin"; //id 받아오는 로직으로 수정 필요
+		return mypageService.jjimList(id);
+	}
+	
+	@RequestMapping(value = "/mypage/jjimDel.ajax")
+	@ResponseBody
+	public Map<String, Object> jjimDel(@RequestParam(value = "selectedIdxList[]") List<String> selectedIdxList){
+		logger.info("{}",selectedIdxList);
+		return mypageService.jjimDel(selectedIdxList);
 	}
 }

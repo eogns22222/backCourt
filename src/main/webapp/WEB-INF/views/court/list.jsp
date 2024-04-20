@@ -64,7 +64,7 @@
 		</tbody>
         <!-- 여기 원래는 데이터 받아와서 반복문 돌려야됨 -->
 		<tr>
-			<td colspan="7">
+			<td colspan="5">
 				<div class="container">                           
 				  <nav aria-label="Page navigation" style="text-align:center">
 					  <ul class="pagination" id="pagination"></ul>
@@ -91,15 +91,14 @@
 	var filterFlag = false;
 	var searchFlag = false;
 	
-	$(document).on('click', 'tr', function() {
-	    // 해당 행의 courtIdx 값을 가져옴
-	    var courtIdx = $(this).find('.courtJjim').data('courtidx');
-	    
-	    console.log(courtIdx);
-	    
-	    window.location.href = './detail.go?court_idx='+courtIdx;
+	$(document).on('click', 'td', function(event) {
+	    // 클릭된 요소가 courtJjim 이미지를 포함하는지 확인
+	    if (!$(event.target).hasClass('courtJjim')) {
+	        var courtIdx = $(this).closest('tr').find('.courtJjim').data('courtidx');
+	        console.log(courtIdx);  // courtIdx 확인
+	        window.location.href = './detail.go?court_idx=' + courtIdx; // 상세 페이지로 이동
+	    }
 	});
-
 	$(document).ready(function() {
 	    // 페이지 로드 시 callList 호출
 	    callList(currentPage);
@@ -208,7 +207,7 @@
 		$('#pagination').twbsPagination({
 				startPage:1
 				,totalPages:totalPage
-				,visiblePages:5
+				,visiblePages:5	
 				,onPageClick:function(evt,pg){
 // 					console.log(pg);
 				
