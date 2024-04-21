@@ -49,9 +49,9 @@
         
         <!-- header 하단 -->
         <ul class="menu">
-            <li><a href="official">공식 경기</a></li>
-            <li><a href="teammate">팀 서비스</a></li>
-            <li><a href="guest">구장 대여</a></li>
+            <li><a href="../official">공식 경기</a></li>
+            <li><a href="../teammate">팀 서비스</a></li>
+            <li><a href="../guest">구장 대여</a></li>
         </ul>
     </div>
 </header>
@@ -144,8 +144,15 @@
             });
             $('.nav').removeClass('on');
         });
-
+        
     })
+	function numChk(){
+		var numChk = $('#noticeNum').html();
+		console.log(numChk);
+    	if(numChk <= 1){
+			$('#noticeNum').removeClass('on');
+		}
+	}
 	
 	// 로그인 체크
 	function sessionChk(){
@@ -299,7 +306,7 @@
 			
 			content += '<p class="date">' + dateStr + '</p>';
 			content += '<p class="content">' + item.notice_content + '</p>';
-			content += '<button class="btn" onclick ="del(' + item.notice_idx + ');">확인</button>';
+			content += '<button class="btn" onclick ="del(' + item.notice_idx + '); numChk();">확인</button>';
 			content += '</li>';
 			
 		}
@@ -311,6 +318,10 @@
 	
 		content = count.notice_count;
 	
+		if(count.notice_count > 0){
+			$('#noticeNum').addClass('on');
+		}
+		
 		$('#noticeNum').html(content);
 	}
  	

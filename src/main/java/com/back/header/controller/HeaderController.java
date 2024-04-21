@@ -99,7 +99,7 @@ public class HeaderController {
 	public String logout(HttpSession session) {
 		logger.info("로그아웃 시도");
 		String page = "redirect:/login.do";
-		session.removeAttribute("loginInfo");
+		session.removeAttribute("loginId");
 		
 		return page;
 	}

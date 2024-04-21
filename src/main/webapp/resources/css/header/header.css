@@ -20,7 +20,8 @@ img{width:100%;}
 .header .top .icoCont li a{display:block;position:relative;}
 .header .top .icoCont li a .icon{display:block;width:100px;margin:0 auto;}
 .header .top .icoCont li a .txt{display:block;margin-top:12px;}
-.header .top .icoCont li a .num{position:absolute;top:0;right:0;background:red;display:block;width:50px;height:50px;font-size:30px;line-height:50px;border-radius:100%;}
+.header .top .icoCont li a .num{display:none;position:absolute;top:0;right:0;background:red;width:50px;height:50px;font-size:30px;line-height:50px;border-radius:100%;}
+.header .top .icoCont li a .num.on{display:block;}
 .header .top .icoCont li .noticeBox{display:none;position:absolute;bottom:-430px;left:calc(50% - 420px);width:500px;height:400px;padding:10px;background:rgb(194, 191, 191);box-sizing:border-box;}
 .header .top .icoCont li .noticeBox.on{display:block;}
 .header .top .icoCont li .noticeBox:before{content: "";position:absolute;top:-50px;right:50px;width:0;height:0;border:30px solid rgb(194, 191, 191);border-top:30px solid rgba(0, 0, 0, 0);border-left:30px solid rgba(0, 0, 0, 0);border-right:30px solid rgba(0, 0, 0, 0);}
