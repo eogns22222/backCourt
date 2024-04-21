@@ -1,14 +1,14 @@
 package com.back.admin.dto;
 
-import java.sql.Date;
-
 public class AdminReportDTO {
 	private int reportIdx;
 	private String reportState;
 	private String reportSubject;
 	private String reportId;
-	private Date reportDate;
+	private String reportDate;
 	private String reportAdminId;
+	private String reportContent;
+	private String reportFeed;
 	
 	public int getReportIdx() {
 		return reportIdx;
@@ -34,10 +34,10 @@ public class AdminReportDTO {
 	public void setReportId(String reportId) {
 		this.reportId = reportId;
 	}
-	public Date getReportDate() {
+	public String getReportDate() {
 		return reportDate;
 	}
-	public void setReportDate(Date reportDate) {
+	public void setReportDate(String reportDate) {
 		this.reportDate = reportDate;
 	}
 	public String getReportAdminId() {
@@ -45,5 +45,17 @@ public class AdminReportDTO {
 	}
 	public void setReportAdminId(String reportAdminId) {
 		this.reportAdminId = reportAdminId;
+	}
+	public String getReportContent() {
+		return reportContent;
+	}
+	public void setReportContent(String reportContent) {
+		this.reportContent = reportContent;
+	}
+	public String getReportFeed() {
+		return reportFeed;
+	}
+	public void setReportFeed(String reportFeed) {
+		this.reportFeed = reportFeed;
 	}
 }

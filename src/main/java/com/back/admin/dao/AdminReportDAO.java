@@ -18,4 +18,11 @@ public interface AdminReportDAO {
 
 	int categoryReportCount(String reportState);
 
+
+	AdminReportDTO detail(String reportIdx);
+
+	void update(String reportIdx, String reportState, String reportFeed);
+
+	void feedInsert(String adminId, String reportIdx);
+
 }

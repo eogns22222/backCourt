@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.back.admin.dao.AdminReportDAO;
-import com.back.admin.dto.AdminCourtDTO;
 import com.back.admin.dto.AdminReportDTO;
 
 @Service
@@ -27,16 +26,16 @@ public class AdminReportService {
 		int start = (page - 1) * 10;
 
 		if (searchFlag.equals("true")) {
-			logger.info(searchFlag+"service 1st if");
+			logger.info(searchFlag + "service 1st if");
 			list = adminReportDAO.searchList(start, reportSearch);
 			result.put("totalPage", adminReportDAO.searchReportCount(reportSearch));
 		} else {
 			if (reportState.equals("")) {
-				logger.info(searchFlag+"service 2nd if");
+				logger.info(searchFlag + "service 2nd if");
 				list = adminReportDAO.list(start);
 				result.put("totalPage", adminReportDAO.allReportCount());
 			} else {
-				logger.info(searchFlag+"service 2nd else");
+				logger.info(searchFlag + "service 2nd else");
 				list = adminReportDAO.filteringList(start, reportState);
 				result.put("totalPage", adminReportDAO.categoryReportCount(reportState));
 			}
@@ -45,6 +44,26 @@ public class AdminReportService {
 		result.put("list", list);
 
 		return result;
+	}
+
+	public Map<String, AdminReportDTO> detail(String reportIdx) {
+		Map<String, AdminReportDTO> map = new HashMap<String, AdminReportDTO>();
+		AdminReportDTO dto = adminReportDAO.detail(reportIdx);
+		map.put("reportInfo", dto);
+		return map;
+	}
+
+	public Map<String, Object> update(String adminId,String reportIdx, String reportState, String reportFeed) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		adminReportDAO.update(reportIdx, reportState, reportFeed);
+		try {
+			adminReportDAO.feedInsert(adminId,reportIdx);
+		} catch (Exception e) {
+			map.put("result", false);
+		}
+		map.put("result", true);
+		return map;
 	}
 
 }

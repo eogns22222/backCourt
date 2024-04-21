@@ -69,6 +69,32 @@
 		LEFT JOIN feed f ON r.report_idx = f.report_idx
 		WHERE r.report_state = #{param1}
 	</select>
+	
+	<select id="detail" resultType="com.back.admin.dto.AdminReportDTO">
+			
+		SELECT 
+			report_write_type AS reportCategory
+			, report_write_idx  AS reportCategoryIdx
+			, id AS reportId
+			, report_date AS reportDate
+			, report_state AS reportState
+			, report_tit AS reportSubject
+			, report_content AS reportContent
+			, report_feed AS reportFeed
+		FROM report
+		WHERE report_idx = #{param1};
+		
+	</select>
+
+	<update id="update" parameterType="String">
+		UPDATE report
+		SET report_state = #{param2}, report_feed = #{param3}
+		WHERE report_idx = #{param1}
+	</update>
+
+	<insert id="feedInsert" parameterType="String">
+		INSERT INTO feed(id,report_idx) values(#{param1},#{param2})
+	</insert>
 
 </mapper>
 
