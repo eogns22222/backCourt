@@ -2,10 +2,13 @@ package com.back.official.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,6 +21,8 @@ public class OfficialController {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired OfficialService officialService;
 	
+	// 공식 경기 접속 및 리스트
+	
 	@RequestMapping(value = "/")
 	public String home() {
 		return "redirect:/official";
@@ -29,8 +34,15 @@ public class OfficialController {
 	}
 	
 	@RequestMapping(value = "/official/match_list.go")
-	public String listGo() {
+	public String listGo(HttpSession session, Model model) {
 		logger.info("match_list.go /");
+		
+		if(session.getAttribute("loginId") != null) {
+			model.addAttribute("chk", "on");
+		}else {
+			model.addAttribute("chk", "notOn");
+		}
+		
 		return "official/match_list";
 	}
 	
@@ -53,6 +65,51 @@ public class OfficialController {
 		Map<String, Object> map = officialService.searchList(page, courtSearchWord);
 
 		return map;
+	}
+	
+	
+	// 공식 경기 상세보기
+	@RequestMapping(value = "/official/match_info.go")
+	public String detail(HttpSession session, Model model, String official_match_idx) {
+		logger.info("상세보기 이동");
+		logger.info("official_match_idx : {} ", official_match_idx);
+		String page = "../login";
+		
+		if(session.getAttribute("loginId") != null) {
+			page = "official/match_info";
+			officialService.detail(official_match_idx, model);
+		}else {
+			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
+		}
+		
+		return page;
+	}
+	
+	@RequestMapping(value = "/official/payment")
+	public String payment(HttpSession session, Model model, int fee) {
+		logger.info("결제 시도");
+		logger.info("fee : {} ", fee);
+		String page = "redirect:/official";
+		String id = "";
+		int pay = 0;
+		
+		if(session.getAttribute("loginId") != null) {
+			id = (String) session.getAttribute("loginId");
+			pay = officialService.compare(id);
+		}else {
+			page = "../login";
+			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
+		}
+		
+		if(pay < fee) {
+			page = "../mypage/point_add";
+			model.addAttribute("msg2", "포인트가 부족합니다. 충전페이지로 이동할까요?");
+		}else {
+			model.addAttribute("msg2", "정말 예약하시겠습니까?");
+			model.addAttribute("pay", pay);
+		}
+		
+		return page;
 	}
 	
 }

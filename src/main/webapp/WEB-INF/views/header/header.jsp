@@ -8,19 +8,19 @@
     <div class="inner">
         <!-- header 상단 -->
         <div class="top">
-            <h1><a href="#"><img src="../resources/img/icon/img04.jpg" alt=""></a></h1>
+            <h1><a href="/"><img src="../resources/img/icon/logo.png" alt=""></a></h1>
             <ul class="icoCont">
                 <!-- 팀 정보 -->
                 <li>
                     <a href="javascript:;" id="teamInfo" onclick="sessionChk()">
-                        <span class="icon"><img src="../resources/img/icon/img03.jpg" alt=""></span>
+                        <span class="icon"><img src="../resources/img/icon/teamInfo_ico2.jpg" alt=""></span>
                         <span class="txt">팀정보</span>
                     </a>
                 </li>
                 <!-- 알림 -->
                 <li>
                     <a href="javascript:;" id="notice" onclick="sessionChk()">
-                        <span class="icon"><img src="../resources/img/icon/img01.jpg" alt=""></span>
+                        <span class="icon"><img src="../resources/img/icon/notice_ico.jpg" alt=""></span>
                         <span class="txt">알림</span>
                         <span class="num" id="noticeNum"></span>
                     </a>
@@ -40,7 +40,7 @@
                 <!-- 마이페이지 -->
                 <li>
                     <a href="javascript:;" id="myPage" onclick="sessionChk()">
-                        <span class="icon"><img src="../resources/img/icon/img02.jpg" alt=""></span>
+                        <span class="icon"><img src="../resources/img/icon/mypage_ico.jpg" alt=""></span>
                         <span class="txt">내정보</span>
                     </a>
                 </li>
@@ -188,7 +188,7 @@
 		content += '<li class="topCont">';
 		content += '<div class="profile">';
 		content += '<p class="nik"><a href="../mypage/profile_detail?id=' + info.id + '">' + info.id + '</a></p>';
-		content += '<span class="photo"><img src="../resources/img/icon/img01.jpg" alt=""></span>';
+		content += '<span class="photo"><img src="../resources/img/icon/propile.jpg" alt=""></span>';
 		content += '</div>';
 		content += '<div class="point">';
 		content += '<p>포인트<span><a href="../mypage/point?id=' + info.id + '">' + info.point + '</a></span></p>';

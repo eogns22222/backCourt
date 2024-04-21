@@ -5,6 +5,8 @@
 
 <mapper namespace="com.back.official.dao.OfficialDAO">
 	
+	<!-- match_list -->
+	
 	<!-- list 출력 -->
 	<select id="list" resultType="com.back.official.dto.OfficialDTO">
 		SELECT
@@ -129,7 +131,7 @@
 		JOIN court t
 		ON o.court_idx = t.court_idx
 		WHERE court_address LIKE CONCAT('%', #{param1}, '%')
-		AND official_match_level LIKE CONCAT('%', #{param2}, '%');
+		AND official_match_level LIKE CONCAT('%', #{param2}, '%')
 	</select>
 	
 	<!-- 검색 list 출력 -->
@@ -158,6 +160,59 @@
 		JOIN court t
 		ON o.court_idx = t.court_idx
 		WHERE court_address LIKE CONCAT('%', #{param1}, '%')
+	</select>
+	
+	
+	<!-- match_info -->
+	
+	<!-- 사진 이미지 조회 -->
+	<select id="photo" resultType="com.back.official.dto.OfficialDTO">
+		SELECT file_name
+			FROM court_image ci 
+			JOIN court c
+			ON ci.court_idx = c.court_idx
+			JOIN official_match om
+			ON om.court_idx = c.court_idx
+			WHERE om.official_match_idx = #{param1}
+	</select>
+	
+	<!-- 정보 조회 -->
+	<select id="info" resultType="com.back.official.dto.OfficialDTO">
+		SELECT
+			official_match_date
+		   	,official_match_start_time
+		   	,official_match_end_time
+		  	,official_match_level
+		  	,(SELECT count(official_match_idx) FROM offcial_match_ask_list f 
+		  	WHERE f.official_match_idx = o.official_match_idx) AS currentCount
+		  	,official_match_to
+		  	,official_match_info
+		  	,official_match_fee
+			FROM official_match o
+			JOIN court t
+			ON o.court_idx = t.court_idx
+		WHERE t.court_state = 'true'
+		AND o.official_match_post_state = '공개'
+		and official_match_idx = #{param1}
+	</select>
+	
+	<!-- 주소 조회 -->
+	<select id="addressInfo" resultType="com.back.official.dto.OfficialDTO">
+		SELECT
+			t.court_name 
+		  	,(SELECT court_address FROM court c WHERE c.court_idx = o.court_idx) AS court_address
+			FROM official_match o
+			JOIN court t
+			ON o.court_idx = t.court_idx
+		WHERE t.court_state = 'true'
+		AND o.official_match_post_state = '공개'
+		and official_match_idx = #{param1}
+	</select>
+	
+	<select id="compare" resultType="int">
+		select point
+			from member
+			where id = #{param1}
 	</select>
 	
 </mapper>

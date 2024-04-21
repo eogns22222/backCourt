@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.back.official.dao.OfficialDAO;
 import com.back.official.dto.OfficialDTO;
@@ -68,6 +69,25 @@ public class OfficialService {
 		result.put("list", list);
 		result.put("allList", allList);
 		return result;
+	}
+
+	public void detail(String official_match_idx, Model model) {
+		List<OfficialDTO> photoList = officialDAO.photo(official_match_idx);
+		model.addAttribute("photo", photoList);
+		OfficialDTO info = officialDAO.info(official_match_idx);
+		model.addAttribute("info", info);
+		OfficialDTO address = officialDAO.addressInfo(official_match_idx);
+		model.addAttribute("address", address);
+	}
+
+	public int compare(String id) {
+		int pay = 0;
+		
+		pay = officialDAO.compare(id);
+		
+		logger.info("pay : {}", pay);
+		
+		return pay;
 	}
 	
 }

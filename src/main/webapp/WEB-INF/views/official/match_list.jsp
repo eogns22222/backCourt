@@ -10,7 +10,7 @@
 <script src="../resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <link rel="stylesheet" href="../resources/css/common/reset.css">
 <link rel="stylesheet" href="../resources/css/header/header.css">
-<link rel="stylesheet" href="../resources/css/match_list/match_list.css">
+<link rel="stylesheet" href="../resources/css/official/official.css">
 <style>
 
 </style>
@@ -112,6 +112,10 @@
     })
     
     // 개발 영역
+    var sessionChk2 = 'on';
+    sessionChk2 = '${chk}';
+    console.log(sessionChk2);
+    
     var currentPage = 1;
 	var filterFlag = false;
     
@@ -223,13 +227,18 @@
 		var finishTxt = '모집중';
 		var link = '';
 		for(item of list){
-			/* console.log(item.court_idx); */
-			link = './match_info.go?official_match_idx=' + item.official_match_idx;
+			
 			if(item.currentCount == item.official_match_to){
 				finishClass = 'end';
 				finishClass2 = 'state finish';
 				finishTxt = '모집완료';
 				link = 'javascript:;';
+			}
+			if(sessionChk2 == 'on'){
+				console.log('a');
+				link = './match_info.go?official_match_idx=' + item.official_match_idx;
+			}else{
+				link = '../login';
 			}
 			content +=
 				'<tr class="' + finishClass + '">'
@@ -243,9 +252,10 @@
                 +'</td>'
                 +'<td class="' + finishClass2 +'">' + finishTxt + '</td>'
                 +'</tr>';
-           	var finishClass = '';
-			var finishClass2 = 'state';
-			var finishTxt = '모집중';
+            
+           	finishClass = '';
+			finishClass2 = 'state';
+			finishTxt = '모집중';
 		}
 		$('#tbody').html(content);
 	}

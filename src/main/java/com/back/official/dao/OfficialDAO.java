@@ -28,6 +28,36 @@ public interface OfficialDAO {
 
 	Object searchMatchCount(String courtSearchWord);
 
+	List<OfficialDTO> photo(String official_match_idx);
+
+	OfficialDTO info(String official_match_idx);
+
+	OfficialDTO addressInfo(String official_match_idx);
+
+	int compare(String id);
+	
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

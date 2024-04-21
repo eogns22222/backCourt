@@ -19,6 +19,8 @@ public class OfficialDTO {
 	
 	private String court_address;
 	private int currentCount;
+	private String court_name;
+	private String file_name;
 	
 	public int getOfficial_match_idx() {
 		return official_match_idx;
@@ -109,6 +111,18 @@ public class OfficialDTO {
 	}
 	public void setCurrentCount(int currentCount) {
 		this.currentCount = currentCount;
+	}
+	public String getCourt_name() {
+		return court_name;
+	}
+	public void setCourt_name(String court_name) {
+		this.court_name = court_name;
+	}
+	public String getFile_name() {
+		return file_name;
+	}
+	public void setFile_name(String file_name) {
+		this.file_name = file_name;
 	}
 	
 	
