@@ -29,7 +29,7 @@
     }
 
     input[type="text"] {
-        width: 100%;
+        width: 60%;
     }
     input[type="button"] {
         
@@ -40,22 +40,23 @@
     </style>
 </head>
 <body>
+    <h1>신고/문의 상세보기</h1>
     <table>
         <tr>
-            <th>글 유형</th>
-            <td id="reportCategory"></td>
+            <th>유형</th>
+            <td>글 유형 : <span id="reportCategory">null</span>&nbsp;| 글 번호: <span id="reportCategoryIdx">null</span></td>
         </tr>
         <tr>
-            <th>글 번호</th>
-            <td id="reportCategoryIdx"></td>
+            <th>제목</th>
+            <td><input type="text" id="reportSubject" disabled></td>
         </tr>
         <tr>
             <th>신고자ID</th>
-            <td id="reportId"></td>
+            <td id="reportId">null</td>
         </tr>
         <tr>
             <th>신고날짜</th>
-            <td id="reportDate"></td>
+            <td id="reportDate">null</td>
         </tr>
         <tr>
         	<th>처리 상태</th>
@@ -67,13 +68,10 @@
         		</select>
         	</td>
         </tr>
-        <tr>
-            <th>제목</th>
-            <td id="reportSubject"></td>
-        </tr>
+
         <tr>
             <th>내용</th>
-            <td id="reportContent"></td>
+            <td><textarea id="reportContent" disabled></textarea></td>
         </tr>
         <tr>
             <th>피드백</th>
