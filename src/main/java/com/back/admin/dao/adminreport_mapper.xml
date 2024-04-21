@@ -3,7 +3,72 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
 >
 
-<mapper namespace="com.back.admin.dao.ReportDAO">
+<mapper namespace="com.back.admin.dao.AdminReportDAO">
+
+	<select id="list" resultType="com.back.admin.dto.AdminReportDTO">
+		SELECT
+			r.report_idx AS reportIdx
+			, r.report_state AS reportState
+			, r.report_tit AS reportSubject
+			, r.id AS reportId
+			, r.report_date AS reportDate
+			, f.id AS reportAdminId
+		FROM report r
+		LEFT JOIN feed f ON r.report_idx = f.report_idx	
+		ORDER BY r.report_idx ASC LIMIT #{param1}, 10
+		
+	</select>
+	
+	<select id="searchList" resultType="com.back.admin.dto.AdminReportDTO">
+		SELECT
+			r.report_idx AS reportIdx
+			, r.report_state AS reportState
+			, r.report_tit AS reportSubject
+			, r.id AS reportId
+			, r.report_date AS reportDate
+			, f.id AS reportAdminId
+		FROM report r
+		LEFT JOIN feed f ON r.report_idx = f.report_idx
+		WHERE r.id = #{param2}
+		ORDER BY r.report_idx ASC LIMIT #{param1}, 10
+		
+	</select>
+	<select id="filteringList" resultType="com.back.admin.dto.AdminReportDTO">
+		SELECT
+			r.report_idx AS reportIdx
+			, r.report_state AS reportState
+			, r.report_tit AS reportSubject
+			, r.id AS reportId
+			, r.report_date AS reportDate
+			, f.id AS reportAdminId
+		FROM report r
+		LEFT JOIN feed f ON r.report_idx = f.report_idx
+		WHERE r.report_state = #{param2}
+		ORDER BY r.report_idx ASC LIMIT #{param1}, 10
+		
+	</select>
+	
+	<select id="allReportCount" resultType="int">
+		SELECT
+			COUNT(r.report_idx)
+		FROM report r
+		LEFT JOIN feed f ON r.report_idx = f.report_idx
+	</select>
+	
+	<select id="searchReportCount" resultType="int">
+		SELECT
+			COUNT(r.report_idx)
+		FROM report r
+		LEFT JOIN feed f ON r.report_idx = f.report_idx
+		WHERE r.id = #{param1}
+	</select>
+	<select id="categoryReportCount" resultType="int">
+		SELECT
+			COUNT(r.report_idx)
+		FROM report r
+		LEFT JOIN feed f ON r.report_idx = f.report_idx
+		WHERE r.report_state = #{param1}
+	</select>
 
 </mapper>
 
