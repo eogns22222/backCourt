@@ -8,6 +8,29 @@
 	INSERT INTO report (id, report_tit, report_content, report_write_idx, report_write_type)
 		VALUES (#{id},#{report_tit}, #{report_content}, #{report_write_idx}, #{report_write_type});
 	</insert>
+	
+	<!--  ==========================================  -->
+<!--  포인트 관련 쿼리  -->
+<select id="point_list" resultType="com.back.mypage.dto.MypageDTO">
+	SELECT point_idx, point_date, point_change, point_state FROM point_list where id = #{param1}
+</select>
+
+<insert id="ChargingDo"> 
+	INSERT into point_list(id,point_change,point_state)values(#{param1},#{param2},"충전")
+</insert>
+
+<insert id="PointMinus"> 
+	INSERT into point_list(id,point_change,point_state)values(#{param1},#{param2},"환급")
+</insert>
+
+<select id="point" resultType="String"> 
+	SELECT ( (SELECT SUM(point_change) FROM point_list ps where id =#{param1} AND point_state ="충전")- SUM(point_change) ) as point FROM point_list pl where id=#{param1} AND point_state ="환급";
+</select>
+
+<select id="point_list_ajax" resultType="com.back.mypage.dto.MypageDTO">
+	SELECT point_idx, point_date, point_change, point_state FROM point_list where id = #{param1}
+</select>
+
 </mapper>
 
 
