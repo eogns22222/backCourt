@@ -25,7 +25,7 @@
             <input type="text" id="name" name="title" class="zz" placeholder=" 제목을 입력해 주세요.(글자수 제한: 30자)" maxlength="30">
             <br/><br/>
             <label class="title">내용</label>
-            <textarea id="message" name="contents" class="text" placeholder="내용을 입력해 주세요.(글자수 제한: 500자)" maxlength="500"></textarea>
+            <textarea id="message" name="contents" class="text" placeholder="내용을 입력해 주세요.(글자수 제한: 1000자)" maxlength="1000"></textarea>
             <br/>
             <div class="but">
                 <input type="submit" value="취소" id="cancel" class="submit">
