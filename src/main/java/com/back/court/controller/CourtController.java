@@ -82,4 +82,11 @@ public class CourtController {
 		return "court/detail";
 	}
 	
+	@RequestMapping(value = "/court/detail.ajax")
+	@ResponseBody
+	public Map<String, Object> detail(String courtIdx){
+		logger.info("detail.ajax courtIdx = {}",courtIdx);
+		return courtService.detail(courtIdx);
+	}
+	
 }

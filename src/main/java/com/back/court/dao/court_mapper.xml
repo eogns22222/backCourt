@@ -178,5 +178,17 @@
 		WHERE id = #{param1} AND court_idx = #{param2}
 	
 	</delete>
+	
+	<select id="detail" resultType="com.back.court.dto.CourtDTO">
+		SELECT court_name, court_address, court_info, court_price FROM court where court_idx = #{param1};
+	</select>
+	
+	<select id="fileNameList" resultType="String">
+		SELECT file_name from court_image WHERE court_idx = #{param1};
+	</select>
+	
+	<select id="bookingStartTimeList" resultType="String">
+		SELECT booking_start_time FROM court_booking WHERE court_idx = 77;
+	</select>
 
 </mapper>

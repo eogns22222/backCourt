@@ -29,4 +29,10 @@ public interface CourtDAO {
 
 	int nameFilteringCourtCount(String courtSearchWord);
 
+	List<CourtDTO> detail(String courtIdx);
+
+	List<String> fileNameList(String courtIdx);
+
+	List<String> bookingStartTimeList(String courtIdx);
+
 }

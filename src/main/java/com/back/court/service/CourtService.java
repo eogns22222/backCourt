@@ -98,5 +98,21 @@ public class CourtService {
 		return result;
 	}
 
+	public Map<String, Object> detail(String courtIdx) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		List<CourtDTO> detail = courtDAO.detail(courtIdx);
+		List<String> fileName = courtDAO.fileNameList(courtIdx);
+		List<String> bookingStartTime = courtDAO.bookingStartTimeList(courtIdx);
+		
+		
+		
+		map.put("detail", detail);
+		map.put("fileName", fileName);
+		map.put("bookingStartTime", bookingStartTime);
+		
+		return map;
+	}
+
 
 }
