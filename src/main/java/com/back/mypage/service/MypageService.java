@@ -18,7 +18,7 @@ public class MypageService {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired MypageDAO mypageDAO;
 	
-	
+// ========= 내 포인트 리스트 ===========
 	
 	public String report(String id) {
 		return mypageDAO.report(id);
@@ -27,8 +27,8 @@ public class MypageService {
 		
 		return mypageDAO.point_list(loginId);
 	}
-	public void ChargingDo(String loginId, String charging) {
-		mypageDAO.ChargingDo(loginId,charging);
+	public void Charging_do(String loginId, String charging) {
+		mypageDAO.Charging_do(loginId,charging);
 	}
 	public void PointMinus(String loginId, String minus) {
 		mypageDAO.PointMinus(loginId,minus);
@@ -37,13 +37,29 @@ public class MypageService {
 		return mypageDAO.point(loginId);
 	}
 	
-	public List<MypageDTO> point_list_ajax(String loginId) {
-		return mypageDAO.point_list_ajax(loginId);
+	//아작스로 내 포인트 리스트 출력
+	public Map<String, Object> point_list_ajax(String loginId, int currPage, int pageParCnt) {
+	
+		int start = (currPage-1)*pageParCnt;
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<MypageDTO> list = mypageDAO.point_list_ajax(loginId,pageParCnt,start);
+		logger.info("list Size : "+list.size());
+		result.put("list", list);
+		result.put("currPage",currPage);
+		result.put("totalPages", mypageDAO.point_allConut(pageParCnt,loginId));
+		
+		
+		
+		return result;
 	}
 	
+	public void point_update(String loginId) {
+		mypageDAO.point_update(loginId);
+		
+	}
 	
-	
-	// ======================================
+	// ================================
 	
 	public int report(Map<String, Object> map) {
 		logger.info("report-service  map={}",map);
@@ -70,6 +86,6 @@ public class MypageService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("totalDel", delCount);
 		return map;
-	}
 	
+}
 }
