@@ -9,14 +9,14 @@
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="../resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style>
-    table{
+    .reportListTable{
         border: 2px solid;
         border-collapse: collapse;
     }
-    th{
+    .reportListTh{
         background-color: gainsboro;
     }
-    th,td{
+    .reportListTh,.reportListTd{
         border: 2px solid;
         padding: 10px 30px;
         text-align: center;
@@ -24,7 +24,7 @@
     #adminReportListDiv{
         width: 100%;
     }
-    tr:hover {
+    .reportListTr:hover {
 		background-color: lightgray;
 	}
     
@@ -55,15 +55,15 @@
                 <option value="처리 완료">처리 완료</option>
             </select>
             <input type="text" id="reportSearch" placeholder="신고/문의자 ID 검색"/>
-            <table>
+            <table class="reportListTable">
                 <thead>
                     <tr>
-                        <th>no.</th>
-                        <th>처리상태</th>
-                        <th>제목</th>
-                        <th>신고/문의자 ID</th>
-                        <th>신고/문의 날짜</th>
-                        <th>관리자</th>
+                        <th class="reportListTh">no.</th>
+                        <th class="reportListTh">처리상태</th>
+                        <th class="reportListTh">제목</th>
+                        <th class="reportListTh">신고/문의자 ID</th>
+                        <th class="reportListTh">신고/문의 날짜</th>
+                        <th class="reportListTh">관리자</th>
                     </tr>
                 </thead>
                 <tbody id="reportList"></tbody>
@@ -158,13 +158,13 @@ var searchFlag = false;
 		var content = '';
 		for(item of list){
 			content +=
-				'<tr>'
-				+'<td>'+item.reportIdx+'</td>'
-				+'<td>'+item.reportState+'</td>'
-				+'<td>'+item.reportSubject+'</td>'
-				+'<td>'+item.reportId+'</td>'
-				+'<td>'+item.reportDate+'</td>'
-				+'<td>'+item.reportAdminId+'</td>'
+				'<tr class="reportListTr">'
+				+'<td class="reportListTd">'+item.reportIdx+'</td>'
+				+'<td class="reportListTd">'+item.reportState+'</td>'
+				+'<td class="reportListTd">'+item.reportSubject+'</td>'
+				+'<td class="reportListTd">'+item.reportId+'</td>'
+				+'<td class="reportListTd">'+item.reportDate+'</td>'
+				+'<td class="reportListTd">'+item.reportAdminId+'</td>'
 				+'</tr>';
 		}
 		$('#reportList').html(content);

@@ -9,19 +9,19 @@
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="../resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style>
-    table{
+    .adminCourtListTable{
         border: 2px solid;
         border-collapse: collapse;
     }
-    th{
+    .adminCourtListTh{
         background-color: gainsboro;
     }
-    th,td{
+    .adminCourtListTh,.adminCourtListTd{
         border: 2px solid;
         padding: 10px 30px;
         text-align: center;
     }
-	tr:hover {
+	.adminCourtListTr:hover {
 		background-color: lightgray;
 	}
     
@@ -46,13 +46,13 @@
             <option value="">전체지역</option>
         </select>
         <div><input type="button" id="courtRegist" value="구장 등록"/></div>
-        <table>
+        <table class="adminCourtListTable">
             <thead>
 	            <tr>
-	                <th>구장번호</th>
-	                <th>구장이름</th>
-	                <th>지역</th>
-	                <th>활성여부</th>
+	                <th class="adminCourtListTh">구장번호</th>
+	                <th class="adminCourtListTh">구장이름</th>
+	                <th class="adminCourtListTh">지역</th>
+	                <th class="adminCourtListTh">활성여부</th>
             	</tr>
             </thead>
             <tbody id="admincourtList"></tbody>
@@ -159,11 +159,11 @@
 		var content = '';
 		for(item of list){
 			content +=
-				'<tr>'
-				+'<td>'+item.courtIdx+'</td>'
-				+'<td>'+item.courtName+'</td>'
-				+'<td>'+item.courtAddress.split(' ')[1]+'</td>'
-				+'<td>'+item.courtState+'</td>'
+				'<tr class="adminCourtListTr">'
+				+'<td class="adminCourtListTd">'+item.courtIdx+'</td>'
+				+'<td class="adminCourtListTd">'+item.courtName+'</td>'
+				+'<td class="adminCourtListTd">'+item.courtAddress.split(' ')[1]+'</td>'
+				+'<td class="adminCourtListTd">'+item.courtState+'</td>'
 				+'</tr>';
 		}
 		$('#admincourtList').html(content);

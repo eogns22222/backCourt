@@ -9,30 +9,25 @@
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="../resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style>
-    table, th, td {
+    .reportFeedTable,.reportFeedTh,.reportFeedTd {
         border: 1px solid black;
         border-collapse: collapse;
     }
-
-    th, td {
+    .reportFeedTh,.reportFeedTd {
         padding: 5px 10px;
     }
-
-    button {
-        margin: 5px
-    }
-
-    textarea {
+    .reportFeedTextarea {
         resize: none;
         width: 500px;
         height: 150px;
     }
 
-    input[type="text"] {
+    #reportSubject{
         width: 60%;
     }
-    input[type="button"] {
-        
+    .reportFeedSubmit{
+        background-color: skyblue;
+
     }
     #buttonDiv{
         text-align: right;
@@ -41,26 +36,26 @@
 </head>
 <body>
     <h1>신고/문의 상세보기</h1>
-    <table>
+    <table class="reportFeedTable">
         <tr>
-            <th>유형</th>
-            <td>글 유형 : <span id="reportCategory">null</span>&nbsp;| 글 번호: <span id="reportCategoryIdx">null</span></td>
+            <th class="reportFeedTh">유형</th>
+            <td class="reportFeedTd">글 유형 : <span id="reportCategory">null</span>&nbsp;| 글 번호: <span id="reportCategoryIdx">null</span></td>
         </tr>
         <tr>
-            <th>제목</th>
-            <td><input type="text" id="reportSubject" disabled></td>
+            <th class="reportFeedTh">제목</th>
+            <td class="reportFeedTd"><input type="text" id="reportSubject" disabled></td>
         </tr>
         <tr>
-            <th>신고자ID</th>
-            <td id="reportId">null</td>
+            <th class="reportFeedTh">신고자ID</th>
+            <td id="reportId" class="reportFeedTd">null</td>
         </tr>
         <tr>
-            <th>신고날짜</th>
-            <td id="reportDate">null</td>
+            <th class="reportFeedTh">신고날짜</th>
+            <td id="reportDate" class="reportFeedTd">null</td>
         </tr>
         <tr>
-        	<th>처리 상태</th>
-        	<td>
+        	<th class="reportFeedTh">처리 상태</th>
+        	<td class="reportFeedTd">
         		<select id="reportState">
         			<option value="처리 전">처리 전</option>
         			<option value="처리 중">처리 중</option>
@@ -70,18 +65,18 @@
         </tr>
 
         <tr>
-            <th>내용</th>
-            <td><textarea id="reportContent" disabled></textarea></td>
+            <th class="reportFeedTh">내용</th>
+            <td class="reportFeedTd"><textarea class="reportFeedTextarea" id="reportContent" disabled></textarea></td>
         </tr>
         <tr>
-            <th>피드백</th>
-            <td><textarea id="reportFeed" maxlength="300"></textarea></td>
+            <th class="reportFeedTh">피드백</th>
+            <td class="reportFeedTd"><textarea class="reportFeedTextarea" id="reportFeed" maxlength="300"></textarea></td>
         </tr>
         <tr>
-            <td colspan="2">
+            <td class="reportFeedTd" colspan="2">
                 <div id="buttonDiv">
-                    <input type="button" value="취소">
-                    <input type="button" value="전송">
+                    <input class="reportFeedCancel" type="button" value="취소">
+                    <input class="reportFeedSubmit" type="button" value="전송">
                 </div>
             </td>
         </tr>
