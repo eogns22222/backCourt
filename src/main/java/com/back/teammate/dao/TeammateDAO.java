@@ -6,16 +6,60 @@ import com.back.teammate.dto.TeammateDTO;
 
 public interface TeammateDAO {
 
-	List<TeammateDTO> teamJoinList();
+	List<TeammateDTO> list(int start);
 
-	List<TeammateDTO> pageList(int pagePerCnt, int start);
+	List<TeammateDTO> listFilterLevel(int start, String level);
 
-	int allCount(int pagePerCnt);
+	List<TeammateDTO> listFilterPosition(int start, String position);
 
-	List<TeammateDTO> listFilterAddress(String address);
+	List<TeammateDTO> listFilterPosotionLevel(int start, String position, String level);
 
+	List<TeammateDTO> listFilterAddress(int start, String address);
+
+	List<TeammateDTO> listFilterAddressLevel(int start, String address, String level);
+
+	List<TeammateDTO> listFilterAddressPosition(int start, String address, String position);
+
+	List<TeammateDTO> listFilterAddressPositionLevel(int start, String address, String position, String level);
+
+	List<TeammateDTO> allList();
+
+	int allTeammateCount();
+
+	int levelFilteringTeammateCount(String level);
+
+	int positionFilteringTeammateCount(String position);
+
+	int positionLevelFilteringTeammateCount(String position, String level);
+
+	int addressFilteringTeammateCount(String address);
+
+	int addressLevelFilteringTeammateCount(String address, String level);
+
+	int addressPositionFilteringTeammateCount(String address, String position);
+
+	int allFilteringTeammateCount(String address, String position, String level);
 
 	
+	
+	int addressFilteringCount(String teammateSearchWord);
+
+	int teamnameFilteringCount(String teammateSearchWord);
+
+	int representFilteringCount(String teammateSearchWord);
+
+	List<TeammateDTO> addressSearchList(String teammateSearchWord, int start);
+
+	List<TeammateDTO> teamnameSearchList(String teammateSearchWord, int start);
+
+	List<TeammateDTO> representSearchList(String teammateSearchWord, int start);
+
+
+
+
+
+
+   
 
 
 
