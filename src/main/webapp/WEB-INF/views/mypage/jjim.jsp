@@ -9,17 +9,14 @@
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="../resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style>
-	div{
-		height: 150;
-	}
-    table{
+    .jjimTable{
          border: 2px solid;
         border-collapse: collapse;
     }
-    th{
+    .jjimTh{
     	background-color: gainsboro;
     }
-    th,td{
+    .jjimTh,.jjimTd{
         border: 2px solid;
         padding: 10px 50px;
         text-align: center;
@@ -30,17 +27,18 @@
     </style>
 </head>
 <body>
+    
 	<div>헤더</div>
 	<h2>찜 내역</h2>
     <input type="button" value="선택 삭제">
-    <table>
+    <table class="jjimTable">
         <thead>
             <tr>
-                <th><input type="checkbox" id="allCheck"/></th>
-                <th>No.</th>
-                <th>이름</th>
-                <th>위치</th>
-                <th>가격</th>
+                <th class="jjimTh"><input type="checkbox" id="allCheck"/></th>
+                <th class="jjimTh">No.</th>
+                <th class="jjimTh">이름</th>
+                <th class="jjimTh">위치</th>
+                <th class="jjimTh">가격</th>
             </tr>
         </thead>
         <tbody class="jjimList">
@@ -140,11 +138,11 @@
         for (item of list) {
             content +=
                 '<tr>'
-                + '<td><input class="rowCheck" type="checkbox" data-jjimIdx="'+item.jjimIdx+'"/></td>'
-                + '<td>'+count+'</td>'
-                + '<td>'+item.courtName+'</td>'
-                + '<td>'+item.courtAddress.split(' ')[1]+'</td>'
-                + '<td>'+item.courtPrice+'</td>'
+                + '<td class="jjimTd"><input class="rowCheck" type="checkbox" data-jjimIdx="'+item.jjimIdx+'"/></td>'
+                + '<td class="jjimTd">'+count+'</td>'
+                + '<td class="jjimTd">'+item.courtName+'</td>'
+                + '<td class="jjimTd">'+item.courtAddress.split(' ')[1]+'</td>'
+                + '<td class="jjimTd">'+item.courtPrice+'</td>'
                 + '</tr>';
             count++;
         }
