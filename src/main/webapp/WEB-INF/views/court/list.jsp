@@ -187,10 +187,9 @@
 					showFilterList(data.addressList);
 					filterFlag = true;
 				}
-				var totalPage = data.totalPage/10 > 1 ? data.totalPage/10+1:1;
 				$('#pagination').twbsPagination({
 					startPage:1
-					,totalPages:totalPage
+					,totalPages:data.totalPage
 					,visiblePages:5	
 					,onPageClick:function(evt,pg){
 						currentPage = pg;

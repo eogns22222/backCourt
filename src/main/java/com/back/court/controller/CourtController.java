@@ -85,4 +85,11 @@ public class CourtController {
 		return courtService.detail(courtIdx, selectDate);
 	}
 
+	@RequestMapping(value = "/court/booking.ajax")
+	@ResponseBody
+	public Map<String, Boolean> booking(String selectedTime, String courtIdx, String courtPrice, String courtDate) {
+		String id = "a";
+		return courtService.booking(selectedTime, courtIdx, courtPrice, id, courtDate);
+	}
+
 }

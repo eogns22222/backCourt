@@ -49,15 +49,24 @@
 	</delete>
 	
 	<select id="detail" resultType="com.back.court.dto.CourtDTO">
-		SELECT court_name, court_address, court_info, court_price FROM court where court_idx = #{param1};
+		SELECT court_name AS courtName
+		, court_address
+		, court_info AS courtInfo
+		, court_price AS courtPrice
+		FROM court 
+		WHERE court_idx = #{param1}
+		
 	</select>
 	
 	<select id="fileNameList" resultType="String">
-		SELECT file_name from court_image WHERE court_idx = #{param1};
+		SELECT file_name from court_image WHERE court_idx = #{param1}
 	</select>
 	
 	<select id="bookingStartTimeList" resultType="String">
-		SELECT booking_start_time FROM court_booking WHERE court_idx = #{param1} AND booking_date = #{param2};
+		SELECT booking_start_time 
+		FROM court_booking 
+		WHERE court_idx = #{param1} 
+		AND booking_date = #{param2}
 	</select>
 
 </mapper>

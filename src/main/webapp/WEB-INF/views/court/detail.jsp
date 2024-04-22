@@ -127,11 +127,12 @@
     var courtDetailTime = '';
     var currentDate = new Date();
     var formattedDate = currentDate.getFullYear() + "-" + ((currentDate.getMonth() + 1) < 10 ? '0' + (currentDate.getMonth() + 1) : (currentDate.getMonth() + 1)) + "-" + (currentDate.getDate() < 10 ? '0' + currentDate.getDate() : currentDate.getDate());
-
+    var selectedId = '';
     $('#courtDetailDate').val(formattedDate);
     
     $('.menu').css('display','none');
     $('.courtDetailTimeBtn:not([disabled])').click(function() {
+    	selectedId = $(this).attr('id');
         // 모든 버튼의 배경색을 하늘색으로 초기화합니다.
         $('.courtDetailTimeBtn:not([disabled])').not(this).css('background-color', 'skyblue');
 
@@ -146,11 +147,50 @@
             alert('예약할 시간을 선택하세요.');
         } else {
            if(confirm('정말로 예약 하시겠습니까?')){
-
+				$.ajax({
+					type:'post'
+					, url:'./booking.ajax'
+					, data:{
+						'selectedTime':selectedId
+						,'courtIdx':courtIdx
+						,'courtPrice':$('#courtDetailPrice').html()
+						,'courtDate':$('#courtDetailDate').val()
+					}
+					, dataType:'json'
+					, success:function(data){
+						if(!data.money){
+							if(confirm('포인트가 부족합니다. 충전하시겠습니까?')){
+								window.location.href = '../point_add.go';
+							}
+						}else if(!data.result){
+							alert('예약에 실패했습니다.');
+						}else{
+							alert('예약이 완료 되었습니다.');
+							window.location.href = './list.go';
+						}
+					}
+					, error:function(){}
+				});
            }
         }
     });
     
+    $('#courtDetailDate').change(function() {
+        
+    	$('.courtDetailTimeBtn').each(function() {
+    		$(this).prop('disabled', false);
+        });        
+        callDetail();
+    });
+    $(document).ready(function() {
+        // courtDetailDate input 요소에 datepicker 연결
+        $('#courtDetailDate').datepicker({
+            format: 'yyyy-mm-dd', // 날짜 형식 설정
+            autoclose: true, // 날짜 선택 후 자동으로 닫힘
+            todayHighlight: true, // 오늘 날짜 강조 표시
+            startDate: 'today', // 오늘 이후의 날짜만 선택 가능
+        });
+    });
 
    
    
@@ -166,10 +206,10 @@
             , dataType:'json'
             , success:function(data){
                 console.log(data);
-                $('#courtDetailName').html(data.detail[0].court_name);
-                $('#courtDetailInfo').val(data.detail[0].court_info);
-                $('#courtDetailPrice').html(data.detail[0].court_price);
-                $('#courtDetailAddress').html(data.detail[0].court_address);
+                $('#courtDetailName').html(data.detail[0].courtName);
+                $('#courtDetailInfo').val(data.detail[0].courtInfo);
+                $('#courtDetailPrice').html(data.detail[0].courtPrice);
+                $('#courtDetailAddress').html(data.detail[0].courtAddress);
                 var content = '';
                 
                 for(item of data.fileName){

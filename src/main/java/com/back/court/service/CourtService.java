@@ -12,9 +12,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.back.court.dao.CourtDAO;
 import com.back.court.dto.CourtDTO;
+import com.back.mypage.dao.MypageDAO;
+import com.back.mypage.service.MypageService;
 
 @Service
 public class CourtService {
@@ -35,14 +38,14 @@ public class CourtService {
 		List<CourtDTO> list = courtDAO.list();
 		// 가공될 리스트
 		List<CourtDTO> processedList = new ArrayList<CourtDTO>();
-		
+
 		// 주소 리스트
 		map.put("addressList", addressDeduplication(list));
 
 		// 지역명 검색
-		if (searchFlag.equals("true") && searchCategory.equals("courtAddress")) { //지역명 검색
+		if (searchFlag.equals("true") && searchCategory.equals("courtAddress")) { // 지역명 검색
 			processedList = addressProcessedListing(list, searchWord);
-		} else if (searchFlag.equals("true") && searchCategory.equals("courtName")) {//구장명 검색
+		} else if (searchFlag.equals("true") && searchCategory.equals("courtName")) {// 구장명 검색
 			processedList = nameProcessedListing(list, searchWord);
 		} else if (address.isEmpty() == false) { // 주소필터
 			processedList = addressProcessedListing(list, address);
@@ -52,16 +55,18 @@ public class CourtService {
 
 		// 리스트에 추가
 		map.put("list", pagingList(processedList, start));
-		
+
+		int totalPage = processedList.size() % 10 > 0 ? processedList.size() / 10 + 1 : processedList.size() / 10;
 		// 총 페이지
-		map.put("totalPage", processedList.size());
+		map.put("totalPage", totalPage);
 
 		return map;
 	}
+
 	// 주소 구 단위로 자르고 가나다순 정렬
 	public List<String> addressDeduplication(List<CourtDTO> list) {
 		Set<String> set = new HashSet<String>();
-		
+
 		for (CourtDTO dto : list) {
 			set.add(dto.getCourtAddress().split(" ")[1]);
 		}
@@ -92,7 +97,7 @@ public class CourtService {
 		return processedList;
 	}
 
-	// 페이징 처리위해 10개씩만 
+	// 페이징 처리위해 10개씩만
 	public List<CourtDTO> pagingList(List<CourtDTO> processedList, int start) {
 		List<CourtDTO> list = new ArrayList<CourtDTO>();
 		for (int i = start; i < Math.min(start + 10, processedList.size()); i++) {
@@ -130,6 +135,30 @@ public class CourtService {
 		map.put("fileName", fileName);
 		map.put("bookingStartTime", bookingStartTime);
 
+		return map;
+	}
+
+	@Transactional
+	public Map<String, Boolean> booking(String selectedTime, String courtIdx, String courtPrice, String id, String courtDate) {
+		Map<String, Boolean> map = new HashMap<String, Boolean>();
+//		MypageService ms = new MypageService();
+//		int courtMoney = Integer.parseInt(courtPrice);
+//		int myMoney = Integer.parseInt(ms.point(id));
+//		int bookingStartTime = Integer.parseInt(selectedTime);
+//		logger.info(bookingStartTime+2+"");
+//		
+//		if(courtMoney <= myMoney) {
+//			if(courtDAO.checkBooking(courtDate,bookingStartTime).isEmpty()) {
+//				courtDAO.booking(id,courtIdx,courtDate,bookingStartTime,bookingStartTime+2,"true");
+//				courtDAO.payingBooking(id,courtMoney,"예약",courtIdx,"구장예약");
+//			}else {
+//				map.put("money", false);
+//			}
+//			courtDAO.booking(id,courtIdx,courtDate,bookingStartTime,bookingStartTime+2,"true");
+//		}else {
+//			map.put("money", false);
+//		}
+//		
 		return map;
 	}
 
