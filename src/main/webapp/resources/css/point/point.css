@@ -1,55 +1,47 @@
-body{
-    position: fixed;
-    left: 20%;
-    top: 20%;
-    float:left; 
-}
-div{
+#style{
+	width: 1280px;
+    margin: 0 auto;
+} 
+#he{
     width: 200px;
     height: 200px;
     text-align: center;
-}
-#he{
     float:left; 
     background-color: gainsboro;
     margin-right: 100px;
 }  
-tr,th{
+.thead_tr,.thead_th{
     border-top: 1px  solid black;
     border-bottom: 1px  solid black;
     text-align: center;
 }
-td{
+.thead_td{
     padding: 9px;
-}
-td{
     border-bottom: 1px  solid black;
 }
-th{
+.thead_th{
     background-color: gainsboro;
     padding: 5px 50px
 }
-h1{
-    margin-left: -80px;
-    font-weight: 600;
-}
-h2{
+#title{
     /* float:left;  */
     font-size: 23px;
     margin-bottom: 4%;
     font-weight: 700;
     font-weight: 600;
+    margin-left: 0px;
+    font-weight: 600;
 }
-h3{
+.poin{
+    font-weight: 600;
+    margin-left: -40px;
+}
+#he .point{
     display: inline;
     font-weight: 600;
-    margin-left: -90px;
+    margin-left: -40%;
 }
-h4{
-    font-weight: 600;
-    display: inline;
-}
-button{
+.state{
     border: 0px;
     font-weight: 600;
     background-color: rgb(93, 130, 255);
@@ -59,8 +51,14 @@ button{
 } 
 #mon{
     float:right; 
+    border: 0px;
     width: 100px;
     height: 35px;
     background-color: red;
     color: white;
+}
+.point_if{
+	padding: 9px;
+    text-align: center;
+    border-bottom: 1px  solid black;
 }

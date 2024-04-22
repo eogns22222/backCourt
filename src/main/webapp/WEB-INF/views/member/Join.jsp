@@ -14,7 +14,7 @@
 <body>
 	   <img src="resources/img/icon/logo.png" alt="로고">
     <h1>백코트 회원가입</h1>
-    <form action="Jion.do" method="post">
+    <form action="Join.do" method="post">
         <table>
             <tr>
                 <th>
