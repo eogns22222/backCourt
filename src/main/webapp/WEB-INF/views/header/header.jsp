@@ -8,25 +8,25 @@
     <div class="inner">
         <!-- header 상단 -->
         <div class="top">
-            <h1><a href="#"><img src="resources/img/icon/img04.jpg" alt=""></a></h1>
+            <h1><a href="/"><img src="../resources/img/icon/logo.png" alt=""></a></h1>
             <ul class="icoCont">
                 <!-- 팀 정보 -->
                 <li>
-                    <a href="javascript:;" id="teamInfo">
-                        <span class="icon"><img src="resources/img/icon/img03.jpg" alt=""></span>
+                    <a href="javascript:;" id="teamInfo" onclick="sessionChk()">
+                        <span class="icon"><img src="../resources/img/icon/teamInfo_ico2.jpg" alt=""></span>
                         <span class="txt">팀정보</span>
                     </a>
                 </li>
                 <!-- 알림 -->
                 <li>
-                    <a href="javascript:;" id="notice">
-                        <span class="icon"><img src="resources/img/icon/img01.jpg" alt=""></span>
+                    <a href="javascript:;" id="notice" onclick="sessionChk()">
+                        <span class="icon"><img src="../resources/img/icon/notice_ico.jpg" alt=""></span>
                         <span class="txt">알림</span>
                         <span class="num" id="noticeNum"></span>
                     </a>
                     <!-- 알림창 -->
                     <div class="noticeBox">
-                        <a href="#" class="close"><img src="resources/img/icon/close.png" alt=""></a>
+                        <a href="#" class="close"><img src="../resources/img/icon/close.png" alt=""></a>
                         <h2>알림</h2>
                         <ul id="noticeCont">
 <!--                                 <li class="cont">
@@ -39,8 +39,8 @@
                 </li>
                 <!-- 마이페이지 -->
                 <li>
-                    <a href="${login}" id="myPage" onclick=${msg}>
-                        <span class="icon"><img src="resources/img/icon/img02.jpg" alt=""></span>
+                    <a href="javascript:;" id="myPage" onclick="sessionChk()">
+                        <span class="icon"><img src="../resources/img/icon/mypage_ico.jpg" alt=""></span>
                         <span class="txt">내정보</span>
                     </a>
                 </li>
@@ -49,42 +49,42 @@
         
         <!-- header 하단 -->
         <ul class="menu">
-            <li><a href="#">공식 경기</a></li>
-            <li><a href="#">팀 서비스</a></li>
-            <li><a href="#">구장 대여</a></li>
+            <li><a href="../official">공식 경기</a></li>
+            <li><a href="../teammate">팀 서비스</a></li>
+            <li><a href="../guest">구장 대여</a></li>
         </ul>
     </div>
 </header>
 
 <!-- 내정보 nav -->
 <div class="nav">
-    <a href="#" class="close"><img src="resources/img/icon/close.png" alt=""></a>
-    <ul>
-        <li class="topCont">
+    <a href="#" class="close"><img src="../resources/img/icon/close.png" alt=""></a>
+    <ul id="drawNav">
+<%--         <li class="topCont">
             <div class="profile">
-                <p class="nik"><a href="#" onclick="location.href='mypage/profile_detail?id=${member.id}'">${member.id}</a></p>
-                <span class="photo"><img src="resources/img/icon/img01.jpg" alt=""></span>
+                <p class="nik"><a href="#" onclick="location.href='../mypage/profile_detail?id=${member.id}'">${member.id}</a></p>
+                <span class="photo"><img src="../resources/img/icon/img01.jpg" alt=""></span>
             </div>
             <div class="point">
-                <p>포인트<span><a href="#" onclick="location.href='mypage/point?id=${member.id}'">${member.point}</a></span></p>
+                <p>포인트<span><a href="#" onclick="location.href='../mypage/point?id=${member.id}'">${member.point}</a></span></p>
                 <a href="../logout.do">로그아웃</button>
             </div>
         </li>
-        <li class="cont" onclick="location.href='mypage/match_ask_list?id=${member.id}'">
+        <li class="cont" onclick="location.href='../mypage/match_ask_list?id=${member.id}'">
             <a href="#">신청 내역</a>
         </li>
-        <li class="cont" onclick="location.href='mypage/report_list?id=${member.id}'">
+        <li class="cont" onclick="location.href='../mypage/report_list?id=${member.id}'">
             <a href="#">신고 내역</a>
         </li>
-        <li class="cont" onclick="location.href='mypage/like?id=${member.id}'">
+        <li class="cont" onclick="location.href='../mypage/like?id=${member.id}'">
             <a href="#">찜 목록</a>
-        </li>
+        </li> --%>
     </ul>
 </div>
 
 <!-- 팀 정보 팝업 -->
 <div class="popup teamPop type01">
-    <a href="#" class="close"><img src="resources/img/icon/close.png" alt=""></a>
+    <a href="#" class="close"><img src="../resources/img/icon/close.png" alt=""></a>
     <div class="popWrap">
         <a href="team/write.go" class="btnTeam">팀 만들기</a>
         <h1>내 팀 리스트</h1>
@@ -102,12 +102,16 @@
 </div>
 
 <script>
+	var sessionCheck = 'false';
+	var noticeCheck = 'on';
 
 	// 프론트
     $(function(){
         // 팀 정보 팝업
         $('#teamInfo').on('click',function(){
-            teamListCall();
+        	if(sessionCheck){
+            	teamListCall();
+        	}
         });
         $('.close').on('click',function(){
             $('.popup').removeClass('on');
@@ -117,7 +121,9 @@
 
         // 알림
         $('#notice').on('click',function(){
-            noticeListCall();
+        	if(sessionCheck){
+	            noticeListCall();
+        	}
         });
         $('.noticeBox .close').on('click',function(){
             $('.noticeBox').removeClass('on');
@@ -125,10 +131,12 @@
 
         // 마이페이지 nav
         $('#myPage').on('click',function(){
-            $('.nav').stop(true, false).animate({
-                right:'0'
-            });
-            $('.nav').addClass('on');
+        	if(sessionCheck){
+	            $('.nav').stop(true, false).animate({
+	                right:'0'
+	            });
+	            $('.nav').addClass('on');
+        	}
         });
         $('.nav .close').on('click',function(){
             $('.nav').stop(true, false).animate({
@@ -136,14 +144,71 @@
             });
             $('.nav').removeClass('on');
         });
-
+        
     })
+	function numChk(){
+		var numChk = $('#noticeNum').html();
+		console.log(numChk);
+    	if(numChk <= 1){
+			$('#noticeNum').removeClass('on');
+		}
+	}
+	
+	// 로그인 체크
+	function sessionChk(){
+		$.ajax({
+			type : 'get', 
+			url : './session.ajax',
+			data : {},
+			dataType : 'json',
+			success : function(data){ 
+				console.log(data.sessionCk);
+				if(data.sessionCk == true){
+					sessionCheck = 'true';
+					drawInfo(data.info);
+				}else{
+					sessionCheck = 'false';
+					loginMsg();
+					location.href = '../login';
+				}
+				
+			}, 
+			error : function(error){
+				console.log(error);
+			}, 
+		});
+	}
 	
 	function loginMsg(){
 		alert('로그인이 필요한 서비스입니다.');
 	}
+	function drawInfo(info){
+		var content = '';
+		
+		content += '<li class="topCont">';
+		content += '<div class="profile">';
+		content += '<p class="nik"><a href="../mypage/profile_detail?id=' + info.id + '">' + info.id + '</a></p>';
+		content += '<span class="photo"><img src="../resources/img/icon/propile.jpg" alt=""></span>';
+		content += '</div>';
+		content += '<div class="point">';
+		content += '<p>포인트<span><a href="../mypage/point?id=' + info.id + '">' + info.point + '</a></span></p>';
+		content += '<a href="../logout.do">로그아웃</button>';
+		content += '</div>';
+		content += '</li>';
+		content += '<li class="cont">';
+		content += '<a href="../mypage/match_ask_list?id=' + info.id + '">신청 내역</a>';
+		content += '</li>';
+		content += '<li class="cont">';
+		content += '<a href="../mypage/report_list?id=' + info.id + '">신고 내역</a>';
+		content += '</li>';
+		content += '<li class="cont">';
+		content += '<a href="../mypage/like?id=' + info.id + '">찜 목록</a>';
+		content += '</li>';
+		
+		
+		$('#drawNav').html(content);
+	}
 	
-	var noticeCheck = 'on';
 	
 	$(document).ready(function(){
 		noticeListCall(noticeCheck);
@@ -153,25 +218,22 @@
     function teamListCall(){
 		$.ajax({
 			type : 'get', 
-			url : './team/list.ajax',
+			url : './header/list.ajax',
 			data : {},
 			dataType : 'json',
 			success : function(data){ 
-				
-				if(data.list != null){
+				console.log(data.list);
+				if(data.list != ''){
 					$('.popup').addClass('on');
 		            $('.curtain').addClass('on');
 		            $('html').addClass('on');
 					drawTeamList(data.list);
-				}else if(data.check != 1){
+				}else if(data.list == ''){
 					$('.popup').addClass('on');
 		            $('.curtain').addClass('on');
 		            $('html').addClass('on');
-					drawTeamList02();
-				}else if(data.check == 1){
-					alert(data.msg);
+		            drawTeamList02();
 				}
-				
 				
 				
 			}, 
@@ -188,7 +250,7 @@
 		for(item of list){
 			content += '<li>';
 			content += '<a href="team/info_list?team_idx=' + item.team_idx + '">';
-			content += '<span class="logo"><img src="resources/img/teamLogo/' + item.logo + '.jpg" alt="로고"></span>';
+			content += '<span class="logo"><img src="../resources/img/teamLogo/' + item.logo + '.jpg" alt="로고"></span>';
 			content += '<span class="teamNik">' + item.team_name + '</span>';
 			content += '</a>';
 			content += '</li>';
@@ -199,9 +261,7 @@
 	function drawTeamList02(){
 		var content = '';
 		
-		content += '<ul>';
 		content += '<li class="noTeam">팀이 없습니다.</li>';
-		content += '</ul>';
 		
 		$('#listCont').html(content);
 	}
@@ -215,19 +275,15 @@
 			dataType : 'json',
 			success : function(data){ 
 				
-				if(data.check != 1){
-					drawNoticeList(data.list);
-					drawCountList(data.count);
-					
-					if(on != 'on'){
-						$('.noticeBox').addClass('on');
-						
-					}
-				}else if(on != 'on'){
-					alert(data.msg);
-					
-				}
+				drawNoticeList(data.list);
+				drawCountList(data.count);
 				
+				console.log(data.list);
+				console.log(data.count);
+				
+				if(on != 'on'){
+					$('.noticeBox').addClass('on');
+				}
 				
 			}, 
 			error : function(error){
@@ -250,7 +306,7 @@
 			
 			content += '<p class="date">' + dateStr + '</p>';
 			content += '<p class="content">' + item.notice_content + '</p>';
-			content += '<button class="btn" onclick ="del(' + item.notice_idx + ');">확인</button>';
+			content += '<button class="btn" onclick ="del(' + item.notice_idx + '); numChk();">확인</button>';
 			content += '</li>';
 			
 		}
@@ -262,6 +318,10 @@
 	
 		content = count.notice_count;
 	
+		if(count.notice_count > 0){
+			$('#noticeNum').addClass('on');
+		}
+		
 		$('#noticeNum').html(content);
 	}
  	
