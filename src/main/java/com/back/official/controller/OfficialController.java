@@ -1,5 +1,6 @@
 package com.back.official.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -85,31 +86,37 @@ public class OfficialController {
 		return page;
 	}
 	
-	@RequestMapping(value = "/official/payment")
-	public String payment(HttpSession session, Model model, int fee) {
+	@RequestMapping(value = "/official/payment.ajax", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> payment(HttpSession session, Model model, int fee) {
 		logger.info("결제 시도");
 		logger.info("fee : {} ", fee);
-		String page = "redirect:/official";
 		String id = "";
-		int pay = 0;
+		Map<String, Object> map = new HashMap<String, Object>();
 		
 		if(session.getAttribute("loginId") != null) {
 			id = (String) session.getAttribute("loginId");
-			pay = officialService.compare(id);
+			int pay = officialService.compare(id);
+			map.put("pay", pay);
 		}else {
-			page = "../login";
 			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
 		}
 		
-		if(pay < fee) {
-			page = "../mypage/point_add";
-			model.addAttribute("msg2", "포인트가 부족합니다. 충전페이지로 이동할까요?");
-		}else {
-			model.addAttribute("msg2", "정말 예약하시겠습니까?");
-			model.addAttribute("pay", pay);
-		}
+		return map;
+	}
+	
+	@RequestMapping(value = "/official/use.ajax", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> use(HttpSession session, Model model, int fee, String idx) {
+		logger.info("결제 사용 확인");
+		logger.info("fee : {} ", fee);
+		logger.info("idx : {} ", idx);
+		String id = "";
 		
-		return page;
+		id = (String) session.getAttribute("loginId");
+		Map<String, Object> map = officialService.use(idx, id, fee);
+		
+		return map;
 	}
 	
 }

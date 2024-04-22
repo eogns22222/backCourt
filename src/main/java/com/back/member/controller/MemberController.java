@@ -43,8 +43,8 @@ public class MemberController {
 		if (loginId != null) {
 			session.setAttribute("loginId", loginId);
 			// 공식 경기리스트로 가는 주소
-//				page = "redirect:/oficial/match_list";
-			page = "redirect:/point.Go";
+			page = "redirect:/official";
+			//page = "redirect:/point.Go";
 		} else {
 			model.addAttribute("msg", "아이디 또는 비빌번호를 확인 해주세요");
 

@@ -81,14 +81,19 @@ public class OfficialService {
 	}
 
 	public int compare(String id) {
-		int pay = 0;
-		
-		pay = officialDAO.compare(id);
-		
-		logger.info("pay : {}", pay);
-		
-		return pay;
+		return officialDAO.compare(id);
 	}
+
+	public Map<String, Object> use(String idx, String id, int fee) {
+		int row = officialDAO.payMinus(id, fee);
+		int row2 = officialDAO.insertNotice(idx, id);
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("row", row);
+		result.put("row2", row2);
+		
+		return result;
+	}
+
 	
 }
 
