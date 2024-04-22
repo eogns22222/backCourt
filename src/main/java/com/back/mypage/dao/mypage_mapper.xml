@@ -38,12 +38,12 @@
 	
 	</delete>
 
-<!--  포인트 관련 쿼리  -->
+<!-- ============ 포인트 관련 쿼리 =============== -->
 <select id="point_list" resultType="com.back.mypage.dto.MypageDTO">
 	SELECT point_idx, point_date, point_change, point_state FROM point_list where id = #{param1}
 </select>
 
-<insert id="ChargingDo"> 
+<insert id="Charging_do"> 
 	INSERT into point_list(id,point_change,point_state)values(#{param1},#{param2},"충전")
 </insert>
 
@@ -52,11 +52,32 @@
 </insert>
 
 <select id="point" resultType="String"> 
-	SELECT ( (SELECT SUM(point_change) FROM point_list ps where id =#{param1} AND point_state ="충전")- SUM(point_change) ) as point FROM point_list pl where id=#{param1} AND point_state ="환급";
+	SELECT 
+		( (SELECT SUM(point_change) FROM point_list ps where id =#{param1} AND point_state ="충전") - 
+		SUM(point_change) ) as point 
+	FROM point_list pl where id=#{param1} AND point_state ="환급";
 </select>
 
 <select id="point_list_ajax" resultType="com.back.mypage.dto.MypageDTO">
-	SELECT point_idx, point_date, point_change, point_state FROM point_list where id = #{param1}
+	SELECT 
+		point_idx
+		,point_date
+		,point_change
+		,point_state 
+	FROM point_list where id = #{param1} ORDER BY point_idx DESC LIMIT #{param2} OFFSET #{param3}
 </select>
+
+<select id="point_allConut" resultType="Integer">
+	SELECT CEIL(COUNT(id)/#{param1}) AS pages FROM point_list where id = #{param2}
+</select>
+
+<update id="point_update">
+	UPDATE member set point = (SELECT 
+		(
+		(SELECT SUM(point_change) FROM point_list ps where id =#{param1} AND point_state ="충전")-
+		SUM(point_change)
+		)
+	FROM point_list pl where id=#{param1} AND point_state ="환급") where id=#{param1}
+</update>
 
 </mapper>
