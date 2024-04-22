@@ -4,6 +4,6 @@ import java.util.Map;
 
 public interface GuestDAO {
 
-//	int guestWrite(Map<String, Object> map);
+	int guestWrite(Map<String, Object> map);
 
 }

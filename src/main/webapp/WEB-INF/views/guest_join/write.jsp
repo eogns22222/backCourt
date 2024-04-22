@@ -45,13 +45,13 @@
 		<div class="content-wrapper">
 			<div class="content">모집 레벨 :</div>
 			<div class="radio-wrapper">
-				<input name="guest_level" type="radio" id="bronze" name="level" value="bronze">
+				<input type="radio" id="bronze" name="guest_level" value="bronze">
 					<label for="bronze">브론즈</label> 
-				<input type="radio" id="silver"name="level" value="silver">
+				<input type="radio" id="silver"name="guest_level" value="silver">
 				 	<label for="silver">실버</label>
-				<input type="radio" id="gold" name="level" value="gold">
+				<input type="radio" id="gold" name="guest_level" value="gold">
 				 	<label	for="gold">골드</label>
-				<input type="radio" id="platinum" name="level" value="platinum"> 
+				<input type="radio" id="platinum" name="guest_level" value="platinum"> 
 					<label for="platinum">플레티넘</label>
 			</div>
 		</div>
@@ -67,9 +67,10 @@
 		<div class="content-wrapper">
 			<div class="content">모집 성별 :</div>
 			<div class="radio-wrapper">
-				<input type="radio" id="male" name="guest_gender" value="male"> <label
-					for="male">남자</label> <input type="radio" id="female" name="gender"
-					value="female"> <label for="female">여자</label>
+				<input type="radio" id="male" name="guest_gender" value="male"> 
+				<label for="male">남자</label> 
+					<input type="radio" id="female" name="guest_gender"	value="female"> 
+					<label for="female">여자</label>
 			</div>
 		</div>
 		<div class="content-wrapper">
@@ -117,9 +118,9 @@ function addCommas(event) {
 	$(document).ready(function() {
 		$('#finish').click(function(event) {
 			// 필수 입력값을 확인하여 누락된 것이 있는지 확인
-			var level = $('input[name="level"]:checked').val();
+			var level = $('input[name="guest_level"]:checked').val();
 			var position = $('#position').val();
-			var gender = $('input[name="gender"]:checked').val();
+			var gender = $('input[name="guest_gender"]:checked').val();
 			var participants = $('.text').val();
 			var gameInfo = $('#game-content').val();
 			var fee = $('#feeInput').val();

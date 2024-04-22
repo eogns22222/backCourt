@@ -4,31 +4,31 @@
 >
 
 <mapper namespace="com.back.guest.dao.GuestDAO">
-<!-- 	<insert id="guestWrite" parameterType="map"> -->
-<!-- 		insert into guest_join ( -->
-<!-- 			id -->
-<!-- 			,court_booking_idx -->
-<!-- 			,team_idx -->
-<!-- 			,guest_position -->
-<!-- 			,guest_level -->
-<!-- 			,guest_gender -->
-<!-- 			,guest_to -->
-<!-- 			,guest_info -->
-<!-- 			,guest_fee -->
-<!-- 			,guest_state -->
-<!-- 		)values( -->
-<!-- 				#{id} -->
-<!-- 				,#{court_booking_idx} -->
-<!-- 				,#{team_idx} -->
-<!-- 				,#{guest_position} -->
-<!-- 				,#{guest_level} -->
-<!-- 				,#{guest_gender} -->
-<!-- 				,#{guest_to} -->
-<!-- 				,#{guest_info} -->
-<!-- 				,#{guest_fee} -->
-<!-- 				,#{guest_state} -->
-<!-- 			); -->
-<!-- 	</insert> -->
+	<insert id="guestWrite" parameterType="map">
+		insert into guest_join (
+			id
+			,court_booking_idx
+			,team_idx
+			,guest_position
+			,guest_level
+			,guest_gender
+			,guest_to
+			,guest_info
+			,guest_fee
+			,guest_state
+		)values(
+				#{id}
+				,#{court_booking_idx}
+				,#{team_idx}
+				,#{guest_position}
+				,#{guest_level}
+				,#{guest_gender}
+				,#{guest_to}
+				,#{guest_info}
+				,#{guest_fee}
+				,#{guest_state}
+			);
+	</insert>
 </mapper>
 
 

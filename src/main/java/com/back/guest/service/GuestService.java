@@ -14,9 +14,9 @@ public class GuestService {
 
 	Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired GuestDAO guestDAO;
-//	public int guestWrite(Map<String, Object> map) {
-//		logger.info("guest-service map={}",map);
-//		return guestDAO.guestWrite(map);
-//	}
+	public int guestWrite(Map<String, Object> map) {
+		logger.info("guest-service map={}",map);
+		return guestDAO.guestWrite(map);
+	}
 	
 }
