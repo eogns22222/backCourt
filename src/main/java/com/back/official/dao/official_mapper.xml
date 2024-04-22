@@ -179,7 +179,8 @@
 	<!-- 정보 조회 -->
 	<select id="info" resultType="com.back.official.dto.OfficialDTO">
 		SELECT
-			official_match_date
+			official_match_idx
+			,official_match_date
 		   	,official_match_start_time
 		   	,official_match_end_time
 		  	,official_match_level
@@ -209,11 +210,26 @@
 		and official_match_idx = #{param1}
 	</select>
 	
+	<!-- 내가 가진 포인트 조회 -->
 	<select id="compare" resultType="int">
 		select point
 			from member
 			where id = #{param1}
 	</select>
+	
+	<!-- 내가 가진 포인트에서 참가비 차감 -->
+	<update id="payMinus">
+		update member set point = point - #{param2} where id = #{param1};
+	</update>
+	
+	<!-- 신청내역에 추가 -->
+	<insert id="insertNotice">
+		insert into offcial_match_ask_list(id
+		,official_match_idx
+		,official_match_ask_state)values(#{param2}
+		,#{param1}
+		,"신청");
+	</insert>
 	
 </mapper>
 

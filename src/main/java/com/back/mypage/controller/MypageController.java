@@ -68,7 +68,7 @@ public class MypageController {
 		
 		
 		//포인트 충전 페이지 이동
-		@RequestMapping(value = "/point_add.Go")
+		@RequestMapping(value = "/point_add.go")
 		public String ponitAdd(Model model,HttpSession session) {
 			logger.info("포인트 충전 페이지 이동");
 			
