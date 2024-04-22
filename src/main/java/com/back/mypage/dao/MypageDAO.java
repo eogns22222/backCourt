@@ -7,18 +7,24 @@ import com.back.mypage.dto.MypageDTO;
 
 public interface MypageDAO {
 	
+// =========== 내 포인트 리스트 =============
+	
 	String report(String id);
 	
 	List<MypageDTO> point_list(String loginId);
 
-	void ChargingDo(String loginId, String charging);
+	void Charging_do(String loginId, String charging);
 
 	void PointMinus(String loginId, String minus);
 
 	String point(String loginId);
 	
-	List<MypageDTO> point_list_ajax(String loginId);
+	List<MypageDTO> point_list_ajax(String loginId, int currPage, int start);
 
+	Object point_allConut(int pageParCnt, String loginId);
+	
+	void point_update(String loginId);
+	
 // ============================================
 
 	int report(Map<String, Object> map);
@@ -29,5 +35,7 @@ public interface MypageDAO {
 	int jjimListCount(String id);
 
 	int jjimDel(int jjimidx);
+
+
 
 }

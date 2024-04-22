@@ -6,8 +6,8 @@
 <head>
 	<meta charset="UTF-8">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <link rel="stylesheet" href="./resources/css/common/reset.css" type="text/css">
-    <link rel="stylesheet" href="./resources/css/poin_add/point_add.css" type="text/css">
+    <link rel="stylesheet" href="../resources/css/common/reset.css" type="text/css">
+    <link rel="stylesheet" href="../resources/css/poin_add/point_add.css" type="text/css">
     <title>충전</title>
 </head>
 <body>
@@ -44,7 +44,7 @@ $('button').on('click',function(){
     //input에 있는 값을 가져온다
     console.log(tex);
     if(tex=='취소'){
-        location.href="point.Go";
+        location.href="point.go";
     }
 });
 </script>
