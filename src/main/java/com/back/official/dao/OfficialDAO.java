@@ -35,9 +35,12 @@ public interface OfficialDAO {
 	OfficialDTO addressInfo(String official_match_idx);
 
 	int compare(String id);
+
+	int payMinus(String id, int fee);
+
+	int insertNotice(String idx, String id);
+
 	
-
-
 }
 
 

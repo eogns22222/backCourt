@@ -62,7 +62,7 @@
                     <p class="tit">참가 신청 금액</p>
                     <p class="txt">
                         <span class="pee">${info.official_match_fee}</span>
-                        <a href="./payment?fee=${info.official_match_fee}" class="recoBtn">신청하기</a>
+                        <a href="javascript:;" class="recoBtn" onclick="payment(${info.official_match_fee})">신청하기</a>
                     </p>
                 </div>
             </div>
@@ -107,6 +107,63 @@
 	var msg = '${msg}';
 	if(msg != ''){
 		alert(msg);
+	}
+	
+	// 포인트 신청하기
+	function payment(fee) {
+		
+		$.ajax({
+			type:'POST'
+			,url:'./payment.ajax'
+			,data:{
+				'fee':fee
+			}
+			,dataType:'json'
+			,success:function(data){
+				var cf;
+				if(data.pay < fee){
+					cf = confirm("포인트가 부족합니다. 충전페이지로 이동할까요?");
+					if(cf){
+						location.href = '../point_add.go';
+					}
+				}else{
+					cf = confirm("예약하시겠습니까?");
+					if(cf){
+						if(${info.currentCount} == ${info.official_match_to}){
+							alert('인원 모집이 완료되었습니다.');
+						}else{
+							use(fee, ${info.official_match_idx});
+							alert('예약 완료되었습니다.');
+							location.href = '../official';
+						}
+					}
+				}
+				
+			}
+			,error:function(error){
+				console.log(error);
+			}
+		});
+	}
+	
+	function use(fee, idx){
+		$.ajax({
+			type:'POST'
+			,url:'./use.ajax'
+			,data:{
+				'fee':fee
+				,'idx':idx
+			}
+			,dataType:'json'
+			,success:function(data){
+				console.log(data.row);
+				console.log(data.row2);
+				
+			}
+			,error:function(error){
+				console.log(error);
+			}
+		});
 	}
 	
 	function recruitmentChk(){
