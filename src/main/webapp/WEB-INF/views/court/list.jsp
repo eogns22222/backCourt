@@ -8,18 +8,18 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="../resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
+<link rel="stylesheet" href="../resources/css/common/reset.css">
+<link rel="stylesheet" href="../resources/css/header/header.css">
 <style>
-	div{
-		height: 150;
-	}
-    table{
+    .courtListTable{
         border: 2px solid;
         border-collapse: collapse;
+        
     }
-    th{
+    .courtListTh{
         background-color: gainsboro;
     }
-    th,td{
+    .courtListTh,.courtListTd{
         border: 2px solid;
     padding: 10px 30px;
     text-align: center;
@@ -30,33 +30,30 @@
     }
    .courtJjim{
     	height: 50px;
-	width: auto;
+		width: auto;
     }
-	    tr:hover {
+	.courtListTr:hover {
 		background-color: lightgray;
 	}
 
     </style>
 </head>
 <body>
-    <select name="date">
-        <option value="">현재시간</option>
-        <option value=""></option>
-    </select>
+	<jsp:include page="../header/header.jsp"/>
     <select id="address">
     	<option value="">전체 지역</option>
         <!-- 원래는 반복문 돌리는게 나을꺼 같은데 -->
     </select>
     <br/>
     <br/>
-    <table>
+    <table class="courtListTable">
 		<thead>
 			<tr>
-				<th>구장 사진</th>
-				<th>구장 이름</th>
-				<th>지역</th>
-				<th>가격</th>
-				<th>찜</th>
+				<th class="courtListTh">구장 사진</th>
+				<th class="courtListTh">구장 이름</th>
+				<th class="courtListTh">지역</th>
+				<th class="courtListTh">가격</th>
+				<th class="courtListTh">찜</th>
 			</tr>
 		</thead>
 		<tbody id="list">
@@ -220,12 +217,12 @@
 			var img = item.first_img_name != null ? item.first_img_name+'.png':'no_image.png';
 			var jjim = item.jjim > 0 ? 'jjim.png':'no_jjim.png';
 			content +=
-				'<tr>'
-				+'<td><img class="courtImage"  src="../resources/img/court/'+img+'" alt="ImageCheck"></td>'
-				+'<td>'+item.court_name+'</td>'
-				+'<td>'+item.court_address.split(' ')[1]+'</td>'
-				+'<td>'+item.court_price+'</td>'
-				+'<td><img class="courtJjim" data-courtIdx="'+item.court_idx+'" src="../resources/img/court/'+jjim+'" alt="ImageCheck"></td>'
+				'<tr class="courtListTr">'
+				+'<td class="courtListTd"><img class="courtImage"  src="../resources/img/court/'+img+'" alt="ImageCheck"></td>'
+				+'<td class="courtListTd">'+item.court_name+'</td>'
+				+'<td class="courtListTd">'+item.court_address.split(' ')[1]+'</td>'
+				+'<td class="courtListTd">'+item.court_price+'</td>'
+				+'<td class="courtListTd"><img class="courtJjim" data-courtIdx="'+item.court_idx+'" src="../resources/img/court/'+jjim+'" alt="ImageCheck"></td>'
 				+'</tr>';
 		}
 		$('#list').html(content);

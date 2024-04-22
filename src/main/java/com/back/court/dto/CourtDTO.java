@@ -12,6 +12,7 @@ public class CourtDTO {
 	private int jjim;
 	
 	
+	
 	public int getCourt_idx() {
 		return court_idx;
 	}
