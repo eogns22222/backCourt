@@ -31,20 +31,22 @@ public class GuestController {
 	}
 	
 	@RequestMapping(value = "/guest_join/write.do", method = RequestMethod.POST)
-	public String guestWrite(String guest_info, String guest_level,
+	public String guestWrite(String booking_idx, String guest_info, String guest_level,
 			String guest_position, String guest_gender, String guest_to, String guest_fee){
-		logger.info("write content:"+guest_info
+		logger.info("guest_info:"+guest_info
 				+" guest_level: "+guest_level
 				+" guest_position : "+guest_position
 				+" guest_gender : "+guest_gender
 				+" guest_to : "+guest_to
-				+" guest_fee : "+guest_fee);
+				+" guest_fee : "+guest_fee
+				+" court_booking : "+ booking_idx);
 		String page = "/guest_join/write";
-		 // 나중에 팀모집글에서 들어올 팀장아이디 get session 하기 
+		 // 아이디 수정필요
 		String id = "admin";
-		 // 구장찾기에서 불러온 코트번호, 지역명, 날짜, 구장명으로 변경해주기
-		int court_booking_idx = 3;
-		int team_idx = 14;
+		int court_booking_idx = Integer.parseInt(booking_idx);
+		// 팀idx 수정 필요
+		int team_idx = guestService.callmyteam(id);
+		logger.info("team_idx : "+team_idx);
 		Map<String, Object> map = new HashMap<>();
 		String guestFee = guest_fee.replace(",", "");
 		logger.info(guestFee);
@@ -65,7 +67,6 @@ public class GuestController {
 			page = "index";
 		}
 		
-		
 		return page;
 	}
 	
@@ -74,17 +75,17 @@ public class GuestController {
 	public Map<String, Object> courtList(HttpSession session, Model model){
 		logger.info("courtlist 출력");
 		
-		String id = "";
+		String id = "admin";
 		
 		Map<String, Object> map = new HashMap<String, Object>();
+		List<GuestDTO> list = guestService.courtList(id);
+		map.put("list", list);
 		
-		if(session.getAttribute("loginId") != null) {
-			id = (String) session.getAttribute("loginId");
-			logger.info("loginId : ", id);
-			
-			List<GuestDTO> list = guestService.courtList(id);
-			map.put("list", list);
-		}
+//		if(session.getAttribute("loginId") != null) {
+//			id = (String) session.getAttribute("loginId");
+//			logger.info("loginId : ", id);
+//			
+//		}
 		
 		
 		return map;

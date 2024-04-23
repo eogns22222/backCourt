@@ -31,12 +31,13 @@
 	</insert>
 	
 	<select id="courtList" resultType="com.back.guest.dto.GuestDTO">
-		SELECT
-			court_idx,
-			booking_date,
-			booking_start_time,
-			booking_end_time
-		FROM court_booking WHERE id = 'admin'
+		SELECT cb.court_booking_idx, c.court_name, c.court_address, 
+		CONCAT(cb.booking_date, '/', cb.booking_start_time, '~', cb.booking_end_time) AS bookingDate
+		FROM court_booking cb JOIN court c ON cb.court_idx = c.court_idx WHERE id = #{param1}
+	</select>
+	
+	<select id="callmyteam" resultType="int">
+		SELECT team_idx from team where id = #{param1} limit 1; 
 	</select>
 </mapper>
 

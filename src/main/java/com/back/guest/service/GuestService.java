@@ -20,9 +20,13 @@ public class GuestService {
 		logger.info("guest-service map={}",map);
 		return guestDAO.guestWrite(map);
 	}
+	
 	public List<GuestDTO> courtList(String id) {
-		
 		return guestDAO.courtList(id);
+	}
+
+	public int callmyteam(String id) {
+		return guestDAO.callmyteam(id);
 	}
 	
 }

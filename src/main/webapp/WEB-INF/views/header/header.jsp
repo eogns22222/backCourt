@@ -182,6 +182,7 @@
 	function loginMsg(){
 		alert('로그인이 필요한 서비스입니다.');
 	}
+	
 	function drawInfo(info){
 		var content = '';
 		
