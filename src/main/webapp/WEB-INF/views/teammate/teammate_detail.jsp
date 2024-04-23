@@ -15,10 +15,10 @@
     <div class="teammateinfocont">
         <div class="flexBox">
             <div class="logo">
-                <img class="teammateLogo" src="../resources/img/teamLogo/'+${teammateDetail.logo}+'.jpg" alt="teammateLogo">
+                <img class="teammateLogo" src="../resources/img/teamLogo/${teammateDetail.logo}.jpg" alt="teammateLogo">>
             </div>
             <div>
-                <a href="javascript:;" class="teammatereportBtn" onclick="teammateReport()">신고하기</a>
+                <a href="javascript:;" class="teammateReportBtn">신고하기</a>
                 <h3 class="teamName">${teammateDetail.team_name}</h3>
                 <p class="teamLeader"><span>${teammateDetail.id}</span></p>
             </div>
@@ -29,18 +29,20 @@
         <p class="teammateGender">모집 성별: <span>${teammateDetail.join_to_gender}</span></p>
         <p class="teammatePositions">모집 포지션: <span>${teammateDetail.join_team_position}</span></p>
         <p class="tj">
-            <a href="../report" class="teammatejoinBtn" onclick="teammateJoin()">가입 신청하기</a>
+            <a href="" class="teammatejoinBtn" onclick="teammateJoin()">가입 신청하기</a>
         </p>
     </div>
+  
     <div class="teamDescriptionBox">
-        <p>팀원모집글의 설명 내용내용</p>
+        <p>${teammateDetail.join_to_content}</p>
     </div>
 </div>
 </body>
 <script>
-function teammateReport(){
+$('.teammateReportBtn').on('click',function(){
+	window.location.href = '../mypage/report.go?join_team_idx='+${teammateDetail.join_team_idx}+'&reportWirteType="신고하기"';
+});
 
-}
 function teammateJoin(){
 	
 }

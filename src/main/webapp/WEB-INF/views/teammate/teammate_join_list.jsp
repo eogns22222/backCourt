@@ -90,13 +90,26 @@
    
 </body>
 <script>
+var sessionChk2 = 'on';
+sessionChk2 = '${chk}';
+console.log(sessionChk2);
+
 var currentPage = 1;
 var filterFlag = false;
 var searchFlag = false;
 
-var sessionChk2 = 'on';
-sessionChk2 = '${chk}';
-console.log(sessionChk2);
+
+$(document).on('click', 'td', function(event) {
+    // 클릭된 요소가 courtJjim 이미지를 포함하는지 확인
+    var join_team_idx = $(this).closest('tr').find('.num').html(); // 각 행에서 join_team_idx 값을 가져옴
+    console.log(join_team_idx);  // join_team_idx 확인
+	if(sessionChk2 == 'on'){
+	console.log('a');
+    window.location.href = './teammate_detail.go?join_team_idx=' + join_team_idx; // 상세 페이지로 이동
+	}else{
+	window.location.href = '../login';
+	}
+});
 
 $(document).ready(function(){ // html 문서가 모두 읽히면 되면(준비되면) 다음 내용을 실행 해라
    callList(currentPage);
@@ -238,7 +251,7 @@ function showList(list){
 		}
  		if(sessionChk2 == 'on'){
 			console.log('a');
-			link = './teammate_join_list.go?join_team_idx=' + item.join_team_idx;
+			link = './teammate_detail.go?join_team_idx=' + item.join_team_idx;
 		}else{
 			link = '../login';
 		}

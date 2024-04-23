@@ -97,11 +97,16 @@ public Map<String, Object> searchList(String teammateSearchCategory, String team
 	return result;
 }
 
-public void detail(String join_team_idx, Model model) {
-	
-	
-	TeammateDTO teammateDetail = teammateDAO.detail(join_team_idx);
+public void teammateDetail(String join_team_idx, Model model) {
+	logger.info("팀원모집디테일서비스");
+	TeammateDTO teammateDetail = teammateDAO.teammateDetail(join_team_idx);
 	model.addAttribute("teammateDetail", teammateDetail);
+}
+
+public String compare(String id, String leaderId, String join_team_idx) {
+	logger.info(join_team_idx);
+	logger.info(leaderId);
+	return teammateDAO.compare(id, leaderId,join_team_idx);
 }
    
    

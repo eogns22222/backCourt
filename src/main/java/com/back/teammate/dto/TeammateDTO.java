@@ -5,7 +5,7 @@ public class TeammateDTO {
    private int join_team_idx;
    private int team_idx;
    private int join_team_to;
-   private String join_to_content;
+   private String join_team_content;
    private String join_team_level;
    private String join_to_gender;
    private String join_team_position;
@@ -36,10 +36,10 @@ public class TeammateDTO {
       this.join_team_to = join_team_to;
    }
    public String getJoin_to_content() {
-      return join_to_content;
+      return join_team_content;
    }
-   public void setJoin_to_content(String join_to_content) {
-      this.join_to_content = join_to_content;
+   public void setJoin_to_content(String join_team_content) {
+      this.join_team_content = join_team_content;
    }
    public String getJoin_team_level() {
 		return join_team_level;

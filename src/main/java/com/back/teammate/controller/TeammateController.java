@@ -1,5 +1,6 @@
 package com.back.teammate.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -44,7 +45,7 @@ public class TeammateController {
       @RequestMapping(value="/teammate/teammatePage.ajax", method = RequestMethod.POST)
       @ResponseBody // response 객체로 반환
       public Map<String, Object> callList(String currentPage, String address, String position, String level) {
-         logger.info(position);
+         logger.info("페이징컨트롤");
          int page = Integer.parseInt(currentPage);      
          Map<String, Object> map = teammateService.pageList(page, address, position, level);
          
@@ -63,21 +64,39 @@ public class TeammateController {
   		return map;
   	}
   	// 팀원모집 상세보기
-  	@RequestMapping(value = "/teammate/teammate_detail.go", method = RequestMethod.GET)
+  	@RequestMapping(value = "/teammate/teammate_detail.go")
   	public String detail(HttpSession session, Model model, String join_team_idx) {
   		logger.info("팀원모집상세보기입장이요");
   		logger.info("join_team_idx : {}", join_team_idx);
   		String page = "../login";
   		
   		if(session.getAttribute("loginId") != null) {
-			page = "/teammate/teammate_detail";
-			teammateService.detail(join_team_idx, model);
+			page = "teammate/teammate_detail";
+			teammateService.teammateDetail(join_team_idx, model);
 		}else {
 			model.addAttribute("msg","로그인이 필요한 서비스입니다.");
 		}
   		
   		return page;
   	}
-      
+	@RequestMapping(value = "/teammate/teammateReport.ajax", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> payment(HttpSession session, Model model, String leaderId, String join_team_idx) {
+		logger.info("팀원모집 신고");
+		logger.info("leaderId : {} ", leaderId);
+		logger.info("join_team_idx : {} ", join_team_idx);
+		String id = "";
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		if(session.getAttribute("loginId") != null) {
+			id = (String) session.getAttribute("loginId");
+			String teammateReport = teammateService.compare(id, leaderId, join_team_idx);
+			map.put("teammateReport", teammateReport);
+		}else {
+			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
+		}
+		
+		return map;
+	}
    
 }

@@ -299,7 +299,7 @@
 		 WHERE t.id LIKE CONCAT('%', #{param1}, '%')
 	</select>
 	
-	<select id="detail" resultType="com.back.teammate.dto.TeammateDTO">
+	<select id="teammateDetail" resultType="com.back.teammate.dto.TeammateDTO">
 	SELECT
 		t.logo
 		,t.team_name
@@ -309,8 +309,10 @@
 		,tj.join_team_gender
 		,tj.join_team_position
 		,tj.join_team_content
-	FROM team t, team_join tj
-	WHERE #{param1}
+	FROM team t
+	JOIN team_join tj
+	ON t.team_idx = tj.team_idx
+	WHERE tj.join_team_idx = #{param1}
 	</select>
 	
 </mapper>
