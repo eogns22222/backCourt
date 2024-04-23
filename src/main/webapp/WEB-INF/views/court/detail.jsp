@@ -124,13 +124,12 @@
     </tr>
 </table>
 <input id="courtDetailReport" type="button" value="문의하기"/>
-
 <script>
     var courtIdx = ${courtIdx};
     var courtDetailTime = '';
     var currentDate = new Date();
     var formattedDate = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1).toString().padStart(2, '0') + "-" + currentDate.getDate().toString().padStart(2, '0');
-
+	
     var selectedId = '';
     $('#courtDetailDate').val(formattedDate);
     $('#courtDetailReport').on('click',function(){
@@ -139,13 +138,13 @@
     $('.menu').css('display','none');
     $('.courtDetailTimeBtn:not([disabled])').click(function() {
     	selectedId = $(this).attr('id');
-        // 모든 버튼의 배경색을 하늘색으로 초기화합니다.
+        // 모든 버튼의 배경색을 하늘색으로 초기화
         $('.courtDetailTimeBtn:not([disabled])').not(this).css('background-color', 'skyblue');
 
-        // 클릭된 버튼의 배경색을 검정색으로 변경합니다.
+        // 클릭된 버튼의 배경색을 검정색으로 변경
         $(this).css('background-color', 'black');
         courtDetailTime = $(this).attr('id');
-       	console.log(courtDetailTime);
+       	// console.log(courtDetailTime);
     });
     $('#courtDetailBooking').on('click',function(){
 
@@ -164,11 +163,14 @@
 					}
 					, dataType:'json'
 					, success:function(data){
-						if(!data.money){
+						console.log(data.money);
+                        console.log('------');
+                        console.log(data.result);
+						if(data.money == false){
 							if(confirm('포인트가 부족합니다. 충전하시겠습니까?')){
 								window.location.href = '../mypage/point_add.go';
 							}
-						}else if(!data.result){
+						}else if(data.result == false){
 							alert('예약에 실패했습니다.');
 						}else{
 							alert('예약이 완료 되었습니다.');
@@ -197,11 +199,11 @@
             todayHighlight: true, // 오늘 날짜 강조 표시
             startDate: 'today', // 오늘 이후의 날짜만 선택 가능
         });
+        callDetail();
     });
 
    
    
-    callDetail();
     function callDetail(){
         $.ajax({
             type:'post'
@@ -212,22 +214,36 @@
             }
             , dataType:'json'
             , success:function(data){
-                console.log(data);
+                disabledButton();
+                // console.log(data);
                 $('#courtDetailName').html(data.detail[0].courtName);
                 $('#courtDetailInfo').val(data.detail[0].courtInfo);
                 $('#courtDetailPrice').html(data.detail[0].courtPrice);
                 $('#courtDetailAddress').html(data.detail[0].courtAddress);
                 var content = '';
-                
-                for(item of data.fileName){
-                	content += '<div class="swiper-slide"><img src="../resources/img/court/'+item+'.png" alt="Image"></div>';
+                if(data.fileName.length > 0 ){
+	                for(item of data.fileName){
+	                	content += '<div class="swiper-slide"><img src="../resources/img/court/'+item+'.png" alt="Image"></div>';
+	                }
+                	
+                }else{
+                	content += '<div class="swiper-slide"><img src="../resources/img/court/no_image.png" alt="Image"></div>';
                 }
-                
+
                 $('#swiperImage').html(content);
-                
+                if(data.bookingStartTime.length > 0){
+                	for(item of data.bookingStartTime){
+			            $('.courtDetailTimeBtn').each(function() {
+			                if($(this).attr('id') == item){
+			                    $(this).prop('disabled', true);
+			                    $(this).css('background-color','gray');
+			                }
+			            });
+                	}
+                }
+
                 var swiper = new Swiper('.swiper-container', {
-                    // 다양한 옵션 설정, 
-                    // 아래에서 설명하는 옵션들은 해당 위치에 들어갑니다!!
+                    
                     slidesPerView : 'auto',
                     autoplay: {
                     	delay:5000
@@ -244,36 +260,29 @@
                    	},
                 })
 
-
-                
-                var currentHour = currentDate.getHours();
-                console.log('시간블럭 비활성 시작');
-                $.each(data.bookingStartTime, function(index, item) {
-                    $('.courtDetailTimeBtn').each(function() {
-                    	
-	                   	var thisHour = $(this).attr('id');
-	                   	
-                    	if($('#courtDetailDate').val() == formattedDate){
-	                        if (thisHour == item || thisHour < currentHour + 1) {
-	                            $(this).prop('disabled', true);
-	                            $(this).css('background-color', 'gray');
-	                        }
-                    	}else{
-	                        if (thisHour == item) {
-	                            $(this).prop('disabled', true);
-	                            $(this).css('background-color', 'gray');
-	                        }
-                    	}
-                    });
-                });
-                
-
             }
             , error:function(error){
 
             }
         });
     }
+
+    function disabledButton(){
+        var nowHours = currentDate.getHours();
+        var nowDate = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1).toString().padStart(2, '0') + "-" + currentDate.getDate().toString().padStart(2, '0');
+    	console.log(nowDate);
+        if($('#courtDetailDate').val() == nowDate){
+	        if(nowHours > 0){
+	            $('.courtDetailTimeBtn').each(function() {
+	                if($(this).attr('id') <= nowHours){
+	                    $(this).prop('disabled', true);
+	                    $(this).css('background-color','gray');
+	                }
+	            });
+	        }
+        }
+    }
+    
 </script>
 </body>
 </html>
