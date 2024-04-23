@@ -16,24 +16,31 @@ import com.back.admin.service.AdminCourtService;
 public class AdminCourtController {
 
 	Logger logger = LoggerFactory.getLogger(getClass());
-	@Autowired AdminCourtService adminCourtService;
-	
+	@Autowired
+	AdminCourtService adminCourtService;
+
 	@RequestMapping(value = "/admin/courtList.go")
 	public String listGo() {
 		return "/admin/court_list";
 	}
-	
+
 	@RequestMapping(value = "/admin/courtList.ajax", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> callList(String currentPage, String address,String searchCategory, String searchWord, String searchFlag) {
+	public Map<String, Object> callList(String currentPage, String address, String searchCategory, String searchWord,
+			String searchFlag) {
 		logger.info("listCall / currentPage = {} / address = {} / ", currentPage, address);
 		logger.info(searchFlag);
 		int page = Integer.parseInt(currentPage);
-		if(searchFlag.equals("true")) {
+		if (searchFlag.equals("true")) {
 			return adminCourtService.searchList(searchCategory, searchWord, page, address);
-		}else {
-			return adminCourtService.list(page, address);			
+		} else {
+			return adminCourtService.list(page, address);
 		}
 
+	}
+
+	@RequestMapping(value = "/admin/courtWrite.go")
+	public String WriteGo() {
+		return "/admin/court_register";
 	}
 }

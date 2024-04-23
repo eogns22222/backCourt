@@ -78,14 +78,14 @@ public class CourtController {
 		return "court/detail";
 	}
 
-	@RequestMapping(value = "/court/detail.ajax")
+	@RequestMapping(value = "/court/detail.ajax", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> detail(String courtIdx, String selectDate) {
 		logger.info("detail.ajax courtIdx = {}", courtIdx);
 		return courtService.detail(courtIdx, selectDate);
 	}
 
-	@RequestMapping(value = "/court/booking.ajax")
+	@RequestMapping(value = "/court/booking.ajax", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Boolean> booking(String courtStartTime, String courtIdx, String courtPrice, String courtDate) {
 
