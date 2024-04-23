@@ -2,6 +2,7 @@ package com.back.guest.dto;
 
 public class GuestDTO {
 	
+	// 게스트 글작성
 	private int guest_idx;
 	private String id;
 	private int court_booking_idx;
@@ -13,7 +14,6 @@ public class GuestDTO {
 	private String guest_info;
 	private int guest_fee;
 	private String guest_state;
-	
 	
 	public int getGuest_idx() {
 		return guest_idx;
@@ -80,6 +80,44 @@ public class GuestDTO {
 	}
 	public void setGuest_state(String guest_state) {
 		this.guest_state = guest_state;
+	}
+	
+	// 구장찾기
+	private int court_idx;
+	private String booking_date;
+	private String booking_start_time;
+	private String booking_end_time;
+	private String booking_state;
+	
+	public int getCourt_idx() {
+		return court_idx;
+	}
+	public void setCourt_idx(int court_idx) {
+		this.court_idx = court_idx;
+	}
+	public String getBooking_date() {
+		return booking_date;
+	}
+	public void setBooking_date(String booking_date) {
+		this.booking_date = booking_date;
+	}
+	public String getBooking_start_time() {
+		return booking_start_time;
+	}
+	public void setBooking_start_time(String booking_start_time) {
+		this.booking_start_time = booking_start_time;
+	}
+	public String getBooking_end_time() {
+		return booking_end_time;
+	}
+	public void setBooking_end_time(String booking_end_time) {
+		this.booking_end_time = booking_end_time;
+	}
+	public String getBooking_state() {
+		return booking_state;
+	}
+	public void setBooking_state(String booking_state) {
+		this.booking_state = booking_state;
 	}
 	
 }

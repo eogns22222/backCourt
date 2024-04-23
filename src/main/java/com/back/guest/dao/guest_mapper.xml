@@ -29,6 +29,15 @@
 				,#{guest_state}
 			);
 	</insert>
+	
+	<select id="courtList" resultType="com.back.guest.dto.GuestDTO">
+		SELECT
+			court_idx,
+			booking_date,
+			booking_start_time,
+			booking_end_time
+		FROM court_booking WHERE id = 'admin'
+	</select>
 </mapper>
 
 

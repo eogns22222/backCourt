@@ -33,7 +33,7 @@
 		</div>
 		<div class="content-wrapper">
 			<div class="content">구장명 :</div>
-			<button class="find-button">구장 찾기</button>
+			<button type="button" id="findCourtButton" class="find-button">구장 찾기</button>
 		</div>
 		<div class="content-wrapper">
 			<div class="content">경기정보 :</div>
@@ -69,8 +69,8 @@
 			<div class="radio-wrapper">
 				<input type="radio" id="male" name="guest_gender" value="male"> 
 				<label for="male">남자</label> 
-					<input type="radio" id="female" name="guest_gender"	value="female"> 
-					<label for="female">여자</label>
+				<input type="radio" id="female" name="guest_gender"	value="female"> 
+				<label for="female">여자</label>
 			</div>
 		</div>
 		<div class="content-wrapper">
@@ -94,27 +94,37 @@
 		</div>
 		</form>
 	</div>
+	<!-- 팀 정보 팝업 -->
+    <div id="courtPopup" class="popup">
+        <a href="#" id="closePopup" class="closePopup"><img src="../resources/img/icon/close.png" alt=""></a>
+        <div class="popWrap">
+            <h1>구장 리스트</h1>
+            <div class="courts">
+                <ul id="courts">
+                </ul>
+            </div>
+        </div>
+    </div>
 </body>
 <script>
-//textarea 값을 초기화함
-window.onload = function () {
-    document.getElementById("game-content").value = "";
-};
+	//textarea 값을 초기화함
+	window.onload = function () {
+	    document.getElementById("game-content").value = "";
+	};
+	
+	// 참가비 text박스에 숫자만입력하고, 세자리 수마다 컴마 추가
+	function addCommas(event) {
+	    // 입력된 값에서 쉼표 제거
+	    let value = event.target.value.replace(/,/g, '');
+	    // 숫자 이외의 문자 제거
+	    value = value.replace(/\D/g, '');
+	    // 세 자리마다 쉼표 추가
+	    value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+	    // 입력된 값 업데이트
+	    event.target.value = value;
+	}
 
-// 참가비 text박스에 숫자만입력하고, 세자리 수마다 컴마 추가
-function addCommas(event) {
-    // 입력된 값에서 쉼표 제거
-    let value = event.target.value.replace(/,/g, '');
-    // 숫자 이외의 문자 제거
-    value = value.replace(/\D/g, '');
-    // 세 자리마다 쉼표 추가
-    value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    // 입력된 값 업데이트
-    event.target.value = value;
-}
-
-// 작성완료 시 폼 제출
-
+	// 작성완료 시 폼 제출
 	$(document).ready(function() {
 		$('#finish').click(function(event) {
 			// 필수 입력값을 확인하여 누락된 것이 있는지 확인
@@ -126,9 +136,14 @@ function addCommas(event) {
 			var fee = $('#feeInput').val();
 			var errorMessage = "";
 
+			// 경기 정보 입력 여부 확인
+			if (!gameInfo) {
+				errorMessage += "경기 정보를 입력하세요.\n";
+			}
+			
 			// 레벨 선택 여부 확인
 			if (!level) {
-				errorMessage += "레벨을 선택하세요.\n";
+				errorMessage += "모집 레벨을 선택하세요.\n";
 			}
 
 			// 모집 포지션 선택 여부 확인
@@ -138,7 +153,7 @@ function addCommas(event) {
 
 			// 성별 선택 여부 확인
 			if (!gender) {
-				errorMessage += "성별을 선택하세요.\n";
+				errorMessage += "모집 성별을 선택하세요.\n";
 			}
 
 			// 모집 인원 입력 여부 확인
@@ -146,14 +161,10 @@ function addCommas(event) {
 				errorMessage += "모집 인원을 입력하세요.\n";
 			}
 
-			// 경기 정보 입력 여부 확인
-			if (!gameInfo) {
-				errorMessage += "경기 정보를 입력하세요.\n";
-			}
 
 			// 참가비 입력 여부 확인
 			if (!fee) {
-				errorMessage += "참가비를 입력하세요.\n";
+				errorMessage += "게스트 참가비를 입력하세요.\n";
 			}
 
 			// 필수 입력값이 누락된 경우 알림창 표시
@@ -184,5 +195,34 @@ function addCommas(event) {
 			}
 		});
 	});
+
+    // "구장 찾기" 버튼 클릭 시 AJAX를 통해 구장 리스트를 가져와서 화면에 표시
+    $(document).ready(function() {
+            $('#findCourtButton').click(function() {
+                $.ajax({
+                    url: 'courtlist.ajax',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        // AJAX 요청이 성공했을 때 동작할 코드
+                        console.log(data.list);
+                        var courtList = $('#courts');
+                        courtList.empty(); // 기존 리스트를 비움
+                        $.each(data, function(index, court) {
+                            courtList.append('<li>' + court.name + '</li>');
+                        });
+                        $('#courtPopup').show(); // 구장 리스트를 보여줌
+                    },
+                    error: function(error) {
+                        console.error(error);    
+                        alert('구장 리스트를 불러오는 데 실패했습니다.');
+                    }
+                });
+            });
+        });
+    
+	    $('#closePopup').click(function() {
+	        $('#courtPopup').hide();
+	    });
 </script>
 </html>

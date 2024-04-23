@@ -1,6 +1,7 @@
 package com.back.guest.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -12,7 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.back.guest.dto.GuestDTO;
 import com.back.guest.service.GuestService;
 
 @Controller
@@ -65,4 +68,27 @@ public class GuestController {
 		
 		return page;
 	}
+	
+	@RequestMapping(value = "/guest_join/courtlist.ajax", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> courtList(HttpSession session, Model model){
+		logger.info("courtlist 출력");
+		
+		String id = "";
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		if(session.getAttribute("loginId") != null) {
+			id = (String) session.getAttribute("loginId");
+			logger.info("loginId : ", id);
+			
+			List<GuestDTO> list = guestService.courtList(id);
+			map.put("list", list);
+		}
+		
+		
+		return map;
+
+	}
+	
 }
