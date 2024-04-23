@@ -26,28 +26,36 @@ public class TeammateService {
       int start = (page - 1) * 10;
       
       if (address.equals("") == true && position.equals("") == true && level.equals("") == true) {
+    	  logger.info("1");
           list = teammateDAO.list(start);
           result.put("totalPage", teammateDAO.allTeammateCount());
       } else if (address.equals("") == true && position.equals("") == true && level.equals("") == false) {
-          list = teammateDAO.listFilterLevel(start ,level);
+    	  logger.info("2");
+    	  list = teammateDAO.listFilterLevel(start ,level);
           result.put("totalPage", teammateDAO.levelFilteringTeammateCount(level));
       } else if (address.equals("") == true && position.equals("") == false && level.equals("") == true) {
-          list = teammateDAO.listFilterPosition(start ,position);
+    	  logger.info("3");
+    	  list = teammateDAO.listFilterPosition(start ,position);
           result.put("totalPage", teammateDAO.positionFilteringTeammateCount(position));
       } else if (address.equals("") == true && position.equals("") == false && level.equals("") == false) {
-          list = teammateDAO.listFilterPosotionLevel(start ,position,level);
+    	  logger.info("4");
+    	  list = teammateDAO.listFilterPosotionLevel(start ,position,level);
           result.put("totalPage", teammateDAO.positionLevelFilteringTeammateCount(position,level));
       } else if (address.equals("") == false && position.equals("") == true && level.equals("") == true) {
-          list = teammateDAO.listFilterAddress(start ,address);
+    	  logger.info("5");
+    	  list = teammateDAO.listFilterAddress(start ,address);
           result.put("totalPage", teammateDAO.addressFilteringTeammateCount(address));      
       } else if (address.equals("") == false && position.equals("") == true && level.equals("") == false) {
-          list = teammateDAO.listFilterAddressLevel(start ,address, level);
+    	  logger.info("6");
+    	  list = teammateDAO.listFilterAddressLevel(start ,address, level);
           result.put("totalPage", teammateDAO.addressLevelFilteringTeammateCount(address, level));
       } else if (address.equals("") == false && position.equals("") == false && level.equals("") == true) {
-          list = teammateDAO.listFilterAddressPosition(start ,address, position);
+    	  logger.info("7");
+    	  list = teammateDAO.listFilterAddressPosition(start ,address, position);
           result.put("totalPage", teammateDAO.addressPositionFilteringTeammateCount(address, position));
       } else if (address.equals("") == false && position.equals("") == false && level.equals("") == false) {
-          list = teammateDAO.listFilterAddressPositionLevel(start ,address, position, level);
+    	  logger.info("8");
+    	  list = teammateDAO.listFilterAddressPositionLevel(start ,address, position, level);
           result.put("totalPage", teammateDAO.allFilteringTeammateCount(address, position,level));
       }
 			

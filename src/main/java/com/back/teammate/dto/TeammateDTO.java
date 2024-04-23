@@ -6,9 +6,9 @@ public class TeammateDTO {
    private int team_idx;
    private int join_team_to;
    private String join_to_content;
-   private String join_to_level;
+   private String join_team_level;
    private String join_to_gender;
-   private String join_to_position;
+   private String join_team_position;
 
    
    private String team_name;
@@ -41,24 +41,24 @@ public class TeammateDTO {
    public void setJoin_to_content(String join_to_content) {
       this.join_to_content = join_to_content;
    }
-   public String getJoin_to_level() {
-      return join_to_level;
-   }
-   public void setJoin_to_level(String join_to_level) {
-      this.join_to_level = join_to_level;
-   }
+   public String getJoin_team_level() {
+		return join_team_level;
+	}
+	public void setJoin_team_level(String join_team_level) {
+		this.join_team_level = join_team_level;
+	}
    public String getJoin_to_gender() {
       return join_to_gender;
    }
    public void setJoin_to_gender(String join_to_gender) {
       this.join_to_gender = join_to_gender;
    }
-   public String getJoin_to_position() {
-      return join_to_position;
-   }
-   public void setJoin_to_position(String join_to_position) {
-      this.join_to_position = join_to_position;
-   }
+   public String getJoin_team_position() {
+		return join_team_position;
+	}
+	public void setJoin_team_position(String join_team_position) {
+		this.join_team_position = join_team_position;
+	}
    public String getTeam_name() {
       return team_name;
    }
@@ -83,4 +83,5 @@ public String getLogo() {
 public void setLogo(String logo) {
 	this.logo = logo;
 }
+
 }

@@ -4,8 +4,9 @@
 <head>
 <meta charset="UTF-8">
 <title>팀원 리스트</title>
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="../resources/css/common/common.css" type ="text/css">
-<!-- <link rel="stylesheet" href="../resources/css/common/reset.css" type ="text/css"> -->
+<link rel="stylesheet" href="../resources/css/common/reset.css" type ="text/css">
 <link rel="stylesheet" href="../resources/css/header/header.css" type ="text/css">
 <link rel="stylesheet" href="../resources/css/teammate/teammate.css" type ="text/css">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -21,9 +22,9 @@
     <!-- 포지션 -->
     <select id="teamjoinpos">
         <option value="">전체 포지션</option>
-        <option value="센터">Center</option>
-        <option value="가드">Guard</option>
-        <option value="포워드">Forward</option>
+        <option value="Center">Center</option>
+        <option value="Guard">Guard</option>
+        <option value="Forward">Forward</option>
     </select>
     <!-- 레벨 -->
     <select id="teamjoinlevel">
@@ -158,8 +159,7 @@ function callList(currentPage) {
        }
        ,dataType:'json'
        ,success:function(data){
-          /* console.log(data.list); */
-          console.log(data.totalPage);
+          console.log(data.list);
           showList(data.list);
           if(filterFlag == false){
              showFilterList(data.allList);
@@ -228,12 +228,12 @@ function showList(list){
        content +=
           '<tr class="' + finishClass + '">'
        +'<td class="num">' + item.join_team_idx + '</td>'
-       +'<td class="logo">'+item.logo+'</td>'
+       +'<td class="logo">'+ item.logo+'</td>'
        +'<td class="teamName">' + item.team_name +'</td>'
        +'<td class="representID">' + item.id + '</td>'
        +'<td class="address"><a href="' + link + '">서울시 ' + item.team_address.split(' ')[1] + '</a></td>'
-       +'<td class="position">' + item.join_to_position + '</td>'
-       +'<td class="level">' + item.join_to_level +'</td>'
+       +'<td class="position">' + item.join_team_position + '</td>'
+       +'<td class="level">' + item.join_team_level +'</td>'
        +'</tr>';
        
         finishClass = '';

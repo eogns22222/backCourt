@@ -24,6 +24,7 @@ public class TeammateController {
    // 팀원 모집 게시판 입장
 	@RequestMapping(value = "/teammate")
 	public String teammate() {
+		logger.info("팀메이트 접속");
 		return "redirect:/teammate/teammate_join_list.go";
 	}
    
@@ -43,9 +44,9 @@ public class TeammateController {
       @RequestMapping(value="/teammate/teammatePage.ajax", method = RequestMethod.POST)
       @ResponseBody // response 객체로 반환
       public Map<String, Object> callList(String currentPage, String address, String position, String level) {
-         logger.info(address);
+         logger.info(position);
          int page = Integer.parseInt(currentPage);      
-         Map<String, Object> map = teammateService.pageList(page, address, level, position);
+         Map<String, Object> map = teammateService.pageList(page, address, position, level);
          
          return map;
      
@@ -53,11 +54,11 @@ public class TeammateController {
       
   	@RequestMapping(value = "/official/teammateSearchList.ajax", method = RequestMethod.POST)
   	@ResponseBody
-  	public Map<String, Object> searchList(String searchCategory, String searchWord,String searchFlag, String currentPage, String address,String id, String teamName) {
+  	public Map<String, Object> searchList(String teammateSearchCategory, String teammateSearchWord,String searchFlag, String currentPage, String address,String id, String teamName) {
 		logger.info("listCall / currentPage = {} / address = {} / ", currentPage, address);
 		logger.info("서치리스트");
   		int page = Integer.parseInt(currentPage);
-  		Map<String, Object> map = teammateService.searchList(searchCategory, searchWord, page, address, id, teamName);
+  		Map<String, Object> map = teammateService.searchList(teammateSearchCategory, teammateSearchWord, page, address, id, teamName);
 
   		return map;
   	}

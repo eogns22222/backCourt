@@ -4,10 +4,11 @@
 >
 
 <mapper namespace="com.back.teammate.dao.TeammateDAO">
-   <!-- list 출력 -->
-   <select id="list" resultType="com.back.teammate.dto.TeammateDTO">
+   	<!-- list 출력 -->
+   	<select id="list" resultType="com.back.teammate.dto.TeammateDTO">
 	   SELECT
-		   t.logo
+	   	   tj.join_team_idx
+		   ,t.logo
 		   ,t.team_name
 		   ,t.id
 		   ,t.team_address
@@ -15,12 +16,14 @@
 		   ,tj.join_team_level
 	   FROM team t, team_join tj
 	   WHERE t.team_idx = tj.team_idx
-   </select>
+	   LIMIT #{param1}, 10
+   	</select>
    
-   <!-- 레벨 필터 list 출력 -->
-   <select id="listFilterLevel" resultType="com.back.teammate.dto.TeammateDTO">
+   	<!-- 레벨 필터 list 출력 -->
+   	<select id="listFilterLevel" resultType="com.back.teammate.dto.TeammateDTO">
 	   SELECT
-		   t.logo
+	   	   tj.join_team_idx
+		   ,t.logo
 		   ,t.team_name
 		   ,t.id
 		   ,t.team_address
@@ -28,13 +31,15 @@
 		   ,tj.join_team_level
 	   FROM team t, team_join tj
 	   WHERE t.team_idx = tj.team_idx
-	   AND tj.join_team_level LIKE CONCAT(#{param2})
-   </select>
+	   AND tj.join_team_level LIKE CONCAT('%', #{param2}, '%')
+	   LIMIT #{param1}, 10
+   	</select>
    
-   <!-- 포지션 필터 list 출력 -->
-   <select id="listFilterPosition" resultType="com.back.teammate.dto.TeammateDTO">
+   	<!-- 포지션 필터 list 출력 -->
+   	<select id="listFilterPosition" resultType="com.back.teammate.dto.TeammateDTO">
 	   SELECT
-	 	    t.logo
+	   		tj.join_team_idx
+	 	   ,t.logo
 		   ,t.team_name
 		   ,t.id
 		   ,t.team_address
@@ -42,13 +47,15 @@
 		   ,tj.join_team_level
 	   FROM team t, team_join tj
 	   WHERE t.team_idx = tj.team_idx
-	   AND tj.join_team_position LIKE CONCAT(#{param1})
-   </select>
+	   AND tj.join_team_position LIKE CONCAT('%', #{param2}, '%')
+	   LIMIT #{param1}, 10
+   	</select>
    
-   <!-- 포지션,레벨 필터 list 출력 -->
-   <select id="listFilterPosotionLevel" resultType="com.back.teammate.dto.TeammateDTO">
+   	<!-- 포지션,레벨 필터 list 출력 -->
+   	<select id="listFilterPosotionLevel" resultType="com.back.teammate.dto.TeammateDTO">
 	   SELECT
-	   t.logo
+	   		tj.join_team_idx
+	   		,t.logo
 		   ,t.team_name
 		   ,t.id
 		   ,t.team_address
@@ -56,14 +63,16 @@
 		   ,tj.join_team_level
 	   FROM team t, team_join tj
 	   WHERE t.team_idx = tj.team_idx
-	   AND tj.join_team_position LIKE CONCAT(#{param1})
-	   AND tj.join_team_level LIKE CONCAT(#{param2})
-   </select>
+	   AND tj.join_team_position LIKE CONCAT(#{param2})
+	   AND tj.join_team_level LIKE CONCAT(#{param3})
+	   LIMIT #{param1}, 10
+   	</select>
    
-   <!-- 주소 필터 list 출력 -->
-   <select id="listFilterAddress" resultType="com.back.teammate.dto.TeammateDTO">
+   	<!-- 주소 필터 list 출력 -->
+   	<select id="listFilterAddress" resultType="com.back.teammate.dto.TeammateDTO">
 	   SELECT
-		   t.logo
+	   		tj.join_team_idx
+		   ,t.logo
 		   ,t.team_name
 		   ,t.id
 		   ,t.team_address
@@ -73,12 +82,13 @@
 	   WHERE t.team_idx = tj.team_idx
 	   AND t.team_address LIKE CONCAT('%', #{param2}, '%')
 	   LIMIT #{param1}, 10
-   </select>
+   	</select>
 
-   <!-- 주소,레벨 필터 list 출력 -->
-   <select id="listFilterAddressLevel" resultType="com.back.teammate.dto.TeammateDTO">
+   	<!-- 주소,레벨 필터 list 출력 -->
+   	<select id="listFilterAddressLevel" resultType="com.back.teammate.dto.TeammateDTO">
 	   SELECT
-		   t.logo
+	   		tj.join_team_idx
+		   ,t.logo
 		   ,t.team_name
 		   ,t.id
 		   ,t.team_address
@@ -86,44 +96,16 @@
 		   ,tj.join_team_level
 	   FROM team t, team_join tj
 	   WHERE t.team_idx = tj.team_idx
-	   AND t.team_address LIKE CONCAT('%', #{param1}, '%')
-	   AND tj.join_team_level LIKE CONCAT(#{param2})
-   </select>
-   
-   <!-- 주소,포지션 필터 list 출력 -->
-   <select id="listFilterAddressPosition" resultType="com.back.teammate.dto.TeammateDTO">
-	   SELECT
-		   t.logo
-		   ,t.team_name
-		   ,t.id
-		   ,t.team_address
-		   ,tj.join_team_position
-		   ,tj.join_team_level
-	   FROM team t, team_join tj
-	   WHERE t.team_idx = tj.team_idx
-	   AND t.team_address LIKE CONCAT('%', #{param1}, '%')
-	   AND tj.join_team_position LIKE CONCAT(#{param2})
-   </select>
-   
-   <!-- 주소,포지션,레벨 필터 list 출력 -->
-   <select id="listFilterAddressPositionLevel" resultType="com.back.teammate.dto.TeammateDTO">
-	   SELECT
-		   t.logo
-		   ,t.team_name
-		   ,t.id
-		   ,t.team_address
-		   ,tj.join_team_position
-		   ,tj.join_team_level
-	   FROM team t, team_join tj
-	   WHERE t.team_idx = tj.team_idx
-	   AND t.team_address LIKE CONCAT('%', #{param1}, '%')
-	   AND tj.join_team_position LIKE CONCAT(#{param2})
+	   AND t.team_address LIKE CONCAT('%', #{param2}, '%')
 	   AND tj.join_team_level LIKE CONCAT(#{param3})
-   </select>
+	   LIMIT #{param1}, 10
+   	</select>
    
-   <select id="allList" resultType="com.back.teammate.dto.TeammateDTO">
+   	<!-- 주소,포지션 필터 list 출력 -->
+   	<select id="listFilterAddressPosition" resultType="com.back.teammate.dto.TeammateDTO">
 	   SELECT
-		   t.logo
+	   		tj.join_team_idx
+		   ,t.logo
 		   ,t.team_name
 		   ,t.id
 		   ,t.team_address
@@ -131,9 +113,44 @@
 		   ,tj.join_team_level
 	   FROM team t, team_join tj
 	   WHERE t.team_idx = tj.team_idx
-   </select>
+	   AND t.team_address LIKE CONCAT('%', #{param2}, '%')
+	   AND tj.join_team_position LIKE CONCAT(#{param3})
+	   LIMIT #{param1}, 10
+   	</select>
    
-   <!-- 토탈 페이지 수 -->
+   	<!-- 주소,포지션,레벨 필터 list 출력 -->
+   	<select id="listFilterAddressPositionLevel" resultType="com.back.teammate.dto.TeammateDTO">
+	   SELECT
+	   		tj.join_team_idx
+		   ,t.logo
+		   ,t.team_name
+		   ,t.id
+		   ,t.team_address
+		   ,tj.join_team_position
+		   ,tj.join_team_level
+	   FROM team t, team_join tj
+	   WHERE t.team_idx = tj.team_idx
+	   AND t.team_address LIKE CONCAT('%', #{param2}, '%')
+	   AND tj.join_team_position LIKE CONCAT(#{param3})
+	   AND tj.join_team_level LIKE CONCAT(#{param4})
+	   LIMIT #{param1}, 10
+   	</select>
+   
+   	<!-- allList 출력 -->
+   	<select id="allList" resultType="com.back.teammate.dto.TeammateDTO">
+	   SELECT
+	  		tj.join_team_idx
+		   ,t.logo
+		   ,t.team_name
+		   ,t.id
+		   ,t.team_address
+		   ,tj.join_team_position
+		   ,tj.join_team_level
+	   FROM team t, team_join tj
+	   WHERE t.team_idx = tj.team_idx
+   	</select>
+   
+  	<!-- 토탈 페이지 수 -->
 	<select id="allTeammateCount" resultType="int">
 		  SELECT CEIL(COUNT(join_team_idx)/10) AS totalPage
 		  FROM team_join
@@ -210,7 +227,8 @@
 	<!-- 팀 활동지역 검색 list 출력 -->
 	<select id="addressSearchList" resultType="com.back.teammate.dto.TeammateDTO">
 	   SELECT
-		   t.logo
+	   		tj.join_team_idx
+		   ,t.logo
 		   ,t.team_name
 		   ,t.id
 		   ,t.team_address
@@ -219,12 +237,14 @@
 	   FROM team t, team_join tj
 	   WHERE t.team_idx = tj.team_idx
 	   AND t.team_address LIKE CONCAT('%', #{param1}, '%')
+	   LIMIT #{param2}, 10
 	</select>
 	
 	<!-- 팀명 검색 list 출력 -->
 	<select id="teamnameSearchList" resultType="com.back.teammate.dto.TeammateDTO">
 	   SELECT
-		   t.logo
+	   		tj.join_team_idx
+		   ,t.logo
 		   ,t.team_name
 		   ,t.id
 		   ,t.team_address
@@ -233,13 +253,13 @@
 	   FROM team t, team_join tj
 	   WHERE t.team_idx = tj.team_idx
 	   AND t.team_name LIKE CONCAT('%', #{param1}, '%')
+	   LIMIT #{param2}, 10
 	</select>
 	
 	<!-- 팀장명 검색 list 출력 -->
 	<select id="representSearchList" resultType="com.back.teammate.dto.TeammateDTO">
 	   SELECT
-		   t.logo
-		   ,t.team_name
+	   		tj.join_team_idx
 		   ,t.id
 		   ,t.team_address
 		   ,tj.join_team_position
@@ -247,6 +267,7 @@
 	   FROM team t, team_join tj
 	   WHERE t.team_idx = tj.team_idx
 	   AND t.id LIKE CONCAT('%', #{param1}, '%')
+	   LIMIT #{param2}, 10
 	</select>
 
 	<!-- 팀 활동지역 검색 후 토탈 페이지 출력 -->
