@@ -34,19 +34,15 @@ public class CourtController {
 
 	@RequestMapping(value = "/court/list.ajax", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> callList(String currentPage, String address,String searchCategory, String searchWord, String searchFlag) {
+	public Map<String, Object> callList(String currentPage, String address, String searchCategory, String searchWord,
+			String searchFlag) {
 		logger.info("listCall / currentPage = {} / address = {} / ", currentPage, address);
 		logger.info(searchFlag);
 		int page = Integer.parseInt(currentPage);
-		if(searchFlag.equals("true")) {
-			return courtService.searchList(searchCategory, searchWord, page, address);
-		}else {
-			return courtService.list(page, address);			
-		}
+
+		return courtService.list(page, address, searchCategory, searchWord, searchFlag);
 
 	}
-
-
 
 	@RequestMapping(value = "/court/jjim.ajax", method = RequestMethod.POST)
 	@ResponseBody
@@ -78,15 +74,22 @@ public class CourtController {
 	@RequestMapping(value = "/court/detail.go")
 	public String detailGo(Model model, String court_idx) {
 		logger.info(court_idx);
-		model.addAttribute("courtIdx",court_idx);
+		model.addAttribute("courtIdx", court_idx);
 		return "court/detail";
 	}
-	
+
 	@RequestMapping(value = "/court/detail.ajax")
 	@ResponseBody
-	public Map<String, Object> detail(String courtIdx){
-		logger.info("detail.ajax courtIdx = {}",courtIdx);
-		return courtService.detail(courtIdx);
+	public Map<String, Object> detail(String courtIdx, String selectDate) {
+		logger.info("detail.ajax courtIdx = {}", courtIdx);
+		return courtService.detail(courtIdx, selectDate);
 	}
-	
+
+	@RequestMapping(value = "/court/booking.ajax")
+	@ResponseBody
+	public Map<String, Boolean> booking(String selectedTime, String courtIdx, String courtPrice, String courtDate) {
+		String id = "a";
+		return courtService.booking(selectedTime, courtIdx, courtPrice, id, courtDate);
+	}
+
 }

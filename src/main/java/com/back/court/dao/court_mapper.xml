@@ -7,162 +7,31 @@
 	
 	<select id="list" resultType="com.back.court.dto.CourtDTO">
 		
-		
 		SELECT
 			(SELECT ci.file_name 
 			FROM court_image ci 
 		 	WHERE ci.court_idx = c.court_idx 
 		 	ORDER BY ci.photo_idx ASC 
-		 	LIMIT 1) AS first_img_name
-		   	, c.court_name
-		  	,c.court_address
-		  	,c.court_info
-		  	,c.court_price
-		  	,c.court_state
-		  	,c.court_official
+		 	LIMIT 1) AS firstImageName
+		   	, c.court_name AS courtName
+		  	,c.court_address AS courtAddress
+		  	,c.court_info AS courtInfo
+		  	,c.court_price AS courtPrice
+		  	,c.court_state AS courtState
+		  	,c.court_official AS courtOfficial
+		  	,c.court_idx AS courtIdx
 		  	,(SELECT COUNT(j.court_idx)
 			from jjim j 
 			where j.court_idx = c.court_idx
-			and j.id = 'admin') as jjim
+			and j.id = 'admin') AS jjim
 			,c.court_idx
 		FROM court c 
 		WHERE c.court_state = 'true' 
 		AND c.court_official = 'false'
-		ORDER BY court_address asc LIMIT #{param1}, 10
+		ORDER BY c.court_address
 	
 	</select>
 	
-	<select id="addressSearchList" resultType="com.back.court.dto.CourtDTO">
-		
-		
-		SELECT
-			(SELECT ci.file_name 
-			FROM court_image ci 
-		 	WHERE ci.court_idx = c.court_idx 
-		 	ORDER BY ci.photo_idx ASC 
-		 	LIMIT 1) AS first_img_name
-		   	, c.court_name
-		  	,c.court_address
-		  	,c.court_info
-		  	,c.court_price
-		  	,c.court_state
-		  	,c.court_official
-		  	,(SELECT COUNT(j.court_idx)
-			from jjim j 
-			where j.court_idx = c.court_idx
-			and j.id = 'admin') as jjim
-			,c.court_idx
-		FROM court c 
-		WHERE c.court_state = 'true' 
-		AND c.court_official = 'false'
-		AND c.court_address LIKE CONCAT('%', #{param1}, '%')
-		ORDER BY court_address asc LIMIT #{param2}, 10
-	</select>
-	
-	
-	<select id="nameSearchList" resultType="com.back.court.dto.CourtDTO">
-		
-		
-		SELECT
-			(SELECT ci.file_name 
-			FROM court_image ci 
-		 	WHERE ci.court_idx = c.court_idx 
-		 	ORDER BY ci.photo_idx ASC 
-		 	LIMIT 1) AS first_img_name
-		   	, c.court_name
-		  	,c.court_address
-		  	,c.court_info
-		  	,c.court_price
-		  	,c.court_state
-		  	,c.court_official
-		  	,(SELECT COUNT(j.court_idx)
-			from jjim j 
-			where j.court_idx = c.court_idx
-			and j.id = 'admin') as jjim
-			,c.court_idx
-		FROM court c 
-		WHERE c.court_state = 'true' 
-		AND c.court_official = 'false'
-		AND c.court_name LIKE CONCAT('%', #{param1}, '%')
-		ORDER BY court_address asc LIMIT #{param2}, 10
-	</select>
-	
-	<select id="listFilterAddress" resultType="com.back.court.dto.CourtDTO">
-		
-		
-		SELECT
-			(SELECT ci.file_name 
-			FROM court_image ci 
-		 	WHERE ci.court_idx = c.court_idx 
-		 	ORDER BY ci.photo_idx ASC 
-		 	LIMIT 1) AS first_img_name
-		   	, c.court_name
-		  	,c.court_address
-		  	,c.court_info
-		  	,c.court_price
-		  	,c.court_state
-		  	,c.court_official
-		  	,(SELECT COUNT(j.court_idx)
-			from jjim j 
-			where j.court_idx = c.court_idx
-			and j.id = 'admin') as jjim
-			,c.court_idx
-		FROM court c 
-		WHERE c.court_state = 'true' 
-		AND c.court_official = 'false'
-		AND c.court_address LIKE CONCAT('%', #{param2}, '%')
-		ORDER BY court_address asc LIMIT #{param1}, 10
-	</select>
-	
-	<select id="allList" resultType="com.back.court.dto.CourtDTO">
-		
-		
-		SELECT
-			(SELECT ci.file_name 
-			FROM court_image ci 
-		 	WHERE ci.court_idx = c.court_idx 
-		 	ORDER BY ci.photo_idx ASC 
-		 	LIMIT 1) AS first_img_name
-		   	, c.court_name
-		  	,c.court_address
-		  	,c.court_info
-		  	,c.court_price
-		  	,c.court_state
-		  	,c.court_official
-		  	,(SELECT COUNT(j.court_idx)
-			from jjim j 
-			where j.court_idx = c.court_idx
-			and j.id = 'admin') as jjim
-			,c.court_idx
-		FROM court c 
-		WHERE c.court_state = 'true' 
-		AND c.court_official = 'false'
-		
-	</select>
-	
-	<select id="allCourtCount" resultType="int">
-	
-		SELECT COUNT(court_idx) AS totalPage
-		FROM court 
-	
-	</select>
-	
-	
-	<select id="addressFilteringCourtCount" resultType="int">
-	
-		SELECT COUNT(court_idx) AS totalPage 
-		FROM court 
-		WHERE court_address LIKE CONCAT('%', #{param1}, '%')
-	
-	</select>
-	
-	<select id="nameFilteringCourtCount" resultType="int">
-	
-		SELECT COUNT(court_idx) AS totalPage 
-		FROM court 
-		WHERE court_name LIKE CONCAT('%', #{param1}, '%')
-	
-	</select>
 	
 	<insert id="jjim">
 	
@@ -180,15 +49,24 @@
 	</delete>
 	
 	<select id="detail" resultType="com.back.court.dto.CourtDTO">
-		SELECT court_name, court_address, court_info, court_price FROM court where court_idx = #{param1};
+		SELECT court_name AS courtName
+		, court_address
+		, court_info AS courtInfo
+		, court_price AS courtPrice
+		FROM court 
+		WHERE court_idx = #{param1}
+		
 	</select>
 	
 	<select id="fileNameList" resultType="String">
-		SELECT file_name from court_image WHERE court_idx = #{param1};
+		SELECT file_name from court_image WHERE court_idx = #{param1}
 	</select>
 	
 	<select id="bookingStartTimeList" resultType="String">
-		SELECT booking_start_time FROM court_booking WHERE court_idx = 77;
+		SELECT booking_start_time 
+		FROM court_booking 
+		WHERE court_idx = #{param1} 
+		AND booking_date = #{param2}
 	</select>
 
 </mapper>

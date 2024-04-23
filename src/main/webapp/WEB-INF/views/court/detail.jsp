@@ -12,7 +12,9 @@
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
 <link rel="stylesheet" href="../resources/css/common/reset.css">
 <link rel="stylesheet" href="../resources/css/header/header.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
 
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 
 <style>
     .courtDetailTable,.courtDetailTh,.courtDetailTd {
@@ -30,6 +32,35 @@
     #datepicker {
         margin-bottom: 20px;
     }
+	.swiper-container {
+	 	width: 50%;
+	 	height: 50%; 
+	 }
+	.swiper-slide {
+	 	font-size: 18px;
+	 	background: #fff;	
+	 }
+	.swiper-pagination-bullet {
+		 width: 12px;
+		 height: 12px; 
+		 border: 1px solid pink; 
+		 opacity: 1; 
+	}
+	.swiper-pagination-bullet-active { 
+		width: 40px; 
+		transition: width .5s; 
+		border-radius: 5px; 
+		background: pink; 
+		border: 1px solid; 
+	}
+	.swiper-container {
+        overflow: hidden; /* 테이블 셀에서 넘치는 부분을 잘라냄 */
+        position: relative; /* 상대적인 위치 설정 */
+    }
+    .swiper-button-prev, .swiper-button-next, .swiper-pagination {
+        position: absolute; /* 절대적인 위치 설정 */
+        z-index: 1; /* 다른 요소 위로 배치 */
+    }
 </style>
 </head>
 <body>
@@ -42,24 +73,38 @@
     <tr>
         <th class="courtDetailTh">구장 사진</th>
         <td class="courtDetailTd">
-        	<div class="swiper-container">
-            	<div class="swiper-wrapper" id="imageList">
-                	
-            	</div>
-            <!-- 네비게이션 버튼 추가 -->
-            	<div class="swiper-button-prev"></div>
-            	<div class="swiper-button-next"></div>
-            	<div class="swiper-pagination"></div>
-        	</div>
-        </td>
+		<!-- Slider main container -->
+		<div class="swiper-container">
+		  <!-- Additional required wrapper -->
+		  	<div class="swiper-wrapper" id="swiperImage">
+		    
+		  	</div>
+		  
+		  	<!-- 페이징 필요시 추가 -->
+		  	<div class="swiper-pagination"></div>
+		  <!-- 이전, 다음 버튼 필요시 추가 -->
+		  	<div class="swiper-button-prev"></div>
+		  	<div class="swiper-button-next"></div>
+		
+		</div> 
     </tr>
     <tr>
         <th class="courtDetailTh">구장 예약 시간</th>
         <td class="courtDetailTd">
 			<input id="courtDetailDate" type="text"/>
             <br/>
-            <input class="courtDetailTimeBtn" id="00" type="button" value="00~02">
-            <!-- 나머지 시간대 버튼들은 생략 -->
+            <input class="courtDetailTimeBtn" id="0" type="button" value="00~02">
+            <input class="courtDetailTimeBtn" id="2" type="button" value="02~04">
+            <input class="courtDetailTimeBtn" id="4" type="button" value="04~06">
+            <input class="courtDetailTimeBtn" id="6" type="button" value="06~08">
+            <input class="courtDetailTimeBtn" id="8" type="button" value="08~10">
+            <input class="courtDetailTimeBtn" id="10" type="button" value="10~12">
+            <input class="courtDetailTimeBtn" id="12" type="button" value="12~14">
+            <input class="courtDetailTimeBtn" id="14" type="button" value="14~16">
+            <input class="courtDetailTimeBtn" id="16" type="button" value="16~18">
+            <input class="courtDetailTimeBtn" id="18" type="button" value="18~20">
+            <input class="courtDetailTimeBtn" id="20" type="button" value="20~22">
+            <input class="courtDetailTimeBtn" id="22" type="button" value="22~24">
         </td>
     </tr>
     <tr>
@@ -77,12 +122,17 @@
 </table>
 <input id="courtDetailReport" type="button" value="문의하기"/>
 
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script>
     var courtIdx = ${courtIdx};
     var courtDetailTime = '';
+    var currentDate = new Date();
+    var formattedDate = currentDate.getFullYear() + "-" + ((currentDate.getMonth() + 1) < 10 ? '0' + (currentDate.getMonth() + 1) : (currentDate.getMonth() + 1)) + "-" + (currentDate.getDate() < 10 ? '0' + currentDate.getDate() : currentDate.getDate());
+    var selectedId = '';
+    $('#courtDetailDate').val(formattedDate);
+    
     $('.menu').css('display','none');
     $('.courtDetailTimeBtn:not([disabled])').click(function() {
+    	selectedId = $(this).attr('id');
         // 모든 버튼의 배경색을 하늘색으로 초기화합니다.
         $('.courtDetailTimeBtn:not([disabled])').not(this).css('background-color', 'skyblue');
 
@@ -97,63 +147,52 @@
             alert('예약할 시간을 선택하세요.');
         } else {
            if(confirm('정말로 예약 하시겠습니까?')){
-
+				$.ajax({
+					type:'post'
+					, url:'./booking.ajax'
+					, data:{
+						'selectedTime':selectedId
+						,'courtIdx':courtIdx
+						,'courtPrice':$('#courtDetailPrice').html()
+						,'courtDate':$('#courtDetailDate').val()
+					}
+					, dataType:'json'
+					, success:function(data){
+						if(!data.money){
+							if(confirm('포인트가 부족합니다. 충전하시겠습니까?')){
+								window.location.href = '../point_add.go';
+							}
+						}else if(!data.result){
+							alert('예약에 실패했습니다.');
+						}else{
+							alert('예약이 완료 되었습니다.');
+							window.location.href = './list.go';
+						}
+					}
+					, error:function(){}
+				});
            }
         }
     });
     
-    var swiper = new Swiper(".mySwiper", {
-        spaceBetween: 30, // 슬라이드간 간격
-        centeredSlides: true, // 신경안써도 됨
-        // autoplay: { // 자동 슬라이드 여부
-        //     delay: 2500,
-        //     disableOnInteraction: false,
-        // },
-        autoplay: false, // 자동 슬라이드 false
-        pagination: { // 페이지네이션
-            el: ".swiper-pagination",
-            clickable: true,
-        },
-        navigation: { // 이전, 다음 버튼
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-        },
+    $('#courtDetailDate').change(function() {
+        
+    	$('.courtDetailTimeBtn').each(function() {
+    		$(this).prop('disabled', false);
+        });        
+        callDetail();
     });
-
-    
-    
     $(document).ready(function() {
-        // Datepicker 초기화
+        // courtDetailDate input 요소에 datepicker 연결
         $('#courtDetailDate').datepicker({
-            format: 'yyyy-mm-dd',
-            autoclose: true,
-            todayHighlight: true
-        });
-
-        // 기본 날짜 설정
-        $('#courtDetailDate').datepicker('setDate', new Date());
-
-        // 날짜 선택 이벤트 리스너
-        $('#courtDetailDate').on('changeDate', function(e) {
-            var selectedDate = e.format();
-            console.log('선택된 날짜:', selectedDate);
-
-            // 선택된 날짜에 기반한 추가 작업을 여기에 추가할 수 있습니다.
+            format: 'yyyy-mm-dd', // 날짜 형식 설정
+            autoclose: true, // 날짜 선택 후 자동으로 닫힘
+            todayHighlight: true, // 오늘 날짜 강조 표시
+            startDate: 'today', // 오늘 이후의 날짜만 선택 가능
         });
     });
 
-    // Datepicker 설정
-    $('#datepicker').datepicker({
-        format: 'yyyy-mm-dd',
-        autoclose: true,
-        todayHighlight: true
-    });
-    $('#datepicker').on('changeDate', function(e){
-        var selectedDate = e.format();
-        console.log('선택된 날짜:', selectedDate);
-
-        // 여기에 선택된 날짜를 이용한 추가 작업을 수행할 수 있습니다.
-    });
+   
    
     callDetail();
     function callDetail(){
@@ -162,39 +201,64 @@
             , url:'./detail.ajax'
             , data:{
                 "courtIdx":courtIdx
+                ,"selectDate":$('#courtDetailDate').val()
             }
             , dataType:'json'
             , success:function(data){
                 console.log(data);
-                $('#courtDetailName').html(data.detail[0].court_name);
-                $('#courtDetailInfo').val(data.detail[0].court_info);
-                $('#courtDetailPrice').html(data.detail[0].court_price);
-                $('#courtDetailAddress').html(data.detail[0].court_address);
+                $('#courtDetailName').html(data.detail[0].courtName);
+                $('#courtDetailInfo').val(data.detail[0].courtInfo);
+                $('#courtDetailPrice').html(data.detail[0].courtPrice);
+                $('#courtDetailAddress').html(data.detail[0].courtAddress);
                 var content = '';
-                for(item of data.fileName){
-                	content +=
-                		'<div class="swiper-slide"><img src="../resources/img/court/'+item+'.png" alt="Image"></div>'
-                }
-                $('#imageList').html(content);
                 
-                // Swiper 초기화
+                for(item of data.fileName){
+                	content += '<div class="swiper-slide"><img src="../resources/img/court/'+item+'.png" alt="Image"></div>';
+                }
+                
+                $('#swiperImage').html(content);
+                
                 var swiper = new Swiper('.swiper-container', {
-                    // 선택적 매개변수
-                    navigation: {
-                        nextEl: '.swiper-button-next',
-                        prevEl: '.swiper-button-prev',
+                    // 다양한 옵션 설정, 
+                    // 아래에서 설명하는 옵션들은 해당 위치에 들어갑니다!!
+                    slidesPerView : 'auto',
+                    autoplay: {
+                    	delay:5000
                     },
-                });
+                    loop:true,
+                    spaceBetween : 10, 
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true,
+                      },
+                    navigation: {
+                    	nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                   	},
+                })
+
+
+                
+                var currentHour = currentDate.getHours() < 10 ? '0' + currentDate.getHours():currentDate.getHours(); // 현재 시간(0부터 23까지)
+//                 console.log(currentHour);
                 
                 $.each(data.bookingStartTime, function(index, item) {
                     $('.courtDetailTimeBtn').each(function() {
-                        if ($(this).attr('id') == item) {
-                            $(this).prop('disabled', true);
-                        }
+                    	if($('#courtDetailDate').val() == formattedDate){
+	                    	var thisHour = $(this).attr('id') < 10 ? '0' + $(this).attr('id'):$(this).attr('id');
+	                        if (thisHour == item || $(this).attr('id') <  (currentDate.getHours()-1 < 0 ? 0: currentDate.getHours()-1)) {
+	                            $(this).prop('disabled', true);
+	                        }
+                    	}else{
+	                    	var thisHour = $(this).attr('id') < 10 ? '0' + $(this).attr('id'):$(this).attr('id');
+	                        if (thisHour == item) {
+	                            $(this).prop('disabled', true);
+	                        }
+                    	}
                     });
                 });
                 $('.courtDetailTimeBtn:not([disabled])').css('background-color', 'skyblue');
-
+                
 
             }
             , error:function(error){
@@ -202,9 +266,6 @@
             }
         });
     }
-   	function showDate(){
-   		
-   	}
 </script>
 </body>
 </html>

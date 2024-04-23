@@ -180,15 +180,23 @@
 			}
 			,dataType:'json'
 			,success:function(data){
-				console.log(data.list);
+				console.log(data);
 // 				console.log(data.totalPage);
 				showList(data.list);
 				if(filterFlag == false){
-					showFilterList(data.allList);
+					showFilterList(data.addressList);
 					filterFlag = true;
 				}
-				var totalPage = data.totalPage/10 > 1 ? data.totalPage/10:1;
-				showPagination(totalPage);
+				$('#pagination').twbsPagination({
+					startPage:1
+					,totalPages:data.totalPage
+					,visiblePages:5	
+					,onPageClick:function(evt,pg){
+						currentPage = pg;
+						callList(currentPage);
+					}
+					
+				});
 				
 			}
 			,error:function(error){
@@ -196,33 +204,21 @@
 			}
 		});
 	}
-	function showPagination(totalPage) {
-		$('#pagination').twbsPagination({
-				startPage:1
-				,totalPages:totalPage
-				,visiblePages:5	
-				,onPageClick:function(evt,pg){
-// 					console.log(pg);
-				
-					currentPage = pg;
-					callList(currentPage);
-				}
-				
-		});
-	}
+	
+	
 	function showList(list){
 		var content = '';
 		for(item of list){
-// 			console.log(item.court_idx);
-			var img = item.first_img_name != null ? item.first_img_name+'.png':'no_image.png';
+			console.log(item.firstImageName);
+			var img = item.firstImageName != null ? item.firstImageName+'.png':'no_image.png';
 			var jjim = item.jjim > 0 ? 'jjim.png':'no_jjim.png';
 			content +=
 				'<tr class="courtListTr">'
-				+'<td class="courtListTd"><img class="courtImage"  src="../resources/img/court/'+img+'" alt="ImageCheck"></td>'
-				+'<td class="courtListTd">'+item.court_name+'</td>'
-				+'<td class="courtListTd">'+item.court_address.split(' ')[1]+'</td>'
-				+'<td class="courtListTd">'+item.court_price+'</td>'
-				+'<td class="courtListTd"><img class="courtJjim" data-courtIdx="'+item.court_idx+'" src="../resources/img/court/'+jjim+'" alt="ImageCheck"></td>'
+				+'<td class="courtListTd"><img class="courtImage"  src="../resources/img/court/'+img+'" alt="courtImage"></td>'
+				+'<td class="courtListTd">'+item.courtName+'</td>'
+				+'<td class="courtListTd">'+item.courtAddress.split(' ')[1]+'</td>'
+				+'<td class="courtListTd">'+item.courtPrice+'</td>'
+				+'<td class="courtListTd"><img class="courtJjim" data-courtIdx="'+item.courtIdx+'" src="../resources/img/court/'+jjim+'" alt="ImageCheck"></td>'
 				+'</tr>';
 		}
 		$('#list').html(content);
@@ -230,15 +226,9 @@
 
 	function showFilterList(list) {
 		var content = '';
-		var allAddress = [];
-		var address = [];
-		for(item of list){
-			allAddress.push(item.court_address.split(' ')[1]);			
-		}
-		address = Array.from(new Set(allAddress));
-		address.sort();
+		
 		content = '<option value="">전체 지역</option>';
-		for(item of address){
+		for(item of list){
 			content += '<option value="'+item+'">'+item+'</option>';
 		}
 
