@@ -50,8 +50,7 @@
 
 	<select id="detail" resultType="com.back.court.dto.CourtDTO">
 		SELECT court_name AS courtName
-		,
-		court_address
+		, court_address AS courtAddress
 		, court_info AS courtInfo
 		, court_price AS courtPrice
 		FROM
