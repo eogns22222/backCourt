@@ -24,7 +24,7 @@ public interface CourtDAO {
 
 	void insertPointHistory(String id, int pointChange, String pointState, String WriteIdx, String WriteType);
 
-	void insertBooking(String id, int courtIdx, String courtDate, String courtStartTime, String courtEndTime, String courtState);
-
+	void insertBooking(String id, int courtIdx, String courtDate, String courtStartTime, String courtEndTime,
+			String courtState);
 
 }

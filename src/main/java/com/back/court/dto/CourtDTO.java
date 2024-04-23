@@ -67,7 +67,6 @@ public class CourtDTO {
 		this.courtOfficial = courtOfficial;
 	}
 
-
 	public int getJjim() {
 		return jjim;
 	}

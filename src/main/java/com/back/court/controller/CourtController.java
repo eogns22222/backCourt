@@ -88,10 +88,10 @@ public class CourtController {
 	@RequestMapping(value = "/court/booking.ajax")
 	@ResponseBody
 	public Map<String, Boolean> booking(String courtStartTime, String courtIdx, String courtPrice, String courtDate) {
-		
-		//수정필요
+
+		// 수정필요
 		String id = "a";
-		
+
 		return courtService.booking(courtStartTime, courtIdx, courtPrice, id, courtDate);
 	}
 

@@ -138,24 +138,24 @@ public class CourtService {
 		return map;
 	}
 
-
-	public Map<String, Boolean> booking(String courtStartTime, String courtIdx, String courtPrice, String id, String courtDate) {
+	public Map<String, Boolean> booking(String courtStartTime, String courtIdx, String courtPrice, String id,
+			String courtDate) {
 		Map<String, Boolean> map = new HashMap<String, Boolean>();
-			int courtBookingPrice = Integer.parseInt(courtPrice);
-			int myPoint = courtDAO.myPoint(id);
-			if(courtBookingPrice > myPoint) {
-				map.put("money", false);
-				return map;
-			}
-			if(courtDAO.duplicateCheckBooking(courtDate,courtStartTime) > 0) {
-				map.put("result", false);
-				return map;
-			}
-			int courtEndTime = Integer.parseInt(courtStartTime)+2;
-			
-			courtDAO.insertBooking(id,Integer.parseInt(courtIdx),courtDate,courtStartTime,Integer.toString(courtEndTime),"true");
-			courtDAO.insertPointHistory(id,myPoint,"예약",courtIdx,"구장");
-			
+		int courtBookingPrice = Integer.parseInt(courtPrice);
+		int myPoint = courtDAO.myPoint(id);
+		if (courtBookingPrice > myPoint) {
+			map.put("money", false);
+			return map;
+		}
+		if (courtDAO.duplicateCheckBooking(courtDate, courtStartTime) > 0) {
+			map.put("result", false);
+			return map;
+		}
+		int courtEndTime = Integer.parseInt(courtStartTime) + 2;
+//			
+//			courtDAO.insertBooking(id,Integer.parseInt(courtIdx),courtDate,courtStartTime,Integer.toString(courtEndTime),"true");
+//			courtDAO.insertPointHistory(id,myPoint,"예약",courtIdx,"구장");
+
 		return map;
 	}
 
