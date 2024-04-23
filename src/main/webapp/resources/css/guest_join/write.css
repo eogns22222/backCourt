@@ -1,11 +1,5 @@
 @charset "UTF-8";
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 .wrapper {
     width: 50%;
     margin: 20px auto;
@@ -150,8 +144,21 @@ input[type="text"] {
 
 }
 
+#courts .courtList {
+    margin-bottom: 30px; 
+}
+
+.courtList:hover {
+	background-color: lightgray;
+	cursor: pointer;
+}
+
+#court_booking_idx{
+	display: none;
+}
+
 /* 팝업 */
-.popup{display:none;position:absolute;top:calc(50% - 250px);left:calc(50% - 250px);z-index:20;}
+.popup{display:none;position:absolute;top:calc(50% - 250px);left:calc(50% - 250px);z-index:20;background-color: rgba(255, 255, 255, 0.9);}
 .popup .closePopup{position:absolute;top:-50px;right:-50px;}
 .popup .closePopup img{width:50px;}
 

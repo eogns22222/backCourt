@@ -88,7 +88,29 @@ public class GuestDTO {
 	private String booking_start_time;
 	private String booking_end_time;
 	private String booking_state;
+	private String bookingDate;
+	private String court_name;
+	private String court_address;
 	
+	
+	public String getCourt_name() {
+		return court_name;
+	}
+	public void setCourt_name(String court_name) {
+		this.court_name = court_name;
+	}
+	public String getCourt_address() {
+		return court_address;
+	}
+	public void setCourt_address(String court_address) {
+		this.court_address = court_address;
+	}
+	public String getBookingDate() {
+		return bookingDate;
+	}
+	public void setBookingDate(String bookingDate) {
+		this.bookingDate = bookingDate;
+	}
 	public int getCourt_idx() {
 		return court_idx;
 	}

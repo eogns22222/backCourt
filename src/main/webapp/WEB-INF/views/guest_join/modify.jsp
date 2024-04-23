@@ -4,27 +4,28 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게스트 모집글 작성</title>
+<title>게스트 모집글 수정</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="../resources/css/common/reset.css"
 	type="text/css">
-<link rel="stylesheet"
-	href="../resources/css/guest_join/write.css" type="text/css">
 <link rel="stylesheet" href="../resources/css/header/header.css"
 	type="text/css">
+<link rel="stylesheet" href="../resources/css/report/report.css"
+	type="text/css">
+<link rel="stylesheet"
+	href="../resources/css/guest_join/write.css" type="text/css">
 </head>
 <body>
-<jsp:include page="../header/header.jsp"/>
 	<div class="wrapper">
 		<div class="header">
 			<img src="../resources/img/icon/logo.png" class="img" alt="로고" /> <span>게스트
-				모집글 작성</span>
+				모집글 수정</span>
 		</div>
 		<br />
-		<form id="guestForm" action="write.do" method="post">
+		<form id="guestForm" action="modify.do" method="post">
 		<div class="content-wrapper">
 			<div class="content">지역 :</div>
-			<input type="text" disabled id="address" />
+			<input type="text" id="address" disabled/>
 		</div>
 		<div class="content-wrapper">
 			<div class="content">날짜 :</div>
@@ -32,7 +33,7 @@
 		</div>
 		<div class="content-wrapper">
 			<div class="content">구장명 :</div>
-			<button type="button" id="findCourtButton" class="find-button">구장 찾기</button>
+			<input type="text" id="courtname" disabled/>
 		</div>
 		<div class="content-wrapper">
 			<div class="content">경기정보 :</div>
@@ -87,27 +88,14 @@
 					oninput="addCommas(event)" maxlength="7" placeholder="참가비를 입력해 주세요" />
 			</div>
 		</div>
-		<div class="write">
-			<input type="submit" value="작성 취소" id="cancel" class="submit">
-			<input type="submit" value="작성 완료" id="finish" class="submit">
+		<div class="update">
+			<input type="submit" value="수정 취소" id="cancel" class="submit">
+			<input type="submit" value="수정 완료" id="update" class="submit">
 		</div>
-		<input type="text" id="court_booking_idx" name="booking_idx"/>
 		</form>
 	</div>
-	<!-- 팀 정보 팝업 -->
-    <div id="courtPopup" class="popup">
-        <a href="#" id="closePopup" class="closePopup"><img src="../resources/img/icon/close.png" alt=""></a>
-        <div class="popWrap">
-            <h1>구장 리스트</h1>
-            <div class="courts">
-                <ul id="courts">
-                </ul>
-            </div>
-        </div>
-    </div>
 </body>
 <script>
-	$('.menu').css('display','none');
 	// textarea 값을 초기화함
 	window.onload = function () {
 	    document.getElementById("game-content").value = "";
@@ -237,37 +225,6 @@
 	        $('#courtPopup').hide();
 	    });
 	    
-	    function showList(list){
-	    	var content = '';
-	    	for(item of list){
-	    		content +=
-	    			'<div class="courtList">' + '<br>'
-	    			+'<span class="courtBookingIdx">'+item.court_booking_idx+'</span> | ' 
-	    			+'<span class="courtName">'+item.court_name+'</span> | ' 
-	    			+'<span class="courtAddress">'+item.court_address+'</span> | ' 
-	    			+'<span class="courtDate">'+item.bookingDate+'</span> '
-		    		+'</div>' + '<br>' + '<hr>';
-	    	}
-	    	$('#courts').html(content);
-	    	 $('.courtList').click(function() {
-	             // 클릭한 항목의 정보를 가져와서 입력 필드에 채움
-	             var court_booking_idx = $(this).find('.courtBookingIdx').text();
-	             var court_name = $(this).find('.courtName').text();
-	             var court_address = $(this).find('.courtAddress').text();
-	             var bookingDate = $(this).find('.courtDate').text();
-	             fillForm(court_booking_idx, court_name, court_address, bookingDate);
-	             $('#court_booking_idx').val(court_booking_idx);
-	    	 $('#courtPopup').hide();
-	         });
-	    }
-	 	
-	    function fillForm(court_idx, court_name, court_address, bookingDate){
-	        // 지역 입력 필드에 값 설정
-	        $('#address').val(court_address);
-	        // 구장명 입력 필드에 값 설정
-	        $('#court').val(court_name);
-	        // 날짜 입력 필드에 값 설정
-	        $('#date').val(bookingDate);
-	    }
+
 </script>
 </html>
