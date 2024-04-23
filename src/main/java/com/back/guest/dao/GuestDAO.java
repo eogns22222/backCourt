@@ -11,4 +11,6 @@ public interface GuestDAO {
 
 	List<GuestDTO> courtList(String id);
 
+	int callmyteam(String id);
+
 }
