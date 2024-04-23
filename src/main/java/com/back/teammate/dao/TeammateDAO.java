@@ -54,6 +54,8 @@ public interface TeammateDAO {
 
 	List<TeammateDTO> representSearchList(String teammateSearchWord, int start);
 
+	TeammateDTO detail(String join_team_idx);
+
 
 
 

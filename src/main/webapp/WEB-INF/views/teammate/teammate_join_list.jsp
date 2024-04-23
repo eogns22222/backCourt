@@ -14,6 +14,8 @@
 </head>
 <body>
     <jsp:include page="../header/header.jsp"/>
+    
+    <div class ="teammateDIV">
     <h2>팀원 모집리스트</h2>
     <!-- 지역 -->
     <select id="teamjoinaddr">
@@ -35,19 +37,20 @@
         <option value="플레티넘">플레티넘</option>
     </select>
     
-    <div class="table">
+    <div class="teammateTable">
     <table>
         <colgroup>
-             <col width="5%"/>
-             <col width="10%"/>
+             <col width="9%"/>
+             <col width="9%"/>
+             <col width="9%"/>
+             <col width="9%"/>
              <col width="50%"/>
-             <col width="10%"/>
-             <col width="10%"/>
-             <col width="10%"/>
+             <col width="7%"/>
+             <col width="7%"/>
          </colgroup>
          <thead>
            <tr>
-           	  <th></th>
+           	  <th>no.</th>
               <th>팀로고</th>
               <th>팀명</th>
               <th>팀장아이디</th>
@@ -69,6 +72,7 @@
                </td>
            </tr>
         </table>
+        </div>
         </div>
     <br/>
     
@@ -100,17 +104,30 @@ $(document).ready(function(){ // html 문서가 모두 읽히면 되면(준비�
 
 $('#teamjoinaddr').on('change',function(){
    $('#pagination').twbsPagination('destroy');
+   searchFlag =false;
    callList(currentPage);
 });
 $('#teamjoinpos').on('change',function(){
+	$('#pagination').twbsPagination('destroy');
+	searchFlag =false;
 	callList(currentPage);
 });
 $('#teamjoinlevel').on('change',function(){
+	$('#pagination').twbsPagination('destroy');
+	searchFlag =false;
 	callList(currentPage);
 });
-$('.searchBox button').on('click',function(){
-	$('#pagination').twbsPagination('destroy');
-	searchList(currentPage);
+$('#searchBtn').on('click', function(){
+    if($('#searchWord').val() == ''){
+        alert('검색단어를 입력해주세요');
+        return;
+    }
+    searchFlag = true;
+    currentPage = 1;
+
+    $('#pagination').twbsPagination('destroy');
+    searchList(currentPage);
+
 });
 
 function callList(currentPage) {
@@ -150,8 +167,8 @@ function callList(currentPage) {
        type:'POST'
        ,url:'./teammateSearchList.ajax'
        ,data:{
-          'teammateSearchCategory':$('#searchWord').val()
-          ,'teammateSearchWord':$('#searchBtn').val()
+          'teammateSearchCategory':$('#searchCategory').val()
+          ,'teammateSearchWord':$('#searchWord').val()
           ,'address':$('#teamJoinLoc').val()
           ,'id':$('#teamJoinRepresent').val()
           ,'teamName':$('#teamJoinName').val()
@@ -165,8 +182,9 @@ function callList(currentPage) {
              showFilterList(data.allList);
              filterFlag = true;
           }
-          var totalPage = data.totalPage/10 > 1 ? data.totalPage/10:1;
+          var totalPage = data.totalPage;
           showPagination2(totalPage);
+       		console.log(showPagination2);
           
        }
        ,error:function(error){
@@ -224,11 +242,10 @@ function showList(list){
 		}else{
 			link = '../login';
 		}
-    	
        content +=
           '<tr class="' + finishClass + '">'
        +'<td class="num">' + item.join_team_idx + '</td>'
-       +'<td class="logo">'+ item.logo+'</td>'
+       +'<td class="logo"><img class="teammateImage"  src="../resources/img/teamLogo/'+item.logo+'.jpg" alt="teammateLogo"></td>'
        +'<td class="teamName">' + item.team_name +'</td>'
        +'<td class="representID">' + item.id + '</td>'
        +'<td class="address"><a href="' + link + '">서울시 ' + item.team_address.split(' ')[1] + '</a></td>'
@@ -240,10 +257,10 @@ function showList(list){
 		finishClass2 = 'state';
 		finishTxt = '모집중';
     }
-    
+
     $('#tbody').html(content);
-   }
-   
+  }
+
 function showFilterList(list) {
    var content = '';
    var allTeammateAddress = [];
