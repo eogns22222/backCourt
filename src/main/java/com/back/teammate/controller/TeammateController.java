@@ -52,9 +52,9 @@ public class TeammateController {
      
       }
       
-  	@RequestMapping(value = "/official/teammateSearchList.ajax", method = RequestMethod.POST)
+  	@RequestMapping(value = "/teammate/teammateSearchList.ajax", method = RequestMethod.POST)
   	@ResponseBody
-  	public Map<String, Object> searchList(String teammateSearchCategory, String teammateSearchWord,String searchFlag, String currentPage, String address,String id, String teamName) {
+  	public Map<String, Object> searchList(String currentPage, String teammateSearchCategory, String teammateSearchWord,String searchFlag, String address,String id, String teamName) {
 		logger.info("listCall / currentPage = {} / address = {} / ", currentPage, address);
 		logger.info("서치리스트");
   		int page = Integer.parseInt(currentPage);
@@ -62,11 +62,21 @@ public class TeammateController {
 
   		return map;
   	}
-  	@RequestMapping(value = "/teammate/teammate_detail.go", method = RequestMethod.POST)
-  	public String detailGo(Model model, String join_team_idx) {
-  		logger.info("디테일");
-  		model.addAttribute("teammateIdx",join_team_idx);
-  		return "teammate/teammate_detail";
+  	// 팀원모집 상세보기
+  	@RequestMapping(value = "/teammate/teammate_detail.go", method = RequestMethod.GET)
+  	public String detail(HttpSession session, Model model, String join_team_idx) {
+  		logger.info("팀원모집상세보기입장이요");
+  		logger.info("join_team_idx : {}", join_team_idx);
+  		String page = "../login";
+  		
+  		if(session.getAttribute("loginId") != null) {
+			page = "/teammate/teammate_detail";
+			teammateService.detail(join_team_idx, model);
+		}else {
+			model.addAttribute("msg","로그인이 필요한 서비스입니다.");
+		}
+  		
+  		return page;
   	}
       
    

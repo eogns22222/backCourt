@@ -1,5 +1,6 @@
 package com.back.teammate.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.back.teammate.dao.TeammateDAO;
 import com.back.teammate.dto.TeammateDTO;
@@ -67,22 +69,22 @@ public class TeammateService {
 
 public Map<String, Object> searchList(String teammateSearchCategory, String teammateSearchWord, int page, String address, String id, String teamName) {
 	Map<String, Object> result = new HashMap<String, Object>();
-	List<TeammateDTO> list = null;
+	List<TeammateDTO> list = new ArrayList<TeammateDTO>();
 	List<TeammateDTO> allList = teammateDAO.allList();
 	
 	int start = (page - 1) * 10;
-	
-	if(teammateSearchCategory.equals("teamAddress")) {
+	logger.info(teammateSearchCategory);
+	if(teammateSearchCategory.equals("teamJoinLoc")) {
 		list = teammateDAO.addressSearchList(teammateSearchWord,start);
-		logger.info("서치리스트 코트어드레스 ");
+		logger.info("서치리스트 주소 ");
 		result.put("list", list);
 		result.put("totalPage", teammateDAO.addressFilteringCount(teammateSearchWord));
-	}else if(teammateSearchCategory.equals("teamName")) {
+	}else if(teammateSearchCategory.equals("teamJoinName")) {
 		list = teammateDAO.teamnameSearchList(teammateSearchWord,start);
 		logger.info("서치리스트 팀명 ");
 		result.put("list", list);
 		result.put("totalPage", teammateDAO.teamnameFilteringCount(teammateSearchWord));
-	}else if(teammateSearchCategory.equals("representName")) {
+	}else if(teammateSearchCategory.equals("teamJoinRepresent")) {
 		list = teammateDAO.representSearchList(teammateSearchWord,start);
 		logger.info("서치리스트 팀장ID ");
 		result.put("list", list);
@@ -93,6 +95,13 @@ public Map<String, Object> searchList(String teammateSearchCategory, String team
 	result.put("list", list);
 	result.put("allList", allList);
 	return result;
+}
+
+public void detail(String join_team_idx, Model model) {
+	
+	
+	TeammateDTO teammateDetail = teammateDAO.detail(join_team_idx);
+	model.addAttribute("teammateDetail", teammateDetail);
 }
    
    
