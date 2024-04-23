@@ -1,0 +1,57 @@
+.match_ask_list{
+    /* border: 1px solid black; */
+    width: 1000px;
+    margin-left: 30%;
+    margin-top: 100px;
+    padding: 10px 200px 0px 50px;
+}
+.oficial_list_thead{
+    /* border: 1px solid black; */
+    background-color: gainsboro;
+}
+.oficial_list{
+    text-align: center;
+    width: 800px;
+} 
+.oficial_list_th{
+    /* border: 1px solid black; */
+    width: 500px;
+    padding: 20px 10px;
+    font-size: 19px;
+    font-weight: 700;
+    text-align: center;
+}
+.title{
+    margin-bottom: 40px;
+    font-size: 20px;
+    
+}
+.button{
+    border: 0px;
+    background-color: gainsboro;
+    font-size: 20px;
+    margin-bottom: 40px;
+    margin-right: 40px;
+    font-weight: 500;
+    border-radius: 10%;
+    width: 99px;
+    height: 40px;
+}
+.Cancell_button{
+    border: 0px;
+    background-color: red;
+    border-radius: 10%;
+    width: 90px;
+    height: 40px;
+    color: white;
+}
+.oficial_list_tbody{
+    border-bottom: 1px solid black;
+    padding: 1090px;
+}
+.oficial_list_td{
+    padding: 10px 0px;
+}
+.oficial_list_State{
+    border: 0px;
+}

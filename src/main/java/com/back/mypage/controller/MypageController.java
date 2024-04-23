@@ -226,4 +226,45 @@ public class MypageController {
 			logger.info("{}",selectedIdxList);
 			return mypageService.jjimDel(selectedIdxList);
 		}
-	}
+
+
+
+// ============ 신청/예약 리스트 ==================
+
+// 신청/예약  리스트 이동
+@RequestMapping(value = "/mypage/match_ask_list.go")
+	public String matchAskListGo() {
+	return "mypage/match_ask_list";
+}
+
+// 신청/예약 리스트(아작스)
+@RequestMapping(value = "/mypage/match_ask_list.ajax")
+@ResponseBody
+	public Map<String, Object>  match_ask_list_ajax(String Choice,String page,String num,HttpSession session) {
+	logger.info("아작스 접근");
+	logger.info("선택 버튼 : {}",Choice);
+	logger.info("n번 부터 : {}",page);
+	logger.info("n개 :  {} ",num);
+
+	//로그인 중인 아이디
+//	String loginId = (String) session.getAttribute("loginId");	
+//	logger.info("로그인 아이디 : {}",loginId);
+	
+	String loginId = "testID8";
+	logger.info("로그인 아이디 : {}",loginId);
+	
+	//값 변환
+	int currPage = Integer.parseInt(page); //n번 부터
+	int pageParnum = Integer.parseInt(num); //n개
+	
+	Map<String, Object> map = mypageService.match_ask_list_ajax(loginId,Choice,currPage,pageParnum);
+	
+	return map;
+}
+
+
+
+
+
+
+}

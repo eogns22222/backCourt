@@ -42,12 +42,12 @@ public class MypageService {
 	
 		int start = (currPage-1)*pageParCnt;
 		
-		Map<String, Object> result = new HashMap<String, Object>();
-		List<MypageDTO> list = mypageDAO.point_list_ajax(loginId,pageParCnt,start);
+		Map<String, Object> result = new HashMap<String, Object>(); //아작스로 데이터를 보내기 위한 작업
+		List<MypageDTO> list = mypageDAO.point_list_ajax(loginId,pageParCnt,start); //아이디,n개 보여줘,n번부터
 		logger.info("list Size : "+list.size());
-		result.put("list", list);
-		result.put("currPage",currPage);
-		result.put("totalPages", mypageDAO.point_allConut(pageParCnt,loginId));
+		result.put("list", list); //맥에 리스트 라는 이름으로 리스트를 넣는다
+		result.put("currPage",currPage); //n번부터
+		result.put("totalPages", mypageDAO.point_allConut(pageParCnt,loginId)); //총 페이 갯수 계산
 		
 		
 		
@@ -88,4 +88,28 @@ public class MypageService {
 		return map;
 	
 }
+	
+// ============= 신청/예약 리스트 ==============
+	
+	
+	public Map<String, Object> match_ask_list_ajax(String loginId, String choice, int currPage, int pageParnum) {
+		logger.info("로그인 아이디 : {}",loginId);
+		logger.info("선택 버튼 : {}",choice);
+		logger.info("n번 부터 : {}",currPage);
+		logger.info("n개 :  {} ",pageParnum);
+		
+		int start = (currPage-1)*pageParnum;
+		
+		Map<String, Object> retul = new HashMap<String, Object>();
+
+			List<MypageDTO> list = mypageDAO.match_ask_list_ajax(loginId,pageParnum,start);
+			logger.info("list Size : {}",list.size());
+			retul.put("list", list);
+			retul.put("currPage",currPage);
+			//retul.put("totalPages",mypageDAO.match_allConut(pageParnum,loginId));
+			
+			
+		
+		return retul;
+	}
 }

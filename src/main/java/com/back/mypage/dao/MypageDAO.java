@@ -36,6 +36,15 @@ public interface MypageDAO {
 
 	int jjimDel(int jjimidx);
 
+	
+	
+// ========== 신청/예약 리스트 ====================
+	
+	
+	List<MypageDTO> match_ask_list_ajax(String loginId, int pageParnum, int start);
+
+	//Object match_allConut(int pageParnum, String loginId);
+
 
 
 }

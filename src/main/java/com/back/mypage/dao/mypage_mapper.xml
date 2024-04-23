@@ -39,6 +39,7 @@
 	</delete>
 
 <!-- ============ 포인트 관련 쿼리 =============== -->
+
 <select id="point_list" resultType="com.back.mypage.dto.MypageDTO">
 	SELECT point_idx, point_date, point_change, point_state FROM point_list where id = #{param1}
 </select>
@@ -79,5 +80,24 @@
 		)
 	FROM point_list pl where id=#{param1} AND point_state ="환급") where id=#{param1}
 </update>
+
+
+<!-- =========== 신청/예약 리스트 =====================  -->
+
+<select id="match_ask_list_ajax" resultType="com.back.mypage.dto.MypageDTO">
+SELECT om.official_match_idx
+	   ,om.official_match_date
+	   ,om.official_match_start_time
+	   ,om.official_match_end_time
+	   ,omal.official_match_idx
+	   ,omal.official_match_ask_state
+	   ,omal.id 
+FROM official_match om
+right outer join
+offcial_match_ask_list omal on omal.official_match_idx = om.official_match_idx WHERE omal.id =#{param1}
+ORDER BY om.official_match_date  DESC LIMIT #{param2} OFFSET #{param3}
+</select>
+
+
 
 </mapper>
