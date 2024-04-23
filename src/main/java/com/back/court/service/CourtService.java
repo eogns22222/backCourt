@@ -138,27 +138,24 @@ public class CourtService {
 		return map;
 	}
 
-	@Transactional
-	public Map<String, Boolean> booking(String selectedTime, String courtIdx, String courtPrice, String id, String courtDate) {
+
+	public Map<String, Boolean> booking(String courtStartTime, String courtIdx, String courtPrice, String id, String courtDate) {
 		Map<String, Boolean> map = new HashMap<String, Boolean>();
-//		MypageService ms = new MypageService();
-//		int courtMoney = Integer.parseInt(courtPrice);
-//		int myMoney = Integer.parseInt(ms.point(id));
-//		int bookingStartTime = Integer.parseInt(selectedTime);
-//		logger.info(bookingStartTime+2+"");
-//		
-//		if(courtMoney <= myMoney) {
-//			if(courtDAO.checkBooking(courtDate,bookingStartTime).isEmpty()) {
-//				courtDAO.booking(id,courtIdx,courtDate,bookingStartTime,bookingStartTime+2,"true");
-//				courtDAO.payingBooking(id,courtMoney,"예약",courtIdx,"구장예약");
-//			}else {
-//				map.put("money", false);
-//			}
-//			courtDAO.booking(id,courtIdx,courtDate,bookingStartTime,bookingStartTime+2,"true");
-//		}else {
-//			map.put("money", false);
-//		}
-//		
+			int courtBookingPrice = Integer.parseInt(courtPrice);
+			int myPoint = courtDAO.myPoint(id);
+			if(courtBookingPrice > myPoint) {
+				map.put("money", false);
+				return map;
+			}
+			if(courtDAO.duplicateCheckBooking(courtDate,courtStartTime) > 0) {
+				map.put("result", false);
+				return map;
+			}
+			int courtEndTime = Integer.parseInt(courtStartTime)+2;
+			
+			courtDAO.insertBooking(id,Integer.parseInt(courtIdx),courtDate,courtStartTime,Integer.toString(courtEndTime),"true");
+			courtDAO.insertPointHistory(id,myPoint,"예약",courtIdx,"구장");
+			
 		return map;
 	}
 

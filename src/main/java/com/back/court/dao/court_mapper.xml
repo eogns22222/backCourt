@@ -68,5 +68,21 @@
 		WHERE court_idx = #{param1} 
 		AND booking_date = #{param2}
 	</select>
+	
+	<select id="duplicateCheckBooking" resultType="int">
+	
+		SELECT COUNT(court_booking_idx)
+		FROM court_booking
+		WHERE booking_date = #{param1}
+		AND booking_start_time = #{param2}
+		
+	</select>
 
+	<select id="myPoint" resultType="int">
+		SELECT point
+		FROM member
+		WHERE id = #{param1}
+	</select>
+	
+	<insert id=""></insert>
 </mapper>

@@ -61,6 +61,9 @@
         position: absolute; /* 절대적인 위치 설정 */
         z-index: 1; /* 다른 요소 위로 배치 */
     }
+    .courtDetailTimeBtn{
+   		background-color : skyblue;
+   	}
 </style>
 </head>
 <body>
@@ -126,10 +129,13 @@
     var courtIdx = ${courtIdx};
     var courtDetailTime = '';
     var currentDate = new Date();
-    var formattedDate = currentDate.getFullYear() + "-" + ((currentDate.getMonth() + 1) < 10 ? '0' + (currentDate.getMonth() + 1) : (currentDate.getMonth() + 1)) + "-" + (currentDate.getDate() < 10 ? '0' + currentDate.getDate() : currentDate.getDate());
+    var formattedDate = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1).toString().padStart(2, '0') + "-" + currentDate.getDate().toString().padStart(2, '0');
+
     var selectedId = '';
     $('#courtDetailDate').val(formattedDate);
-    
+    $('#courtDetailReport').on('click',function(){
+    	window.location.href = '../mypage/report.go?reportWriteIdx='+courtIdx+'&reportWirteType="구장문의"';
+    });
     $('.menu').css('display','none');
     $('.courtDetailTimeBtn:not([disabled])').click(function() {
     	selectedId = $(this).attr('id');
@@ -151,7 +157,7 @@
 					type:'post'
 					, url:'./booking.ajax'
 					, data:{
-						'selectedTime':selectedId
+						'courtStartTime':selectedId
 						,'courtIdx':courtIdx
 						,'courtPrice':$('#courtDetailPrice').html()
 						,'courtDate':$('#courtDetailDate').val()
@@ -160,7 +166,7 @@
 					, success:function(data){
 						if(!data.money){
 							if(confirm('포인트가 부족합니다. 충전하시겠습니까?')){
-								window.location.href = '../point_add.go';
+								window.location.href = '../mypage/point_add.go';
 							}
 						}else if(!data.result){
 							alert('예약에 실패했습니다.');
@@ -176,6 +182,7 @@
     });
     
     $('#courtDetailDate').change(function() {
+        $('.courtDetailTimeBtn').css('background-color', 'skyblue');
         
     	$('.courtDetailTimeBtn').each(function() {
     		$(this).prop('disabled', false);
@@ -239,25 +246,26 @@
 
 
                 
-                var currentHour = currentDate.getHours() < 10 ? '0' + currentDate.getHours():currentDate.getHours(); // 현재 시간(0부터 23까지)
-//                 console.log(currentHour);
-                
+                var currentHour = currentDate.getHours();
+                console.log('시간블럭 비활성 시작');
                 $.each(data.bookingStartTime, function(index, item) {
                     $('.courtDetailTimeBtn').each(function() {
+                    	
+	                   	var thisHour = $(this).attr('id');
+	                   	
                     	if($('#courtDetailDate').val() == formattedDate){
-	                    	var thisHour = $(this).attr('id') < 10 ? '0' + $(this).attr('id'):$(this).attr('id');
-	                        if (thisHour == item || $(this).attr('id') <  (currentDate.getHours()-1 < 0 ? 0: currentDate.getHours()-1)) {
+	                        if (thisHour == item || thisHour < currentHour + 1) {
 	                            $(this).prop('disabled', true);
+	                            $(this).css('background-color', 'gray');
 	                        }
                     	}else{
-	                    	var thisHour = $(this).attr('id') < 10 ? '0' + $(this).attr('id'):$(this).attr('id');
 	                        if (thisHour == item) {
 	                            $(this).prop('disabled', true);
+	                            $(this).css('background-color', 'gray');
 	                        }
                     	}
                     });
                 });
-                $('.courtDetailTimeBtn:not([disabled])').css('background-color', 'skyblue');
                 
 
             }

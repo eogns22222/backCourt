@@ -18,10 +18,13 @@ public interface CourtDAO {
 
 	List<String> bookingStartTimeList(String courtIdx, String selectDate);
 
-	String checkBooking(String courtDate, int bookingStartTime);
+	int duplicateCheckBooking(String courtDate, String courtStartTime);
 
-	void booking(String id, String courtIdx, String courtDate, int bookingStartTime, int i, String string);
+	int myPoint(String id);
 
-	void payingBooking(String id, int courtMoney, String string, String courtIdx, String string2);
+	void insertPointHistory(String id, int pointChange, String pointState, String WriteIdx, String WriteType);
+
+	void insertBooking(String id, int courtIdx, String courtDate, String courtStartTime, String courtEndTime, String courtState);
+
 
 }
