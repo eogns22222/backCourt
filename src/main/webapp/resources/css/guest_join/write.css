@@ -127,6 +127,10 @@ input[type="text"] {
     text-align: center;
 }
 
+.update{
+	text-align: center;
+}
+
 #cancel{
     background-color: gray;
 }
@@ -137,6 +141,10 @@ input[type="text"] {
 
 #date{
     background-color: #fff;
+}
+
+#courtname{
+	background-color: #fff;
 }
 
 .text{

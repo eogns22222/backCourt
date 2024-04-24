@@ -39,6 +39,35 @@
 	<select id="callmyteam" resultType="int">
 		SELECT team_idx from team where id = #{param1} limit 1; 
 	</select>
+	
+	
+	<!-- 수정페이지 -->
+	<select id="guestModify" resultType="com.back.guest.dto.GuestDTO">
+		SELECT 
+			c.court_address 
+			,CONCAT(cb.booking_date,cb.booking_start_time, cb.booking_end_time) as bookingDate
+			, c.court_name 
+			,gj.guest_info 
+			,gj.guest_level 
+			,gj.guest_position 
+			,gj.guest_gender 
+			,gj.guest_to 
+			,gj.guest_fee 
+		FROM guest_join gj join court_booking cb on gj.court_booking_idx = cb.court_booking_idx join court c on cb.court_idx = c.court_idx 
+		where gj.guest_idx = #{param1};
+	</select>
+	
+	<update id="writeUpdate" parameterType="Object">
+		UPDATE guest_join SET 
+			guest_info = #{param1} 
+			,guest_level = #{param2}
+			,guest_position = #{param3}
+			,guest_gender = #{param4}
+			,guest_to = #{param5}
+			,guest_fee = #{param6}
+		WHERE guest_idx = #{param7};
+	</update>
+	
 </mapper>
 
 
