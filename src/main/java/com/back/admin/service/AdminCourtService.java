@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.back.admin.dao.AdminCourtDAO;
 import com.back.admin.dto.AdminCourtDTO;
-import com.back.court.dto.CourtDTO;
 
 @Service
 public class AdminCourtService {
@@ -24,6 +25,9 @@ public class AdminCourtService {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired
 	AdminCourtDAO adminCourtDAO;
+
+	@Autowired
+	private ServletContext servletContext;
 
 	public Map<String, Object> list(int page, String address) {
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -112,25 +116,68 @@ public class AdminCourtService {
 	}
 
 	public void courtImageUploading(int idx, MultipartFile[] files) {
+		// 경로 어떻게 하지 프로젝트안에 src/main/webapp/resources/img/court 안에 이미지 저장하고 싶은데
 
-		String fileRoot = "../../../../../../../src/main/webapp/resources/img/court/"; // 절대 경로 사용
+		String directory = servletContext.getRealPath("/resources/img/court/");
+		logger.info("경로 " + directory);
+
 		int count = 1;
 		for (MultipartFile file : files) {
 			String fileName = file.getOriginalFilename();
-			logger.info(fileName);
-
 			String newFileName = "court" + idx + "_image" + count + ".png";
+			Path filePath = Paths.get(directory + newFileName);
 
 			try {
 				byte[] bytes = file.getBytes();
-				Path path = Paths.get(fileRoot + newFileName);
-				Files.write(path, bytes);
+				Files.write(filePath, bytes);
 				adminCourtDAO.courtImageUpload(Integer.toString(idx), newFileName);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error("Failed to write file: " + filePath, e);
 			}
+			count++;
 		}
 	}
 
+//	public void courtImageUploading(int idx, MultipartFile[] files) {
+//		String absolutePath = servletContext.getRealPath(relativePath);
+//		Path path = Paths.get(absolutePath);
+//		logger.info(fileRoot);
+//		int count = 1;
+//		for (MultipartFile file : files) {
+//			String fileName = file.getOriginalFilename();
+//			logger.info(fileName);
+//
+//			String newFileName = "court" + idx + "_image" + count + ".png";
+//
+//			try {
+//				byte[] bytes = file.getBytes();
+//				Path path = Paths.get(fileRoot + newFileName);
+//				Files.write(path, bytes);
+//				adminCourtDAO.courtImageUpload(Integer.toString(idx), newFileName);
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
+
+//        String absolutePath = servletContext.getRealPath(relativePath);
+//        Path path = Paths.get(absolutePath);
+//        logger.info(fileRoot);
+//		int count = 1;
+//		for (MultipartFile file : files) {
+//			String fileName = file.getOriginalFilename();
+//			logger.info(fileName);
+//
+//			String newFileName = "court" + idx + "_image" + count + ".png";
+//
+//			try {
+//				byte[] bytes = file.getBytes();
+//				Path path = Paths.get(fileRoot + newFileName);
+//				Files.write(path, bytes);
+//				adminCourtDAO.courtImageUpload(Integer.toString(idx), newFileName);
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
 }
