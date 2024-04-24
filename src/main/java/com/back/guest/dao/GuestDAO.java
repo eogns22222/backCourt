@@ -13,4 +13,9 @@ public interface GuestDAO {
 
 	int callmyteam(String id);
 
+	GuestDTO guestModify(int guestIdx); 
+
+	void writeUpdate(String guest_info, String guest_level, String guest_position, String guest_gender,
+			String guest_to, int guest_fee, String guestIdx);
+
 }

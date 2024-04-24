@@ -8,8 +8,8 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="../resources/css/common/reset.css"
 	type="text/css">
-<link rel="stylesheet"
-	href="../resources/css/guest_join/write.css" type="text/css">
+<link rel="stylesheet" href="../resources/css/guest_join/write.css" 
+	type="text/css">
 <link rel="stylesheet" href="../resources/css/header/header.css"
 	type="text/css">
 </head>

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.back.guest.dto.GuestDTO;
@@ -40,6 +41,7 @@ public class GuestController {
 				+" guest_to : "+guest_to
 				+" guest_fee : "+guest_fee
 				+" court_booking : "+ booking_idx);
+		// 리스트페이지로 바꿔야함
 		String page = "/guest_join/write";
 		 // 아이디 수정필요
 		String id = "admin";
@@ -92,4 +94,49 @@ public class GuestController {
 
 	}
 	
+	@RequestMapping(value = "/guest_join/modify")
+	public String update() {
+		logger.info("게스트 모집글 수정페이지 접속");
+		
+		return "/guest_join/modify";
+	}
+
+	
+	@RequestMapping(value = "/guest_join/modify.ajax", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, GuestDTO> guestModify(String guestIdx){
+		
+		guestIdx = "4";
+		
+		logger.info("guestIdx"+ guestIdx);
+
+		return guestService.guestModify(Integer.parseInt(guestIdx));
+	}
+	
+	@RequestMapping(value = "/guest_join/guestUpdate.ajax", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> writeUpdate(String guest_info, String guest_level, String guest_position, 
+			String guest_gender, String guest_to, int guest_fee, String guestIdx){
+		logger.info("guestUpate " + guest_level + " " + guest_gender);
+		guestIdx = "4";
+		return guestService.writeUpdate(guest_info, guest_level, guest_position, guest_gender, guest_to, guest_fee, guestIdx);
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
