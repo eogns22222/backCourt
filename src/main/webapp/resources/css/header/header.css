@@ -35,11 +35,21 @@ img{width:100%;}
 .header .top .icoCont li .noticeBox .cont .btn{}
 
 /* 하단 메뉴 */
-.header .menu{display:flex;line-height:60px;}
+.header .menu{display:none;line-height:60px;}
+.header .menu.on{display:flex;}
 .header .menu li{}
 .header .menu li:not(:first-child){margin-left:200px;}
 .header .menu li a{display:block;font-size:30px;}
 .header .menu li a.on{background:skyblue;font-weight:600;}
+
+/* 팀서비스 2depth */
+.teamDepth2{display:none;margin:30px 30px 30px 170px;}
+.teamDepth2.on{display:block;}
+.teamDepth2 a{display:inline-block;padding:10px 20px;border:none;background:none;font-size:30px;border-radius:25px;}
+.teamDepth2 a.on{background:blue;font-weight:600;color:#fff;}
+.teamDepth2 .teamJoin{margin-right:100px;}
+.teamDepth2 .guestJoin{}
+
 
 /* nav */
 .nav{display:block;position:absolute;top:0;right:-450px;z-index:99;height:100vw;}

@@ -90,9 +90,19 @@
    
 </body>
 <script>
+
 var sessionChk2 = 'on';
 sessionChk2 = '${chk}';
 console.log(sessionChk2);
+
+
+// 팀서비스 2depth on
+$('.menu').css('display','flex');
+$('.menu li').eq(1).children('a').addClass('on');
+$('.teamDepth2').addClass('on');
+$('.teamDepth2 a').eq(0).addClass('on');
+// ------------------------------------------------------
+
 
 var currentPage = 1;
 var filterFlag = false;

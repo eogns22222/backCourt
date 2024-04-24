@@ -48,11 +48,18 @@
         </div>
         
         <!-- header 하단 -->
-        <ul class="menu">
+        <ul class="menu on">
             <li><a href="../official">공식 경기</a></li>
             <li><a href="../teammate">팀 서비스</a></li>
-            <li><a href="../guest">구장 대여</a></li>
+            <li><a href="../court">구장 대여</a></li>
         </ul>
+        
+		 <!-- 팀서비스 2depth -->
+		 <div class="teamDepth2">
+		     <a href="../teammate" class="teamJoin">팀원모집</a>
+		     <a href="../guest" class="guestJoin">게스트 모집</a>
+		 </div>
+         
     </div>
 </header>
 
