@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.back.mypage.dto.MypageDTO;
+import com.back.official.dto.OfficialDTO;
 
 public interface MypageDAO {
 	
@@ -41,10 +42,19 @@ public interface MypageDAO {
 // ========== 신청/예약 리스트 ====================
 	
 	
-	List<MypageDTO> match_ask_list_ajax(String loginId, int pageParnum, int start);
+	List<OfficialDTO> official_match_list_ajax(String loginId, int pageParnum, int startPage);
 
-	//Object match_allConut(int pageParnum, String loginId);
+	Object official_match_allConut(int pageParnum, String loginId);
 
+	List<MypageDTO> guest_match_list_ajax(String loginId, int pageParnum, int startPage);
+
+	Object guest_match_allConu(int pageParnum, String loginId);
+
+	List<MypageDTO> court_match_list_ajax(String loginId, int pageParnum, int startPage);
+
+	Object court_match_allConu(int pageParnum, String loginId);
+
+	void match_ask_list_del(String loginId,String idx);
 
 
 }
