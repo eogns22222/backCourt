@@ -50,8 +50,7 @@
 
 	<select id="detail" resultType="com.back.court.dto.CourtDTO">
 		SELECT court_name AS courtName
-		,
-		court_address
+		, court_address AS courtAddress
 		, court_info AS courtInfo
 		, court_price AS courtPrice
 		FROM
@@ -77,9 +76,9 @@
 
 		SELECT COUNT(court_booking_idx)
 		FROM court_booking
-		WHERE booking_date =
-		#{param1}
+		WHERE booking_date = #{param1}
 		AND booking_start_time = #{param2}
+		AND court_idx = #{param3}
 
 	</select>
 
@@ -90,5 +89,15 @@
 		= #{param1}
 	</select>
 
-	<insert id=""></insert>
+	<insert id="insertBooking" parameterType="map">
+		INSERT INTO 
+			court_booking(id,court_idx,booking_date,booking_start_time,booking_end_time,booking_state)
+			VALUES(#{id},#{court_idx},#{booking_date},#{booking_start_time},#{booking_end_time},#{booking_state})
+	</insert>
+	
+	<insert id="insertPointHistory" parameterType="map">
+		INSERT INTO
+			point_list(id,point_change,point_state,write_idx,write_type)
+			VALUES(#{id},#{point_change},#{point_state},#{write_idx},#{write_type})
+	</insert>
 </mapper>

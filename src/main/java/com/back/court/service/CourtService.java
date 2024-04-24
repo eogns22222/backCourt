@@ -16,8 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.back.court.dao.CourtDAO;
 import com.back.court.dto.CourtDTO;
-import com.back.mypage.dao.MypageDAO;
-import com.back.mypage.service.MypageService;
 
 @Service
 public class CourtService {
@@ -126,11 +124,14 @@ public class CourtService {
 
 	public Map<String, Object> detail(String courtIdx, String selectDate) {
 		Map<String, Object> map = new HashMap<String, Object>();
-
+		logger.info("선택된 날짜 = " + selectDate);
+		logger.info("courtIdx = " + courtIdx);
 		List<CourtDTO> detail = courtDAO.detail(courtIdx);
 		List<String> fileName = courtDAO.fileNameList(courtIdx);
 		List<String> bookingStartTime = courtDAO.bookingStartTimeList(courtIdx, selectDate);
-
+		for (String string : bookingStartTime) {
+			logger.info(string);
+		}
 		map.put("detail", detail);
 		map.put("fileName", fileName);
 		map.put("bookingStartTime", bookingStartTime);
@@ -143,20 +144,48 @@ public class CourtService {
 		Map<String, Boolean> map = new HashMap<String, Boolean>();
 		int courtBookingPrice = Integer.parseInt(courtPrice);
 		int myPoint = courtDAO.myPoint(id);
+		logger.info(myPoint + " " + courtBookingPrice);
+
+		map.put("money", true);
+		map.put("result", true);
 		if (courtBookingPrice > myPoint) {
 			map.put("money", false);
 			return map;
 		}
-		if (courtDAO.duplicateCheckBooking(courtDate, courtStartTime) > 0) {
+		logger.info(courtDAO.duplicateCheckBooking(courtDate, courtStartTime, courtIdx) + "일정체크 courtDate =" + courtDate
+				+ " courtStartTime" + courtStartTime);
+		if (courtDAO.duplicateCheckBooking(courtDate, courtStartTime, courtIdx) > 0) {
 			map.put("result", false);
 			return map;
 		}
+
 		int courtEndTime = Integer.parseInt(courtStartTime) + 2;
-//			
-//			courtDAO.insertBooking(id,Integer.parseInt(courtIdx),courtDate,courtStartTime,Integer.toString(courtEndTime),"true");
-//			courtDAO.insertPointHistory(id,myPoint,"예약",courtIdx,"구장");
+		Map<String, Object> insertMap = new HashMap<String, Object>();
+
+		insertMap.put("id", id);
+		insertMap.put("court_idx", Integer.parseInt(courtIdx));
+		insertMap.put("booking_date", courtDate);
+		insertMap.put("booking_start_time", Integer.parseInt(courtStartTime));
+		insertMap.put("booking_end_time", courtEndTime);
+		insertMap.put("booking_state", "true");
+		insertMap.put("point_change", courtBookingPrice);
+		insertMap.put("point_state", "예약");
+		insertMap.put("write_idx", courtIdx);
+		insertMap.put("write_type", "구장예약");
+
+		bookingAndPaying(insertMap);
 
 		return map;
 	}
 
+	@Transactional
+	public void bookingAndPaying(Map<String, Object> insertMap) {
+		try {
+			courtDAO.insertBooking(insertMap);
+			courtDAO.insertPointHistory(insertMap);
+		} catch (Exception e) {
+			logger.error("insert 실패", e);
+			throw new RuntimeException("insert 실패");
+		}
+	}
 }

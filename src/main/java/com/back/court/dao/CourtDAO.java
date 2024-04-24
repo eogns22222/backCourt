@@ -1,6 +1,7 @@
 package com.back.court.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.back.court.dto.CourtDTO;
 
@@ -18,13 +19,14 @@ public interface CourtDAO {
 
 	List<String> bookingStartTimeList(String courtIdx, String selectDate);
 
-	int duplicateCheckBooking(String courtDate, String courtStartTime);
+	int duplicateCheckBooking(String courtDate, String courtStartTime, String courtIdx);
 
 	int myPoint(String id);
 
 	void insertPointHistory(String id, int pointChange, String pointState, String WriteIdx, String WriteType);
 
-	void insertBooking(String id, int courtIdx, String courtDate, String courtStartTime, String courtEndTime,
-			String courtState);
 
+	void insertBooking(Map<String, Object> insertMap);
+
+	void insertPointHistory(Map<String, Object> insertMap);
 }

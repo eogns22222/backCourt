@@ -5,6 +5,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="../resources/css/common/reset.css">
+<link rel="stylesheet" href="../resources/css/header/header.css">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="../resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
@@ -78,6 +80,10 @@
 	var currentPage = 1;
 	var filterFlag = false;
 	var searchFlag = false;
+	
+	$('#courtRegist').on('click', function(){
+		window.location.href = './courtWrite.go';
+	});
 	
 	$(document).on('click', 'td', function(event) {
 		 var courtIdx = $(this).closest('tr').find('td:first').text();
