@@ -8,7 +8,7 @@
     <div class="inner">
         <!-- header 상단 -->
         <div class="top">
-            <h1><a href="/"><img src="../resources/img/icon/logo.png" alt=""></a></h1>
+            <h1><a href="../official"><img src="../resources/img/icon/logo.png" alt=""></a></h1>
             <ul class="icoCont">
                 <!-- 팀 정보 -->
                 <li>
@@ -48,11 +48,18 @@
         </div>
         
         <!-- header 하단 -->
-        <ul class="menu">
+        <ul class="menu on">
             <li><a href="../official">공식 경기</a></li>
             <li><a href="../teammate">팀 서비스</a></li>
-            <li><a href="../guest">구장 대여</a></li>
+            <li><a href="../court">구장 대여</a></li>
         </ul>
+        
+		 <!-- 팀서비스 2depth -->
+		 <div class="teamDepth2">
+		     <a href="../teammate" class="teamJoin">팀원모집</a>
+		     <a href="../guest" class="guestJoin">게스트 모집</a>
+		 </div>
+         
     </div>
 </header>
 
@@ -192,7 +199,7 @@
 		content += '<span class="photo"><img src="../resources/img/icon/propile.jpg" alt=""></span>';
 		content += '</div>';
 		content += '<div class="point">';
-		content += '<p>포인트<span><a href="../mypage/point?id=' + info.id + '">' + info.point + '</a></span></p>';
+		content += '<p>포인트<span><a href="../mypage/point.go?id=' + info.id + '">' + info.point + '</a></span></p>';
 		content += '<a href="../logout.do">로그아웃</button>';
 		content += '</div>';
 		content += '</li>';
@@ -250,7 +257,7 @@
 		
 		for(item of list){
 			content += '<li>';
-			content += '<a href="team/info_list?team_idx=' + item.team_idx + '">';
+			content += '<a href="../team/info_list.go?team_idx=' + item.team_idx + '">';
 			content += '<span class="logo"><img src="../resources/img/teamLogo/' + item.logo + '.jpg" alt="로고"></span>';
 			content += '<span class="teamNik">' + item.team_name + '</span>';
 			content += '</a>';

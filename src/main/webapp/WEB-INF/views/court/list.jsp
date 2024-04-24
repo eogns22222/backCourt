@@ -80,6 +80,10 @@
 	<div></div>
 </body>
 <script>
+	// 구장 대여
+	$('.menu li').eq(2).children('a').addClass('on');
+	// ---------------------------------------------------
+
 	var currentPage = 1;
 	var filterFlag = false;
 	var searchFlag = false;
