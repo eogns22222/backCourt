@@ -1,6 +1,7 @@
 package com.back.admin.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.back.admin.dto.AdminCourtDTO;
 
@@ -21,5 +22,10 @@ public interface AdminCourtDAO {
 	List<AdminCourtDTO> nameSearchList(String courtSearchWord, int start);
 
 	Object nameFilteringCourtCount(String courtSearchWord);
+
+	Boolean write(AdminCourtDTO dto);
+
+	void courtImageUpload(String idx, String newFileName);
+
 
 }

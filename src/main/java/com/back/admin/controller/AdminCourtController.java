@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.back.admin.service.AdminCourtService;
 
@@ -42,5 +44,34 @@ public class AdminCourtController {
 	@RequestMapping(value = "/admin/courtWrite.go")
 	public String WriteGo() {
 		return "/admin/court_register";
+	}
+	
+	@RequestMapping(value = "/admin/courtWrite.ajax")
+	@ResponseBody
+	public Map<String, Boolean> Write(
+            @RequestParam("file") MultipartFile[] files,
+            @RequestParam("courtWriteName") String courtWriteName,
+            @RequestParam("courtWriteInfo") String courtWriteInfo,
+            @RequestParam("courtWritePrice") String courtWritePrice,
+            @RequestParam("courtWriteAddress") String courtWriteAddress,
+            @RequestParam("courtIsOfficial") String courtIsOfficial,
+            @RequestParam("courtIsDisabled") String courtIsDisabled){
+		
+		logger.info("courtWriteName: {}", courtWriteName);
+        logger.info("courtWriteInfo: {}", courtWriteInfo);
+        logger.info("courtWritePrice: {}", courtWritePrice);
+        logger.info("courtWriteAddress: {}", courtWriteAddress);
+        logger.info("courtIsOfficial: {}", courtIsOfficial);
+        logger.info("courtIsDisabled: {}", courtIsDisabled);
+        
+        
+        // 파일 정보도 로깅
+        for (MultipartFile file : files) {
+            logger.info("File Name: {}", file.getOriginalFilename());
+            logger.info("Content Type: {}", file.getContentType());
+            logger.info("File Size: {}", file.getSize());
+        }
+		
+		return adminCourtService.write(files,courtWriteName,courtWriteInfo,courtWritePrice,courtWriteAddress,courtIsOfficial,courtIsDisabled);
 	}
 }

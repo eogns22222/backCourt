@@ -93,6 +93,19 @@
 		WHERE court_name LIKE CONCAT('%', #{param1}, '%')
 	
 	</select>
+	
+	<insert id="write" useGeneratedKeys="true" keyColumn="court_idx"
+		keyProperty="courtIdx" parameterType="com.back.admin.dto.AdminCourtDTO">
+		INSERT INTO 
+		court(court_name,court_address,court_info,court_price,court_state,court_official)
+		VALUES(#{courtName},#{courtAddress},#{courtInfo},#{courtPrice},#{courtState},#{courtOfficial})
+	</insert>
+	
+	<insert id="courtImageUpload" parameterType="String">
+		INSERT INTO 
+		court_image(court_idx,file_name)
+		VALUES(#{param1},#{param2})
+	</insert>
 </mapper>
 
 
