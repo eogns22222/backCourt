@@ -8,7 +8,7 @@
     <div class="inner">
         <!-- header 상단 -->
         <div class="top">
-            <h1><a href="/"><img src="../resources/img/icon/logo.png" alt=""></a></h1>
+            <h1><a href="../official"><img src="../resources/img/icon/logo.png" alt=""></a></h1>
             <ul class="icoCont">
                 <!-- 팀 정보 -->
                 <li>
@@ -192,7 +192,7 @@
 		content += '<span class="photo"><img src="../resources/img/icon/propile.jpg" alt=""></span>';
 		content += '</div>';
 		content += '<div class="point">';
-		content += '<p>포인트<span><a href="../mypage/point?id=' + info.id + '">' + info.point + '</a></span></p>';
+		content += '<p>포인트<span><a href="../mypage/point.go?id=' + info.id + '">' + info.point + '</a></span></p>';
 		content += '<a href="../logout.do">로그아웃</button>';
 		content += '</div>';
 		content += '</li>';
@@ -250,7 +250,7 @@
 		
 		for(item of list){
 			content += '<li>';
-			content += '<a href="team/info_list?team_idx=' + item.team_idx + '">';
+			content += '<a href="../team/info_list.go?team_idx=' + item.team_idx + '">';
 			content += '<span class="logo"><img src="../resources/img/teamLogo/' + item.logo + '.jpg" alt="로고"></span>';
 			content += '<span class="teamNik">' + item.team_name + '</span>';
 			content += '</a>';

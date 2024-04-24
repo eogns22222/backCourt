@@ -8,10 +8,10 @@
 	
 	<select id="teamList" resultType="com.back.header.dto.HeaderDTO">
 		SELECT 
-			team_idx,
-			logo, 
-			team_name
-			FROM team WHERE id = #{param1}
+			tl.team_idx,
+			(SELECT logo FROM team t WHERE t.team_idx = tl.team_idx) as logo, 
+			(SELECT team_name FROM team t WHERE t.team_idx = tl.team_idx) as team_name
+			FROM team_list tl WHERE id = #{param1};
 	</select>
 	
 	<select id="noticeList" resultType="com.back.header.dto.HeaderDTO">

@@ -5,6 +5,125 @@
 
 <mapper namespace="com.back.team.dao.TeamDAO">
 
+	<select id="teamDetail" resultType="com.back.team.dto.TeamDTO">
+		SELECT 
+			t.team_idx 
+			,t.logo
+			,t.team_name
+			,(SELECT id FROM member m WHERE m.id = t.id AND t.team_idx = #{param1}) AS id
+			,t.team_address
+			,t.team_level
+			,(SELECT COUNT(tl.team_idx) FROM team_list tl WHERE tl.team_idx = #{param1}) AS teamCount
+			,t.team_info
+			FROM team t
+			WHERE t.team_idx = #{param1}
+	</select>
+	
+	<select id="listTeam" resultType="com.back.team.dto.TeamDTO">
+		SELECT 
+			(SELECT id FROM member m WHERE m.id = tl.id) AS id
+			,tl.team_date
+			FROM team_list tl
+			WHERE tl.team_idx = #{param2}
+			ORDER BY tl.team_date asc LIMIT #{param1}, 10
+	</select>
+	
+	<select id="teamTotal" resultType="int">
+		SELECT CEIL(COUNT((SELECT id FROM member m WHERE m.id = tl.id))/10) AS totalPage 
+			FROM team_list tl
+			WHERE tl.team_idx = #{param1}
+	</select>
+	
+	<select id="listAppli" resultType="com.back.team.dto.TeamDTO">
+		SELECT 
+			applicant_idx
+			,id
+			,(SELECT level  FROM member m WHERE m.id = tjl.id) AS level
+			,(SELECT position  FROM member m WHERE m.id = tjl.id) AS position
+			FROM team_join_list tjl
+			WHERE join_team_idx = (SELECT 
+			join_team_idx 
+			FROM team_join tj 
+			WHERE team_idx = #{param2})
+			ORDER BY applicant_idx asc LIMIT #{param1}, 10
+	</select>
+	
+	<select id="appliTotal" resultType="int">
+		SELECT CEIL(COUNT((SELECT level  FROM member m WHERE m.id = tjl.id))/10) AS totalPage 
+			FROM team_join_list tjl
+			WHERE join_team_idx = (SELECT 
+			join_team_idx 
+			FROM team_join tj 
+			WHERE team_idx = #{param1})
+	</select>
+	
+	<select id="listWriteTeam" resultType="com.back.team.dto.TeamDTO">
+		SELECT 
+			join_team_idx
+			,join_team_gender 
+			,join_team_level 
+			,join_team_position
+			FROM team_join tj 
+			JOIN team t 
+			ON tj.team_idx = t.team_idx 
+			WHERE t.id = #{param2}
+			AND tj.join_team_state = "공개"
+			AND tj.team_idx = #{param1}
+			ORDER BY tj.join_team_idx  DESC LIMIT 1;
+	</select>
+	
+	<select id="listWriteGuest" resultType="com.back.team.dto.TeamDTO">
+		SELECT 
+			guest_idx
+			,guest_gender
+			,guest_level
+			,guest_position
+			FROM guest_join gj 
+			JOIN team t 
+			ON gj.team_idx = t.team_idx 
+			WHERE t.id = #{param3}
+			AND gj.guest_state = "공개"
+			AND gj.team_idx = #{param2}
+			ORDER BY gj.guest_idx  DESC LIMIT #{param1},#{param4};
+	</select>
+	
+	<select id="writeTotal" resultType="int">
+		SELECT 
+			CEIL(((COUNT(join_team_idx)) + 
+			(SELECT COUNT(guest_idx) FROM guest_join gj WHERE id = #{param2}))/10)
+			AS totalPage
+			FROM team_join
+			WHERE team_idx = #{param1};
+	</select>
+	
+	<select id="listDrop" resultType="com.back.team.dto.TeamDTO">
+		SELECT
+			tq.id
+			,team_ban
+			FROM team_quit tq
+			JOIN team t 
+			ON tq.team_idx = t.team_idx
+			WHERE t.team_idx = #{param2}
+			LIMIT #{param1},10;
+	</select>
+	
+	<select id="dropTotal" resultType="int">
+		SELECT CEIL(COUNT(id)/10) AS totalPage 
+			FROM team_quit tq
+			WHERE tq.team_idx = #{param1};
+	</select>
+	
+	<select id="userPop" resultType="com.back.team.dto.TeamDTO">
+		SELECT 
+			id
+			,level
+			,position
+			,gender
+			,address
+			FROM member
+			WHERE id = #{param1};
+	</select>
+
 </mapper>
 
 
