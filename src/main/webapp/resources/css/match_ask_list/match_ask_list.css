@@ -1,19 +1,19 @@
 .match_ask_list{
     /* border: 1px solid black; */
     width: 1000px;
-    margin-left: 30%;
-    margin-top: 100px;
+    margin-left: 15%;
+    margin-top: 40px;
     padding: 10px 200px 0px 50px;
 }
-.oficial_list_thead{
+.match_list_thead{
     /* border: 1px solid black; */
     background-color: gainsboro;
 }
-.oficial_list{
+.match_list{
     text-align: center;
     width: 800px;
 } 
-.oficial_list_th{
+.match_list_th{
     /* border: 1px solid black; */
     width: 500px;
     padding: 20px 10px;
@@ -45,13 +45,13 @@
     height: 40px;
     color: white;
 }
-.oficial_list_tbody{
+.match_list_tbody{
     border-bottom: 1px solid black;
     padding: 1090px;
 }
-.oficial_list_td{
+.match_list_td{
     padding: 10px 0px;
 }
-.oficial_list_State{
+.match_list_State{
     border: 0px;
 }

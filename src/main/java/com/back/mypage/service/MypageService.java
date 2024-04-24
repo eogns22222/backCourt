@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.back.mypage.dao.MypageDAO;
 import com.back.mypage.dto.MypageDTO;
+import com.back.official.dto.OfficialDTO;
 
 @Service
 public class MypageService {
@@ -98,18 +99,43 @@ public class MypageService {
 		logger.info("n번 부터 : {}",currPage);
 		logger.info("n개 :  {} ",pageParnum);
 		
-		int start = (currPage-1)*pageParnum;
+		int startPage = (currPage-1)*pageParnum;
 		
-		Map<String, Object> retul = new HashMap<String, Object>();
+		Map<String, Object> result = new HashMap<String, Object>();
 
-			List<MypageDTO> list = mypageDAO.match_ask_list_ajax(loginId,pageParnum,start);
+		//공식 경기를 클릭 하면 반응
+		if (choice.equals("공식 경기")) {
+			List<OfficialDTO> list = mypageDAO.official_match_list_ajax(loginId,pageParnum,startPage);
 			logger.info("list Size : {}",list.size());
-			retul.put("list", list);
-			retul.put("currPage",currPage);
-			//retul.put("totalPages",mypageDAO.match_allConut(pageParnum,loginId));
-			
-			
+			result.put("list", list);
+			result.put("Choice",choice);
+			result.put("totalPages",mypageDAO.official_match_allConut(pageParnum,loginId));
+		}
 		
-		return retul;
+		//세스트 리ㅅ
+		if (choice.equals("게스트")) {
+			List<MypageDTO> list = mypageDAO.guest_match_list_ajax(loginId,pageParnum,startPage);
+			logger.info("list Size : "+list.size());
+			result.put("list", list);
+			result.put("Choice",choice);
+			result.put("totalPages", mypageDAO.guest_match_allConu(pageParnum,loginId));
+		}
+			
+		if(choice.equals("구장 예약")) {
+			List<MypageDTO> list = mypageDAO.court_match_list_ajax(loginId,pageParnum,startPage);
+			logger.info("구장 예약 list size : "+list.size());
+			result.put("list", list);
+			result.put("Choice",choice);
+			result.put("totalPages",mypageDAO.court_match_allConu(pageParnum,loginId));
+		}
+		
+		logger.info("총 페이지 : {}",result.get("totalPages"));	
+		
+		return result;
+	}
+	public void match_ask_list_del(String loginId,String idx) {
+		mypageDAO.match_ask_list_del(loginId,idx);
+		logger.info("삭제 서비스 주.....");
+		
 	}
 }

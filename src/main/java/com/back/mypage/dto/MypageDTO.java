@@ -222,4 +222,60 @@ public class MypageDTO {
 		public void setGuest_state(String guest_state) {
 			this.guest_state = guest_state;
 		}
+		
+		
+//		구장 신청 리스트
+		
+		private Date booking_date;
+		private String booking_start_time;
+		private String booking_end_time;
+		
+//		구장 시작,종료 시간 합 결과
+		private String guest_time;
+		
+
+		public Date getBooking_date() {
+			return booking_date;
+		}
+		public void setBooking_date(Date booking_date) {
+			this.booking_date = booking_date;
+		}
+		public String getBooking_start_time() {
+			return booking_start_time;
+		}
+		public void setBooking_start_time(String booking_start_time) {
+			this.booking_start_time = booking_start_time;
+		}
+		public String getBooking_end_time() {
+			return booking_end_time;
+		}
+		public void setBooking_end_time(String booking_end_time) {
+			this.booking_end_time = booking_end_time;
+		}
+		public String getGuest_time() {
+			return guest_time;
+		}
+		public void setGuest_time(String guest_time) {
+			this.guest_time = guest_time;
+		}
+		
+		
+//		구장 이름
+		private String court_name;
+		
+//		구장예약 시간
+		private String court_time;
+
+		public String getCourt_name() {
+			return court_name;
+		}
+		public void setCourt_name(String court_name) {
+			this.court_name = court_name;
+		}
+		public String getCourt_time() {
+			return court_time;
+		}
+		public void setCourt_time(String court_time) {
+			this.court_time = court_time;
+		}
 }

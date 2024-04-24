@@ -1,5 +1,7 @@
 package com.back.official.dto;
 
+import java.sql.Date;
+
 public class OfficialDTO {
 
 	// 공식 경기 리스트
@@ -123,6 +125,47 @@ public class OfficialDTO {
 	}
 	public void setFile_name(String file_name) {
 		this.file_name = file_name;
+	}
+	
+	
+//	========== 공식 경기 신천 리스트 ==========
+	
+	private int official_match_ask_idx;
+	private String id;
+	private String official_match_ask_state;
+	private Date official_match_ask_date;
+	
+	private String time;
+
+	public int getOfficial_match_ask_idx() {
+		return official_match_ask_idx;
+	}
+	public void setOfficial_match_ask_idx(int official_match_ask_idx) {
+		this.official_match_ask_idx = official_match_ask_idx;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getOfficial_match_ask_state() {
+		return official_match_ask_state;
+	}
+	public void setOfficial_match_ask_state(String official_match_ask_state) {
+		this.official_match_ask_state = official_match_ask_state;
+	}
+	public Date getOfficial_match_ask_date() {
+		return official_match_ask_date;
+	}
+	public void setOfficial_match_ask_date(Date official_match_ask_date) {
+		this.official_match_ask_date = official_match_ask_date;
+	}
+	public String getTime() {
+		return time;
+	}
+	public void setTime(String time) {
+		this.time = time;
 	}
 	
 	
