@@ -257,11 +257,32 @@ public class MypageController {
 	int currPage = Integer.parseInt(page); //n번 부터
 	int pageParnum = Integer.parseInt(num); //n개
 	
+	//아작스를 컨트롤러에서 처리 하지 않고 서비스로 보낸다.
 	Map<String, Object> map = mypageService.match_ask_list_ajax(loginId,Choice,currPage,pageParnum);
 	
 	return map;
 }
 
+
+	//아작스 리스트 삭제
+	@RequestMapping(value = "/mypage/match_ask_list_del.ajax", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> match_ask_list_del(String idx,HttpSession session){
+		logger.info("아작스 리스트 삭제 중...");
+		logger.info("idx : {}",idx);
+		
+		//로그인 중인 아이디
+//		String loginId = (String) session.getAttribute("loginId");	
+//		logger.info("로그인 아이디 : {}",loginId);
+		
+		String loginId = "testID8";
+		logger.info("로그인 아이디 : {}",loginId);
+
+		
+		mypageService.match_ask_list_del(loginId,idx);
+		
+		return null;
+	}
 
 
 
