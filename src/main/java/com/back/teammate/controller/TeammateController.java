@@ -1,6 +1,5 @@
 package com.back.teammate.controller;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -76,27 +75,17 @@ public class TeammateController {
 		}else {
 			model.addAttribute("msg","로그인이 필요한 서비스입니다.");
 		}
-  		
+  		model.addAttribute("join_team_idx",join_team_idx);
   		return page;
   	}
-	@RequestMapping(value = "/teammate/teammateReport.ajax", method = RequestMethod.POST)
+
+  	@RequestMapping(value = "/teammate/teammateJoin.ajax", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> payment(HttpSession session, Model model, String leaderId, String join_team_idx) {
-		logger.info("팀원모집 신고");
-		logger.info("leaderId : {} ", leaderId);
-		logger.info("join_team_idx : {} ", join_team_idx);
-		String id = "";
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		if(session.getAttribute("loginId") != null) {
-			id = (String) session.getAttribute("loginId");
-			String teammateReport = teammateService.compare(id, leaderId, join_team_idx);
-			map.put("teammateReport", teammateReport);
-		}else {
-			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
-		}
-		
-		return map;
+	public Map<String, Object> teammateJoin(HttpSession session ,String joinTeamIdx) {
+  		logger.info("팀원가입신청할게요"+session.getAttribute("loginId"));
+  		logger.info("join_team_idx : {}", joinTeamIdx);
+  		String id = (String) session.getAttribute("loginId");
+		return teammateService.teammateJoin(joinTeamIdx, id, "대기중");
 	}
    
 }

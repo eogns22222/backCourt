@@ -18,7 +18,7 @@
                 <img class="teammateLogo" src="../resources/img/teamLogo/${teammateDetail.logo}.jpg" alt="teammateLogo">>
             </div>
             <div>
-                <a href="javascript:;" class="teammateReportBtn">신고하기</a>
+                <a class="teammateReportBtn">신고하기</a>
                 <h3 class="teamName">${teammateDetail.team_name}</h3>
                 <p class="teamLeader"><span>${teammateDetail.id}</span></p>
             </div>
@@ -29,7 +29,7 @@
         <p class="teammateGender">모집 성별: <span>${teammateDetail.join_to_gender}</span></p>
         <p class="teammatePositions">모집 포지션: <span>${teammateDetail.join_team_position}</span></p>
         <p class="tj">
-            <a href="" class="teammatejoinBtn" onclick="teammateJoin()">가입 신청하기</a>
+        <a class="teammateJoinBtn">가입 신청하기</a>
         </p>
     </div>
   
@@ -40,11 +40,36 @@
 </body>
 <script>
 $('.teammateReportBtn').on('click',function(){
-	window.location.href = '../mypage/report.go?join_team_idx='+${teammateDetail.join_team_idx}+'&reportWirteType="신고하기"';
+	window.location.href = '../mypage/report.go?join_team_idx='+${teammateDetail.join_team_idx}+'&reportWirteType="팀원모집신고"';
 });
 
-function teammateJoin(){
-	
-}
+var joinTeamIdx = ${join_team_idx};
+console.log(joinTeamIdx);
+$('.teammateJoinBtn').on('click', function() {
+    var cf = confirm("${teammateDetail.team_name} 팀에 가입 하시겠습니까?");
+    if (cf) {
+        $.ajax({
+            type: 'post',
+            url: './teammateJoin.ajax',
+            data: {
+                'joinTeamIdx': joinTeamIdx
+            },
+            dataType: 'json',
+            success: function(data) {
+            	console.log(data.result);
+            	if(data.result == true){
+                alert('팀원 가입 신청이 완료되었습니다.');
+                location.href = '../teammate/teammate_join_list.go';            		
+            	}else{
+            		alert('이미 신청된 팀입니다.');
+            	}
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    } 
+});
+
 </script>
 </html>

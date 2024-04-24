@@ -103,11 +103,22 @@ public void teammateDetail(String join_team_idx, Model model) {
 	model.addAttribute("teammateDetail", teammateDetail);
 }
 
-public String compare(String id, String leaderId, String join_team_idx) {
-	logger.info(join_team_idx);
-	logger.info(leaderId);
-	return teammateDAO.compare(id, leaderId,join_team_idx);
+public Map<String, Object> teammateJoin(String joinTeamIdx, String id, String join_state) {
+    Map<String, Object> result = new HashMap<>();
+    result.put("result", false);
+    logger.info("팀원가입 서비스에 들어왔다.");
+    logger.info("가입할 팀 = " + joinTeamIdx);
+    int row = teammateDAO.duplicateChk(joinTeamIdx,id);
+    if(row>0) {
+    	return result;
+    }
+    result.put("result", teammateDAO.teammateJoin(joinTeamIdx, id, join_state));
+    
+    
+    return result;
 }
+
+
    
    
 

@@ -15,6 +15,8 @@ public class TeammateDTO {
    private String id;
    private String team_address;
    private String logo;
+   private String join_state;
+   private String join_date;
    
    
    public int getJoin_team_idx() {
@@ -82,6 +84,24 @@ public String getLogo() {
 }
 public void setLogo(String logo) {
 	this.logo = logo;
+}
+public String getJoin_team_content() {
+	return join_team_content;
+}
+public void setJoin_team_content(String join_team_content) {
+	this.join_team_content = join_team_content;
+}
+public String getJoin_state() {
+	return join_state;
+}
+public void setJoin_state(String join_state) {
+	this.join_state = join_state;
+}
+public String getJoin_date() {
+	return join_date;
+}
+public void setJoin_date(String join_date) {
+	this.join_date = join_date;
 }
 
 }

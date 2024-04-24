@@ -315,4 +315,14 @@
 	WHERE tj.join_team_idx = #{param1}
 	</select>
 	
+	<insert id="teammateJoin" parameterType="String">
+	INSERT INTO 
+		team_join_list(id, join_team_idx, join_state)
+	VALUES(#{param2},#{param1},#{param3})
+	</insert>
+	
+	<select id="duplicateChk" resultType="int">
+		SELECT count(id) FROM team_join_list WHERE join_team_idx = #{param1} AND id = #{param2} AND (join_state = '수락' OR join_state = '대기중')
+	</select>
+	
 </mapper>

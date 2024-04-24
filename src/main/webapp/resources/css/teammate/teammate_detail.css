@@ -42,7 +42,7 @@
     margin-bottom: 5px;
 }
 
-a.teammatejoinBtn{
+.teammateJoinBtn{
     display: block;
     margin-right: 5px;
     padding: 5px 8px;
@@ -52,8 +52,9 @@ a.teammatejoinBtn{
     background-color: blue;
     font-weight: bold;
     text-align: center;
+    cursor: pointer;
 }
-a.teammatereportBtn{
+a.teammateReportBtn{
     display: inline-block;
     background-color: red;
     font-weight: bold;
@@ -63,6 +64,7 @@ a.teammatereportBtn{
     margin-right: 5px;
     margin-bottom: 10px;
     padding: 5%;
+    cursor: pointer;
 }
 
 .teamDescriptionBox {

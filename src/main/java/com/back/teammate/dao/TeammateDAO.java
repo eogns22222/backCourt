@@ -56,7 +56,9 @@ public interface TeammateDAO {
 
 	TeammateDTO teammateDetail(String join_team_idx);
 
-	String compare(String id, String leaderId, String join_team_idx);
+	boolean teammateJoin(String joinTeamIdx, String id, String join_state);
+
+	int duplicateChk(String joinTeamIdx, String id);
 
 
 
