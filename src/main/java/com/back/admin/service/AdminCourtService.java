@@ -1,5 +1,6 @@
 package com.back.admin.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -116,15 +117,34 @@ public class AdminCourtService {
 	}
 
 	public void courtImageUploading(int idx, MultipartFile[] files) {
-		String directory = servletContext.getRealPath("/resources/img/court/");
-		
+
+		String os = System.getProperty("os.name").toLowerCase();
+		String directory = "";
+		if (os.contains("mac")) {
+			directory = "/Users/chaehyeonpark/Documents/gdj78_backcourt/upload/court/";
+		} else if (os.contains("win")) {
+			directory = "C:/upload/court/";
+		}
+		File dirPath = new File(directory);
 		logger.info("경로 " + directory);
+		Path path = Paths.get(directory);
+        try {
+			Files.createDirectories(path.getParent());
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		// 폴더가 존재하지 않으면 생성
+		if (!dirPath.exists()) {
+			dirPath.mkdirs();
+			logger.info("폴더가 생성되었습니다.");
+		}
 
 		int count = 1;
 		for (MultipartFile file : files) {
 			String fileName = file.getOriginalFilename();
 			String newFileName = "court" + idx + "_image" + count + ".png";
-			Path filePath = Paths.get("/**/resources/img/court/" + newFileName);
+			Path filePath = Paths.get(directory+ newFileName);
 
 			try {
 				byte[] bytes = file.getBytes();
