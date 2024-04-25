@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="../resources/css/common/common.css" type ="text/css">
 <link rel="stylesheet" href="../resources/css/common/reset.css" type ="text/css">
 <link rel="stylesheet" href="../resources/css/header/header.css" type ="text/css">
-<link rel="stylesheet" href="../resources/css/teammate/teammate.css" type ="text/css">
+<link rel="stylesheet" href="../resources/css/teammate/teammate_list.css" type ="text/css">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="../resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 </head>

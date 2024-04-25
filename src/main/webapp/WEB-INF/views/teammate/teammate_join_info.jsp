@@ -7,7 +7,7 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="../resources/css/common/reset.css">
 <link rel="stylesheet" href="../resources/css/header/header.css">
-<link rel="stylesheet" href="../resources/css/teammate/teammate_detail.css">
+<link rel="stylesheet" href="../resources/css/teammate/teammate_info.css">
 </head>
 <body>
 <jsp:include page="../header/header.jsp"/>
