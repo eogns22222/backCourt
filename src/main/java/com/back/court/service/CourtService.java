@@ -66,7 +66,9 @@ public class CourtService {
 		Set<String> set = new HashSet<String>();
 
 		for (CourtDTO dto : list) {
-			set.add(dto.getCourtAddress().split(" ")[1]);
+			if (dto.getCourtAddress().contains(" ")) {
+				set.add(dto.getCourtAddress().split(" ")[1]);
+			}
 		}
 		List<String> DeduplicationList = new ArrayList<String>(set);
 		Collections.sort(DeduplicationList);

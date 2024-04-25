@@ -64,7 +64,7 @@
                 <tr>
                     <th class="courtWriteTh">구장 가격</th>
                     <td class="courtWriteTd">
-                        <input type="text" id="courtWritePrice"/>
+                        <input type="number" id="courtWritePrice"/>
                     </td>
                 </tr>
                 <tr>
@@ -88,7 +88,6 @@
 	</div>
         
 <script>
-    
     $('#courtRegisterSubmit').on('click',function(){
         var formData = new FormData();
         var files = $('#courtImageUpload')[0].files;
@@ -147,7 +146,7 @@
                 ,contentType:false
                 ,processData:false
                 ,success:function(){
-
+					window.location.href = './courtList.go';
                 }
                 ,error:function(error){
 
