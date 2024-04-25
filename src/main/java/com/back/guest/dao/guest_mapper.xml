@@ -68,6 +68,27 @@
 		WHERE guest_idx = #{param7};
 	</update>
 	
+	
+	<!--  게스트 모집 리스트 페이지 -->
+	<select id="list" resultType="com.back.guest.dto.GuestDTO">
+		SELECT 
+			gj.guest_idx
+			,c.court_name 
+			,c.court_address 
+			,t.team_name 
+			,gj.guest_gender 
+			,gj.guest_position 
+			,gj.guest_level 
+			,gj.guest_to 
+		FROM guest_join gj 
+		JOIN court_booking cb 
+		ON gj.court_booking_idx = cb.court_booking_idx 
+		JOIN court c 
+		ON c.court_idx = cb.court_idx 
+		JOIN team t
+		ON t.team_idx = gj.team_idx 
+		WHERE gj.guest_state = 'true'
+	</select>
 </mapper>
 
 

@@ -25,12 +25,14 @@ public class GuestController {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired GuestService guestService;
 	
+	// 작성페이지 접속
 	@RequestMapping(value = "/guest_join/write")
 	public String guestWriteGo() {
 		logger.info("게스트 모집글 작성페이지 접속");
 		return "/guest_join/write";
 	}
 	
+	// 글쓰기 작성
 	@RequestMapping(value = "/guest_join/write.do", method = RequestMethod.POST)
 	public String guestWrite(String booking_idx, String guest_info, String guest_level,
 			String guest_position, String guest_gender, String guest_to, String guest_fee){
@@ -72,6 +74,7 @@ public class GuestController {
 		return page;
 	}
 	
+	// 구장 리스트 불러오기
 	@RequestMapping(value = "/guest_join/courtlist.ajax", method = RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> courtList(HttpSession session, Model model){
@@ -94,6 +97,8 @@ public class GuestController {
 
 	}
 	
+	
+	// 수정페이지 접속
 	@RequestMapping(value = "/guest_join/modify")
 	public String update() {
 		logger.info("게스트 모집글 수정페이지 접속");
@@ -101,7 +106,7 @@ public class GuestController {
 		return "/guest_join/modify";
 	}
 
-	
+	// 수정페이지 불러오기
 	@RequestMapping(value = "/guest_join/modify.ajax", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, GuestDTO> guestModify(String guestIdx){
@@ -113,6 +118,8 @@ public class GuestController {
 		return guestService.guestModify(Integer.parseInt(guestIdx));
 	}
 	
+	
+	// 수정페이지 작성완료
 	@RequestMapping(value = "/guest_join/guestUpdate.ajax", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> writeUpdate(String guest_info, String guest_level, String guest_position, 
@@ -122,6 +129,23 @@ public class GuestController {
 		return guestService.writeUpdate(guest_info, guest_level, guest_position, guest_gender, guest_to, guest_fee, guestIdx);
 	}
 	
+	
+	// 게스트 리스트 접속
+	@RequestMapping(value = "/guest_join/list.go")
+	public String listGo() {
+		logger.info("게스트모집 리스트 접속");
+		return "/guest_join/list";
+	}
+	
+	// 게스트 리스트 가져오기
+	@RequestMapping(value = "/guest_join/list.ajax")
+	@ResponseBody
+	public Map<String, Object> guestList(){
+		logger.info("게스트리스트 아작스 요청");
+//		guestService.guestList()
+		
+		return null;
+	}
 }
 
 
