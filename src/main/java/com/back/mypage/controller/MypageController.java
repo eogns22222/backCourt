@@ -38,18 +38,13 @@ public class MypageController {
 					String loginId =  (String) session.getAttribute("loginId");
 					
 					if (loginId!=null) {
-						//내가 임의로 넣은 값
-						//String loginId = "a";
 						logger.info("로그인 아이디 : "+loginId);
 						
 						//포인트 합 출력
-						String point = mypageService.point(loginId);
+						String point = mypageService.point_list(loginId);
 						model.addAttribute("point",point);
 						page = "/mypage/point";
 						
-						//리스트 출력
-						List<MypageDTO> list = mypageService.point_list(loginId);
-						model.addAttribute("pont_list",list);
 					}
 					
 					return page;
@@ -68,7 +63,6 @@ public class MypageController {
 					int pageParCnt = Integer.parseInt(cnt);
 					
 					String loginId = (String) session.getAttribute("loginId");
-					//String loginId = "a";
 					logger.info("아잨스 에서 세션 아이디 : "+loginId);
 					Map<String, Object> map = mypageService.point_list_ajax(loginId,currPage,pageParCnt);
 					
@@ -84,11 +78,9 @@ public class MypageController {
 					
 					//로그인 회원 아이디 가져오기
 					String loginId = (String) session.getAttribute("loginId");
-					//logger.info("loginId"+loginId);
+					logger.info("loginId"+loginId);
 					
 					if (loginId!=null) {
-						//내가 임의로 넣은 값
-						//String loginId = "a";
 						
 						String point = mypageService.point(loginId);
 						model.addAttribute("point",point);
@@ -108,10 +100,8 @@ public class MypageController {
 					
 					//로그인 회원 아이디 가져오기
 					String loginId = (String) session.getAttribute("loginId");
-					//logger.info("loginId"+loginId);
-					
-					//내가 임의로 넣은 값
-					//String loginId = "a";
+					logger.info("loginId"+loginId);
+
 					
 					mypageService.Charging_do(loginId,Charging);
 					
@@ -128,11 +118,9 @@ public class MypageController {
 					String page = "redirect:/login";
 					//로그인 회원 아이디 가져오기
 					String loginId = (String) session.getAttribute("loginId");
-					//logger.info("loginId"+loginId);
+					logger.info("loginId"+loginId);
 					
 					if (loginId!=null) {
-						//내가 임의로 넣은 값
-						//String loginId = "a";
 						
 						String point = mypageService.point(loginId);
 						model.addAttribute("point",point);
@@ -153,10 +141,8 @@ public class MypageController {
 					
 					//로그인 회원 아이디 가져오기
 					String loginId = (String) session.getAttribute("loginId");
-					//logger.info("로그인 중인 사람 : "+loginId);
-					
-					//내가 임의로 넣은 값
-					//String loginId = "a";
+					logger.info("로그인 중인 사람 : "+loginId);
+
 					logger.info("로그인 중인 사람 : "+loginId);
 					
 					mypageService.PointMinus(loginId,minus);
@@ -247,10 +233,7 @@ public class MypageController {
 	logger.info("n개 :  {} ",num);
 
 	//로그인 중인 아이디
-//	String loginId = (String) session.getAttribute("loginId");	
-//	logger.info("로그인 아이디 : {}",loginId);
-	
-	String loginId = "testID8";
+	String loginId = (String) session.getAttribute("loginId");	
 	logger.info("로그인 아이디 : {}",loginId);
 	
 	//값 변환
@@ -264,28 +247,55 @@ public class MypageController {
 }
 
 
-	//아작스 리스트 삭제
-	@RequestMapping(value = "/mypage/match_ask_list_del.ajax", method = RequestMethod.POST)
+	//아작스 리스트 삭제 (공식 경기 삭제)
+	@RequestMapping(value = "/mypage/official_match_list_del.ajax", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> match_ask_list_del(String idx,HttpSession session){
 		logger.info("아작스 리스트 삭제 중...");
 		logger.info("idx : {}",idx);
 		
 		//로그인 중인 아이디
-//		String loginId = (String) session.getAttribute("loginId");	
-//		logger.info("로그인 아이디 : {}",loginId);
-		
-		String loginId = "testID8";
+		String loginId = (String) session.getAttribute("loginId");	
 		logger.info("로그인 아이디 : {}",loginId);
-
 		
-		mypageService.match_ask_list_del(loginId,idx);
+		Map<String, Object> map = 	mypageService.match_ask_list_del(loginId,idx);
 		
-		return null;
+		return map;
 	}
 
 
+	//아작스 (게스트 리스트 삭제)
+	@RequestMapping(value = "/mypage/guset_match_list_del.ajax")
+	@ResponseBody
+	public Map<String, Object> guset_match_list_del(String idx,HttpSession session){
+		logger.info("아작스(게스트 리스트 삭제 접속)");
+		
+		//로그인 중인 아이디
+		String loginId = (String) session.getAttribute("loginId");	
+		logger.info("로그인 아이디 : {}",loginId);
+		
+		Map<String, Object> map = mypageService.guset_match_list_del(loginId,idx);
+		
+		return map;
+	}
 
+	
+	//아작스 (구장 리스트 삭제)
+	@RequestMapping(value = "/mypage/court_match_list_del")
+	@ResponseBody
+	public Map<String, Object> court_match_list_del(String idx,HttpSession session){
+		logger.info("아작스 (구장 리스트 삭제) 접근");
+		
+		//로그인 중인 아이디
+		String loginId = (String) session.getAttribute("loginId");	
+		logger.info("로그인 아이디 : {}",loginId);
+		
+		Map<String, Object> map =mypageService.court_match_list_del(loginId,idx);
+		
+		
+		return map;
+	}
+	
 
 
 }

@@ -167,6 +167,7 @@ public class MypageDTO {
 		private String guest_info;
 		private int guest_fee;
 		private String guest_state;
+		
 
 		public String getCourt_booking_idx() {
 			return court_booking_idx;

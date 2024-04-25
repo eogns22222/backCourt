@@ -23,12 +23,12 @@
         <button class="button">구장 예약</button>
         <table class="match_list">
         	<thead id = "listHead" class="match_list_thead">
-        	
+        
+
         	</thead>
             <tbody id="listBody">
-                
             </tbody>
-            <tr>
+            <tr >
                 <!-- 플러그인 사용법 --> 
                    <td colspan="4">
                        <div class="container">                           
@@ -59,15 +59,100 @@ $('.button').on('click',function(){
 });
 
 
-    //취소 처리 버튼
-    $('.Cancell_button').on('click',function(){
-    	console.log($(this));
-        /* var cancell = confirm('신청을 취소하시겠습니까?');
+/* $(document).on('click', '.match_list_del_button', function() {
+    // 여기에 클릭 이벤트 핸들러 내용을 작성합니다.
+    console.log($(this).val());
+    var cancell = confirm('신청을 취소하시겠습니까?');
+    if (cancell) {
+        alert('신청 취소가 완료되었습니다');
+    }
+}); */
+
+
+
+
+
+//공식 경리 리스트 삭제
+function official_match_list_del(idx){
+	//console.log('공식 경기 삭제');
+	var cancell = confirm('신청을 취소하시겠습니까?');
         if (cancell) {
             alert('신청 취소가 완료되었습니다');
-        } */
-    });
+		  //삭제 아작스
+		  $.ajax({
+		        type:'post',
+		        url:'./official_match_list_del.ajax',
+		        data:{
+					'idx':idx
+		        },
+		        dataType:'json',
+		        success:function(data){
+					console.log(data.msg);
+		        },
+		        error:function(error){
+		            console.log(error);
+		        }
+		    }); 
+		  $('#pagination').twbsPagination('destroy');
+		  listCall(currentPage,click);
+        }
+	
+}
 
+
+// 게스트 리스트 삭제
+function guset_match_list_del(idx){
+	console.log(idx);	
+	var cancell = confirm('신청을 취소하시겠습니까?');
+        if (cancell) {
+            alert('신청 취소가 완료되었습니다');
+            $.ajax({
+                type:'post',
+                url:'guset_match_list_del.ajax',
+                data:{
+                    'idx':idx
+                },
+                dataType:'json',
+                success:function(data){
+					console.log(data.msg);
+                },
+                error:function(error){
+                    console.log(error);
+                }
+            });
+            $('#pagination').twbsPagination('destroy');
+            click = "게스트";
+            listCall(currentPage,click);
+        } 
+}
+
+// 구장 리스트 삭제
+function court_match_list_del(idx){
+	console.log(idx);	
+	var cancell = confirm('신청을 취소하시겠습니까?');
+        if (cancell) {
+            alert('신청 취소가 완료되었습니다');
+            //삭제
+            $.ajax({
+                type:'post',
+                url:'court_match_list_del.ajax',
+                data:{
+                    'idx':idx
+                },
+                dataType:'json',
+                success:function(data){
+					console.log(data.msg);
+                },
+                error:function(error){
+                    console.log(error);
+                }
+            });
+            $('#pagination').twbsPagination('destroy');
+            click = "구장 예약";
+            listCall(currentPage,click);
+            
+        }
+}
 
 
 //아작스 선언
@@ -82,16 +167,17 @@ function listCall(page,Choice){
         },
         dataType:'json',//아작스 방식
         success:function(data){
+        	
         	if(data.Choice=='공식 경기'){
-        		officialList(data.list);
+        		officialList(data.list,data.startPage,data.siz);
         		HeadTable();
         	}
         	if(data.Choice=='게스트'){
-                gusetList(data.list);
+                gusetList(data.list,data.startPage,data.siz);
                 HeadTable_guset();
             }
         	if(data.Choice=='구장 예약'){
-        		courtList(data.list);
+        		courtList(data.list,data.startPage,data.siz);
         		HeadTable();
         	}
             //console.log("총 페이지 수 : ",data);
@@ -117,28 +203,10 @@ function listCall(page,Choice){
 }
 
 
-  //리스트 삭제
-function del(idx){  
-	
-	//삭제 아작스
-    $.ajax({
-        type:'post',
-        url:'./match_ask_list_del.ajax',
-        data:{
-			'idx':idx
-        },
-        dataType:'json',
-        success:function(data){
-			console.log('삭제 완료');
-        },
-        error:function(error){
-            console.log(error);
-        }
-    });
-	
-    console.log(idx);
-}
 
+
+
+ 
 
 
 
@@ -170,48 +238,74 @@ function HeadTable(){
 
 
 // 오피셜 경기 리스트
-function officialList(list){
+function officialList(list,start,siz){
     var Content = '';
-	var count = 0;
-    for (official of list) {
-    	count++;
-    	Content += '<tr class="match_list_tbody">';
-    	Content += '<td class="match_list_td">'+count+'</td>';
-    	// 날짜 오류 수정
-    	var date = new Date(official.official_match_date);
-        var ModifyDate = date.toLocaleDateString("ko-KR");
-    	Content += '<td class="match_list_td">'+ModifyDate+'</td>';
-    	Content += '<td class="match_list_td">'+official.time+'</td>';
-    	Content += '<td class="match_list_td"><button  class="Cancell_button" onclick="del('+official.official_match_ask_idx+')">신청 취소</button></td>';
-    	Content += '</tr>';
-    }
+	var count = start;
+	var size = siz;
+	if(size >0){
+	    for (official of list) {
+	    	count ++;
+	    	Content += '<tr class="match_list_tbody">';
+	    	Content += '<td class="match_list_td">'+count+'</td>';
+	    	// 날짜 오류 수정
+	    	var date = new Date(official.official_match_date);
+	        var ModifyDate = date.toLocaleDateString("ko-KR");
+	    	Content += '<td class="match_list_td">'+ModifyDate+'</td>';
+	    	Content += '<td class="match_list_td">'+official.time+'</td>';
+	    	Content += '<td class="match_list_td"><button class="match_list_del_button" onclick="official_match_list_del('+official.official_match_ask_idx+') ">신청 취소</button></td>';
+	    	Content += '</tr>';
+	    	
+	    }
+	}else{
+	    Content += '<tr class="match_list_tbody">';
+		Content += '<td colspan="4" class="match_list_td">공식 경기 신청이 처음 이시군요!! </td>';
+		Content += '</tr>';
+	    }
     $('#listBody').html(Content);
 }
 
 //게스트 경기 리스트
-function gusetList(list){
+function gusetList(list,start,siz){
 	var Content = '';
-	var count=0;
-	for (guset of list) {
-		count++;
-		Content += '<tr class="match_list_tbody">';
-		Content += '<td class="match_list_td">'+count+'</td>';
-		// 날짜 오류 수정
-    	var date = new Date(official.official_match_date);
-        var ModifyDate = date.toLocaleDateString("ko-KR");
-		Content += '<td class="match_list_td">'+ModifyDate+'</td>';
-		Content += '<td class="match_list_td">'+guset.guest_time+'</td>';
-        Content += '<td class="match_list_td">'+guset.guest_join_state+'</td>';
-        Content += '<td class="match_list_td"><button  class="Cancell_button onclick="del()"">신청 취소</button></td>';
-        Content += '</tr>';
-	}
+	var count= start;
+	var size = siz;
+	if(size >0){
+		for (guset of list) {
+			count++;
+			Content += '<tr class="match_list_tbody">';
+			Content += '<td class="match_list_td">'+count+'</td>';
+			// 날짜 오류 수정
+	    	var date = new Date(guset.booking_date);
+	        var ModifyDate = date.toLocaleDateString("ko-KR");
+			Content += '<td class="match_list_td">'+ModifyDate+'</td>';
+			Content += '<td class="match_list_td">'+guset.guest_time+'</td>';
+			var state = guset.guest_join_state;
+			var styleButton = '';
+			if (state == '확인중') {
+				styleButton = 'match_list_Checking';
+			}else if (state == '거부') {
+				styleButton = 'match_list_No';
+			}else if (state == '수락') {
+				styleButton = 'match_list_Yes';
+			}
+	        Content += '<td class="match_list_td"><button disabled id="'+styleButton+'">'+guset.guest_join_state+'</button></td>';
+	        Content += '<td class="match_list_td"><button  class="match_list_del_button" onclick="guset_match_list_del('+guset.guest_join_idx+')">신청 취소</button></td>';
+	        Content += '</tr>';
+		}
+	}else{
+	    Content += '<tr class="match_list_tbody">';
+		Content += '<td colspan="5" class="match_list_td">게스트 신청이 처음 이시군요!! </td>';
+		Content += '</tr>';
+	    }
 	$('#listBody').html(Content);
 }
 
 //구장 예약 리스트
-function courtList(list){
+function courtList(list,start,siz){
     var Content = '';
-	var count = 0;
+	var count = start;
+	var siz = siz;
+	if(siz >  0){
     for (court of list) {
     	count++;
     	Content += '<tr class="match_list_tbody">';
@@ -221,8 +315,13 @@ function courtList(list){
     	var date = new Date(official.official_match_date);
         var ModifyDate = date.toLocaleDateString("ko-KR");
         Content += '<td class="match_list_td">'+ModifyDate+'<br/>'+court.court_time+'</td>';
-        Content += '<td class="match_list_td"><button  class="Cancell_button onclick="del()"">신청 취소</button></td>';
+        Content += '<td class="match_list_td"><button  class="match_list_del_button" onclick="court_match_list_del('+court.court_booking_idx +')">신청 취소</button></td>';
         Content += '</tr>';
+    	}
+    }else{
+    Content += '<tr class="match_list_tbody">';
+	Content += '<td colspan="4" class="match_list_td">구장 예약이 처음 이시군요!! </td>';
+	Content += '</tr>';
     }
     $('#listBody').html(Content);
 }

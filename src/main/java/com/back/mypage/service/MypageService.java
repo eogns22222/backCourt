@@ -24,7 +24,7 @@ public class MypageService {
 	public String report(String id) {
 		return mypageDAO.report(id);
 	}
-	public List<MypageDTO> point_list(String loginId) {
+	public String point_list(String loginId) {
 		
 		return mypageDAO.point_list(loginId);
 	}
@@ -109,15 +109,19 @@ public class MypageService {
 			logger.info("list Size : {}",list.size());
 			result.put("list", list);
 			result.put("Choice",choice);
+			result.put("startPage", startPage); //n번 부터
+			result.put("siz", list.size()); //리스트 사이즈
 			result.put("totalPages",mypageDAO.official_match_allConut(pageParnum,loginId));
 		}
 		
-		//세스트 리ㅅ
+		//세스트 리스트
 		if (choice.equals("게스트")) {
 			List<MypageDTO> list = mypageDAO.guest_match_list_ajax(loginId,pageParnum,startPage);
 			logger.info("list Size : "+list.size());
 			result.put("list", list);
 			result.put("Choice",choice);
+			result.put("startPage", startPage); //n번 부터
+			result.put("siz", list.size()); //리스트 사이즈
 			result.put("totalPages", mypageDAO.guest_match_allConu(pageParnum,loginId));
 		}
 			
@@ -126,6 +130,8 @@ public class MypageService {
 			logger.info("구장 예약 list size : "+list.size());
 			result.put("list", list);
 			result.put("Choice",choice);
+			result.put("startPage", startPage); //n번 부터
+			result.put("siz", list.size()); //리스트 사이즈
 			result.put("totalPages",mypageDAO.court_match_allConu(pageParnum,loginId));
 		}
 		
@@ -133,9 +139,68 @@ public class MypageService {
 		
 		return result;
 	}
-	public void match_ask_list_del(String loginId,String idx) {
-		mypageDAO.match_ask_list_del(loginId,idx);
-		logger.info("삭제 서비스 주.....");
+	
+	//신청/예약 삭지 아작스
+	public Map<String, Object> match_ask_list_del(String loginId,String idx) {
+		int row=0;
 		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		row = mypageDAO.match_ask_list_del(loginId,idx);
+		logger.info("삭제 서비스 중.....");
+		
+		if (row>0) {
+			result.put("msg", "삭제 성공");
+		}else {
+			result.put("msg","삭제 실패");
+		}
+		
+		logger.info("삭제 결과 : "+result.get("msg"));
+		
+		
+		return result;
+		
+	}
+	
+	
+	//아작스(게스트 리스트 삭제)
+	public Map<String, Object> guset_match_list_del(String loginId, String idx) {
+		logger.info("아작스(게스트 리스트 삭제 서비스 처리 중...)");
+		
+		//삭제 된 로우가 있는지 확인 할때 씀
+		int row = 0;
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		row = mypageDAO.guset_match_list_del(loginId,idx);
+		
+		if (row>0) {
+			result.put("msg", "삭제 성공");			
+		}else {
+			result.put("msg", "삭제 실패");
+		}
+		logger.info("삭제 성공 여부 : "+result.get("msg"));
+		
+		return result;
+	}
+	
+	
+	
+	//아작스 (구장 리스트 삭제)
+	public Map<String, Object> court_match_list_del(String loginId, String idx) {
+		logger.info(idx);
+		int row =0;
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		row = mypageDAO.court_match_list_del(loginId,idx);
+		
+		if (row>0) {
+			result.put("msg", "삭제 성공");
+		}else {
+			result.put("msg","삭제 실패");
+		}
+		
+		return result;
 	}
 }

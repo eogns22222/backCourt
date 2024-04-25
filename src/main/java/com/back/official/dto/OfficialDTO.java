@@ -128,7 +128,7 @@ public class OfficialDTO {
 	}
 	
 	
-//	========== 공식 경기 신천 리스트 ==========
+//	========== 공식 경기 신청 리스트 ==========
 	
 	private int official_match_ask_idx;
 	private String id;

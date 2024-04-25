@@ -12,7 +12,7 @@ public interface MypageDAO {
 	
 	String report(String id);
 	
-	List<MypageDTO> point_list(String loginId);
+	String point_list(String loginId);
 
 	void Charging_do(String loginId, String charging);
 
@@ -54,7 +54,11 @@ public interface MypageDAO {
 
 	Object court_match_allConu(int pageParnum, String loginId);
 
-	void match_ask_list_del(String loginId,String idx);
+	int match_ask_list_del(String loginId,String idx);
+
+	int guset_match_list_del(String loginId, String idx);
+
+	int court_match_list_del(String loginId, String idx);
 
 
 }

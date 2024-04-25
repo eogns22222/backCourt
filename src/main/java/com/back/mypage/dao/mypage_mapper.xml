@@ -41,7 +41,7 @@
 <!-- ============ 포인트 관련 쿼리 =============== -->
 
 <select id="point_list" resultType="com.back.mypage.dto.MypageDTO">
-	SELECT point_idx, point_date, point_change, point_state FROM point_list where id = #{param1}
+	SELECT point FROM member where id = #{param1}
 </select>
 
 <insert id="Charging_do"> 
@@ -108,11 +108,13 @@ SELECT CEIL(COUNT(id)/#{param1}) FROM offcial_match_ask_list where id = #{param2
 <select id="guest_match_list_ajax"  resultType="com.back.mypage.dto.MypageDTO">
 	SELECT
 	cb.booking_date
+	,guest_idx.guest_join_idx
 	,CONCAT(cb.booking_start_time, ' ~ ', cb.booking_end_time) AS guest_time
 	,guest_idx.guest_join_state FROM court_booking cb 
 join(
 	SELECT gj.court_booking_idx
 		  ,gjl.guest_join_state 
+		  ,gjl.guest_join_idx
 	FROM guest_join_list gjl join guest_join gj on gjl.guest_idx = gj.guest_idx where gjl.id =#{param1})as guest_idx
 on cb.court_booking_idx = guest_idx.court_booking_idx ORDER BY cb.booking_date LIMIT #{param2} offset #{param3};
 </select>
@@ -126,6 +128,7 @@ SELECT CEIL(COUNT(guest_join_idx)/#{param1}) FROM guest_join_list where id = #{p
 <select id="court_match_list_ajax" resultType="com.back.mypage.dto.MypageDTO">
 	SELECT 
 		c.court_name
+		,cb.court_booking_idx 
 		,cb.booking_date
 		,CONCAT(cb.booking_start_time," ~ ",cb.booking_start_time) as court_time
 	FROM court c join court_booking cb 
@@ -137,8 +140,19 @@ SELECT CEIL(COUNT(guest_join_idx)/#{param1}) FROM guest_join_list where id = #{p
 SELECT CEIL(COUNT(court_booking_idx)/#{param1}) FROM court_booking cb where id =#{param2}
 </select>
 
-<delete id="match_ask_list_del">
 
+<!-- 공식 경기 리스 트 삭제 -->
+<delete id="match_ask_list_del" >
+DELETE FROM offcial_match_ask_list where id = #{param1} and official_match_ask_idx=#{param2}
+</delete>
+
+<!-- 게스트 리스트 삭제 -->
+<delete id="guset_match_list_del">
+DELETE FROM guest_join_list WHERE id=#{param1} AND guest_join_idx =#{param2}
+</delete>
+
+<delete id="court_match_list_del">
+DELETE FROM court_booking where id=#{param1} AND court_booking_idx = #{param2}
 </delete>
 
 </mapper>

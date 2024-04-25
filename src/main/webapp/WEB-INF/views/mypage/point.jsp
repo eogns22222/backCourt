@@ -23,7 +23,7 @@
         <div id="he">
             <h3 class="poin">포인트 내역</h3>
             <br/>
-            <h3 class="point">${point } 원</h3>
+            <h3 class="point">${point} 원</h3>
             <br/><br/>
             <button class="state">충전</button>
             <button class="state">환급</button>
