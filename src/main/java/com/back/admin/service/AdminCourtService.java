@@ -119,6 +119,8 @@ public class AdminCourtService {
 	public void courtImageUploading(int idx, MultipartFile[] files) {
 
 		String os = System.getProperty("os.name").toLowerCase();
+		
+		logger.info(os);
 		String directory = "";
 		if (os.contains("mac")) {
 			directory = "/Users/chaehyeonpark/Documents/gdj78_backcourt/upload/court/";
