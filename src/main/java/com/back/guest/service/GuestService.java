@@ -1,15 +1,19 @@
 package com.back.guest.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.back.court.dto.CourtDTO;
 import com.back.guest.dao.GuestDAO;
 import com.back.guest.dto.GuestDTO;
 
@@ -44,7 +48,7 @@ public class GuestService {
 		return map;
 	}
 
-	// 수정하기 
+	// 수정하기
 	public Map<String, Object> writeUpdate(String guest_info, String guest_level, String guest_position,
 			String guest_gender, String guest_to, int guest_fee, String guestIdx) {
 		guestDAO.writeUpdate(guest_info, guest_level, guest_position, guest_gender, guest_to, guest_fee, guestIdx);
@@ -55,7 +59,7 @@ public class GuestService {
 
 	// 게스트 모집글 리스트 페이지
 	public Map<String, Object> guestList(int page, String searchFlag, String searchCategory, String searchWord,
-			String address, String gender, String position, String level){
+			String address, String gender, String position, String level) {
 		// 시작 페이지
 		int start = (page - 1) * 10;
 
@@ -66,6 +70,9 @@ public class GuestService {
 		// 가공될 리스트
 		List<GuestDTO> processedList = new ArrayList<GuestDTO>();
 
+		// 주소 리스트
+		map.put("addressList", addressDeduplication(list));
+
 		// 검색
 		if (searchFlag.equals("true") && searchCategory.equals("Address")) { // 지역명 검색
 			processedList = addressProcessedListing(list, searchWord);
@@ -73,22 +80,19 @@ public class GuestService {
 			processedList = nameProcessedListing(list, searchWord);
 		} else if (searchFlag.equals("true") && searchCategory.equals("teamName")) {// 팀명 검색
 			processedList = teamNameProcessedListing(list, searchWord);
-		}else if (address.isEmpty() == false
-				|| gender.isEmpty() == false 
-				|| position.isEmpty() == false
-				|| level.isEmpty() == false
-				) { // 필터
+		} else if (address.isEmpty() == false || gender.isEmpty() == false || position.isEmpty() == false
+				|| level.isEmpty() == false) { // 필터
 			processedList = list;
-			if(address.isEmpty() == false) {	
+			if (address.isEmpty() == false) {
 				processedList = addressProcessedListing(processedList, address);
 			}
-			if(gender.isEmpty() == false) {
+			if (gender.isEmpty() == false) {
 				processedList = genderProcessedListing(processedList, gender);
 			}
-			if(position.isEmpty() == false) {
+			if (position.isEmpty() == false) {
 				processedList = positionProcessedListing(processedList, position);
 			}
-			if(level.isEmpty() == false) {
+			if (level.isEmpty() == false) {
 				processedList = levelProcessedListing(processedList, level);
 			}
 		} else { // 기본
@@ -113,6 +117,18 @@ public class GuestService {
 			}
 		}
 		return processedList;
+	}
+
+	// 주소 구 단위로 자르고 가나다순 정렬
+	public List<String> addressDeduplication(List<GuestDTO> list) {
+		Set<String> set = new HashSet<String>();
+
+		for (GuestDTO dto : list) {
+			set.add(dto.getCourt_address().split(" ")[1]);
+		}
+		List<String> DeduplicationList = new ArrayList<String>(set);
+		Collections.sort(DeduplicationList);
+		return DeduplicationList;
 	}
 
 	// 주소 필터 메서드

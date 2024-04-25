@@ -1,287 +1,232 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>게스트 모집 게시판</title>
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
-<script src="../resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
+<script
+	src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<script src="../resources/js/jquery.twbsPagination.js"
+	type="text/javascript"></script>
 <link rel="stylesheet" href="../resources/css/common/reset.css">
 <link rel="stylesheet" href="../resources/css/header/header.css">
 <link rel="stylesheet" href="../resources/css/guest_join/list.css">
 <style>
-
+.table tr th {
+	background: lightgray;
+}
 </style>
 </head>
 <body>
-	<jsp:include page="../header/header.jsp"/>
-	<div class="official content">
-        <div class="filterCont">
-            <!-- 지역 -->
-            <select id="address">
-                <option value="">전체 지역</option>
-            </select>
-    
-            <!-- 날짜 -->
-            <select id="date">
-                <option value="">날짜</option>
-            </select>
-    
-            <!-- 레벨 -->
-            <select id="level">
-            	<option value="">전체 레벨</option>
-                <option value="브론즈">브론즈</option>
-                <option value="실버">실버</option>
-                <option value="골드">골드</option>
-                <option value="플레티넘">플레티넘</option>
-            </select>
-        </div>
-    
-        <div class="table">
-            <table>
-                <colgroup>
-                    <col width="5%"/>
-                    <col width="10%"/>
-                    <col width="50%"/>
-                    <col width="10%"/>
-                    <col width="10%"/>
-                    <col width="10%"/>
-                </colgroup>
-                <thead>
-                	<tr>
-	                    <th></th>
-	                    <th>경기 날짜</th>
-	                    <th>지역</th>
-	                    <th>레벨</th>
-	                    <th>모집인원</th>
-	                    <th>상태</th>
-	                </tr>
-                </thead>
-                <tbody id="tbody">
-                	
-                </tbody>
-                <!-- <tr>
-                    <td class="num">1</td>
-                    <td class="gameDate">5월5일</td>
-                    <td class="address"><a href="#">서울시 금천구</a></td>
-                    <td class="level">골드</td>
-                    <td>
-                        <span class="present">5</span> / 
-                        <span class="Recruitment">10</span>
-                    </td>
-                    <td class="state">모집중</td>
-                </tr>
-                <tr>
-                    <td class="num">1</td>
-                    <td class="gameDate">5월5일</td>
-                    <td class="address"><a href="#">서울시 금천구</a></td>
-                    <td class="level">골드</td>
-                    <td>
-                        <span class="present">5</span> / 
-                        <span class="Recruitment">10</span>
-                    </td>
-                    <td class="state finish">모집중</td>
-                </tr> -->
-                <tr>
+	<jsp:include page="../header/header.jsp" />
+	<div class="guest_join content">
+		<div class="filterCont">
+			<!-- 지역 -->
+			<select id="address" class="filter">
+				<option value="">전체 지역</option>
+			</select>
+
+			<!-- 성별 -->
+			<select id="gender" class="filter">
+				<option value="">성별 선택</option>
+				<option value="남자">남자</option>
+				<option value="여자">여자</option>
+			</select>
+
+			<!-- 포지션 -->
+			<select id="position" class="filter">
+				<option value="">포지션 선택</option>
+				<option value="센터">센터</option>
+				<option value="포워드">포워드</option>
+				<option value="가드">가드</option>
+			</select>
+
+			<!-- 레벨 -->
+			<select id="level" class="filter">
+				<option value="">전체 레벨</option>
+				<option value="브론즈">브론즈</option>
+				<option value="실버">실버</option>
+				<option value="골드">골드</option>
+				<option value="플레티넘">플레티넘</option>
+			</select>
+		</div>
+
+		<div class="table">
+			<table>
+				<colgroup>
+					<col width="20%" />
+					<col width="20%" />
+					<col width="10%" />
+					<col width="5%" />
+					<col width="5%" />
+					<col width="5%" />
+					<col width="5%" />
+				</colgroup>
+				<thead>
+					<tr>
+						<th>구장명</th>
+						<th>지역</th>
+						<th>팀명</th>
+						<th>포지션</th>
+						<th>레벨</th>
+						<th>성별</th>
+						<th>모집인원</th>
+					</tr>
+				</thead>
+				<tbody id="list">
+
+				</tbody>
+				<tr>
 					<td colspan="7">
-						<div class="container">                           
-						  <nav aria-label="Page navigation" style="text-align:center">
-							  <ul class="pagination" id="pagination"></ul>
-						  </nav>               
-						 </div>
+						<div class="container">
+							<nav aria-label="Page navigation" style="text-align: center">
+								<ul class="pagination" id="pagination"></ul>
+							</nav>
+						</div>
 					</td>
 				</tr>
-            </table>
-        </div>
-        
-    
-        <div class="searchBox">
-            <input type="text" name="searchInput" placeholder="지역명을 입력해주세요." maxlength="20"/>
-            <button onclick="searchList(1)">검색</button>
-        </div>
-    
-    </div>
+			</table>
+		</div>
+
+		<select id="searchCategory">
+			<option value="courtName">코트 명</option>
+			<option value="Address">지역 명</option>
+			<option value="teamName">팀 명</option>
+		</select> <input type="text" id="searchWord" placeholder="검색단어입력"
+			maxlength="20" />
+		<!-- 이거 누르면 아작스 하는걸로 -->
+		<input type="button" id="searchBtn" value="검색" />
+
+	</div>
 </body>
 <script>
-    $('.menu').css('display','none');
-    // 퍼블 영역
-    $(function(){
-        // 공식 경기
-        $('.menu li').eq(0).children('a').addClass('on');
-    })
-    
-    // 개발 영역
-    var sessionChk2 = 'on';
-    sessionChk2 = '${chk}';
-    console.log(sessionChk2);
+ 
+	$('.menu li').eq(1).children('a').addClass('on');
+	$('.teamDepth2').addClass('on');
+	$('.teamDepth2 a').eq(1).addClass('on');
     
     var currentPage = 1;
 	var filterFlag = false;
+	var searchFlag = false;
     
-    $(document).ready(function(){
-    	callList(currentPage);
-    });
-    
-    $('#level').on('change',function(){
-		$('#pagination').twbsPagination('destroy');
-		callList(currentPage);
+	// $(document).on('click', 'td', function(event) {
+	// 	var guest_join_idx = $(this).closest('tr').find('.num')
+	//         var courtIdx = $(this).closest('tr').find('.courtJjim').data('courtidx');
+	//         console.log(courtIdx);  // courtIdx 확인
+	//         window.location.href = './detail.go?court_idx=' + courtIdx; // 상세 페이지로 이동
+	    
+	// });
+
+	$(document).ready(function() {
+	    // 페이지 로드 시 callList 호출
+	    callList(currentPage);
 	});
-    
-	$('#address').on('change',function(){
+
+	$('#searchBtn').on('click', function(){
+	    if($('#searchWord').val() == ''){
+	        alert('검색단어를 입력해주세요');
+	        return;
+	    }
+	    currentPage = 1;
+
+	    $('#pagination').twbsPagination('destroy');
+	    searchFlag = true;
+	    callList(currentPage);
+
+	});	
+	
+
+	// 검색 단어 입력 필드에서 Enter 키 눌렀을 때 검색 실행
+    $('#searchWord').on('keypress', function(event) {
+        if (event.which === 13) { // 13은 Enter 키의 keyCode
+            $('#searchBtn').click(); // 검색 버튼 클릭 이벤트 호출
+        }
+    });
+
+
+	$('.filter').on('change',function(){
 		$('#pagination').twbsPagination('destroy');
+		searchFlag = false;
 		callList(currentPage);
 	});
 	
-	$('.searchBox button').on('click',function(){
-		$('#pagination').twbsPagination('destroy');
-		searchList(currentPage);
-	});
-    
-    // list
 	function callList(currentPage) {
-		
 		$.ajax({
 			type:'POST'
-			,url:'./match_list.ajax'
+			,url:'./list.ajax'
 			,data:{
-				'courtSearchWord':$('select[name="searchInput"]').val()
-				,'currentPage':currentPage
+				'currentPage':currentPage
 				,'address':$('#address').val()
+				,'position':$('#position').val()
+				,'gender':$('#gender').val()
 				,'level':$('#level').val()
+				,'searchCategory':$('#searchCategory').val()
+				,'searchWord':$('#searchWord').val()
+				,'searchFlag':searchFlag
 			}
 			,dataType:'json'
 			,success:function(data){
-				/* console.log(data.list); */
-				/* console.log(data.totalPage); */
+				console.log(data);
+// 				console.log(data.totalPage);
 				showList(data.list);
 				if(filterFlag == false){
-					showFilterList(data.allList);
+					showFilterList(data.addressList);
 					filterFlag = true;
 				}
-				var totalPage = data.totalPage;
-				showPagination(totalPage);
-				
-			}
-			,error:function(error){
-				console.log(error);
-			}
-		});
-	}
-	function searchList(currentPage) {
-		$.ajax({
-			type:'POST'
-			,url:'./searchList.ajax'
-			,data:{
-				'courtSearchWord':$('input[name="searchInput"]').val()
-				,'currentPage':currentPage
-			}
-			,dataType:'json'
-			,success:function(data){
-				/* console.log(data.list); */
-				console.log(data.totalPage);
-				showList(data.list);
-				if(filterFlag == false){
-					showFilterList(data.allList);
-					filterFlag = true;
-				}
-				var totalPage = data.totalPage;
-				showPagination2(totalPage);
-			}
-			,error:function(error){
-				console.log(error);
-			}
-		});
-	}
-	function showPagination(totalPage) {
-		$('#pagination').twbsPagination({
-				startPage:1
-				,totalPages:totalPage
-				,visiblePages:5
-				,onPageClick:function(evt,pg){
-					console.log(pg);
-					currentPage = pg;
-					callList(currentPage);
+				$('#pagination').twbsPagination({
+					startPage:1
+					,totalPages:data.totalPage
+					,visiblePages:5	
+					,onPageClick:function(evt,pg){
+						currentPage = pg;
+						callList(currentPage);
+					}
 					
-				}
+				});
 				
+			}
+			,error:function(error){
+				console.log(error);
+			}
 		});
 	}
-	function showPagination2(totalPage) {
-		$('#pagination').twbsPagination({
-				startPage:1
-				,totalPages:totalPage
-				,visiblePages:5
-				,onPageClick:function(evt,pg){
-					console.log(pg);
-					currentPage = pg;
-					searchList(currentPage);
-				}
-				
-		});
-	}
+	
+	
 	function showList(list){
 		var content = '';
-		var finishClass = '';
-		var finishClass2 = 'state';
-		var finishTxt = '모집중';
-		var link = '';
 		for(item of list){
-			
-			if(item.currentCount == item.official_match_to){
-				finishClass = 'end';
-				finishClass2 = 'state finish';
-				finishTxt = '모집완료';
-				link = 'javascript:;';
-			}
-			if(sessionChk2 == 'on'){
-				console.log('a');
-				link = './match_info.go?official_match_idx=' + item.official_match_idx;
-			}else{
-				link = '../login';
-			}
+
 			content +=
-				'<tr class="' + finishClass + '">'
-				+'<td class="num">' + item.official_match_idx + '</td>'
-                +'<td class="gameDate">' + item.official_match_date + '</td>'
-                +'<td class="address"><a href="' + link + '">서울시 ' + item.court_address.split(' ')[1] + '</a></td>'
-                +'<td class="level">' + item.official_match_level + '</td>'
-                +'<td>'
-                +'<span class="present">' + item.currentCount + '</span> / '
-                +'<span class="Recruitment">' + item.official_match_to + '</span>'
-                +'</td>'
-                +'<td class="' + finishClass2 +'">' + finishTxt + '</td>'
-                +'</tr>';
-            
-           	finishClass = '';
-			finishClass2 = 'state';
-			finishTxt = '모집중';
+				'<tr>'
+				+'<td>'+ item.court_name +'</td>'
+				+'<td>'+ item.court_address +'</td>'
+				+'<td>'+ item.team_name +'</td>'
+				+'<td>'+ item.guest_position +'</td>'
+				+'<td>'+ item.guest_level +'</td>'
+				+'<td>'+ item.guest_gender +'</td>'
+				+'<td>'+ item.guest_to +'</td>'
+				+'</tr>';
 		}
-		$('#tbody').html(content);
+		$('#list').html(content);
 	}
+
+	
 	function showFilterList(list) {
 		var content = '';
-		var allAddress = [];
-		var address = [];
-		for(item of list){
-			allAddress.push(item.court_address.split(' ')[1]);			
-		}
-		address = Array.from(new Set(allAddress));
-		address.sort();
+		
 		content = '<option value="">전체 지역</option>';
-		for(item of address){
+		for(item of list){
 			content += '<option value="'+item+'">'+item+'</option>';
 		}
 
 		$('#address').html(content);
 		
 	}
-    
-	/* function searchList() {
-		currentPage = 1;
-		callList(currentPage);
-	} */
 
 </script>
 </html>
