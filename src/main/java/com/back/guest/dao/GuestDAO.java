@@ -18,4 +18,6 @@ public interface GuestDAO {
 	void writeUpdate(String guest_info, String guest_level, String guest_position, String guest_gender,
 			String guest_to, int guest_fee, String guestIdx);
 
+	List<GuestDTO> guestList();
+
 }

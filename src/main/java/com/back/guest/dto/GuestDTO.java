@@ -14,7 +14,17 @@ public class GuestDTO {
 	private String guest_info;
 	private int guest_fee;
 	private String guest_state;
-	
+	// 구장찾기
+	private int court_idx;
+	private String booking_date;
+	private String booking_start_time;
+	private String booking_end_time;
+	private String booking_state;
+	private String bookingDate;
+	private String court_name;
+	private String court_address;
+	// 게스트 모집리스트
+	private String team_name;
 	public int getGuest_idx() {
 		return guest_idx;
 	}
@@ -82,15 +92,6 @@ public class GuestDTO {
 		this.guest_state = guest_state;
 	}
 	
-	// 구장찾기
-	private int court_idx;
-	private String booking_date;
-	private String booking_start_time;
-	private String booking_end_time;
-	private String booking_state;
-	private String bookingDate;
-	private String court_name;
-	private String court_address;
 	
 	
 	public String getCourt_name() {
@@ -140,6 +141,12 @@ public class GuestDTO {
 	}
 	public void setBooking_state(String booking_state) {
 		this.booking_state = booking_state;
+	}
+	public String getTeam_name() {
+		return team_name;
+	}
+	public void setTeam_name(String team_name) {
+		this.team_name = team_name;
 	}
 	
 }
