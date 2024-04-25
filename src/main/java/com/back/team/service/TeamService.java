@@ -54,6 +54,55 @@ public class TeamService {
 	public TeamDTO userPop(String userId) {
 		return teamDAO.userPop(userId);
 	}
+
+	public int dropMember(int team_idx, String userId) {
+		String teamName = teamDAO.teamName(team_idx);
+		String msg = teamName + " 팀에서 추방당했습니다.";
+		teamDAO.dropList(team_idx, userId);
+		teamDAO.sendNotice(msg, userId);
+		return teamDAO.dropMember(team_idx, userId);
+	}
+
+	public int appliMember(int team_idx, String userId, int idx, int num) {
+		String teamName = teamDAO.teamName(team_idx);
+		String msg = "";
+		if(num == 1) {
+			msg = teamName + " 팀 신청이 수락되었습니다.";
+			teamDAO.intoTeam(team_idx, userId);
+			teamDAO.sendNotice(msg, userId);
+		}else {
+			msg = teamName + " 팀 신청이 거부되었습니다.";
+			teamDAO.sendNotice(msg, userId);
+		}
+		
+		return teamDAO.delJoinList(idx);
+	}
+
+	public int delteWrite(int idx, int num) {
+		int row = 0;
+		if(num == 1) {
+			// 팀원 모집글 삭제
+			row = teamDAO.delTeamWrite(idx);
+		}else {
+			// 게스트 모집글 삭제
+			row = teamDAO.delGuestWrite(idx);
+		}
+		
+		return row;
+	}
+
+	public int destroyTeam(int team_idx, String id) {
+		List<String> list = teamDAO.searchTeam(team_idx);
+		String teamName = teamDAO.teamName(team_idx);
+		String msg = "";
+		msg = teamName + " 팀이 해체되었습니다.";
+		
+		for (String user : list) {
+			teamDAO.sendNotice(msg, user);
+		}
+		
+		return teamDAO.destroyTeam(team_idx, id);
+	}
 	
 }
 
