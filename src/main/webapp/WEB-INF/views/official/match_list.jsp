@@ -233,10 +233,11 @@
 				finishClass2 = 'state finish';
 				finishTxt = '모집완료';
 				link = 'javascript:;';
+			}else{
+				link = './match_info.go?official_match_idx=' + item.official_match_idx;
 			}
 			if(sessionChk2 == 'on'){
 				console.log('a');
-				link = './match_info.go?official_match_idx=' + item.official_match_idx;
 			}else{
 				link = '../login';
 			}

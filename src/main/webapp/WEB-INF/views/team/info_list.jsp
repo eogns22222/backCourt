@@ -35,7 +35,7 @@
                 </c:if>
                  <!-- 팀원 입장 -->
                 <c:if test="${id != info.id}">
-                	<li><button class="createTeamBtn" onclick="location.href='./create'">내 팀 만들기</button></li>
+                	<li><button class="createTeamBtn" onclick="location.href='./create.go'">내 팀 만들기</button></li>
                 </c:if>
             </ul>
         </div>
@@ -404,7 +404,7 @@
 		console.log('???',writeTeam);
 		if(writeTeam == 0){
 			content3 +=
-				'<button onclick="location.href=\'../teammate/join_write.go\'">팀원 모집 글 작성</button>'
+				'<button onclick="location.href=\'../teammate/join_write.go?team_idx=' + team_idx + '\'">팀원 모집 글 작성</button>'
 				+'<button onclick="location.href=\'../guest_join/write.go\'">게스트 모집 글 작성</button>';
 		}else{
 			content3 +=
