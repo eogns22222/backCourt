@@ -118,6 +118,21 @@ public Map<String, Object> teammateJoin(String joinTeamIdx, String id, String jo
     return result;
 }
 
+public int callMyteamInfo(String id) {
+	logger.info("callMyteamInfo-service id={}",id);
+	return teammateDAO.callMyteamInfo(id);
+}
+
+public int teammateWrite(TeammateDTO dto) {
+	logger.info("teammateWrite-service map={}",dto);
+	return teammateDAO.teammateWrite(dto);
+}
+
+public TeammateDTO teammateWriteInfo(int team_idx) {
+	logger.info("teammateWriteInfo-service ={}", team_idx);
+	return teammateDAO.teammateWriteInfo(team_idx);
+}
+
 
    
    

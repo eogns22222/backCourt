@@ -60,6 +60,11 @@ public interface TeammateDAO {
 
 	int duplicateChk(String joinTeamIdx, String id);
 
+	int callMyteamInfo(String id);
+
+	int teammateWrite(TeammateDTO dto);
+
+	TeammateDTO teammateWriteInfo(int team_idx);
 
 
 

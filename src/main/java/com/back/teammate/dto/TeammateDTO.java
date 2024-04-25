@@ -9,7 +9,6 @@ public class TeammateDTO {
    private String join_team_level;
    private String join_to_gender;
    private String join_team_position;
-
    
    private String team_name;
    private String id;
@@ -17,7 +16,7 @@ public class TeammateDTO {
    private String logo;
    private String join_state;
    private String join_date;
-   
+   private String team_info;
    
    public int getJoin_team_idx() {
       return join_team_idx;
@@ -102,6 +101,12 @@ public String getJoin_date() {
 }
 public void setJoin_date(String join_date) {
 	this.join_date = join_date;
+}
+public String getTeam_info() {
+	return team_info;
+}
+public void setTeam_info(String team_info) {
+	this.team_info = team_info;
 }
 
 }

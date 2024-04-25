@@ -325,4 +325,32 @@
 		SELECT count(id) FROM team_join_list WHERE join_team_idx = #{param1} AND id = #{param2} AND (join_state = '수락' OR join_state = '대기중')
 	</select>
 	
+	<select id="callMyteamInfo" resultType="java.lang.Integer">
+		SELECT team_idx from team where id = #{param1} limit 1; 
+	</select>
+
+	<select id="teammateWriteInfo" resultType="com.back.teammate.dto.TeammateDTO">
+		SELECT team_name, team_address, team_info from team where team_idx = #{param1}; 
+	</select>
+	
+	<insert id="teammateWrite" useGeneratedKeys="true" keyColumn="join_team_idx"
+		keyProperty="join_team_idx" parameterType="com.back.teammate.dto.TeammateDTO">
+	INSERT INTO team_join(
+		team_idx
+		,join_team_to
+		,join_team_content
+		,join_team_level
+		,join_team_gender
+		,join_team_position
+		,join_team_state
+	)VALUES(
+		#{team_idx}
+		,10
+		,#{join_team_content}
+		,#{join_team_level}
+		,#{join_to_gender}
+		,#{join_team_position}
+		,'true')
+	</insert>
+	
 </mapper>

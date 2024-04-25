@@ -15,7 +15,7 @@
     <div class="teammateinfocont">
         <div class="flexBox">
             <div class="logo">
-                <img class="teammateLogo" src="../resources/img/teamLogo/${teammateDetail.logo}.jpg" alt="teammateLogo">>
+<%--                 <img class="teammateLogo" src="../resources/img/teamLogo/${teammateDetail.logo}.jpg" alt="teammateLogo">> --%>
             </div>
             <div>
                 <a class="teammateReportBtn">신고하기</a>
@@ -40,7 +40,7 @@
 </body>
 <script>
 $('.teammateReportBtn').on('click',function(){
-	window.location.href = '../mypage/report.go?join_team_idx='+${teammateDetail.join_team_idx}+'&reportWirteType="팀원모집신고"';
+	window.location.href = '../mypage/report.go?join_team_idx='+${join_team_idx}+'&reportWirteType="팀원모집신고"';
 });
 
 var joinTeamIdx = ${join_team_idx};
