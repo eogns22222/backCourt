@@ -141,4 +141,10 @@ public class GuestController {
 		return guestService.guestList(Integer.parseInt(currentPage), searchFlag, searchCategory, searchWord, address, gender, position,
 				level);
 	}
+	
+	@RequestMapping(value ="/guest_join/info.go")
+	public String infoGo() {
+		logger.info("상세페이지 진입");
+		return "guest_join/info";
+	}
 }

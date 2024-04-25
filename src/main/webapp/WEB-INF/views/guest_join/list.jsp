@@ -17,6 +17,9 @@
 <link rel="stylesheet" href="../resources/css/header/header.css">
 <link rel="stylesheet" href="../resources/css/guest_join/list.css">
 <style>
+.table tr{
+	cursor: pointer;
+}
 .table tr th {
 	background: lightgray;
 }
@@ -126,6 +129,7 @@
 	    // 페이지 로드 시 callList 호출
 	    callList(currentPage);
 	});
+	
 
 	$('#searchBtn').on('click', function(){
 	    if($('#searchWord').val() == ''){
@@ -140,7 +144,10 @@
 
 	});	
 	
-
+	$(document).on('click', 'td', function(event){
+		var guestJoinIdx = $(this).closet('tr').find('.')
+	});
+	
 	// 검색 단어 입력 필드에서 Enter 키 눌렀을 때 검색 실행
     $('#searchWord').on('keypress', function(event) {
         if (event.which === 13) { // 13은 Enter 키의 keyCode
@@ -202,7 +209,7 @@
 		for(item of list){
 
 			content +=
-				'<tr>'
+				'<tr onclick="goGuestDetail(' + item.guest_idx +')">'
 				+'<td>'+ item.court_name +'</td>'
 				+'<td>'+ item.court_address +'</td>'
 				+'<td>'+ item.team_name +'</td>'
@@ -215,6 +222,9 @@
 		$('#list').html(content);
 	}
 
+	function goGuestDetail(guest_idx) {
+	    window.location.href = './info.go?guest_idx=' + guest_idx; // 공지사항 상세 페이지로 이동
+	}
 	
 	function showFilterList(list) {
 		var content = '';
@@ -227,6 +237,7 @@
 		$('#address').html(content);
 		
 	}
+	
 
 </script>
 </html>

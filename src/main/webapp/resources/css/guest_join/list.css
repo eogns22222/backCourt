@@ -12,7 +12,7 @@
 .table{margin:20px 0 50px;border:1px solid #000;}
 .table tr td,th{border:1px solid #000;line-height:50px;text-align:center;}
 .table table{width:100%;}
-.table tr{}
+.table tr{cursor: pointer;}
 .table tr th{background: lightgray;}
 .table tr td{}
 .table tr td a{display:block;color:blue;}
