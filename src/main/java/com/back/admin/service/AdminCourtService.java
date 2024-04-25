@@ -116,16 +116,15 @@ public class AdminCourtService {
 	}
 
 	public void courtImageUploading(int idx, MultipartFile[] files) {
-		// 경로 어떻게 하지 프로젝트안에 src/main/webapp/resources/img/court 안에 이미지 저장하고 싶은데
-
 		String directory = servletContext.getRealPath("/resources/img/court/");
+		
 		logger.info("경로 " + directory);
 
 		int count = 1;
 		for (MultipartFile file : files) {
 			String fileName = file.getOriginalFilename();
 			String newFileName = "court" + idx + "_image" + count + ".png";
-			Path filePath = Paths.get(directory + newFileName);
+			Path filePath = Paths.get("/**/resources/img/court/" + newFileName);
 
 			try {
 				byte[] bytes = file.getBytes();
