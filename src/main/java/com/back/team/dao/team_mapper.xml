@@ -41,7 +41,7 @@
 			,(SELECT level  FROM member m WHERE m.id = tjl.id) AS level
 			,(SELECT position  FROM member m WHERE m.id = tjl.id) AS position
 			FROM team_join_list tjl
-			WHERE join_team_idx = (SELECT 
+			WHERE join_team_idx in (SELECT 
 			join_team_idx 
 			FROM team_join tj 
 			WHERE team_idx = #{param2})
@@ -51,7 +51,7 @@
 	<select id="appliTotal" resultType="int">
 		SELECT CEIL(COUNT((SELECT level  FROM member m WHERE m.id = tjl.id))/10) AS totalPage 
 			FROM team_join_list tjl
-			WHERE join_team_idx = (SELECT 
+			WHERE join_team_idx in (SELECT 
 			join_team_idx 
 			FROM team_join tj 
 			WHERE team_idx = #{param1})
@@ -67,9 +67,8 @@
 			JOIN team t 
 			ON tj.team_idx = t.team_idx 
 			WHERE t.id = #{param2}
-			AND tj.join_team_state = "공개"
-			AND tj.team_idx = #{param1}
-			ORDER BY tj.join_team_idx  DESC LIMIT 1;
+			AND tj.join_team_state = "true"
+			ORDER BY tj.join_team_idx  DESC LIMIT 1
 	</select>
 	
 	<select id="listWriteGuest" resultType="com.back.team.dto.TeamDTO">
@@ -81,19 +80,20 @@
 			FROM guest_join gj 
 			JOIN team t 
 			ON gj.team_idx = t.team_idx 
-			WHERE t.id = #{param3}
-			AND gj.guest_state = "공개"
-			AND gj.team_idx = #{param2}
-			ORDER BY gj.guest_idx  DESC LIMIT #{param1},#{param4};
+			WHERE gj.id = #{param3}
+			AND gj.guest_state = "true"
+			ORDER BY gj.guest_idx  DESC LIMIT #{param1},#{param4}
 	</select>
 	
 	<select id="writeTotal" resultType="int">
 		SELECT 
-			CEIL(((COUNT(join_team_idx)) + 
-			(SELECT COUNT(guest_idx) FROM guest_join gj WHERE id = #{param2}))/10)
+			ceil(((select count(team_idx) 
+			from team_join 
+			where team_idx = #{param1} AND join_team_state = "true") + 
+			(SELECT COUNT(guest_idx) FROM guest_join gj WHERE gj.id = #{param2}))/10)
 			AS totalPage
 			FROM team_join
-			WHERE team_idx = #{param1};
+			join guest_join gj2 limit 1
 	</select>
 	
 	<select id="listDrop" resultType="com.back.team.dto.TeamDTO">
@@ -104,13 +104,13 @@
 			JOIN team t 
 			ON tq.team_idx = t.team_idx
 			WHERE t.team_idx = #{param2}
-			LIMIT #{param1},10;
+			LIMIT #{param1},10
 	</select>
 	
 	<select id="dropTotal" resultType="int">
 		SELECT CEIL(COUNT(id)/10) AS totalPage 
 			FROM team_quit tq
-			WHERE tq.team_idx = #{param1};
+			WHERE tq.team_idx = #{param1}
 	</select>
 	
 	<select id="userPop" resultType="com.back.team.dto.TeamDTO">
@@ -121,8 +121,72 @@
 			,gender
 			,address
 			FROM member
-			WHERE id = #{param1};
+			WHERE id = #{param1}
 	</select>
+	
+	<select id="teamName" resultType="string">
+		SELECT 
+			team_name
+			FROM team t 
+			WHERE team_idx = #{param1}
+	</select>	
+	
+	<insert id="dropList">
+		INSERT INTO team_quit(id
+		,team_idx
+		,team_ban) VALUES(#{param2},#{param1},"추방")
+	</insert>
+	
+	<delete id="dropMember">
+		DELETE 
+			FROM team_list 
+			WHERE team_idx = #{param1}
+			AND id = #{param2}
+	</delete>
+	
+	<insert id="sendNotice">
+		INSERT INTO notice(id,
+		notice_content) VALUES(#{param2}, #{param1})
+	</insert>	
+	
+	<insert id="intoTeam">
+		INSERT INTO team_list(id
+		,team_idx) VALUES(#{param2},#{param1})
+	</insert>	
+	
+	<delete id="delJoinList">
+		DELETE 
+			FROM team_join_list 
+			WHERE applicant_idx = #{param1}
+	</delete>	
+	
+	<update id="delTeamWrite">
+		UPDATE 
+			team_join 
+			SET join_team_state = "false" 
+			WHERE join_team_idx = #{param1}
+	</update>
+	
+	<update id="delGuestWrite">
+		UPDATE
+			guest_join 
+			SET guest_state = "false" 
+			WHERE guest_idx = #{param1}
+	</update>	
+	
+	<select id="searchTeam" resultType="String">
+		SELECT 
+			id
+			FROM team_list
+			WHERE team_idx = #{param1}
+	</select>		
+	
+	<delete id="destroyTeam" >
+		DELETE
+			FROM team
+			WHERE team_idx = #{param1}
+			AND id = #{param2};
+	</delete>		
 
 </mapper>
 

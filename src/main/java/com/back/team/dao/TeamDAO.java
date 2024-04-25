@@ -28,6 +28,29 @@ public interface TeamDAO {
 
 	TeamDTO userPop(String userId);
 
+	String teamName(int team_idx);
+	
+	void dropList(int team_idx, String userId);
+	
+	int dropMember(int team_idx, String userId);
+
+	void sendNotice(String msg, String userId);
+
+	void intoTeam(int team_idx, String userId);
+
+	int delJoinList(int idx);
+
+	int delTeamWrite(int idx);
+
+	int delGuestWrite(int idx);
+
+	List<String> searchTeam(int team_idx);
+	
+	int destroyTeam(int team_idx, String id);
+
+
+
+
 }
 
 

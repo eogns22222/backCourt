@@ -9,7 +9,7 @@ img{width:100%;margin:0 auto;}
 .teamInfoContainer .leftCont .teamInformation{padding:30px;text-align:center;}
 .teamInfoContainer .leftCont .teamInformation li{font-size:23px;line-height:1.3;}
 .teamInfoContainer .leftCont .teamInformation li:not(:last-child){margin-bottom:30px;}
-.teamInfoContainer .leftCont .teamInformation .logoImg{width:200px;margin:0 auto;}
+.teamInfoContainer .leftCont .teamInformation .logoImg{width:200px;height:200px;margin:0 auto;}
 .teamInfoContainer .leftCont .teamInformation li .createTeamBtn{margin-top:20px;padding:15px 20px;background:blue;border:none;font-size:25px;color:#fff;cursor:pointer;}
 .teamInfoContainer .leftCont .teamInformation li .dropTeamBtn{margin-top:20px;padding:15px 20px;background:blue;border:none;font-size:25px;color:#fff;cursor:pointer;}
 
@@ -68,7 +68,7 @@ img{width:100%;margin:0 auto;}
 .teamInfoContainer .rightCont table .modifications .refusalBtn{background:red;}
 
 /* userPop */
-.userPop{display:none;position:absolute;top:calc(50% - 210px);left:calc(50% - 240px);z-index:99;}
+.userPop{display:none;position:absolute;top:calc(50% - 110px);left:calc(50% - 240px);z-index:99;}
 .userPop.on{display:block;}
 .userPop .close{position:absolute;top:-50px;right:-50px;width:50px;}
 .userPop .popWrap{}
