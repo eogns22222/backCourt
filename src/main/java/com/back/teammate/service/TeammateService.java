@@ -133,6 +133,14 @@ public TeammateDTO teammateWriteInfo(int team_idx) {
 	return teammateDAO.teammateWriteInfo(team_idx);
 }
 
+public Map<String, TeammateDTO> teammateModify(int join_team_idx) {
+	Map<String, TeammateDTO> map = new HashMap<String, TeammateDTO>();
+	TeammateDTO dto = teammateDAO.teammateModify(join_team_idx);
+	logger.info(dto.getTeam_name() + " ");
+	map.put("teammateInfo", dto);
+	return map;
+}
+
 
    
    

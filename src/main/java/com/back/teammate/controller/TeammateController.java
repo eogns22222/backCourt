@@ -95,7 +95,7 @@ public class TeammateController {
 
 	@RequestMapping(value = "/teammate/teammate_join_write.go")
 	public String guestWriteGo(Model model, int team_idx) {
-		logger.info("게스트 모집글 작성페이지 접속");
+		logger.info("팀원 모집글 작성페이지 접속");
 
 		TeammateDTO dto = teammateService.teammateWriteInfo(team_idx);
 		logger.info("teammateWrite확인");
@@ -148,4 +148,25 @@ public class TeammateController {
 
 		return page;
 	}
+	
+	// 팀원모집 수정페이지 접속
+	@RequestMapping(value = "/teammate/teammate_join_modify.go")
+	public String update() {
+		logger.info("팀원 모집글 수정페이지 접속");
+
+		return "/teammate/teammate_join_modify";
+	}
+	
+	// 팀원모집 수정페이지 불러오기
+	@RequestMapping(value = "/teammate/teammateModify.ajax", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, TeammateDTO> teammateModify(int join_team_idx) {
+
+		join_team_idx = 4;
+
+		logger.info("join_team_Idx : " + join_team_idx);
+
+		return teammateService.teammateModify(join_team_idx);
+	}
+
 }

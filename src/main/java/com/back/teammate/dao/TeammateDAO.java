@@ -66,6 +66,8 @@ public interface TeammateDAO {
 
 	TeammateDTO teammateWriteInfo(int team_idx);
 
+	TeammateDTO teammateModify(int join_team_idx);
+
 
 
 

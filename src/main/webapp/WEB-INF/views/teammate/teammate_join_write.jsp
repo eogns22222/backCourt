@@ -17,8 +17,7 @@
 <jsp:include page="../header/header.jsp"/>
 	<div class="wrapper">
 		<div class="header">
-			<img src="../resources/img/icon/logo.png" class="img" alt="로고" /> <span>게스트
-				모집글 작성</span>
+			<img src="../resources/img/icon/logo.png" class="img" alt="로고" /> <span>팀원 모집글 작성</span>
 		</div>
 		<br />
 		<div class="content-wrapper">
@@ -64,9 +63,9 @@
 			<div class="content">모집 포지션 :</div>
 			<select class="select" name="teammatePosition" id="teammatePosition">
 				<option value="">포지션 선택</option>
-				<option value="center">센터</option>
-				<option value="forward">포워드</option>
-				<option value="guard">가드</option>
+				<option value="센터">센터</option>
+				<option value="포워드">포워드</option>
+				<option value="가드">가드</option>
 			</select>
 		</div>
 		<div class="write">
@@ -118,7 +117,7 @@ var team_idx = '${info.team_idx}';
 		});
 	});
 	
-	// 작성 취소	
+	// 작성 취소	시 컴펌창
 	$(document).ready(function() {
 	    $('#cancel').click(function(event) {
 	        // 취소 여부 확인
@@ -133,20 +132,7 @@ var team_idx = '${info.team_idx}';
 	    });
 	});
 	
-	// 작성 취소 시 컨펌창
-	$(document).ready(function() {
-		$('#cancel').click(function(event) {
-			// 취소 여부 확인
-			var confirmed = confirm("작성을 취소하시겠습니까?");
-			if (confirmed) {
-				// 확인을 누를 경우 이전 페이지로 이동
-				window.history.back();
-			} else {
-				// 취소를 누르면 폼 제출을 중지
-				event.preventDefault();
-			}
-		});
-	});
+
 
 	 	
 </script>

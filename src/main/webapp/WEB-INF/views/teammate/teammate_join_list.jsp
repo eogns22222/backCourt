@@ -24,9 +24,9 @@
     <!-- 포지션 -->
     <select id="teamjoinpos">
         <option value="">전체 포지션</option>
-        <option value="Center">Center</option>
-        <option value="Guard">Guard</option>
-        <option value="Forward">Forward</option>
+        <option value="센터">센터</option>
+        <option value="포워드">포워드</option>
+        <option value="가드">가드</option>
     </select>
     <!-- 레벨 -->
     <select id="teamjoinlevel">

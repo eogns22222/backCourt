@@ -353,4 +353,14 @@
 		,'true')
 	</insert>
 	
+	<!-- 수정페이지 -->
+	<select id="teammateModify" resultType="com.back.teammate.dto.TeammateDTO">
+		SELECT
+			join_team_content
+			,join_team_gender
+			,join_team_level
+			,join_team_position
+		FROM team_join
+		WHERE join_team_idx = #{param1}
+	</select>
 </mapper>
