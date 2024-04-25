@@ -57,7 +57,7 @@
 		 <!-- 팀서비스 2depth -->
 		 <div class="teamDepth2">
 		     <a href="../teammate" class="teamJoin">팀원모집</a>
-		     <a href="../guest" class="guestJoin">게스트 모집</a>
+		     <a href="../guest_join" class="guestJoin">게스트 모집</a>
 		 </div>
          
     </div>
@@ -93,7 +93,7 @@
 <div class="popup teamPop type01">
     <a href="#" class="close"><img src="../resources/img/icon/close.png" alt=""></a>
     <div class="popWrap">
-        <a href="team/write.go" class="btnTeam">팀 만들기</a>
+        <a href="../team/create.go" class="btnTeam">팀 만들기</a>
         <h1>내 팀 리스트</h1>
         <div class="listCont">
             <ul id="listCont">
@@ -204,13 +204,13 @@
 		content += '</div>';
 		content += '</li>';
 		content += '<li class="cont">';
-		content += '<a href="../mypage/match_ask_list?id=' + info.id + '">신청 내역</a>';
+		content += '<a href="../mypage/match_ask_list.go?id=' + info.id + '">신청 내역</a>';
 		content += '</li>';
 		content += '<li class="cont">';
-		content += '<a href="../mypage/report_list?id=' + info.id + '">신고 내역</a>';
+		content += '<a href="../mypage/report_list.go?id=' + info.id + '">신고 내역</a>';
 		content += '</li>';
 		content += '<li class="cont">';
-		content += '<a href="../mypage/like?id=' + info.id + '">찜 목록</a>';
+		content += '<a href="../mypage/jjim.go?id=' + info.id + '">찜 목록</a>';
 		content += '</li>';
 		
 		

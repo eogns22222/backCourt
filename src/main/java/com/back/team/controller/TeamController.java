@@ -133,6 +133,12 @@ public class TeamController {
 		return map;
 	}
 	
+	@RequestMapping(value = "/team/create.go")
+	public String createTeam(HttpSession session, Model model) {
+		logger.info("create.go /");
+		return "team/create";
+	}
+	
 }
 
 
