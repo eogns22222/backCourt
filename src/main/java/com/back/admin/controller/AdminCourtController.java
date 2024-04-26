@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,33 +46,55 @@ public class AdminCourtController {
 	public String WriteGo() {
 		return "/admin/court_register";
 	}
-	
+
 	@RequestMapping(value = "/admin/courtWrite.ajax")
 	@ResponseBody
-	public Map<String, Boolean> Write(
-            @RequestParam("file") MultipartFile[] files,
-            @RequestParam("courtWriteName") String courtWriteName,
-            @RequestParam("courtWriteInfo") String courtWriteInfo,
-            @RequestParam("courtWritePrice") String courtWritePrice,
-            @RequestParam("courtWriteAddress") String courtWriteAddress,
-            @RequestParam("courtIsOfficial") String courtIsOfficial,
-            @RequestParam("courtIsDisabled") String courtIsDisabled){
-		
+	public Map<String, Boolean> write(@RequestParam("file") MultipartFile[] files,
+			@RequestParam("courtWriteName") String courtWriteName,
+			@RequestParam("courtWriteInfo") String courtWriteInfo,
+			@RequestParam("courtWritePrice") String courtWritePrice,
+			@RequestParam("courtWriteAddress") String courtWriteAddress,
+			@RequestParam("courtIsOfficial") String courtIsOfficial,
+			@RequestParam("courtIsDisabled") String courtIsDisabled) {
+
 		logger.info("courtWriteName: {}", courtWriteName);
-        logger.info("courtWriteInfo: {}", courtWriteInfo);
-        logger.info("courtWritePrice: {}", courtWritePrice);
-        logger.info("courtWriteAddress: {}", courtWriteAddress);
-        logger.info("courtIsOfficial: {}", courtIsOfficial);
-        logger.info("courtIsDisabled: {}", courtIsDisabled);
-        
-        
-        // 파일 정보도 로깅
-        for (MultipartFile file : files) {
-            logger.info("File Name: {}", file.getOriginalFilename());
-            logger.info("Content Type: {}", file.getContentType());
-            logger.info("File Size: {}", file.getSize());
-        }
-		
-		return adminCourtService.write(files,courtWriteName,courtWriteInfo,courtWritePrice,courtWriteAddress,courtIsOfficial,courtIsDisabled);
+		logger.info("courtWriteInfo: {}", courtWriteInfo);
+		logger.info("courtWritePrice: {}", courtWritePrice);
+		logger.info("courtWriteAddress: {}", courtWriteAddress);
+		logger.info("courtIsOfficial: {}", courtIsOfficial);
+		logger.info("courtIsDisabled: {}", courtIsDisabled);
+
+		// 파일 정보도 로깅
+		for (MultipartFile file : files) {
+			logger.info("File Name: {}", file.getOriginalFilename());
+			logger.info("Content Type: {}", file.getContentType());
+			logger.info("File Size: {}", file.getSize());
+		}
+
+		return adminCourtService.write(files, courtWriteName, courtWriteInfo, courtWritePrice, courtWriteAddress,
+				courtIsOfficial, courtIsDisabled);
+	}
+
+	@RequestMapping(value = "/admin/courtDetail.go")
+	public String DetailGo(String courtIdx, Model model) {
+		logger.info(courtIdx);
+		adminCourtService.detailLoad(courtIdx, model);
+		return "/admin/court_update";
+	}
+
+	@RequestMapping(value = "/admin/courtUpdate.ajax")
+	@ResponseBody
+	public Map<String, Boolean> update(@RequestParam("file") MultipartFile[] files,
+			@RequestParam("courtUpdateName") String courtUpdateName,
+			@RequestParam("courtUpdateInfo") String courtUpdateInfo,
+			@RequestParam("courtUpdatePrice") String courtUpdatePrice,
+			@RequestParam("courtUpdateAddress") String courtUpdateAddress,
+			@RequestParam("courtIsOfficial") String courtIsOfficial,
+			@RequestParam("courtIsDisabled") String courtIsDisabled,
+			@RequestParam("courtIdx") String courtIdx) {
+
+		logger.info("update controller courtIdx = " + courtIdx);
+		return adminCourtService.update(files, courtUpdateName, courtUpdateInfo, courtUpdatePrice, courtUpdateAddress,
+				courtIsOfficial, courtIsDisabled, courtIdx);
 	}
 }
