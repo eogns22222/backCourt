@@ -16,11 +16,11 @@
         <table>
             <tr>
                 <th>현재 금액</th>
-                <td>${point}원</td>
+                <td id="point"></td>
             </tr>
             <tr>
                 <th>충전할 금액</th>
-                    <td><input type="text" name="Charging"></td>
+                    <td class="td"><input type="text" name="Charging"></td>
                 </tr>
             </table>
             <input type="button" name="button" value="충전">
@@ -47,5 +47,35 @@ $('button').on('click',function(){
         location.href="point.go";
     }
 });
+allPoint();
+
+//내 지갑 사정	
+function allPoint(){
+	$.ajax({
+      type:'post',
+      url:'./my_allpoint.ajax',
+      data:{},
+      dataType:'JSON',
+      success:function(data){
+      	Point(data.point);
+      },
+      error:function(error){
+          console.log(error);
+      }
+  });
+}
+
+//내 지갑 포인트
+function Point(point){
+	var point = point;
+	var content = '';
+	console.log(point);
+	if (point == null) {
+		content = '<td id="point">0 원</td>';
+	}else {
+		content = '<td id="point">'+point+' 원</td>';
+	}
+	$('#point').html(content);
+}
 </script>
 </html>

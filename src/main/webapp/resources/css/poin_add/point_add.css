@@ -10,7 +10,7 @@ body{
     /* float: left; */
     text-align: center;
 }
-table,tr,td{
+table,tr,.td{
     border: 1px solid black;
 }
 th{

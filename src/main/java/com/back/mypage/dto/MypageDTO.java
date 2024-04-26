@@ -279,4 +279,15 @@ public class MypageDTO {
 		public void setCourt_time(String court_time) {
 			this.court_time = court_time;
 		}
+		
+		//포인트
+		private int point;
+
+		public int getPoint() {
+			return point;
+		}
+		public void setPoint(int point) {
+			this.point = point;
+		}
+		
 }

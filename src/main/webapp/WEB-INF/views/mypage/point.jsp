@@ -22,9 +22,7 @@
         <h2 id="title">내 포인트 내역</h2>
         <div id="he">
             <h3 class="poin">포인트 내역</h3>
-            <br/>
-            <h3 class="point">${point} 원</h3>
-            <br/><br/>
+            <h3 class="point" ></h3>
             <button class="state">충전</button>
             <button class="state">환급</button>
         </div>
@@ -69,6 +67,7 @@ var pagePerNum = 5;
 
 /* 리스트 호출 */
 listCall(showPage);
+allPoint();
 
 /* 아작스로 리스트 만들기 */
 	function listCall(page) {
@@ -82,6 +81,7 @@ listCall(showPage);
 	        dataType:'JSON', //아작스 타입
 	        success:function(data){//리턴된 값을 받는 곳
 	           drawList(data.list); //drawList 라는 이름으로 data에 있는 값을 넣어서 넣어준다.
+	           allPoint(data.point);
 	            console.log("총페이지수",data); 
 	           
 	           //플러그인 추가
@@ -104,6 +104,23 @@ listCall(showPage);
 	    });
 	    
 	}
+	
+//내 지갑 사정	
+function allPoint(){
+	$.ajax({
+        type:'post',
+        url:'./my_allpoint.ajax',
+        data:{},
+        dataType:'JSON',
+        success:function(data){
+        	Point(data.point);
+        },
+        error:function(error){
+            console.log(error);
+        }
+    });
+}
+	
 
 //리스트를 출력
 function drawList(list){
@@ -122,6 +139,19 @@ function drawList(list){
     $('#list').html(con);
 }
 
+
+//내 지갑 포인트
+function Point(point){
+	var point = point;
+	var content = '';
+	console.log(point);
+	if (point == null) {
+		content = '<h3 class="poin">0 원</h3>';	
+	}else {
+		content = '<h3 class="poin">'+point+' 원</h3>';		
+	}
+	$('.point').html(content);
+}
 
 
 

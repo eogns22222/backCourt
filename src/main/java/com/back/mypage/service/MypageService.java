@@ -24,10 +24,8 @@ public class MypageService {
 	public String report(String id) {
 		return mypageDAO.report(id);
 	}
-	public String point_list(String loginId) {
-		
-		return mypageDAO.point_list(loginId);
-	}
+	
+	
 	public void Charging_do(String loginId, String charging) {
 		mypageDAO.Charging_do(loginId,charging);
 	}
@@ -39,6 +37,7 @@ public class MypageService {
 	}
 	
 	//아작스로 내 포인트 리스트 출력
+	@SuppressWarnings("unlikely-arg-type")
 	public Map<String, Object> point_list_ajax(String loginId, int currPage, int pageParCnt) {
 	
 		int start = (currPage-1)*pageParCnt;
@@ -48,12 +47,32 @@ public class MypageService {
 		logger.info("list Size : "+list.size());
 		result.put("list", list); //맥에 리스트 라는 이름으로 리스트를 넣는다
 		result.put("currPage",currPage); //n번부터
+		result.put("siez",list.size()); //리스트 사이즈
+		result.put("point",list.indexOf("point")+1);
 		result.put("totalPages", mypageDAO.point_allConut(pageParCnt,loginId)); //총 페이 갯수 계산
 		
+		logger.info("내 지갑 사정 : "+result.get("point"));
+		
+		return result;
+	}
+	
+	
+	//내 지갑 보기
+	public Map<String, Object> my_allpoint_ajax(String loginId) {
+		logger.info("내지갑 사정 서비스 접근");
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		String point = mypageDAO.my_allpoint_ajax(loginId);
+		result.put("point", point);
+		
+		logger.info("내 포인트 : "+point);
 		
 		
 		return result;
 	}
+	
+	
 	
 	public void point_update(String loginId) {
 		mypageDAO.point_update(loginId);
@@ -203,4 +222,9 @@ public class MypageService {
 		
 		return result;
 	}
+
+
+
+
+
 }

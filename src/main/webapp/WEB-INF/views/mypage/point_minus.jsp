@@ -16,11 +16,11 @@
         <table>
             <tr>
                 <th>환급 금액</th>
-                <td>${point}원</td>
+                <td id="point"></td>
             </tr>
             <tr>
                 <th>환급할 금액</th>
-                    <td><input type="text" name="minus"></td>
+                    <td class="td"><input type="text" name="minus"></td>
                 </tr>
             </table>
             <input type="button" name="button" value="환급">
@@ -28,6 +28,10 @@
         <button>취소</button>
 </body>
 <script>
+
+var sum = {sum};
+console.log(sum);
+
 $('input[type="button"]').on('click',function(){
     //input에 있는 값을 가져온다
     var ch = $('input[name="minus"]').val();
@@ -35,11 +39,17 @@ $('input[type="button"]').on('click',function(){
     var tex = $(this).text();
 
     if(ch!=''){
-        alert('환급이 완료되었습니다');
             $('form').submit();
+        if (sum>0) {
+        alert('환급이 완료되었습니다');
+        }else{
+        	location.href="point.go";
+        }
         }else{
             alert('환급이 실패 되었습니다.');
         }
+		
+		
 });
 $('button').on('click',function(){
     //지금 내가 클릭한 버튼의 텍스트를 가져온다
@@ -50,5 +60,38 @@ $('button').on('click',function(){
         location.href="point.go";
     }
 });
+
+console.log(${sum});
+
+allPoint();
+
+//내 지갑 사정	
+function allPoint(){
+	$.ajax({
+        type:'post',
+        url:'./my_allpoint.ajax',
+        data:{},
+        dataType:'JSON',
+        success:function(data){
+        	Point(data.point);
+        },
+        error:function(error){
+            console.log(error);
+        }
+    });
+}
+
+//내 지갑 포인트
+function Point(point){
+	var point = point;
+	var content = '';
+	console.log(point);
+	if (point == null) {
+		content = '<td id="point">0 원</td>';
+	}else {
+		content = '<td id="point">'+point+' 원</td>';
+	}
+	$('#point').html(content);
+}
 </script>
 </html>

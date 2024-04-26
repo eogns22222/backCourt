@@ -40,9 +40,8 @@ public class MypageController {
 					if (loginId!=null) {
 						logger.info("로그인 아이디 : "+loginId);
 						
-						//포인트 합 출력
-						String point = mypageService.point_list(loginId);
-						model.addAttribute("point",point);
+						
+						
 						page = "/mypage/point";
 						
 					}
@@ -69,6 +68,22 @@ public class MypageController {
 					return map;// 여기에서 처리된 데이처를 리턴 해준다.
 				}
 				
+				//내 지갑 사정 (아작스)
+				@RequestMapping(value = "/mypage/my_allpoint.ajax")
+				@ResponseBody
+				public Map<String, Object> my_allpoint_ajax(HttpSession session){
+					logger.info("내 지갑 사정(아작스) ");
+					
+					String loginId = (String) session.getAttribute("loginId");
+					logger.info("아잨스 에서 세션 아이디 : "+loginId);
+					
+					
+					Map<String, Object> map = mypageService.my_allpoint_ajax(loginId);
+					
+					return map;
+				}
+				
+				
 				
 				//포인트 충전 페이지 이동
 				@RequestMapping(value = "/mypage/point_add.go")
@@ -82,8 +97,6 @@ public class MypageController {
 					
 					if (loginId!=null) {
 						
-						String point = mypageService.point(loginId);
-						model.addAttribute("point",point);
 						page = "mypage/point_add";
 						
 					}
@@ -122,8 +135,6 @@ public class MypageController {
 					
 					if (loginId!=null) {
 						
-						String point = mypageService.point(loginId);
-						model.addAttribute("point",point);
 						
 						page = "mypage/point_minus";
 						
@@ -135,9 +146,12 @@ public class MypageController {
 				
 				//환급 페이지 처리
 				@RequestMapping(value = "/mypage/point_minus.do")
-				public String PointMinus(String minus,HttpSession session) {
+				public String PointMinus(String minus,HttpSession session,Model model) {
+					logger.info("------------------  환급 처리 컨트롤러  ----------------------");
 					logger.info("환급 중...");
 					logger.info("환급 금액 : "+minus);
+					
+					String page = "mypage/point_minus";
 					
 					//로그인 회원 아이디 가져오기
 					String loginId = (String) session.getAttribute("loginId");
@@ -145,12 +159,27 @@ public class MypageController {
 
 					logger.info("로그인 중인 사람 : "+loginId);
 					
-					mypageService.PointMinus(loginId,minus);
+					Map<String, Object> point = mypageService.my_allpoint_ajax(loginId);
+					logger.info("내 지갑 포인트 : "+point.get("point"));
+					int poin = Integer.parseInt((String) point.get("point"));
+					int min = Integer.parseInt(minus);
+					int sum = poin-min;
 					
-					//포인트 정보 업데이트
-					mypageService.point_update(loginId);
+					if (sum>0) {
+						mypageService.PointMinus(loginId,minus);
+						
+						//포인트 정보 업데이트
+						mypageService.point_update(loginId);
+						page = "redirect:/mypage/point.go";
+					}else {
+						page = "mypage/point_minus";
+						model.addAttribute("sum",sum);
+					}
+
 					
-					return "redirect:/mypage/point.go";
+					
+					return page;
+					//return null;
 				}
 
 		

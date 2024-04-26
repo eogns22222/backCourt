@@ -11,8 +11,9 @@ public interface MypageDAO {
 // =========== 내 포인트 리스트 =============
 	
 	String report(String id);
-	
-	String point_list(String loginId);
+
+	//내 지갑 보기
+	String my_allpoint_ajax(String loginId);
 
 	void Charging_do(String loginId, String charging);
 
@@ -59,6 +60,12 @@ public interface MypageDAO {
 	int guset_match_list_del(String loginId, String idx);
 
 	int court_match_list_del(String loginId, String idx);
+
+
+
+
+
+
 
 
 }
