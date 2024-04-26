@@ -3,32 +3,17 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
 >
 
-<mapper namespace="com.back.admin.dao.WriteDAO">
+<mapper namespace="com.back.admin.dao.AdminWriteDAO">
 
+	<select id="callCourtList" resultType="com.back.admin.dto.AdminCourtDTO">
+	
+		SELECT
+			court_name AS courtName
+			,court_address AS courtAddress
+			,court_idx AS courtIdx
+		FROM court 
+		WHERE court_state = 'true'
+		AND court_official = 'true'
+		
+	</select>
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
