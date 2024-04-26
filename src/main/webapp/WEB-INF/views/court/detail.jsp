@@ -127,6 +127,9 @@
     </tr>
 </table>
 <input id="courtDetailReport" type="button" value="문의하기"/>
+<div id="courtListPopup">
+
+</div>
 </body>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c9f77d7846342440699b7b6723322c23&libraries=services"></script>
 <script>
