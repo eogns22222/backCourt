@@ -16,4 +16,60 @@
 		AND court_official = 'true'
 		
 	</select>
+	
+	<select id="callCourtInfo" resultType="com.back.admin.dto.AdminCourtDTO">
+		SELECT
+			court_name AS courtName
+			,court_address AS courtAddress
+			,court_idx AS courtIdx
+		FROM court
+		WHERE court_idx = #{param1}
+	</select>
+	
+	<select id="fileNameList" resultType="String">
+		SELECT
+			file_name
+		FROM court_image
+		WHERE court_idx = #{param1}
+	</select>
+	
+	<select id="bookingStartTime" resultType="String">
+		SELECT
+		booking_start_time
+		FROM court_booking
+		WHERE court_idx = #{param1}
+		AND booking_date = #{param2}
+	</select>
+	
+	<insert id="officialWrite">
+		INSERT INTO 
+		official_match(
+			court_idx
+			,official_match_gender
+			,official_match_level
+			,official_match_to
+			,official_match_to_state
+			,official_match_info
+			,official_match_fee
+			,official_match_date
+			,official_match_start_time
+			,official_match_end_time
+			,official_match_state
+			,official_match_post_state
+		)
+		VALUES(
+			#{courtIdx}
+			,#{officialGender}
+			,#{officialLevel}
+			,#{officialTO}
+			,'모집중'
+			,#{officialInfo}
+			,#{officialPrice}
+			,#{officialDate}
+			,#{officialStartTime}
+			,#{officialEndTime}
+			,#{officialIsDisabled}
+			,'true'
+		)
+	</insert>
 </mapper>
