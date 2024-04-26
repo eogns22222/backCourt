@@ -99,7 +99,7 @@ img{width:100%;}
 .adminBody .adminContainer{margin-left:50px;}
 .adminHeader{height:100vh;}
 .adminHeader .headerCont{width:350px;height:100%;padding:20px;background:#e1e1e1;box-sizing:border-box;}
-.adminHeader .headerCont .logout{display:inline-block;padding:0 10px; line-height:60px;font-size:30px;background:blue;}
+.adminHeader .headerCont .logout{display:inline-block;padding:0 10px; line-height:60px;font-size:30px;background:blue;color:#fff;}
 .adminHeader .headerCont .menu{margin-top:150px;}
 .adminHeader .headerCont .menu li{margin:40px 0;}
 .adminHeader .headerCont .menu li a{display:block;font-size:40px;}

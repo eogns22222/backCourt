@@ -48,7 +48,11 @@ public interface TeamDAO {
 	
 	int destroyTeam(int team_idx, String id);
 
+	int createComplete(TeamDTO dto);
 
+	int insertTeamList(String id, int idx);
+	
+	void updateLogo(String newFileName, int idx);
 
 
 }
