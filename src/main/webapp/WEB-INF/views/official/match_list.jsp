@@ -24,11 +24,6 @@
                 <option value="">전체 지역</option>
             </select>
     
-            <!-- 날짜 -->
-            <select id="date">
-                <option value="">날짜</option>
-            </select>
-    
             <!-- 레벨 -->
             <select id="level">
             	<option value="">전체 레벨</option>
