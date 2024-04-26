@@ -16,6 +16,7 @@
         <div class="flexBox">
             <div class="logo">
 <%--                 <img class="teammateLogo" src="../resources/img/teamLogo/${teammateDetail.logo}.jpg" alt="teammateLogo">> --%>
+                <img class="teammateLogo" src="/logo/${teammateDetail.logo}.jpg" alt="teammateLogo">>
             </div>
             <div>
                 <a class="teammateReportBtn">신고하기</a>
@@ -59,7 +60,7 @@ $('.teammateJoinBtn').on('click', function() {
             	console.log(data.result);
             	if(data.result == true){
                 alert('팀원 가입 신청이 완료되었습니다.');
-                location.href = '../teammate/teammate_join_list.go';            		
+                location.href = '../teammate/join_list.go';            		
             	}else{
             		alert('이미 신청된 팀입니다.');
             	}

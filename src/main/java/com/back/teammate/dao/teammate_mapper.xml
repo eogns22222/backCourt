@@ -353,14 +353,37 @@
 		,'true')
 	</insert>
 	
-	<!-- 수정페이지 -->
+	<!-- 수정 페이지 불러오기 -->
 	<select id="teammateModify" resultType="com.back.teammate.dto.TeammateDTO">
-		SELECT
-			join_team_content
-			,join_team_gender
-			,join_team_level
-			,join_team_position
-		FROM team_join
-		WHERE join_team_idx = #{param1}
+	  SELECT tj.join_team_idx 
+	  		,tj.join_team_content
+			,tj.join_team_gender
+			,tj.join_team_level
+			,tj.join_team_position
+			,t.team_name 
+			,t.team_address 
+			,t.team_info FROM team_join tj
+			JOIN team t ON tj.team_idx =t.team_idx WHERE tj.join_team_idx = #{param1}
 	</select>
+	
+	<!-- 수정 업데이트 -->
+	<update id="writeUpdate" parameterType="Object">
+		UPDATE team_join SET 
+			join_team_content = #{param1} 
+			,join_team_level = #{param3}
+			,join_team_gender = #{param2}
+			,join_team_position = #{param4}
+		WHERE join_team_idx = #{param5}
+	</update>
+	<select id="modifyDetail" resultType="com.back.teammate.dto.TeammateDTO">
+	 SELECT 
+	 	t.team_name 
+	 	,t.team_address 
+	 	,t.team_info 
+	 	FROM team t 
+	 	JOIN team_join tj
+	 	ON tj.team_idx = t.team_idx
+	 	WHERE tj.join_team_idx = #{param1}
+	 </select>
+	 
 </mapper>

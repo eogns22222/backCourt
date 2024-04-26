@@ -27,10 +27,10 @@ public class TeammateController {
 	@RequestMapping(value = "/teammate")
 	public String teammate() {
 		logger.info("팀메이트 접속");
-		return "redirect:/teammate/teammate_join_list.go";
+		return "redirect:/teammate/join_list.go";
 	}
 
-	@RequestMapping(value = "/teammate/teammate_join_list.go")
+	@RequestMapping(value = "/teammate/join_list.go")
 	public String teammateGo(HttpSession session, Model model) {
 		logger.info("teammate_join_list.go /");
 
@@ -39,7 +39,7 @@ public class TeammateController {
 		} else {
 			model.addAttribute("chk", "notOn");
 		}
-		return "teammate/teammate_join_list";
+		return "teammate/join_list";
 	}
 
 	// 팀원 리스트 페이징 처리
@@ -68,14 +68,14 @@ public class TeammateController {
 	}
 
 	// 팀원모집 상세보기
-	@RequestMapping(value = "/teammate/teammate_join_info.go")
+	@RequestMapping(value = "/teammate/join_info.go")
 	public String detail(HttpSession session, Model model, String join_team_idx) {
 		logger.info("팀원모집상세보기입장이요");
 		logger.info("join_team_idx : {}", join_team_idx);
 		String page = "../login";
-		page = "teammate/teammate_join_info";
+		page = "teammate/join_info";
 		if (session.getAttribute("loginId") != null) {
-			page = "teammate/teammate_join_info";
+			page = "teammate/join_info";
 			teammateService.teammateDetail(join_team_idx, model);
 		} else {
 			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
@@ -93,7 +93,8 @@ public class TeammateController {
 		return teammateService.teammateJoin(joinTeamIdx, id, "대기중");
 	}
 
-	@RequestMapping(value = "/teammate/teammate_join_write.go")
+	// 팀원모집글 작성페이지
+	@RequestMapping(value = "/teammate/join_write.go")
 	public String guestWriteGo(Model model, int team_idx) {
 		logger.info("팀원 모집글 작성페이지 접속");
 
@@ -101,18 +102,18 @@ public class TeammateController {
 		logger.info("teammateWrite확인");
 		model.addAttribute("info", dto);
 
-		return "/teammate/teammate_join_write";
+		return "/teammate/join_write";
 	}
 
 	// 팀원 모집 작성란 폼
-	@RequestMapping(value = "/teammate/teammate_join_write.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/teammate/join_write.do", method = RequestMethod.POST)
 	public String teammateWrite(HttpSession session, String teammate_info, String teammateTO, String teammateLevel,
 			String teammateGender, String teammatePosition, String teammateState) {
 		// 로거 확인
 		// 리스트페이지로 바꿔야함
-		String page = "/teammate/teammate_join_write";
-//		String id = (String) session.getAttribute("loginId");
-		String id = "mit";
+		String page = "/teammate/join_write";
+		String id = (String) session.getAttribute("loginId");
+//		String id = "mit";
 		int team_idx = teammateService.callMyteamInfo(id);
 		logger.info("팀원모집글 올리는 team_idx={}" + team_idx + " id={} " + id);
 
@@ -142,31 +143,43 @@ public class TeammateController {
 		int row = teammateService.teammateWrite(dto);
 		logger.info("insert 후 idx : " + dto.getJoin_team_idx());
 		if (row >= 1) {
-			// 나중에 글 상세보기 페이지로 이동 수정 필요!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-			page = "redirect:/teammate/teammate_join_info.go?join_team_idx=" + dto.getJoin_team_idx();
+			page = "redirect:/teammate/join_info.go?join_team_idx=" + dto.getJoin_team_idx();
 		}
 
 		return page;
 	}
 	
 	// 팀원모집 수정페이지 접속
-	@RequestMapping(value = "/teammate/teammate_join_modify.go")
-	public String update() {
+	@RequestMapping(value = "/teammate/join_modify")
+	public String teammateModify(int idx, Model model) {
 		logger.info("팀원 모집글 수정페이지 접속");
-
-		return "/teammate/teammate_join_modify";
+		
+		TeammateDTO dto = teammateService.modifyDetail(idx);
+		model.addAttribute("modiDto",dto);
+		model.addAttribute("idx", idx);
+		
+		return "/teammate/join_modify";
 	}
-	
+
 	// 팀원모집 수정페이지 불러오기
 	@RequestMapping(value = "/teammate/teammateModify.ajax", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, TeammateDTO> teammateModify(int join_team_idx) {
 
-		join_team_idx = 4;
-
-		logger.info("join_team_Idx : " + join_team_idx);
+		logger.info("수정페이지 join_team_Idx : " + join_team_idx);
 
 		return teammateService.teammateModify(join_team_idx);
 	}
 
+	// 수정페이지 작성완료
+	@RequestMapping(value = "/teammate/teammateUpdate.ajax", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> writeUpdate(String teammate_info, String teammate_gender, String teammate_level,
+			String teammate_position, int join_team_idx) {
+		logger.info("teammateUpdate " + teammate_info + " " + teammate_gender);
+		logger.info("teammateUpdate " + teammate_level + " " + teammate_position);
+		logger.info("teammateUpdate " + join_team_idx);
+		return teammateService.writeUpdate(teammate_info, teammate_gender, teammate_level, teammate_position,join_team_idx);
+	}
+	
 }

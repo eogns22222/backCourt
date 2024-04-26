@@ -115,7 +115,7 @@ $(document).on('click', 'td', function(event) {
     console.log(join_team_idx);  // join_team_idx 확인
 	if(sessionChk2 == 'on'){
 	console.log('a');
-    window.location.href = './teammate_join_info.go?join_team_idx=' + join_team_idx; // 상세 페이지로 이동
+    window.location.href = './join_info.go?join_team_idx=' + join_team_idx; // 상세 페이지로 이동
 	}else{
 	window.location.href = '../login';
 	}
@@ -261,14 +261,14 @@ function showList(list){
 		}
  		if(sessionChk2 == 'on'){
 			console.log('a');
-			link = './teammate_join_info.go?join_team_idx=' + item.join_team_idx;
+			link = './join_info.go?join_team_idx=' + item.join_team_idx;
 		}else{
 			link = '../login';
 		}
        content +=
           '<tr class="' + finishClass + '">'
        +'<td class="num">' + item.join_team_idx + '</td>'
-       +'<td class="logo"><img class="teammateImage"  src="../resources/img/teamLogo/'+item.logo+'.jpg" alt="teammateLogo"></td>'
+       +'<td class="logo"><img class="teammateImage" src="/logo/${item.logo}.jpg" alt="teammateLogo"></td>'
        +'<td class="teamName">' + item.team_name +'</td>'
        +'<td class="representID">' + item.id + '</td>'
        +'<td class="address"><a href="' + link + '">서울시 ' + item.team_address.split(' ')[1] + '</a></td>'

@@ -17,20 +17,19 @@
 <jsp:include page="../header/header.jsp"/>
 	<div class="wrapper">
 		<div class="header">
-<!-- 			<img src="../resources/img/icon/logo.png" class="img" alt="로고" />  -->
-		<span>팀원 모집글 수정</span>
+			<img src="../resources/img/icon/logo.png" class="img" alt="로고" /> <span>팀원 모집글 작성</span>
 		</div>
 		<br />
 		<div class="content-wrapper">
 			<div class="content">팀명 : ${info.team_name}</div>
 		</div>
 		<div class="content-wrapper">
-			<div class="content" id="address">지역 : ${info.team_address}</div>
+			<div class="content" disabled id="address">지역 : ${info.team_address}</div>
 		</div>
 		<div class="content-wrapper">
 			<div class="content">팀 설명 : ${info.team_info}</div>
 		</div>
-		<form id="teammateForm" action="teammate_join_write.do" method="post">
+		<form id="teammateForm" action="join_write.do" method="post">
 		<div class="content-wrapper">
 			<div class="content">모집내용 : </div>
 			<textarea name="teammate_info" class="textarea" id="teammateContent" maxlength="500"
@@ -69,53 +68,60 @@
 				<option value="가드">가드</option>
 			</select>
 		</div>
-		<div class="update">
-			<input type="submit" value="수정 취소" id="cancel" class="submit">
-			<input type="submit" value="수정 완료" id="finish" class="submit">
+		<div class="write">
+			<input type="submit" value="작성 취소" id="cancel" class="submit">
+			<input type="submit" value="작성 완료" id="finish" class="submit">
 		</div>
 		</form>
 	</div>
 </body>
 <script>
-$('.menu').css('display','none');
-var join_team_idx = '${info.join_team_idx}';
+var team_idx = '${info.team_idx}';
 
+	$('.menu').css('display','none');
+	// textarea 값을 초기화함
+	window.onload = function () {
+	    document.getElementById("teammateContent").value = "";
+	};
 
-	// 수정완료 클릭 시
-	$('#update').on('click',function(){
-		if(!confirm("수정 하시겠습니까?")){
-			return;
-		}
-		var selectedGender = $("input[name='teammateGender']:checked").val();
-		var selectedLevel = $("input[name='teammateLevel']:checked").val();
-		console.log(selectedGender,selectedLevel);
-		$.ajax({
-			type: 'POST'
-			, url: './teammateUpdate.ajax'
-			, dataType: 'json'
-			, data:{
-				'teammate_info':$('#game-teammateContent').val()
-				,'teammate_gender':selectedGender
-				,'teammate_level':selectedLevel
-				,'teammate_position':$('#teammatePosition').val()
-				,'join_team_idx':join_team_idx
+	// 작성완료 시 폼 제출
+	$(document).ready(function() {
+		$('#finish').click(function(event) {
+			// 필수 입력값을 확인하여 누락된 것이 있는지 확인
+			var teammateContent = $('#teammateContent').val();
+			var teammateGender = $('input[name="teammateGender"]:checked').val();
+			var teammateLevel = $('input[name="teammateLevel"]:checked').val();
+			var teammatePosition = $('#teammatePosition').val();
+			var errorMessage = "";
+			
+			// 팀원모집내용 입력 여부 확인
+			if (!teammateContent || !teammateGender || !teammateLevel || !teammatePosition) {
+				errorMessage += "입력하지 않은 내용이 있습니다.";
 			}
-			, success:function(data){
-					alert("수정 완료되었습니다.");
-					window.location.href = './teammate/info.go'
-			}
-			, error:function(){
-				alert("수정 실패");
+
+			// 필수 입력값이 누락된 경우 알림창 표시
+			if (errorMessage !== "") {
+				alert(errorMessage);
+				event.preventDefault(); // 폼 제출을 중지
+			} else {
+				// 모든 필수 입력값이 제공된 경우 확인 메시지 표시
+				var confirmed = confirm("작성을 완료하시겠습니까?");
+				if (!confirmed) {
+					event.preventDefault(); // 확인을 누르지 않으면 폼 제출 중지
+				}
+				console.log(teammateContent);
+				console.log(teammateGender);
+				console.log(teammateLevel);
+				console.log(teammatePosition);
 			}
 		});
-		
 	});
 	
-	// 수정 취소 시 컨펌창
+	// 작성 취소	시 컴펌창
 	$(document).ready(function() {
 	    $('#cancel').click(function(event) {
 	        // 취소 여부 확인
-	        var confirmed = confirm("수정을 취소하시겠습니까?");
+	        var confirmed = confirm("작성을 취소하시겠습니까?");
 	        if (confirmed) {
 	            // 확인을 누를 경우 이전 페이지로 이동
 	            window.history.back();
@@ -126,27 +132,7 @@ var join_team_idx = '${info.join_team_idx}';
 	    });
 	});
 	
-	
-	$(document).ready(function(){
-    	
-    	$.ajax({
-    		type:'POST'
-    		,url: './teammateModify.ajax'
-    		,dataType:'json'
-    		,data:{'join_team_idx':join_team_idx
-    		}
-    		, success:function(data){
-    			console.log(data);
-    			$("#teammateContent").val(data.teammateInfo.join_team_content);
-    			$("input[name='teammateGender'][value='" + data.teammateInfo.join_to_gender + "']").prop("checked", true);
-    			$("input[name='teammateLevel'][value='" + data.teammateInfo.join_team_level + "']").prop("checked", true);
-    			$("#position").val(data.teammateInfo.join_team_position);
-    		}
-			, error: function(error){
-				
-			}
-    	});
-    });
+
 
 	 	
 </script>

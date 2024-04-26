@@ -68,6 +68,13 @@ public interface TeammateDAO {
 
 	TeammateDTO teammateModify(int join_team_idx);
 
+	void writeUpdate(String teammate_info, String teammate_gender, String teammate_level, String teammate_position,
+			int join_team_idx);
+
+	TeammateDTO modifyDetail(int idx);
+
+
+
 
 
 

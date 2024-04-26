@@ -136,10 +136,28 @@ public TeammateDTO teammateWriteInfo(int team_idx) {
 public Map<String, TeammateDTO> teammateModify(int join_team_idx) {
 	Map<String, TeammateDTO> map = new HashMap<String, TeammateDTO>();
 	TeammateDTO dto = teammateDAO.teammateModify(join_team_idx);
-	logger.info(dto.getTeam_name() + " ");
-	map.put("teammateInfo", dto);
+	dto.setJoin_team_idx(join_team_idx);
+	logger.info("teammateModify-service ={}", join_team_idx);
+	map.put("modifyInfo", dto);
 	return map;
 }
+
+public Map<String, Object> writeUpdate(String teammate_info, String teammate_gender, String teammate_level,
+		String teammate_position, int join_team_idx) {
+	logger.info("writeUpdate service join_team_idx="+join_team_idx);
+	teammateDAO.writeUpdate(teammate_info, teammate_gender, teammate_level, teammate_position, join_team_idx);
+	Map<String, Object> map = new HashMap<String, Object>();
+	
+	map.put("result", true);
+	return map;
+}
+
+public TeammateDTO modifyDetail(int idx) {
+	return teammateDAO.modifyDetail(idx);
+}
+
+
+
 
 
    
