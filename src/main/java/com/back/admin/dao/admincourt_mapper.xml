@@ -106,6 +106,43 @@
 		court_image(court_idx,file_name)
 		VALUES(#{param1},#{param2})
 	</insert>
+	
+	<select id="detailLoad" resultType="com.back.admin.dto.AdminCourtDTO">
+		SELECT 
+			court_name AS courtName
+			, court_address AS courtAddress
+			, court_info AS courtInfo
+			, court_price AS courtPrice
+			, court_state AS courtState
+			, court_official AS courtOfficial
+		FROM court
+		WHERE court_idx = #{param1}
+	</select>
+	
+	<select id="fileName" resultType="String">
+		SELECT
+			file_name AS fileName
+		FROM court_image
+		WHERE court_idx = #{param1}
+	</select>
+	
+	<update id="update" parameterType="com.back.admin.dto.AdminCourtDTO">
+	
+		UPDATE court 
+		SET court_name = #{courtIdx}
+			,court_address = #{courtAddress}
+			,court_info = #{courtInfo}
+			,court_price = #{courtPrice}
+			,court_state = #{courtState}
+			,court_official = #{courtOfficial}
+		WHERE court_idx = #{courtIdx}
+		
+	</update>
+	
+	<delete id="deleteFileList" parameterType="int">
+		DELETE FROM court_image WHERE court_idx = #{param1}
+	</delete>
+	
 </mapper>
 
 

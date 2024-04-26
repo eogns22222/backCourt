@@ -11,10 +11,11 @@ public interface AdminCourtDAO {
 	List<AdminCourtDTO> list(int start);
 
 	Object allCourtCount();
- 
+
 	List<AdminCourtDTO> listFilterAddress(int start, String address);
 
 	Object addressFilteringCourtCount(String address);
+
 	List<AdminCourtDTO> addressSearchList(String courtSearchWord, int start);
 
 	List<AdminCourtDTO> nameSearchList(String courtSearchWord, int start);
@@ -25,5 +26,14 @@ public interface AdminCourtDAO {
 
 	void courtImageUpload(String idx, String newFileName);
 
+	Object callImageName();
+
+	AdminCourtDTO detailLoad(String courtIdx);
+
+	List<String> fileName(String courtIdx);
+
+	Boolean update(AdminCourtDTO dto);
+
+	void deleteFileList(int courtIdx);
 
 }

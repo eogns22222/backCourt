@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.back.admin.dao.AdminCourtDAO;
@@ -26,9 +27,10 @@ public class AdminCourtService {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired
 	AdminCourtDAO adminCourtDAO;
-
-	@Autowired
-	private ServletContext servletContext;
+	
+	String macRoot = "/Users/chaehyeonpark/Documents/gdj78_backcourt/upload/court/";
+	
+	String winRoot = "C:/upload/court/";
 
 	public Map<String, Object> list(int page, String address) {
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -113,24 +115,24 @@ public class AdminCourtService {
 
 		courtImageUploading(idx, files);
 
-		return null;
+		return map;
 	}
 
 	public void courtImageUploading(int idx, MultipartFile[] files) {
 
 		String os = System.getProperty("os.name").toLowerCase();
-		
+
 		logger.info(os);
 		String directory = "";
 		if (os.contains("mac")) {
-			directory = "/Users/chaehyeonpark/Documents/gdj78_backcourt/upload/court/";
+			directory = macRoot;
 		} else if (os.contains("win")) {
-			directory = "C:/upload/court/";
+			directory = winRoot;
 		}
 		File dirPath = new File(directory);
 		logger.info("경로 " + directory);
 		Path path = Paths.get(directory);
-        try {
+		try {
 			Files.createDirectories(path.getParent());
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
@@ -145,8 +147,8 @@ public class AdminCourtService {
 		int count = 1;
 		for (MultipartFile file : files) {
 			String fileName = file.getOriginalFilename();
-			String newFileName = "court" + idx + "_image" + count + ".png";
-			Path filePath = Paths.get(directory+ newFileName);
+			String newFileName = "court" + idx + "_image" + count;
+			Path filePath = Paths.get(directory + newFileName + ".png");
 
 			try {
 				byte[] bytes = file.getBytes();
@@ -159,46 +161,60 @@ public class AdminCourtService {
 		}
 	}
 
-//	public void courtImageUploading(int idx, MultipartFile[] files) {
-//		String absolutePath = servletContext.getRealPath(relativePath);
-//		Path path = Paths.get(absolutePath);
-//		logger.info(fileRoot);
-//		int count = 1;
-//		for (MultipartFile file : files) {
-//			String fileName = file.getOriginalFilename();
-//			logger.info(fileName);
-//
-//			String newFileName = "court" + idx + "_image" + count + ".png";
-//
-//			try {
-//				byte[] bytes = file.getBytes();
-//				Path path = Paths.get(fileRoot + newFileName);
-//				Files.write(path, bytes);
-//				adminCourtDAO.courtImageUpload(Integer.toString(idx), newFileName);
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
+	public void detailLoad(String courtIdx, Model model) {
 
-//        String absolutePath = servletContext.getRealPath(relativePath);
-//        Path path = Paths.get(absolutePath);
-//        logger.info(fileRoot);
-//		int count = 1;
-//		for (MultipartFile file : files) {
-//			String fileName = file.getOriginalFilename();
-//			logger.info(fileName);
-//
-//			String newFileName = "court" + idx + "_image" + count + ".png";
-//
-//			try {
-//				byte[] bytes = file.getBytes();
-//				Path path = Paths.get(fileRoot + newFileName);
-//				Files.write(path, bytes);
-//				adminCourtDAO.courtImageUpload(Integer.toString(idx), newFileName);
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
+		logger.info("detailLoad Service in ---------------------------------");
+		model.addAttribute("fileName", adminCourtDAO.fileName(courtIdx));
+		model.addAttribute("courtDetail", adminCourtDAO.detailLoad(courtIdx));
+		model.addAttribute("courtIdx", courtIdx);
+		logger.info("detailLoad Service out --------------------------------");
+	}
+
+	public Map<String, Boolean> update(MultipartFile[] files, String courtUpdateName, String courtUpdateInfo,
+			String courtUpdatePrice, String courtUpdateAddress, String courtIsOfficial, String courtIsDisabled,
+			String courtIdx) {
+		Map<String, Boolean> map = new HashMap<String, Boolean>();
+
+		AdminCourtDTO dto = new AdminCourtDTO();
+
+		dto.setCourtName(courtUpdateName);
+		dto.setCourtInfo(courtUpdateInfo);
+		dto.setCourtPrice(courtUpdatePrice);
+		dto.setCourtAddress(courtUpdateAddress);
+		dto.setCourtOfficial(courtIsOfficial);
+		dto.setCourtState(courtIsDisabled);
+		dto.setCourtIdx(Integer.parseInt(courtIdx));
+
+		map.put("result", adminCourtDAO.update(dto));
+		List<String> fileNameList = adminCourtDAO.fileName(courtIdx);
+		courtImageDelete(Integer.parseInt(courtIdx),fileNameList);
+
+		logger.info(map.get("result") + "");
+		courtImageUploading(Integer.parseInt(courtIdx), files);
+
+		return map;
+	}
+
+	//구장 이미지 테이블에서 제거후 파일 삭제
+	public void courtImageDelete(int courtIdx, List<String> fileNameList) {
+		adminCourtDAO.deleteFileList(courtIdx);
+		String os = System.getProperty("os.name").toLowerCase();
+
+		logger.info(os);
+		String directory = "";
+		if (os.contains("mac")) {
+			directory = macRoot;
+		} else if (os.contains("win")) {
+			directory = winRoot;
+		}
+		for (String fileName : fileNameList) {
+			File file = new File(directory + fileName);
+			if (file.exists()) {
+				file.delete();
+			}
+			
+		}
+		
+		
+	}
 }

@@ -15,16 +15,16 @@
 <link rel="stylesheet" href="../resources/css/header/header.css">
 
 <style>
-.courtWriteTable, .courtWriteTh, .courtWriteTd {
+.officialWriteTable, .officialWriteTh, .officialWriteTd {
 	border: 1px solid black;
 	border-collapse: collapse;
 }
 
-.courtWriteTh, .courtWriteTd {
+.officialWriteTh, .officialWriteTd {
 	padding: 5px 10px;
 }
 
-#courtWriteInfo {
+#officialWriteInfo {
 	resize: none;
 	width: 500px;
 	height: 150px;
@@ -39,7 +39,7 @@
 				<ul class="menu">
 					<li><a href="../admin/member_list">회원 관리</a></li>
 					<li><a href="../admin/team_list">팀 관리</a></li>
-					<li><a href="../admin/court_list">구장 관리</a></li>
+					<li><a href="../admin/official_list">구장 관리</a></li>
 					<li><a href="../admin/writing_list">글 관리</a></li>
 					<li><a href="../admin/report_list">신고 관리</a></li>
 				</ul>
@@ -48,47 +48,47 @@
 		<div class="adminContainer">
 			<h1>구장 등록</h1>
 			<form action="" method="post">
-				<table class="courtWriteTable">
+				<table class="officialWriteTable">
 					<tr>
-						<th class="courtWriteTh">구장 이름</th>
-						<td class="courtWriteTd"><input type="text"
-							id="courtWriteName" /></td>
+						<th class="officialWriteTh">구장 이름</th>
+						<td class="officialWriteTd"><input type="text"
+							id="officialWriteName" /></td>
 					</tr>
 					<tr>
-						<th class="courtWriteTh">구장 사진</th>
-						<td class="courtWriteTd"><input type="file"
-							id="courtImageUpload" multiple></td>
+						<th class="officialWriteTh">구장 사진</th>
+						<td class="officialWriteTd"><input type="file"
+							id="officialImageUpload" multiple></td>
 					</tr>
 					<tr>
-						<th class="courtWriteTh">구장 정보</th>
-						<td class="courtWriteTd"><textarea id="courtWriteInfo"
+						<th class="officialWriteTh">구장 정보</th>
+						<td class="officialWriteTd"><textarea id="officialWriteInfo"
 								maxlength="300"></textarea></td>
 					</tr>
 					<tr>
-						<th class="courtWriteTh">구장 가격</th>
-						<td class="courtWriteTd"><input type="number"
-							id="courtWritePrice" /></td>
+						<th class="officialWriteTh">구장 가격</th>
+						<td class="officialWriteTd"><input type="number"
+							id="officialWritePrice" /></td>
 					</tr>
 					<tr>
-						<th class="courtWriteTh">구장 위치</th>
-						<td class="courtWriteTd"><input type="text"
-							id="courtWriteAddress" maxlength="300" /></td>
+						<th class="officialWriteTh">구장 위치</th>
+						<td class="officialWriteTd"><input type="text"
+							id="officialWriteAddress" maxlength="300" /></td>
 					</tr>
 				</table>
-				<br /> <input type="checkbox" id="courtIsOfficial" /> <label
-					for="courtIsOfficial">공식 경기 구장</label> <input type="checkbox"
-					name="" id="courtIsDisabled"> <label for="courtIsDisabled">구장
-					비활성</label> <br /> <input id="courtRegisterCancel" type="button"
-					value="취소 하기" /> <input id="courtRegisterSubmit" type="button"
-					value="등록 하기" />
+				<br /> <input type="checkbox" id="officialIsOfficial" /> <label
+					for="officialIsOfficial">공식 경기 구장</label> <input type="checkbox"
+					name="" id="officialIsDisabled"> <label
+					for="officialIsDisabled">구장 비활성</label> <br /> <input
+					id="officialRegisterCancel" type="button" value="취소 하기" /> <input
+					id="officialRegisterSubmit" type="button" value="등록 하기" />
 			</form>
 		</div>
 	</div>
 
 	<script>
-    $('#courtRegisterSubmit').on('click',function(){
+    $('#officialRegisterSubmit').on('click',function(){
         var formData = new FormData();
-        var files = $('#courtImageUpload')[0].files;
+        var files = $('#officialImageUpload')[0].files;
 
         // 파일이 선택되었는지 확인 후 FormData에 추가
         if (files.length > 0) {
@@ -101,26 +101,26 @@
             return;
         }
 
-    	var courtWriteName = $('#courtWriteName').val();
-    	var courtWriteInfo = $('#courtWriteInfo').val();
-    	var courtWritePrice = $('#courtWritePrice').val();
-    	var courtWriteAddress = $('#courtWriteAddress').val();
-    	var courtIsOfficial = $('#courtIsOfficial').is(':checked');
-    	var courtIsDisabled = !$('#courtIsDisabled').is(':checked');
+    	var officialWriteName = $('#officialWriteName').val();
+    	var officialWriteInfo = $('#officialWriteInfo').val();
+    	var officialWritePrice = $('#officialWritePrice').val();
+    	var officialWriteAddress = $('#officialWriteAddress').val();
+    	var officialIsOfficial = $('#officialIsOfficial').is(':checked');
+    	var officialIsDisabled = !$('#officialIsDisabled').is(':checked');
     	
-//     	console.log(courtWriteName);
-//     	console.log(courtWriteInfo);
-//     	console.log(courtWritePrice);
-//     	console.log(courtWriteAddress);
-//     	console.log(courtIsOfficial);
-//     	console.log(courtIsDisabled);
+//     	console.log(officialWriteName);
+//     	console.log(officialWriteInfo);
+//     	console.log(officialWritePrice);
+//     	console.log(officialWriteAddress);
+//     	console.log(officialIsOfficial);
+//     	console.log(officialIsDisabled);
 
-    	formData.append('courtWriteName', courtWriteName);
-        formData.append('courtWriteInfo', courtWriteInfo);
-        formData.append('courtWritePrice', courtWritePrice);
-        formData.append('courtWriteAddress', courtWriteAddress);
-        formData.append('courtIsOfficial', courtIsOfficial);
-        formData.append('courtIsDisabled', courtIsDisabled);
+    	formData.append('officialWriteName', officialWriteName);
+        formData.append('officialWriteInfo', officialWriteInfo);
+        formData.append('officialWritePrice', officialWritePrice);
+        formData.append('officialWriteAddress', officialWriteAddress);
+        formData.append('officialIsOfficial', officialIsOfficial);
+        formData.append('officialIsDisabled', officialIsDisabled);
 
         //키 벨류 formdata 에서는 entries써야됨
         for (pair of formData.entries()) {
@@ -128,24 +128,24 @@
         }
 
     	
-    	if(courtWriteName == ''
-    		|| courtWriteInfo == ''
-        	|| courtWritePrice == ''
-        	|| courtWriteAddress == ''
+    	if(officialWriteName == ''
+    		|| officialWriteInfo == ''
+        	|| officialWritePrice == ''
+        	|| officialWriteAddress == ''
     	){
 	        alert('모든 정보를 입력해 주세요');
 	        return;
     	}
     	if(confirm('정말 등록 하시겠습니까?')){
         	$.ajax({
-        		url:'./courtWrite.ajax'
+        		url:'./officialWrite.ajax'
         		,type:'post'
         		,data:formData
                 ,contentType:false
                 ,processData:false
                 ,success:function(){
                 	if(data.result == true){
-						window.location.href = './courtList.go';                		
+						window.location.href = './officialList.go';                		
                 	}
                 }
                 ,error:function(error){
@@ -155,14 +155,14 @@
     	}
     });
 
-    $('#courtRegisterCancel').on('click',function(){
+    $('#officialRegisterCancel').on('click',function(){
         if(confirm('정말 취소 하시겠습니까?')){
         	alert('취소되었습니다.');
-        	window.location.href = "./courtList.go";
+        	window.location.href = "./officialList.go";
         }
     });
     
-	$('#courtImageUpload').on('change',function(){
+	$('#officialImageUpload').on('change',function(){
 		var files = $(this)[0].files;
 		
 		if(files.length > 0){
@@ -172,12 +172,12 @@
 				var fileSize = file.size;
 				if(fileName.endsWith('.png') == false){
 					alert('png 확장자만 업로드 가능합니다.');
-					$('#courtImageUpload').val('');
+					$('#officialImageUpload').val('');
 					return;
 				}
 				if(fileSize > 5242880){// 5mb제한
 					alert('5mb가 넘습니다.');
-					$('#courtImageUpload').val('');
+					$('#officialImageUpload').val('');
 					return;
 				}
 				
