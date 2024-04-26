@@ -8,6 +8,7 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="../resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
+<link rel="stylesheet" href="../resources/css/common/reset.css">
 <link rel="stylesheet" href="../resources/css/header/header.css">
 <link rel="stylesheet" href="../resources/css/official/official.css">
 <style>
@@ -21,11 +22,6 @@
             <!-- 지역 -->
             <select id="address">
                 <option value="">전체 지역</option>
-            </select>
-    
-            <!-- 날짜 -->
-            <select id="date">
-                <option value="">날짜</option>
             </select>
     
             <!-- 레벨 -->

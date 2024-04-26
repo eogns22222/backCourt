@@ -187,6 +187,36 @@
 			WHERE team_idx = #{param1}
 			AND id = #{param2};
 	</delete>		
+	
+	<insert id="createComplete"
+		useGeneratedKeys="true"
+		keyColumn="team_idx"
+		keyProperty="team_idx"
+		parameterType="com.back.team.dto.TeamDTO"
+	>
+		INSERT INTO team(id
+		,logo
+		,team_name
+		,team_address
+		,team_level
+		,team_info) VALUES(#{id}
+		,#{logo}
+		,#{team_name}
+		,#{team_address}
+		,#{team_level}
+		,#{team_info})
+	</insert>	
+	
+	<insert id="insertTeamList">
+		insert into team_list(id
+		,team_idx) values(#{param1}, #{param2});
+	</insert>		
+	
+	<update id="updateLogo">
+		UPDATE team set
+		logo = #{param1} WHERE team_idx = #{param2}
+	</update>		
+	
 
 </mapper>
 

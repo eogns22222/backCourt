@@ -258,7 +258,7 @@
 		for(item of list){
 			content += '<li>';
 			content += '<a href="../team/info_list.go?team_idx=' + item.team_idx + '">';
-			content += '<span class="logo"><img src="../resources/img/teamLogo/' + item.logo + '.jpg" alt="로고"></span>';
+			content += '<span class="logo"><img src="/logo/' + item.logo + '.png" alt="로고"></span>';
 			content += '<span class="teamNik">' + item.team_name + '</span>';
 			content += '</a>';
 			content += '</li>';

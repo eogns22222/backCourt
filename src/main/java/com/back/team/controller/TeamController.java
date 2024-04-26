@@ -12,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.back.team.dto.TeamDTO;
 import com.back.team.service.TeamService;
@@ -137,6 +139,21 @@ public class TeamController {
 	public String createTeam(HttpSession session, Model model) {
 		logger.info("create.go /");
 		return "team/create";
+	}
+	
+	@RequestMapping(value = "/team/create.do", method = RequestMethod.POST)
+	public String createComplete(MultipartFile photo, HttpSession session, @RequestParam Map<String, String> param) {
+		logger.info("팀 만들기 요청");
+		String page = "login";
+		String id = (String) session.getAttribute("loginId");
+		int idx = 0;
+		
+		if(id != null) {
+			idx = teamService.createComplete(photo, param, id);
+			page = "redirect:/team/info_list.go?team_idx=" + idx;
+		}
+		
+		return page;
 	}
 	
 }

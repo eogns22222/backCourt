@@ -22,7 +22,7 @@
     <div class="teamInfoContainer">
         <div class="leftCont">
             <ul class="teamInformation">
-                <li class="logoImg"><img src="../resources/img/teamLogo/${info.logo}.jpg" alt=""></li>
+                <li class="logoImg"><img src="/logo/${info.logo}.png" alt=""></li>
                 <li>${info.team_name}</li>
                 <li>팀장 : ${info.id}</li>
                 <li>${info.team_address}</li>
