@@ -348,7 +348,7 @@
 		,10
 		,#{join_team_content}
 		,#{join_team_level}
-		,#{join_to_gender}
+		,#{join_team_gender}
 		,#{join_team_position}
 		,'true')
 	</insert>

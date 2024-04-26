@@ -127,7 +127,7 @@ public class TeammateController {
 		dto.setTeam_idx(team_idx);
 		dto.setJoin_team_content(teammate_info);
 		dto.setJoin_team_level(teammateLevel);
-		dto.setJoin_to_gender(teammateGender);
+		dto.setJoin_team_gender(teammateGender);
 		dto.setJoin_team_position(teammatePosition);
 //		
 //		Map<String, Object> map = new HashMap<>();

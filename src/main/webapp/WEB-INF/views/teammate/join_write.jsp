@@ -40,22 +40,22 @@
 		<div class="content-wrapper">
 			<div class="content">모집 성별 :</div>
 			<div class="radio-wrapper">
-				<input type="radio" id="male" name="teammateGender" value="male"> 
+				<input type="radio" id="male" name="teammateGender" value="남자"> 
 				<label for="male">남자</label> 
-				<input type="radio" id="female" name="teammateGender"	value="female"> 
+				<input type="radio" id="female" name="teammateGender"	value="여자"> 
 				<label for="female">여자</label>
 			</div>
 		</div>
 		<div class="content-wrapper">
 			<div class="content">모집 레벨 : </div>
 			<div class="radio-wrapper">
-				<input type="radio" id="bronze" name="teammateLevel" value="bronze">
+				<input type="radio" id="bronze" name="teammateLevel" value="브론즈">
 					<label for="bronze">브론즈</label> 
-				<input type="radio" id="silver"name="teammateLevel" value="silver">
+				<input type="radio" id="silver"name="teammateLevel" value="실버">
 				 	<label for="silver">실버</label>
-				<input type="radio" id="gold" name="teammateLevel" value="gold">
+				<input type="radio" id="gold" name="teammateLevel" value="골드">
 				 	<label	for="gold">골드</label>
-				<input type="radio" id="platinum" name="teammateLevel" value="platinum"> 
+				<input type="radio" id="platinum" name="teammateLevel" value="플레티넘"> 
 					<label for="platinum">플레티넘</label>
 			</div>
 		</div>

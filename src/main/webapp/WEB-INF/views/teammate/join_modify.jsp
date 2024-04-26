@@ -100,7 +100,7 @@ console.log(join_team_idx);
 			}
 			, success:function(data){
 					alert("수정 완료되었습니다.");
-// 					window.location.href = '../teammate/join_info.go?join_team_idx='+ data.modifyInfo.join_team_idx;
+					window.location.href = './teammate/join_info.go?join_team_idx='+ data.modifyInfo.join_team_idx;
 			}
 			, error:function(){
 				alert("수정 실패");
@@ -136,9 +136,9 @@ console.log(join_team_idx);
     		, success:function(data){
     			console.log(data);
     			$("#teammateContent").val(data.modifyInfo.join_team_content);
-    			$("input[name='teammateGender'][value='" + data.modifyInfo.join_to_gender + "']").prop("checked", true);
+    			$("input[name='teammateGender'][value='" + data.modifyInfo.join_team_gender + "']").prop("checked", true);
     			$("input[name='teammateLevel'][value='" + data.modifyInfo.join_team_level + "']").prop("checked", true);
-    			$("#position").val(data.modifyInfo.join_team_position);
+    			$("#teammatePosition").val(data.modifyInfo.join_team_position);
     		}
 			, error: function(error){
 				
