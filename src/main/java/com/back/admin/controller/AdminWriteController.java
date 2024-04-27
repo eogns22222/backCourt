@@ -37,5 +37,46 @@ public class AdminWriteController {
 //	public Map<String, Object> callCourtInfo(String courtIdx) {
 //		return adminWriteService.callCourtInfo(courtIdx);
 //	}
+	
+	// 공식 경기 리스트 접속
+	@RequestMapping(value = "/admin/writing_official_list.go")
+	public String listGo() {
+		logger.info("공식 경기 리스트 접속");
+		return "/admin/writing_official_list";
+	}
+	
+	// 게스트 리스트 가져오기
+	@RequestMapping(value = "/admin/writing_official_list/list.ajax")
+	@ResponseBody
+	public Map<String, Object> guestList(String address, String currentPage,
+			String level, String searchWord, String searchFlag) {
+		logger.info("공식경기 리스트 아작스 요청");
+		
+		return adminWriteService.officialList(Integer.parseInt(currentPage), searchFlag, searchWord, address, level);
+	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

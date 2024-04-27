@@ -103,3 +103,5 @@ img{width:100%;}
 .adminHeader .headerCont .menu{margin-top:150px;}
 .adminHeader .headerCont .menu li{margin:40px 0;}
 .adminHeader .headerCont .menu li a{display:block;font-size:40px;}
+.adminHeader .headerCont .menu li.on a{background:skyblue;}
+

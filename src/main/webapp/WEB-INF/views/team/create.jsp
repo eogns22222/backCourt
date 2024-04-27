@@ -64,7 +64,7 @@
                 </p>
                 <p>
                     <span>팀 설명 : </span>
-                    <textarea name="teamDescription" id="description"></textarea>
+                    <textarea name="teamDescription" id="description" maxlength="300"></textarea>
                 </p>
                 <div class="btnWrap">
                     <button id="cancle" type="button">취소</button>

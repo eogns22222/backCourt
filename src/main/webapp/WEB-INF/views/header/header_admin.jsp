@@ -6,17 +6,14 @@
         <div class="headerCont">
             <a href="../admin_logout.do" class="logout">로그아웃</a>
             <ul class="menu">
-                <li><a href="../admin/member_list">회원 관리</a></li>
-                <li><a href="../admin/team_list">팀 관리</a></li>
-                <li><a href="../admin/court_list">구장 관리</a></li>
-                <li><a href="../admin/writing_list">글 관리</a></li>
-                <li><a href="../admin/report_list">신고 관리</a></li>
+                <li><a href="../admin/member_list.go">회원 관리</a></li>
+                <li><a href="../admin/team_list.go">팀 관리</a></li>
+                <li><a href="../admin/court_list.go">구장 관리</a></li>
+                <li><a href="../admin/writing_official_list.go">글 관리</a></li>
+                <li><a href="../admin/report_list.go">신고 관리</a></li>
             </ul>
         </div>
     </header>
-    <div class="adminContainer">
-        content
-    </div>
 </div>
 
 
