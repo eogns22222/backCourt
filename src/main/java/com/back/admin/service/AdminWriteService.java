@@ -9,10 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.back.admin.dao.AdminWriteDAO;
 import com.back.admin.dto.AdminCourtDTO;
-import com.back.court.dto.CourtDTO;
+import com.back.admin.dto.AdminWriteDTO;
 
 @Service
 public class AdminWriteService {
@@ -80,6 +81,9 @@ public class AdminWriteService {
 		List<String> bookingStartTime = adminWriteDAO.bookingStartTime(courtIdx, selectDate);
 		result.put("fileName", fileName);
 		result.put("courtInfo", dto);
+		for (String string : bookingStartTime) {
+			logger.info("bookingStartTime = " + string);
+		}
 		result.put("bookingStartTime", bookingStartTime);
 		return result;
 	}
@@ -91,6 +95,18 @@ public class AdminWriteService {
 		logger.info("params: {}", param);
 		Map<String, Boolean> result = new HashMap<String, Boolean>();
 		result.put("result", adminWriteDAO.officialWrite(param));
+		return result;
+	}
+
+	public void officialUpdateGo(Model model, String officialIdx) {
+
+		AdminWriteDTO dto = adminWriteDAO.officialUpdateGo(officialIdx);
+		model.addAttribute("officialInfo", dto);
+	}
+
+	public Map<String, Boolean> officialUpdate(Map<String, Object> param) {
+		Map<String, Boolean> result = new HashMap<String, Boolean>();
+		result.put("result", adminWriteDAO.officialUpdate(param));
 		return result;
 	}
 

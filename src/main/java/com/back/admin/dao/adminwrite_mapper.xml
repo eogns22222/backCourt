@@ -34,11 +34,11 @@
 	</select>
 	
 	<select id="bookingStartTime" resultType="String">
-		SELECT
-		booking_start_time
-		FROM court_booking
+		SELECT official_match_start_time   
+		from official_match  
 		WHERE court_idx = #{param1}
-		AND booking_date = #{param2}
+		AND official_match_date = #{param2}
+
 	</select>
 	
 	<insert id="officialWrite">
@@ -72,4 +72,38 @@
 			,'true'
 		)
 	</insert>
+	
+	<select id="officialUpdateGo" resultType="com.back.admin.dto.AdminWriteDTO">
+		SELECT 
+			official_match_idx AS officialIdx
+			,court_idx AS courtIdx
+			,official_match_gender AS officialGender
+			,official_match_level AS officialLevel
+			,official_match_to AS officialTO
+			,official_match_to_state AS officialTOState
+			,official_match_info AS officialInfo
+			,official_match_fee AS officialPrice
+			,official_match_date AS officialDate
+			,official_match_start_time AS officialStartTime
+			,official_match_end_time AS officialEndTime
+			,official_match_state AS officialMatchState
+			,official_match_post_state AS officialState
+		FROM official_match
+		WHERE official_match_idx = #{param1}
+	</select>
+	
+	<update id="officialUpdate" parameterType="map">
+	UPDATE official_match
+	SET court_idx = #{courtIdx}
+		,official_match_gender = #{officialGender}
+		,official_match_level = #{officialLevel}
+		,official_match_to = #{officialTO}
+		,official_match_info = #{officialInfo}
+		,official_match_fee = #{officialPrice}
+		,official_match_date = #{officialDate}
+		,official_match_start_time = #{officialStartTime}
+		,official_match_end_time = #{officialEndTime}
+		,official_match_post_state = #{officialState}
+	WHERE official_match_idx = #{officialIdx}
+	</update>
 </mapper>

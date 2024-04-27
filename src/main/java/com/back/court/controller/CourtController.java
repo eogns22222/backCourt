@@ -3,6 +3,8 @@ package com.back.court.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +23,8 @@ public class CourtController {
 	@Autowired
 	CourtService courtService;
 
-	@RequestMapping(value = "/court") // / -> /court 로 수정
-	public String home() {
-		return "redirect:/court/list.go";
-	}
-
 	@RequestMapping(value = "/court/list.go")
-	public String listGo() {
+	public String listGo(HttpSession session) {
 		logger.info("list.go /");
 		return "court/list";
 	}
@@ -46,12 +43,12 @@ public class CourtController {
 
 	@RequestMapping(value = "/court/jjim.ajax", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Boolean> jjimAdd(String courtIdx) {
+	public Map<String, Boolean> jjimAdd(HttpSession session, String courtIdx) {
 		logger.info("jjimAdd / courtIdx = {}", courtIdx);
 
 		Map<String, Boolean> map = new HashMap<String, Boolean>();
 //		세션 아이디 받아오
-		String id = "admin";
+		String id = (String) session.getAttribute("loginId");
 		map.put("result", courtService.jjim(id, Integer.parseInt(courtIdx)));
 
 		return map;
@@ -59,20 +56,24 @@ public class CourtController {
 
 	@RequestMapping(value = "/court/noJjim.ajax", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Boolean> jjimRemove(String courtIdx) {
+	public Map<String, Boolean> jjimRemove(HttpSession session, String courtIdx) {
 		logger.info("jjimAdd / courtIdx = {}", courtIdx);
 
 		Map<String, Boolean> map = new HashMap<String, Boolean>();
 
 //		세션 아이디 받아오
-		String id = "admin";
+		String id = (String) session.getAttribute("loginId");
 		map.put("result", courtService.jjimRemove(id, Integer.parseInt(courtIdx)));
 
 		return map;
 	}
 
 	@RequestMapping(value = "/court/detail.go")
-	public String detailGo(Model model, String court_idx) {
+	public String detailGo(HttpSession session, Model model, String court_idx) {
+		String loginId = (String) session.getAttribute("loginId");
+		if (loginId.isEmpty()) {
+			return "redirect:/login.go";
+		}
 		logger.info(court_idx);
 		model.addAttribute("courtIdx", court_idx);
 		return "court/detail";
@@ -87,10 +88,11 @@ public class CourtController {
 
 	@RequestMapping(value = "/court/booking.ajax", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Boolean> booking(String courtStartTime, String courtIdx, String courtPrice, String courtDate) {
+	public Map<String, Boolean> booking(HttpSession session, String courtStartTime, String courtIdx, String courtPrice,
+			String courtDate) {
 
 		// 수정필요
-		String id = "a";
+		String id = (String) session.getAttribute("loginId");
 
 		return courtService.booking(courtStartTime, courtIdx, courtPrice, id, courtDate);
 	}
