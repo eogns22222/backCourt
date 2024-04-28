@@ -317,7 +317,7 @@
 						,'officialEndTime':selectTime+2
 						,'officialDate':selectDate
 						,'courtIdx':courtIdx
-						,'officialIdx':${officialIdx}
+						,'officialIdx':'${officialIdx}'
 					}
 					,success:function(data){
 						console.log(data);
@@ -336,6 +336,8 @@
 		});
 		$('#officialCourtListSearch').on('keydown', function(event){
 			if(event.keyCode == 13){
+
+				$('#pagination').twbsPagination('destroy');
 				currentPage=1;
 				callCourtList(currentPage);
 			}

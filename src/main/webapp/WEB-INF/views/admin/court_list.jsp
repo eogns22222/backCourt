@@ -86,7 +86,7 @@
 	});
 	
 	$(document).on('click', 'td', function(event) {
-		 var courtIdx = $(this).closest('tr').find('td:first').text();
+		var courtIdx = $(this).closest('tr').find('td:first').text();
 		window.location.href = './courtDetail.go?courtIdx=' + courtIdx;
 	});
 

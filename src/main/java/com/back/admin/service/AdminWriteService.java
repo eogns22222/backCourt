@@ -25,22 +25,20 @@ public class AdminWriteService {
 	public Map<String, Object> callCourtList(int currentPage, String searchWord) {
 		int start = (currentPage - 1) * 10;
 		logger.info("::::::::::::callCourtList service in:::::::::::::");
+		logger.info("searchWord = " + searchWord);
 		Map<String, Object> result = new HashMap<String, Object>();
 
-		logger.info(":::::::::::::Input List:::::::::::::::::::::::::");
 		List<AdminCourtDTO> list = adminWriteDAO.callCourtList();
 		List<AdminCourtDTO> processedList = new ArrayList<AdminCourtDTO>();
-		logger.info("::::::::::::::::::::::::::::::::::::::");
-		for (AdminCourtDTO adminCourtDTO : list) {
-			logger.info("courtIdx = " + adminCourtDTO.getCourtIdx() + "\n" + "courtName = "
-					+ adminCourtDTO.getCourtName() + "\n" + "courtAddress = " + adminCourtDTO.getCourtAddress() + "\n");
-		}
+
 		processedList = list;
-		logger.info("::::::::::::::::::::::::::::::::::::::");
+
 		if (searchWord.isEmpty() == false) {
 			processedList = addressProcessedList(processedList, searchWord);
 		}
-
+		for (AdminCourtDTO adminCourtDTO : processedList) {
+			logger.info("processedList Address = " + adminCourtDTO.getCourtAddress());
+		}
 		int totalPage = processedList.size() % 10 > 0 ? processedList.size() / 10 + 1 : processedList.size() / 10;
 		result.put("totalPage", totalPage);
 
@@ -61,10 +59,14 @@ public class AdminWriteService {
 
 	public List<AdminCourtDTO> addressProcessedList(List<AdminCourtDTO> processedList, String searchWord) {
 		List<AdminCourtDTO> list = new ArrayList<AdminCourtDTO>();
-		for (AdminCourtDTO dto : list) {
+		logger.info("addressProcessedList searchWord = " + searchWord);
+		for (AdminCourtDTO dto : processedList) {
 			if (dto.getCourtAddress().contains(searchWord)) {
 				list.add(dto);
 			}
+		}
+		for (AdminCourtDTO adminCourtDTO : list) {
+			logger.info("list address = " + adminCourtDTO.getCourtAddress());
 		}
 		return list;
 	}

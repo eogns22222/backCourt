@@ -258,6 +258,9 @@
 		var formattedDate = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1).toString().padStart(2, '0') + "-" + currentDate.getDate().toString().padStart(2, '0');
 		var selectDate = '';
 		var selectTime = '';
+		$('#officialWriteDate').val(formattedDate);
+		selectDate = $('#officialWriteDate').val();
+		
 
 		$('#officialRegisterSubmit').on('click', function(){
 			var officialCourtName = $('#officialWriteName').val();
@@ -320,6 +323,8 @@
 		});
 		$('#officialCourtListSearch').on('keydown', function(event){
 			if(event.keyCode == 13){
+
+				$('#pagination').twbsPagination('destroy');
 				currentPage=1;
 				callCourtList(currentPage);
 			}
@@ -428,10 +433,6 @@
 			});
 		}
 
-
-		$('#officialWriteDate').val(formattedDate);
-		selectDate = $('#officialWriteDate').val();
-		
 
 		$('#officialRegisterCancel').on('click',function(){
 			if(confirm('정말 취소 하시겠습니까?')){

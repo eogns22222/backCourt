@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.back.court.service.CourtService;
@@ -31,13 +32,10 @@ public class CourtController {
 
 	@RequestMapping(value = "/court/list.ajax", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> callList(String currentPage, String address, String searchCategory, String searchWord,
-			String searchFlag) {
-		logger.info("listCall / currentPage = {} / address = {} / ", currentPage, address);
-		logger.info(searchFlag);
-		int page = Integer.parseInt(currentPage);
+	public Map<String, Object> callList(@RequestParam Map<String, Object> param) {
+		logger.info("listCall / param = {} / ", param);
 
-		return courtService.list(page, address, searchCategory, searchWord, searchFlag);
+		return courtService.list(param);
 
 	}
 
@@ -71,9 +69,9 @@ public class CourtController {
 	@RequestMapping(value = "/court/detail.go")
 	public String detailGo(HttpSession session, Model model, String court_idx) {
 		String loginId = (String) session.getAttribute("loginId");
-		if (loginId.isEmpty()) {
-			return "redirect:/login.go";
-		}
+//		if (loginId == null && loginId.isEmpty()) {
+//			return "redirect:/login.go";
+//		}
 		logger.info(court_idx);
 		model.addAttribute("courtIdx", court_idx);
 		return "court/detail";
