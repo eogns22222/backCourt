@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +31,8 @@ public class MypageService {
 	public void Charging_do(String loginId, String charging) {
 		mypageDAO.Charging_do(loginId,charging);
 	}
-	public void PointMinus(String loginId, String minus) {
-		mypageDAO.PointMinus(loginId,minus);
+	public void PointMinus(String loginId, int min) {
+		mypageDAO.PointMinus(loginId,min);
 	}
 	public String point(String loginId) {
 		return mypageDAO.point(loginId);
@@ -222,9 +224,43 @@ public class MypageService {
 		
 		return result;
 	}
+	
+	
+//	===================== 신고 리스트 / 수정 ==================================
 
 
+	public MypageDTO report_detail(String loginId, int idx) {
+		
+		return mypageDAO.report_detail(loginId,idx);
+	}
 
+
+	public int report_modify(Map<String, String> param) {
+		
+		logger.info("param : {}",param);
+		
+		
+		return mypageDAO.report_modify(param);
+	}
+
+
+	//신고 리스트 출력(ajax)
+	public Map<String, Object> report_list_ajax(String loginId, int currPage, int pageSome) {
+		logger.info("신고 /  문의 리스트 (서비스)");
+		
+		int state = (currPage-1)*pageSome; //n 번 부터 보여 주기(자동 계산)
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<MypageDTO> list =  mypageDAO.report_list(loginId,state,pageSome);
+		result.put("list", list);
+		logger.info("list siez : "+list.size());
+		result.put("state", state); //카운트를 하기위한 것
+		result.put("totalPages", mypageDAO.totalPages(pageSome,loginId)); //총 페이지 수
+		
+		return result;
+	}
+	
+	
 
 
 }
