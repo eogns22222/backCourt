@@ -124,7 +124,6 @@
 			</header>
 			<div class="adminContainer">
 				<h1>공식경기 등록</h1>
-				<form action="" method="post">
 					<table class="officialWriteTable">
 						<tr>
 							<th class="officialWriteTh">공식 경기 이름</th>
@@ -222,7 +221,6 @@
 					<br/>
 					<input id="officialRegisterCancel" type="button" value="취소 하기" />
 					<input id="officialRegisterSubmit" type="button" value="등록 하기" />
-				</form>
 			</div>
 		</div>
 			<div id="light" class="white_content">
