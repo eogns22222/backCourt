@@ -58,7 +58,7 @@ public class AdminWriteController {
 	}
 	
 	// 게스트 리스트 가져오기
-	@RequestMapping(value = "/admin/writing_official_list/list.ajax")
+	@RequestMapping(value = "/admin/writing_official_list/list.ajax", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> guestList(String address, String currentPage,
 			String level, String searchWord, String searchFlag) {
@@ -67,6 +67,39 @@ public class AdminWriteController {
 		return adminWriteService.officialList(Integer.parseInt(currentPage), searchFlag, searchWord, address, level);
 
 	}
+	
+	// 팀 리스트 접속
+	@RequestMapping(value = "/admin/writing_team_list.go")
+	public String teamListGo() {
+		logger.info("공식 경기 리스트 접속");
+		return "/admin/writing_team_list";
+	}
+	
+	@RequestMapping(value = "/admin/writing_team_list/list.ajax", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> callTeamList(@RequestParam Map<String, Object> param) {
+		logger.info("listCall / param = {} / ", param);
+
+		return adminWriteService.teamList(param);
+
+	}
+	
+	// 게스트 리스트 접속
+	@RequestMapping(value = "/admin/writing_guest_list.go")
+	public String guestListGo() {
+		logger.info("공식 경기 리스트 접속");
+		return "/admin/writing_guest_list";
+	}
+	
+	@RequestMapping(value = "/admin/writing_guest_list/list.ajax", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> callGuestList(@RequestParam Map<String, Object> param) {
+		logger.info("listCall / param = {} / ", param);
+
+		return adminWriteService.guestList(param);
+
+	}
+	
 	@RequestMapping(value = "/admin/callCourtInfo.ajax", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> callCourtInfo(String courtIdx, String selectDate) {

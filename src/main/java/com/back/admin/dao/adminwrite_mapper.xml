@@ -125,6 +125,139 @@
 		,official_match_post_state = #{officialState}
 	WHERE official_match_idx = #{officialIdx}
 	</update>
+	
+	<select id="teamList" resultType="com.back.admin.dto.AdminWriteDTO">
+		SELECT 
+			join_team_idx 
+			,logo
+			,team_name
+			,id
+			,join_team_state
+			FROM team_join tj
+			JOIN team t
+			WHERE tj.team_idx = t.team_idx
+		<choose>
+			<when test='searchFlag == "true" and searchCategory == "teamName"'>
+				AND team_name like CONCAT('%', #{searchWord}, '%')
+			</when>
+			<when test='searchFlag == "true" and searchCategory == "teamLeaderName"'>
+				AND id like CONCAT('%', #{searchWord},'%')
+			</when>
+			<when test='address != ""'>
+				AND team_address like CONCAT('%', #{address}, '%')
+			</when>
+		</choose>
+		LIMIT #{start}, 10
+
+	</select>	
+	
+	<select id="addressList" resultType="String">
+		SELECT team_address
+				FROM team 
+				GROUP BY SUBSTRING_INDEX(team_address, ' ', 2)
+	</select>	
+	
+	<select id="totalPage" resultType="int">
+		SELECT COUNT(tj.join_team_idx)
+			FROM team_join tj
+			JOIN team t 
+			WHERE tj.team_idx = t.team_idx
+		<choose>
+			<when test='searchFlag == "true" and searchCategory == "teamName"'>
+				AND team_name like CONCAT('%', #{searchWord}, '%')
+			</when>
+			<when test='searchFlag == "true" and searchCategory == "teamLeaderName"'>
+				AND id like CONCAT('%', #{searchWord},'%')
+			</when>
+			<when test='address != ""'>
+				AND team_address like CONCAT('%', #{address}, '%')
+			</when>
+		</choose>
+	</select>	
+	
+	<select id="guestList" resultType="com.back.admin.dto.AdminWriteDTO">
+		SELECT 
+			gj.guest_idx 
+			,gj.guest_level 
+			,gj.guest_gender 
+			,gj.guest_position 
+			,c.court_address 
+			,c.court_name 
+			,cb.booking_date 
+			,(SELECT COUNT(guest_idx) 
+			FROM guest_join_list gjl 
+			WHERE gjl.guest_idx = gj.guest_idx) AS currentCount
+			,gj.guest_to 
+			,t.logo 
+			,gj.guest_state 
+			FROM guest_join gj 
+			JOIN court_booking cb 
+			ON gj.court_booking_idx = cb.court_booking_idx
+			JOIN court c
+			ON cb.court_idx = c.court_idx
+			JOIN team t 
+			WHERE gj.team_idx = t.team_idx
+		<choose>
+			<when test='searchFlag == "true" and searchCategory == "courtName"'>
+				AND c.court_name like CONCAT('%', #{searchWord}, '%')
+			</when>
+			<when test='searchFlag == "true" and searchCategory == "teamName"'>
+				AND t.team_name like CONCAT('%', #{searchWord}, '%')
+			</when>
+			<when test='address != ""'>
+				AND c.court_address like CONCAT('%', #{address}, '%')
+			</when>
+			<when test='level != ""'>
+				AND gj.guest_level like CONCAT('%', #{level}, '%')
+			</when>
+			<when test='gender != ""'>
+				AND gj.guest_gender like CONCAT('%', #{gender}, '%')
+			</when>
+			<when test='position != ""'>
+				AND gj.guest_position like CONCAT('%', #{position}, '%')
+			</when>
+		</choose>
+		LIMIT #{start}, 10
+
+	</select>		
+	
+	<select id="addressListGuest" resultType="String">
+		SELECT SUBSTRING_INDEX(court_address, ' ', 2)
+				FROM court
+				GROUP BY SUBSTRING_INDEX(court_address, ' ', 2)
+	</select>
+	
+	<select id="totalPageGuest" resultType="int">
+		SELECT COUNT(gj.guest_idx)
+			FROM guest_join gj
+			JOIN court_booking cb 
+			ON gj.court_booking_idx = cb.court_booking_idx
+			JOIN court c
+			ON cb.court_idx = c.court_idx
+			JOIN team t
+			WHERE gj.team_idx = t.team_idx
+		<choose>
+			<when test='searchFlag == "true" and searchCategory == "courtName"'>
+				AND c.court_name like CONCAT('%', #{searchWord}, '%')
+			</when>
+			<when test='searchFlag == "true" and searchCategory == "teamName"'>
+				AND t.team_name like CONCAT('%', #{searchWord}, '%')
+			</when>
+			<when test='address != ""'>
+				AND c.court_address like CONCAT('%', #{address}, '%')
+			</when>
+			<when test='level != ""'>
+				AND gj.guest_level like CONCAT('%', #{level}, '%')
+			</when>
+			<when test='gender != ""'>
+				AND gj.guest_gender like CONCAT('%', #{gender}, '%')
+			</when>
+			<when test='position != ""'>
+				AND gj.guest_position like CONCAT('%', #{position}, '%')
+			</when>
+		</choose>
+	</select>		
+	
 </mapper>
 
 
