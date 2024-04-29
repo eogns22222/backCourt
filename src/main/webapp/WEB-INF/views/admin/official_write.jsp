@@ -258,7 +258,7 @@
 		var formattedDate = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1).toString().padStart(2, '0') + "-" + currentDate.getDate().toString().padStart(2, '0');
 		var selectDate = '';
 		var selectTime = '';
-		$('#officialWriteDate').val(formattedDate);
+		$('#officialWriteDate').val('');
 		selectDate = $('#officialWriteDate').val();
 		
 
@@ -375,6 +375,11 @@
 			console.log("callCourtList out");
 		}
 		function callCourtInfo(idx){
+			$('.officialWriteTimeBtn').css('background-color', 'skyblue');
+			
+			$('.officialWriteTimeBtn').each(function() {
+				$(this).prop('disabled', false);
+			});
 			disabledButton();
 			$.ajax({
 				url:'./callCourtInfo.ajax'
