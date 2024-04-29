@@ -27,7 +27,7 @@
 
         <p class="teamAddress">지역: <span>${teammateDetail.team_address}</span></p>
         <p class="teammateLevel">모집 레벨: <span>${teammateDetail.join_team_level}</span></p>
-        <p class="teammateGender">모집 성별: <span>${teammateDetail.join_to_gender}</span></p>
+        <p class="teammateGender">모집 성별: <span>${teammateDetail.join_team_gender}</span></p>
         <p class="teammatePositions">모집 포지션: <span>${teammateDetail.join_team_position}</span></p>
         <p class="tj">
         <a class="teammateJoinBtn">가입 신청하기</a>

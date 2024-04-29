@@ -3,32 +3,77 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
 >
 
-<mapper namespace="com.back.admin.dao.MemberDAO">
-
+<mapper namespace="com.back.admin.dao.AdminMemberDAO">
+	<select id="list" resultType="com.back.admin.dto.AdminMemberDTO">
+		SELECT
+			id,name,point,state
+		FROM member order by id asc LIMIT #{param1}, 10
+	</select>
+	
+	<select id="allList" resultType="com.back.admin.dto.AdminMemberDTO">
+		SELECT
+			id,name,point,state
+		FROM member
+	</select>
+	<!-- 제재 상태 필터 -->
+	<select id="listFilterState" resultType="com.back.admin.dto.AdminMemberDTO">
+	   SELECT
+	   	   id,name,point,state
+	   FROM member
+	   WHERE state LIKE CONCAT('%', #{param2}, '%')
+	   LIMIT #{param1}, 10
+   	</select>
+   	
+   	<select id="allStateCount" resultType="int">
+		SELECT COUNT(id) AS totalPage
+		FROM member
+	</select>
+	
+	<!-- 제재상태 필터 후 토탈 페이지 출력 -->
+	<select id="filteringStateCount" resultType="int">
+		SELECT COUNT(id) AS totalPage
+		 FROM member
+		 WHERE state LIKE CONCAT('%', #{param1}, '%')
+	</select>
+	
+	<select id="idSearchList" resultType="com.back.admin.dto.AdminMemberDTO">
+		SELECT
+			id,name,point,state
+		FROM member 
+		WHERE id LIKE CONCAT('%', #{param1}, '%')
+ 		ORDER BY id asc LIMIT #{param2}, 10
+	</select>
+	
+	<select id="searchMemberIdCount" resultType="int">
+		SELECT COUNT(id) AS totalPage 
+		FROM member
+		WHERE id LIKE CONCAT('%', #{param1}, '%')
+	</select>
+	
+	<select id="detailLoad" resultType="com.back.admin.dto.AdminMemberDTO">
+	SELECT 
+			id,pw,address,gender,position,level,perm,point,state,name
+	FROM member
+	WHERE id = #{param1}
+	</select>
+	
+	<select id="memberDetail" resultType="com.back.admin.dto.AdminMemberDTO">
+	SELECT 
+			id,pw,address,gender,position,level,perm,point,state,name
+	FROM member
+	WHERE id = #{param1}
+	</select>
+	
+		<!-- 수정 업데이트 -->
+	<update id="writeUpdate" parameterType="Object">
+		UPDATE member SET 
+			pw = #{param2} 
+			,address = #{param4} 
+			,gender = #{param5} 
+			,position = #{param6} 
+			,level = #{param3} 
+			,state = #{param7} 
+			,name = #{param1}
+		WHERE id = #{param8}
+	</update>
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
