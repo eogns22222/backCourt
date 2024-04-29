@@ -8,8 +8,8 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="../resources/css/common/reset.css" type="text/css">
     <link rel="stylesheet" href="../resources/css/match_ask_list/match_ask_list.css" type="text/css">
-	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="../resources/css/header/header.css">
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
       <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
       <script src="../resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
     <title>신청/예약 리스트</title>

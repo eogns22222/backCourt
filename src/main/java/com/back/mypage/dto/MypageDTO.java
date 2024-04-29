@@ -290,4 +290,36 @@ public class MypageDTO {
 			this.point = point;
 		}
 		
+//		======================= 신고 리스트 / 수정 ========================
+		
+		private int report_idx;
+		private Date report_date;
+		private String report_feed;
+		private String report_state;
+
+		public int getReport_idx() {
+			return report_idx;
+		}
+		public void setReport_idx(int report_idx) {
+			this.report_idx = report_idx;
+		}
+		public Date getReport_date() {
+			return report_date;
+		}
+		public void setReport_date(Date report_date) {
+			this.report_date = report_date;
+		}
+		public String getReport_feed() {
+			return report_feed;
+		}
+		public void setReport_feed(String report_feed) {
+			this.report_feed = report_feed;
+		}
+		public String getReport_state() {
+			return report_state;
+		}
+		public void setReport_state(String report_state) {
+			this.report_state = report_state;
+		}
+		
 }
