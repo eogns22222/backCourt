@@ -85,6 +85,7 @@ public class OfficialService {
 	}
 
 	public Map<String, Object> use(String idx, String id, int fee) {
+		officialDAO.addPointList(idx, id, fee);
 		int row = officialDAO.payMinus(id, fee);
 		int row2 = officialDAO.insertNotice(idx, id);
 		Map<String, Object> result = new HashMap<String, Object>();

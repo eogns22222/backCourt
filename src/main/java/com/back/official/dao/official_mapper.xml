@@ -231,6 +231,14 @@
 		,"신청");
 	</insert>
 	
+	<insert id="addPointList">
+		INSERT INTO point_list(id
+		,point_change
+		,point_state
+		,write_idx
+		,write_type)VALUES(#{param2},#{param3},"대기",#{param1},"공식경기")
+	</insert>
+	
 </mapper>
 
 
