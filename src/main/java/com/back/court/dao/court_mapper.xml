@@ -5,14 +5,41 @@
 
 <mapper namespace="com.back.court.dao.CourtDAO">
 
+
+	<select id="addressList" resultType="String">
+		SELECT court_address
+		FROM court 
+		WHERE court_state = 'true'
+		AND court_official = 'false'
+		GROUP BY court_address
+	</select>
+	
+	<select id="totalPage" resultType="int">
+		SELECT COUNT(court_idx)
+		FROM court
+		WHERE court_state = 'true'
+		AND court_official = 'false'
+		<choose>
+			<when test='searchFlag == "true" and searchCategory == "courtName"'>
+				AND court_name LIKE CONCAT('%', #{searchWord}, '%')
+			</when>
+			<when test='searchFlag == "true" and searchCategory == "courtAddress"'>
+				AND court_address LIKE CONCAT('%', #{searchWord},'%')
+			</when>
+			<when test='address != null'>
+				AND court_address LIKE CONCAT('%', #{address}, '%')
+			</when>
+		</choose>
+	</select>
+
 	<select id="list" resultType="com.back.court.dto.CourtDTO">
 
 		SELECT
 		(SELECT ci.file_name
-		FROM court_image ci
-		WHERE ci.court_idx = c.court_idx
-		ORDER BY ci.photo_idx ASC
-		LIMIT 1) AS firstImageName
+			FROM court_image ci
+			WHERE ci.court_idx = c.court_idx
+			ORDER BY ci.photo_idx ASC
+			LIMIT 1) AS firstImageName
 		, c.court_name AS courtName
 		,c.court_address AS courtAddress
 		,c.court_info AS courtInfo
@@ -21,14 +48,25 @@
 		,c.court_official AS courtOfficial
 		,c.court_idx AS courtIdx
 		,(SELECT COUNT(j.court_idx)
-		from jjim j
-		where j.court_idx = c.court_idx
-		and j.id = 'admin') AS jjim
+			FROM jjim j
+			WHERE j.court_idx = c.court_idx
+			AND j.id = 'admin') AS jjim
 		,c.court_idx
 		FROM court c
 		WHERE c.court_state = 'true'
 		AND c.court_official = 'false'
-		ORDER BY c.court_address
+		<choose>
+			<when test='searchFlag == "true" and searchCategory == "courtName"'>
+				AND c.court_name LIKE CONCAT('%', #{searchWord}, '%')
+			</when>
+			<when test='searchFlag == "true" and searchCategory == "courtAddress"'>
+				AND c.court_address LIKE CONCAT('%', #{searchWord},'%')
+			</when>
+			<when test='address != null'>
+				AND c.court_address LIKE CONCAT('%', #{address}, '%')
+			</when>
+		</choose>
+		LIMIT #{start}, 10
 
 	</select>
 

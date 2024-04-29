@@ -16,12 +16,12 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 	<style>
-		.officialWriteTable, .officialWriteTh, .officialWriteTd {
+		.officialUpdateTable, .officialUpdateTh, .officialUpdateTd {
 			border: 1px solid black;
 			border-collapse: collapse;
 		}
 		
-		.officialWriteTh, .officialWriteTd {
+		.officialUpdateTh, .officialUpdateTd {
 			padding: 5px 10px;
 		}
 
@@ -29,7 +29,7 @@
 			margin-bottom: 20px;
 		}
 		
-		#officialWriteInfo {
+		#officialUpdateInfo {
 			resize: none;
 			width: 500px;
 			height: 150px;
@@ -64,7 +64,7 @@
 			z-index: 1; /* 다른 요소 위로 배치 */
 		}
 
-		.OfficialWriteTimeBtn{
+		.OfficialUpdateTimeBtn{
 			background-color : skyblue;
 		}
 	.black_overlay{
@@ -123,18 +123,18 @@
 				</div>
 			</header>
 			<div class="adminContainer">
-				<h1>공식경기 등록</h1>
+				<h1>공식경기 수정</h1>
 				<form action="" method="post">
-					<table class="officialWriteTable">
+					<table class="officialUpdateTable">
 						<tr>
-							<th class="officialWriteTh">공식 경기 이름</th>
-							<td class="officialWriteTd">
-								<input type="text" id="officialWriteName" disabled/>
+							<th class="officialUpdateTh">공식 경기 이름</th>
+							<td class="officialUpdateTd">
+								<input type="text" id="officialUpdateName" disabled/>
 							</td>
 						</tr>
 						<tr>
-							<th class="officialWriteTh">공식 경기 사진</th>
-							<td class="officialWriteTd">
+							<th class="officialUpdateTh">공식 경기 사진</th>
+							<td class="officialUpdateTd">
 								<div class="swiper-container">
 									<!-- Additional required wrapper -->
 									<div class="swiper-wrapper" id="swiperImage">
@@ -153,34 +153,34 @@
 							</td>
 						</tr>
 						<tr>
-							<th class="officialWriteTh">공식 경기 가격</th>
-							<td class="officialWriteTd">
-								<input type="text" id="officialWritePrice" />
+							<th class="officialUpdateTh">공식 경기 가격</th>
+							<td class="officialUpdateTd">
+								<input type="text" id="officialUpdatePrice" value="${officialInfo.officialPrice}" />
 							</td>
 						</tr>
 						<tr>
-							<th class="officialWriteTh">공식 경기 날짜</th>
-							<td class="officialWriteTd">
-								<input id="officialWriteDate" type="text"/>
+							<th class="officialUpdateTh">공식 경기 날짜</th>
+							<td class="officialUpdateTd">
+								<input id="officialUpdateDate" type="text" value="${officialInfo.officialDate}"/>
 								<br/>
-								<input class="officialWriteTimeBtn" id="0" type="button" value="00~02">
-								<input class="officialWriteTimeBtn" id="2" type="button" value="02~04">
-								<input class="officialWriteTimeBtn" id="4" type="button" value="04~06">
-								<input class="officialWriteTimeBtn" id="6" type="button" value="06~08">
-								<input class="officialWriteTimeBtn" id="8" type="button" value="08~10">
-								<input class="officialWriteTimeBtn" id="10" type="button" value="10~12">
-								<input class="officialWriteTimeBtn" id="12" type="button" value="12~14">
-								<input class="officialWriteTimeBtn" id="14" type="button" value="14~16">
-								<input class="officialWriteTimeBtn" id="16" type="button" value="16~18">
-								<input class="officialWriteTimeBtn" id="18" type="button" value="18~20">
-								<input class="officialWriteTimeBtn" id="20" type="button" value="20~22">
-								<input class="officialWriteTimeBtn" id="22" type="button" value="22~24">
+								<input class="officialUpdateTimeBtn" id="0" type="button" value="00~02">
+								<input class="officialUpdateTimeBtn" id="2" type="button" value="02~04">
+								<input class="officialUpdateTimeBtn" id="4" type="button" value="04~06">
+								<input class="officialUpdateTimeBtn" id="6" type="button" value="06~08">
+								<input class="officialUpdateTimeBtn" id="8" type="button" value="08~10">
+								<input class="officialUpdateTimeBtn" id="10" type="button" value="10~12">
+								<input class="officialUpdateTimeBtn" id="12" type="button" value="12~14">
+								<input class="officialUpdateTimeBtn" id="14" type="button" value="14~16">
+								<input class="officialUpdateTimeBtn" id="16" type="button" value="16~18">
+								<input class="officialUpdateTimeBtn" id="18" type="button" value="18~20">
+								<input class="officialUpdateTimeBtn" id="20" type="button" value="20~22">
+								<input class="officialUpdateTimeBtn" id="22" type="button" value="22~24">
 							</td>
 						</tr>
 						<tr>
-							<th class="officialWriteTh">공식 경기 레벨</th>
-							<td class="officialWriteTd">
-								<select id="officialWriteLevel">
+							<th class="officialUpdateTh">공식 경기 레벨</th>
+							<td class="officialUpdateTd">
+								<select id="officialUpdateLevel" >
 									<option value="">레벨을 선택해 주세요</option>
 									<option value="브론즈">브론즈</option>
 									<option value="실버">실버</option>
@@ -190,9 +190,9 @@
 							</td>
 						</tr>
 						<tr>
-							<th class="officialWriteTh">공식 경기 성별</th>
-							<td class="officialWriteTd">
-								<select id="officialWriteGender">
+							<th class="officialUpdateTh">공식 경기 성별</th>
+							<td class="officialUpdateTd">
+								<select id="officialUpdateGender">
 									<option value="">성별을 선택해 주세요</option>
 									<option value="남자">남자</option>
 									<option value="여자">여자</option>
@@ -200,20 +200,20 @@
 							</td>
 						</tr>
 						<tr>
-							<th class="officialWriteTh">공식 경기 모집인원</th>
-							<td class="officialWriteTd">
-								<input type="number" id="officialWriteTo"/>
+							<th class="officialUpdateTh">공식 경기 모집인원</th>
+							<td class="officialUpdateTd">
+								<input type="number" id="officialUpdateTo" value="${officialInfo.officialTO}"/>
 							</td>
 						</tr>
 						<tr>
-							<th class="officialWriteTh">공식 경기 정보</th>
-							<td class="officialWriteTd"><textarea id="officialWriteInfo"
-									maxlength="300"></textarea></td>
+							<th class="officialUpdateTh">공식 경기 정보</th>
+							<td class="officialUpdateTd"><textarea id="officialUpdateInfo"
+									maxlength="300">${officialInfo.officialInfo}</textarea></td>
 						</tr>
 						<tr>
-							<th class="officialWriteTh">공식 경기 위치</th>
-							<td class="officialWriteTd">
-								<input type="text" id="officialWriteAddress" maxlength="300" disabled/></td>
+							<th class="officialUpdateTh">공식 경기 위치</th>
+							<td class="officialUpdateTd">
+								<input type="text" id="officialUpdateAddress" maxlength="300" disabled/></td>
 						</tr>
 					</table>
 					<br /> 
@@ -252,23 +252,33 @@
 			<div id="fade" class="black_overlay"></div>
 	</body>
 	<script>
-		var courtIdx = '';
+		var courtIdx = '${officialInfo.courtIdx}';
 		var currentPage = 1;
 		var currentDate = new Date();
 		var formattedDate = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1).toString().padStart(2, '0') + "-" + currentDate.getDate().toString().padStart(2, '0');
 		var selectDate = '';
 		var selectTime = '';
-		$('#officialWriteDate').val(formattedDate);
-		selectDate = $('#officialWriteDate').val();
+		var originalCourtIdx = '${officialInfo.courtIdx}';
+		var originalSelectTime = '${officialInfo.officialStartTime}';
+			
+		selectTime = '${officialInfo.officialStartTime}';
+		$('#officialUpdateDate').val(formattedDate);
+		selectDate = $('#officialUpdateDate').val();
 		
-
+		console.log(currentDate);
+		console.log(currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds());
+		callCourtInfo(courtIdx);
+		$('#officialUpdateLevel').val('${officialInfo.officialLevel}');
+		$('#officialUpdateGender').val('${officialInfo.officialGender}');
+		disabledButton();
+		
 		$('#officialRegisterSubmit').on('click', function(){
-			var officialCourtName = $('#officialWriteName').val();
-			var officialCourtPrice = $('#officialWritePrice').val();
-			var officialLevel = $('#officialWriteLevel').val();
-			var officialGender = $('#officialWriteGender').val();
-			var officialTO = $('#officialWriteTo').val();
-			var officialInfo = $('#officialWriteInfo').val();
+			var officialCourtName = $('#officialUpdateName').val();
+			var officialCourtPrice = $('#officialUpdatePrice').val();
+			var officialLevel = $('#officialUpdateLevel').val();
+			var officialGender = $('#officialUpdateGender').val();
+			var officialTO = $('#officialUpdateTo').val();
+			var officialInfo = $('#officialUpdateInfo').val();
 			var officialIsDisabled = !$('#officialIsDisabled').is(':checked');
 
 			console.log('officialCourtName = '+officialCourtName);
@@ -291,27 +301,30 @@
 			    alert('모든 정보를 입력 해 주세요.');
 			    return;
 			}
-			if(confirm('정말로 등록 하시겠습니까?')){
+			if(confirm('정말로 수정 하시겠습니까?')){
 				$.ajax({
-					url:'./officialWrite.ajax'
+					url:'./officialUpdate.ajax'
 					,type:'post'
 					,dataType:'json'
 					,data:{
-						'officialIsDisabled':officialIsDisabled
+						'officialState':officialIsDisabled
 						,'officialPrice':officialCourtPrice
 						,'officialLevel':officialLevel
 						,'officialGender':officialGender
 						,'officialTO':officialTO
 						,'officialInfo':officialInfo
 						,'officialStartTime':selectTime
+						,'officialEndTime':selectTime+2
 						,'officialDate':selectDate
 						,'courtIdx':courtIdx
+						,'officialIdx':'${officialIdx}'
 					}
 					,success:function(data){
+						console.log(data);
 						if(data.result){
 							window.location.href = './officialList.go';
 						}else{
-							alert('구장등록에 실패 했습니다.');
+							alert('경기 수정에 실패 했습니다.');
 						}
 					}
 					,error:function(error){
@@ -341,6 +354,7 @@
 		});
 		
 		function callCourtList(currentPage) {
+			disabledButton();
 			console.log("callCourtList in");
 			$.ajax({
 				url:'./callCourtList.ajax'
@@ -386,8 +400,8 @@
 				}
 				,success:function(data){
 					console.log(data);
-					$('#officialWriteName').val(data.courtInfo.courtName);
-					$('#officialWriteAddress').val(data.courtInfo.courtAddress);
+					$('#officialUpdateName').val(data.courtInfo.courtName);
+					$('#officialUpdateAddress').val(data.courtInfo.courtAddress);
 					courtIdx = data.courtInfo.courtIdx;
 					var content = '';
 					if(data.fileName.length > 0 ){
@@ -399,16 +413,26 @@
 						content += '<div class="swiper-slide"><img src="../resources/img/court/no_image.png" alt="Image"></div>';
 					}
 					$('#swiperImage').html(content);
+					
 					if(data.bookingStartTime.length > 0){
+			
 						for(item of data.bookingStartTime){
-							$('.officialWriteTimeBtn').each(function() {
-								if($(this).attr('id') == item){
-									$(this).prop('disabled', true);
-									$(this).css('background-color','gray');
+							$('.officialUpdateTimeBtn').each(function() {
+								if(courtIdx == originalCourtIdx && item == originalSelectTime && $(this).attr('id') == item){
+									console.log('originalCourtIdx = '+originalCourtIdx);
+									console.log('thisCourtIdx = ' + courtIdx);
+									console.log('originalSelectTime = '+originalSelectTime);
+									console.log('thisSelectTime = ',data.bookingStartTime);
+									$(this).css('background-color', 'black');
+									$(this).prop('disabled', false);
+								}else if($(this).attr('id') == item){
+										$(this).prop('disabled', true);
+										$(this).css('background-color','gray');
 								}
 							});
 						}
 					}
+					
 					var swiper = new Swiper('.swiper-container', {
                     
                     slidesPerView : 'auto',
@@ -434,6 +458,8 @@
 		}
 
 
+		
+
 		$('#officialRegisterCancel').on('click',function(){
 			if(confirm('정말 취소 하시겠습니까?')){
 				alert('취소되었습니다.');
@@ -441,23 +467,24 @@
 			}
 		});
 
-		$('.officialWriteTimeBtn:not([disabled])').click(function() {
-			selectTime = $(this).attr('id');
+		$('.officialUpdateTimeBtn:not([disabled])').click(function() {
+			selectTime = parseInt($(this).attr('id'));
+			console.log(selectTime +2);
 			// 모든 버튼의 배경색을 하늘색으로 초기화
-			$('.officialWriteTimeBtn:not([disabled])').not(this).css('background-color', 'skyblue');
+			$('.officialUpdateTimeBtn:not([disabled])').not(this).css('background-color', 'skyblue');
 
 			// 클릭된 버튼의 배경색을 검정색으로 변경
 			$(this).css('background-color', 'black');
-			officialWriteTime = $(this).attr('id');
-			// console.log(officialWriteTime);
+			officialUpdateTime = $(this).attr('id');
+			// console.log(officialUpdateTime);
 		});
 		function disabledButton(){
 			var nowHours = currentDate.getHours();
 			var nowDate = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1).toString().padStart(2, '0') + "-" + currentDate.getDate().toString().padStart(2, '0');
 			console.log(nowDate);
-			if($('#officialWriteDate').val() == nowDate){
+			if($('#officialUpdateDate').val() == nowDate){
 				if(nowHours > 0){
-					$('.officialWriteTimeBtn').each(function() {
+					$('.officialUpdateTimeBtn').each(function() {
 						if($(this).attr('id') <= nowHours){
 							$(this).prop('disabled', true);
 							$(this).css('background-color','gray');
@@ -494,8 +521,8 @@
 		}
 		
 		$(document).ready(function() {
-			// officialWriteDate input 요소에 datepicker 연결
-			$('#officialWriteDate').datepicker({
+			// officialUpdateDate input 요소에 datepicker 연결
+			$('#officialUpdateDate').datepicker({
 				format: 'yyyy-mm-dd', // 날짜 형식 설정
 				autoclose: true, // 날짜 선택 후 자동으로 닫힘
 				todayHighlight: true, // 오늘 날짜 강조 표시
@@ -506,14 +533,14 @@
 
 		});
 			
-		$('#officialWriteDate').change(function() {
-			$('.officialWriteTimeBtn').css('background-color', 'skyblue');
+		$('#officialUpdateDate').change(function() {
+			$('.officialUpdateTimeBtn').css('background-color', 'skyblue');
 			
-			$('.officialWriteTimeBtn').each(function() {
+			$('.officialUpdateTimeBtn').each(function() {
 				$(this).prop('disabled', false);
 			});
 			disabledButton();
-			selectDate = $('#officialWriteDate').val();
+			selectDate = $('#officialUpdateDate').val();
 			selectTime = '';
 			callCourtInfo(courtIdx);
 		});

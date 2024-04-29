@@ -133,20 +133,20 @@
 </body>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c9f77d7846342440699b7b6723322c23&libraries=services"></script>
 <script>
-    var courtIdx = ${courtIdx};
+    var courtIdx = '${courtIdx}';
     var courtDetailTime = '';
     var currentDate = new Date();
     var formattedDate = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1).toString().padStart(2, '0') + "-" + currentDate.getDate().toString().padStart(2, '0');
-
-
-
-
-
-
-
+    $('#courtDetailDate').val(formattedDate);
+    var selectDate = $('#courtDetailDate').val();
 
     var selectedId = '';
-    $('#courtDetailDate').val(formattedDate);
+
+
+
+
+
+
     $('#courtDetailReport').on('click',function(){
     	window.location.href = '../mypage/report.go?reportWriteIdx='+courtIdx+'&reportWirteType="구장문의"';
     });
@@ -174,7 +174,7 @@
 						'courtStartTime':selectedId
 						,'courtIdx':courtIdx
 						,'courtPrice':$('#courtDetailPrice').html()
-						,'courtDate':$('#courtDetailDate').val()
+						,'courtDate':selectDate
 					}
 					, dataType:'json'
 					, success:function(data){
@@ -199,6 +199,7 @@
     });
     
     $('#courtDetailDate').change(function() {
+        selectDate = $(this).val();
         $('.courtDetailTimeBtn').css('background-color', 'skyblue');
         
     	$('.courtDetailTimeBtn').each(function() {

@@ -36,6 +36,95 @@
 		WHERE t.court_state = 'true'
 	</select>	
 	
+	<select id="callCourtInfo" resultType="com.back.admin.dto.AdminCourtDTO">
+		SELECT
+			court_name AS courtName
+			,court_address AS courtAddress
+			,court_idx AS courtIdx
+		FROM court
+		WHERE court_idx = #{param1}
+	</select>
+	
+	<select id="fileNameList" resultType="String">
+		SELECT
+			file_name
+		FROM court_image
+		WHERE court_idx = #{param1}
+	</select>
+	
+	<select id="bookingStartTime" resultType="String">
+		SELECT official_match_start_time   
+		from official_match  
+		WHERE court_idx = #{param1}
+		AND official_match_date = #{param2}
+
+	</select>
+	
+	<insert id="officialWrite">
+		INSERT INTO 
+		official_match(
+			court_idx
+			,official_match_gender
+			,official_match_level
+			,official_match_to
+			,official_match_to_state
+			,official_match_info
+			,official_match_fee
+			,official_match_date
+			,official_match_start_time
+			,official_match_end_time
+			,official_match_state
+			,official_match_post_state
+		)
+		VALUES(
+			#{courtIdx}
+			,#{officialGender}
+			,#{officialLevel}
+			,#{officialTO}
+			,'모집중'
+			,#{officialInfo}
+			,#{officialPrice}
+			,#{officialDate}
+			,#{officialStartTime}
+			,#{officialEndTime}
+			,#{officialIsDisabled}
+			,'true'
+		)
+	</insert>
+	
+	<select id="officialUpdateGo" resultType="com.back.admin.dto.AdminWriteDTO">
+		SELECT 
+			official_match_idx AS officialIdx
+			,court_idx AS courtIdx
+			,official_match_gender AS officialGender
+			,official_match_level AS officialLevel
+			,official_match_to AS officialTO
+			,official_match_to_state AS officialTOState
+			,official_match_info AS officialInfo
+			,official_match_fee AS officialPrice
+			,official_match_date AS officialDate
+			,official_match_start_time AS officialStartTime
+			,official_match_end_time AS officialEndTime
+			,official_match_state AS officialMatchState
+			,official_match_post_state AS officialState
+		FROM official_match
+		WHERE official_match_idx = #{param1}
+	</select>
+	
+	<update id="officialUpdate" parameterType="map">
+	UPDATE official_match
+	SET court_idx = #{courtIdx}
+		,official_match_gender = #{officialGender}
+		,official_match_level = #{officialLevel}
+		,official_match_to = #{officialTO}
+		,official_match_info = #{officialInfo}
+		,official_match_fee = #{officialPrice}
+		,official_match_date = #{officialDate}
+		,official_match_start_time = #{officialStartTime}
+		,official_match_end_time = #{officialEndTime}
+		,official_match_post_state = #{officialState}
+	WHERE official_match_idx = #{officialIdx}
+	</update>
 </mapper>
 
 

@@ -2,6 +2,8 @@ package com.back.admin.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +24,11 @@ public class AdminReportController {
 	AdminReportService adminReportService;
 
 	@RequestMapping(value = "/admin/reportList.go")
-	public String reportListGo() {
+	public String reportListGo(HttpSession session) {
+		String isAdmin = (String) session.getAttribute("isAdmin");
+		if (isAdmin == null ||isAdmin.isEmpty()) {
+			return "redirect:/login.go";
+		}
 		return "/admin/report_list";
 	}
 
@@ -39,7 +45,11 @@ public class AdminReportController {
 	}
 
 	@RequestMapping(value = "/admin/reportDetail.go")
-	public String reportDetailGo(Model model, String reportIdx) {
+	public String reportDetailGo(HttpSession session, Model model, String reportIdx) {
+		String isAdmin = (String) session.getAttribute("isAdmin");
+		if (isAdmin == null ||isAdmin.isEmpty()) {
+			return "redirect:/login.go";
+		}
 		logger.info("reportDetailGo " + reportIdx);
 		model.addAttribute("reportIdx", reportIdx);
 		return "/admin/feed";
@@ -52,10 +62,12 @@ public class AdminReportController {
 		return adminReportService.detail(reportIdx);
 	}
 
-	@RequestMapping(value = "/admin/reportUpdate", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/reportUpdate.ajax", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> reportUpdate(String reportState, String reportFeed, String reportIdx) {
-		String adminId = "admin";
+	public Map<String, Object> reportUpdate(HttpSession session, String reportState, String reportFeed,
+			String reportIdx) {
+
+		String adminId = (String) session.getAttribute("loginId");
 		return adminReportService.update(adminId, reportIdx, reportState, reportFeed);
 	}
 

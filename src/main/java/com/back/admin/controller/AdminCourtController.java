@@ -2,6 +2,8 @@ package com.back.admin.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +25,12 @@ public class AdminCourtController {
 	AdminCourtService adminCourtService;
 
 	@RequestMapping(value = "/admin/courtList.go")
-	public String listGo() {
+	public String listGo(HttpSession session) {
+		String isAdmin = "";
+		isAdmin = (String) session.getAttribute("isAdmin");
+		if (isAdmin == null ||isAdmin.isEmpty()) {
+			return "redirect:/login.go";
+		}
 		return "/admin/court_list";
 	}
 
@@ -31,6 +38,7 @@ public class AdminCourtController {
 	@ResponseBody
 	public Map<String, Object> callList(String currentPage, String address, String searchCategory, String searchWord,
 			String searchFlag) {
+
 		logger.info("listCall / currentPage = {} / address = {} / ", currentPage, address);
 		logger.info(searchFlag);
 		int page = Integer.parseInt(currentPage);
@@ -43,11 +51,15 @@ public class AdminCourtController {
 	}
 
 	@RequestMapping(value = "/admin/courtWrite.go")
-	public String WriteGo() {
+	public String WriteGo(HttpSession session) {
+		String isAdmin = (String) session.getAttribute("isAdmin");
+		if (isAdmin == null ||isAdmin.isEmpty()) {
+			return "redirect:/login.go";
+		}
 		return "/admin/court_register";
 	}
 
-	@RequestMapping(value = "/admin/courtWrite.ajax")
+	@RequestMapping(value = "/admin/courtWrite.ajax", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Boolean> write(@RequestParam("file") MultipartFile[] files,
 			@RequestParam("courtWriteName") String courtWriteName,
@@ -76,13 +88,17 @@ public class AdminCourtController {
 	}
 
 	@RequestMapping(value = "/admin/courtDetail.go")
-	public String DetailGo(String courtIdx, Model model) {
+	public String DetailGo(HttpSession session, String courtIdx, Model model) {
+		String isAdmin = (String) session.getAttribute("isAdmin");
+		if (isAdmin == null ||isAdmin.isEmpty()) {
+			return "redirect:/login.go";
+		}
 		logger.info(courtIdx);
 		adminCourtService.detailLoad(courtIdx, model);
 		return "/admin/court_update";
 	}
 
-	@RequestMapping(value = "/admin/courtUpdate.ajax")
+	@RequestMapping(value = "/admin/courtUpdate.ajax", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Boolean> update(@RequestParam("file") MultipartFile[] files,
 			@RequestParam("courtUpdateName") String courtUpdateName,
@@ -90,11 +106,11 @@ public class AdminCourtController {
 			@RequestParam("courtUpdatePrice") String courtUpdatePrice,
 			@RequestParam("courtUpdateAddress") String courtUpdateAddress,
 			@RequestParam("courtIsOfficial") String courtIsOfficial,
-			@RequestParam("courtIsDisabled") String courtIsDisabled,
-			@RequestParam("courtIdx") String courtIdx) {
+			@RequestParam("courtIsDisabled") String courtIsDisabled, @RequestParam("courtIdx") String courtIdx) {
 
 		logger.info("update controller courtIdx = " + courtIdx);
 		return adminCourtService.update(files, courtUpdateName, courtUpdateInfo, courtUpdatePrice, courtUpdateAddress,
 				courtIsOfficial, courtIsDisabled, courtIdx);
 	}
+
 }

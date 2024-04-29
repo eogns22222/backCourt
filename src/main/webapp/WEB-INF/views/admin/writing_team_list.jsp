@@ -33,15 +33,6 @@
                     <select id="address" class="filter">
                         <option value="">전체 지역</option>
                     </select>
-            
-                    <!-- 레벨 -->
-                    <select id="level" class="filter">
-                        <option value="">전체레벨</option>
-                        <option value="브론즈">브론즈</option>
-                        <option value="실버">실버</option>
-                        <option value="골드">골드</option>
-                        <option value="플레티넘">플레티넘</option>
-                    </select>
 
                     <!-- 게시글 작성 -->
                     <button class="writeBtn" onclick="location.href='./official_write.go'">게시글 작성</button>
@@ -154,7 +145,7 @@
 	function callList(currentPage) {
 		$.ajax({
 			type:'POST'
-			,url:'./writing_official_list/list.ajax'
+			,url:'./list.ajax'
 			,data:{
 				'currentPage':currentPage
 				,'address':$('#address').val()
