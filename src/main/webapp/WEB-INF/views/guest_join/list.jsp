@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>게스트 모집 게시판</title>
+<link rel="icon" href="/logo/logo.png">
 <link
 	href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -13,6 +14,7 @@
 	src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 <script src="../resources/js/jquery.twbsPagination.js"
 	type="text/javascript"></script>
+
 <link rel="stylesheet" href="../resources/css/common/reset.css">
 <link rel="stylesheet" href="../resources/css/header/header.css">
 <link rel="stylesheet" href="../resources/css/guest_join/list.css">
@@ -26,6 +28,7 @@
 </style>
 </head>
 <body>
+
 	<jsp:include page="../header/header.jsp" />
 	<div class="guest_join content">
 		<div class="filterCont">

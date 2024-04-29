@@ -20,4 +20,9 @@ public interface GuestDAO {
 
 	List<GuestDTO> guestList();
 
+	GuestDTO detail(String guest_idx);
+
+	List<String> fileNameList(String guest_idx);
+
+
 }

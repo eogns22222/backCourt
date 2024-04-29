@@ -89,6 +89,43 @@
 		ON t.team_idx = gj.team_idx 
 		WHERE gj.guest_state = 'true'
 	</select>
+	
+	<!-- 게스트모집 상세페이지 사진 띄우기 -->
+	<select id="fileNameList" resultType="String">
+		SELECT 
+			file_name
+		FROM court_image ci 
+		JOIN court c 
+		ON ci.court_idx = c.court_idx 
+		JOIN court_booking cb 
+		ON cb.court_idx = ci.court_idx
+		JOIN guest_join gj 
+		ON cb.court_booking_idx = gj.court_booking_idx 
+		WHERE gj.guest_idx = #{param1}
+	</select>
+	
+	<!-- 게스트모집 상세 정보 불러오기 -->
+	<select id="detail" resultType="com.back.guest.dto.GuestDTO">
+		SELECT 
+		gj.guest_idx
+		,c.court_name 
+		,c.court_address 
+		,t.team_name 
+		,gj.guest_gender 
+		,gj.guest_position 
+		,gj.guest_level 
+		,gj.guest_to 
+		,gj.guest_info 
+		,gj.guest_fee 
+	FROM guest_join gj 
+	join court_booking cb 
+	on gj.court_booking_idx = cb.court_booking_idx 
+	join court c 
+	on c.court_idx = cb.court_idx 
+	join team t
+	on t.team_idx = gj.team_idx 
+	WHERE gj.guest_state = 'true' and gj.guest_idx = #{param1}
+	</select>
 </mapper>
 
 

@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.back.court.dto.CourtDTO;
 import com.back.guest.dao.GuestDAO;
@@ -195,4 +196,36 @@ public class GuestService {
 		return list;
 	}
 
+	// 게스트 모집글 상세보기
+	public Map<String, Object> detail(String guest_idx) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		logger.info("guestIdx = "+guest_idx);
+		GuestDTO detail = guestDAO.detail(guest_idx);
+		List<String> fileName = guestDAO.fileNameList(guest_idx);
+		
+		map.put("detail", detail);
+		map.put("fileName", fileName);
+		return map;
+	}
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

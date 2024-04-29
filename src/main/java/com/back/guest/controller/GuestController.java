@@ -94,18 +94,19 @@ public class GuestController {
 	}
 
 	// 수정페이지 접속
-	@RequestMapping(value = "/guest_join/modify")
+	@RequestMapping(value = "/guest_join/modify.go")
 	public String update() {
 		logger.info("게스트 모집글 수정페이지 접속");
 
 		return "/guest_join/modify";
 	}
 
-	// 수정페이지 불러오기
+	// 수정페이지 글 불러오기
 	@RequestMapping(value = "/guest_join/modify.ajax", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, GuestDTO> guestModify(String guestIdx) {
-
+		
+		// 팀에서 수정하기 완성되면
 		guestIdx = "4";
 
 		logger.info("guestIdx" + guestIdx);
@@ -119,6 +120,7 @@ public class GuestController {
 	public Map<String, Object> writeUpdate(String guest_info, String guest_level, String guest_position,
 			String guest_gender, String guest_to, int guest_fee, String guestIdx) {
 		logger.info("guestUpate " + guest_level + " " + guest_gender);
+		// 팀에서 수정하기 완성되면 
 		guestIdx = "4";
 		return guestService.writeUpdate(guest_info, guest_level, guest_position, guest_gender, guest_to, guest_fee,
 				guestIdx);
@@ -142,9 +144,50 @@ public class GuestController {
 				level);
 	}
 	
+	// 게스트모집 상세 페이지 이동
 	@RequestMapping(value ="/guest_join/info.go")
-	public String infoGo() {
-		logger.info("상세페이지 진입");
+	public String detailGo(Model model, String guest_idx) {
+		logger.info(guest_idx);
+		model.addAttribute("guest_idx",guest_idx);
 		return "guest_join/info";
 	}
+	
+	
+	@RequestMapping(value = "/guest_join/info.ajax", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> detail(String guest_idx){
+		logger.info("info.ajax guest_idx = {}", guest_idx);
+		
+		return guestService.detail(guest_idx);
+	}
+	
+	
+	
+	
+	
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

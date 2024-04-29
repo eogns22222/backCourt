@@ -25,6 +25,10 @@ public class GuestDTO {
 	private String court_address;
 	// 게스트 모집리스트
 	private String team_name;
+	// 게스트 상세페이지 구장사진
+	private String file_name;
+	
+	
 	public int getGuest_idx() {
 		return guest_idx;
 	}
@@ -147,6 +151,12 @@ public class GuestDTO {
 	}
 	public void setTeam_name(String team_name) {
 		this.team_name = team_name;
+	}
+	public String getFile_name() {
+		return file_name;
+	}
+	public void setFile_name(String file_name) {
+		this.file_name = file_name;
 	}
 	
 }
