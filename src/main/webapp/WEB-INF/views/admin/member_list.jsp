@@ -16,8 +16,7 @@
 <body>
     <div class="adminBody">
     <jsp:include page="../header/header_admin.jsp"/>
-    <header class="adminContainer">
-      <div class="headerCont">
+      <div class="adminContainer">
           	<a href="admin_logout.do" class="logout">로그아웃</a>
           	<ul class="menu">
                <li><a href="admin/member_list">회원 관리</a></li>

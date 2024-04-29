@@ -15,8 +15,7 @@
 <body>
     <div class="adminBody">
     <jsp:include page="../header/header_admin.jsp"/>
-    <header class="adminContainer">
-            <div class="headerCont">
+            <div class="adminContainer">
                 <a href="../admin_logout.do" class="logout">로그아웃</a>
                 <ul class="menu">
                     <li><a href="../admin/member_list">회원 관리</a></li>
@@ -26,7 +25,7 @@
                     <li><a href="../admin/report_list">신고 관리</a></li>
                 </ul>
             </div>
-        </header>
+
         <div class="content-wrapper">
         <div class="content">아이디 : ${memberId}</div>
         </div>
