@@ -35,16 +35,18 @@ console.log(sum);
 $('input[type="button"]').on('click',function(){
     //input에 있는 값을 가져온다
     var ch = $('input[name="minus"]').val();
+    console.log(ch);
+    var ss = sum-ch;
+    console.log(ss);
     //지금 내가 클릭한 버튼의 텍스트를 가져온다
     var tex = $(this).text();
 
     if(ch!=''){
-            $('form').submit();
-        if (sum>0) {
-        alert('환급이 완료되었습니다');
-        }else{
-        	location.href="point.go";
-        }
+        if(ss>0){
+        alert('환급이 완료되었습니다');        	
+        }else {
+        	 alert('환급이 실패 되었습니다.');	
+		}
         }else{
             alert('환급이 실패 되었습니다.');
         }
@@ -60,8 +62,6 @@ $('button').on('click',function(){
         location.href="point.go";
     }
 });
-
-console.log(${sum});
 
 allPoint();
 
