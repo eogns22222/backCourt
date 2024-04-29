@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.back.admin.dao.AdminMemberDAO;
 import com.back.admin.dto.AdminMemberDTO;
@@ -17,6 +18,7 @@ public class AdminMemberService {
 
 	Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired AdminMemberDAO memberDAO;
+	
 	public Map<String, Object> list(int page, String state) {
 	      Map<String, Object> result = new HashMap<String, Object>();
 	      List<AdminMemberDTO> list;
@@ -55,6 +57,29 @@ public class AdminMemberService {
 		result.put("list", list);
 		result.put("allList", allList);
 		return result;
+	}
+	public void detailLoad(String memberId, Model model) {
+		logger.info("memberDetailLoad Service in ---------------------------------");
+		model.addAttribute("memberDetail", memberDAO.detailLoad(memberId));
+		model.addAttribute("memberId", memberId);
+		logger.info("memberDetailLoad Service out --------------------------------");
+	}
+	
+	public Map<String, AdminMemberDTO> memberDetail(String memberId) {
+		Map<String, AdminMemberDTO> map = new HashMap<String, AdminMemberDTO>();
+		AdminMemberDTO dto = memberDAO.memberDetail(memberId);
+		map.put("m",dto);
+		return map;
+	}
+	public Map<String, Object> writeUpdate(String memberName, String memberPass, String memberLevel,
+			String memberAddress, String memberGender, String memberPosition, String memberState, String memberId) {
+		logger.info("writeUpdate service memberId="+memberId);
+		memberDAO.writeUpdate(memberName, memberPass, memberLevel, memberAddress, memberGender,
+				memberPosition, memberState, memberId);
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("result",true);
+		return map;
 	}
 	
 }

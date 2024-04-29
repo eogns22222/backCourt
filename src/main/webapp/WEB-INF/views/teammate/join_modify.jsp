@@ -100,7 +100,7 @@ console.log(join_team_idx);
 			}
 			, success:function(data){
 					alert("수정 완료되었습니다.");
-					window.location.href = './teammate/join_info.go?join_team_idx='+ data.modifyInfo.join_team_idx;
+					window.location.href = './join_info.go?join_team_idx='+ join_team_idx;
 			}
 			, error:function(){
 				alert("수정 실패");

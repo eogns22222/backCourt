@@ -44,9 +44,36 @@
  		ORDER BY id asc LIMIT #{param2}, 10
 	</select>
 	
-		<select id="searchMemberIdCount" resultType="int">
+	<select id="searchMemberIdCount" resultType="int">
 		SELECT COUNT(id) AS totalPage 
 		FROM member
 		WHERE id LIKE CONCAT('%', #{param1}, '%')
 	</select>
+	
+	<select id="detailLoad" resultType="com.back.admin.dto.AdminMemberDTO">
+	SELECT 
+			id,pw,address,gender,position,level,perm,point,state,name
+	FROM member
+	WHERE id = #{param1}
+	</select>
+	
+	<select id="memberDetail" resultType="com.back.admin.dto.AdminMemberDTO">
+	SELECT 
+			id,pw,address,gender,position,level,perm,point,state,name
+	FROM member
+	WHERE id = #{param1}
+	</select>
+	
+		<!-- 수정 업데이트 -->
+	<update id="writeUpdate" parameterType="Object">
+		UPDATE member SET 
+			pw = #{param2} 
+			,address = #{param4} 
+			,gender = #{param5} 
+			,position = #{param6} 
+			,level = #{param3} 
+			,state = #{param7} 
+			,name = #{param1}
+		WHERE id = #{param8}
+	</update>
 </mapper>

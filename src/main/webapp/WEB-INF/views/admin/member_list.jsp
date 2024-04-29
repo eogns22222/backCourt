@@ -84,8 +84,8 @@ var searchFlag = false;
 
 
 $(document).on('click', 'td', function(event) {
-	 var memberId = $(this).closest('tr').find('.memberId').text();
-	window.location.href = './adminMemberList.go?memberId=' + memberId;
+	var memberId = $(this).closest('tr').find('.memberId').html();
+	window.location.href = './memberDetail.go?memberId=' + memberId;
 	console.log(item.id);
 });
 

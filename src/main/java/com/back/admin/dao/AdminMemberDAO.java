@@ -20,5 +20,12 @@ public interface AdminMemberDAO {
 
 	Object searchMemberIdCount(String memberSearchWord);
 
+	AdminMemberDTO detailLoad(String memberId);
+
+	AdminMemberDTO memberDetail(String memberId);
+
+	void writeUpdate(String memberName, String memberPass, String memberLevel, String memberAddress,
+			String memberGender, String memberPosition, String memberState, String memberId);
+
 
 }
