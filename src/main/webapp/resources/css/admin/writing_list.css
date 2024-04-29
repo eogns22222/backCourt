@@ -1,7 +1,7 @@
 
 /* writing_list */
 /*  */
-.officialWrap{width:1200px;margin:0 auto;padding:30px 0;}
+.officialWrap{width:1400px;margin:0 auto;padding:30px 0;}
 
 /* writingTabMenu */
 .writingTabMenu{margin-bottom:50px;}
@@ -18,11 +18,11 @@
 
 /* 테이블 */
 .table{margin:20px 0 50px;border:1px solid #000;}
-.table tr td,th{border:1px solid #000;line-height:50px;text-align:center;}
+.table tr td,th{border:1px solid #000;line-height:30px;text-align:center;vertical-align:middle;}
 .table table{width:100%;}
 .table tr{}
 .table tr th{}
-.table tr td{}
+.table tr td{vertical-align:middle;line-height:5;}
 .table tr td a{display:block;color:blue;}
 
 .table tr .num{}
@@ -30,6 +30,11 @@
 .table tr .address{}
 .table tr .address:hover{background:skyblue;}
 .table tr .level{}
+.table tr .logo{}
+.table tr .logo div{width:80px;margin:0 auto;}
+.table tr .logo div img{vertical-align:middle;}
+.table tr .teamNikName{}
+.table tr .teamNikName div{}
 
 .table tr td span{}
 .table tr td .present{}
@@ -46,3 +51,4 @@
 .searchBox{text-align:center;}
 .searchBox input{}
 .searchBox button{}
+

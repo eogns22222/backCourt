@@ -125,6 +125,56 @@
 		,official_match_post_state = #{officialState}
 	WHERE official_match_idx = #{officialIdx}
 	</update>
+	
+	<select id="teamList" resultType="com.back.admin.dto.AdminWriteDTO">
+		SELECT 
+			join_team_idx 
+			,logo
+			,team_name
+			,id
+			,join_team_state
+			FROM team_join tj
+			JOIN team t
+			WHERE tj.team_idx = t.team_idx
+		<choose>
+			<when test='searchFlag == "true" and searchCategory == "teamName"'>
+				AND team_name like CONCAT('%', #{searchWord}, '%')
+			</when>
+			<when test='searchFlag == "true" and searchCategory == "teamLeaderName"'>
+				AND id like CONCAT('%', #{searchWord},'%')
+			</when>
+			<when test='address != null'>
+				AND team_address like CONCAT('%', #{address}, '%')
+			</when>
+		</choose>
+		LIMIT #{start}, 10
+
+	</select>	
+	
+	<select id="addressList" resultType="String">
+		SELECT team_address
+		FROM team 
+		GROUP BY team_address
+	</select>	
+	
+	<select id="totalPage" resultType="int">
+		SELECT COUNT(tj.join_team_idx)
+			FROM team_join tj
+			JOIN team t 
+			WHERE tj.team_idx = t.team_idx
+		<choose>
+			<when test='searchFlag == "true" and searchCategory == "teamName"'>
+				AND team_name like CONCAT('%', #{searchWord}, '%')
+			</when>
+			<when test='searchFlag == "true" and searchCategory == "teamLeaderName"'>
+				AND id like CONCAT('%', #{searchWord},'%')
+			</when>
+			<when test='address != null'>
+				AND team_address like CONCAT('%', #{address}, '%')
+			</when>
+		</choose>
+	</select>	
+	
 </mapper>
 
 

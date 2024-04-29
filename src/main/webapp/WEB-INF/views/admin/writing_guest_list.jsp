@@ -29,9 +29,27 @@
                     </ul>
                 </div>
                 <div class="filterCont">
+                    <!-- 레벨 -->
+                    <select id="level">
+                        <option value="브론즈">브론즈</option>
+                        <option value="실버">실버</option>
+                        <option value="골드">골드</option>
+                        <option value="플레티넘">플레티넘</option>
+                    </select>
                     <!-- 지역 -->
-                    <select id="address" class="filter">
+                    <select id="address">
                         <option value="">전체 지역</option>
+                    </select>
+                    <!-- 성별 -->
+                    <select id="gender">
+                        <option value="남자">남자</option>
+                        <option value="여자">여자</option>
+                    </select>
+                    <!-- 포지션 -->
+                    <select id="position">
+                        <option value="가드">가드</option>
+                        <option value="센터">센터</option>
+                        <option value="포워드">포워드</option>
                     </select>
 
                 </div>
@@ -39,67 +57,75 @@
                 <div class="table">
                     <table>
                         <colgroup>
-                            <col width="10%"/>
-                            <col width="20%"/>
-                            <col width="50%"/>
-                            <col width="10%"/>
-                            <col width="10%"/>
+                            <col width="3%"/> <!-- 번호 -->
+                            <col width="5%"/> <!-- 레벨 --> 
+                            <col width="5%"/> <!-- 성별 -->
+                            <col width="5%"/> <!-- 포지션 -->
+                            <col width="10%"/> <!-- 지역 -->
+                            <col width="35%"/> <!-- 구장명 -->
+                            <col width="10%"/> <!-- 경기 날짜 -->
+                            <col width="5%"/> <!-- 남은 모집인원 -->
+                            <col width="10%"/> <!-- 로고 -->
+                            <col width="10%"/> <!-- 글 상태 -->
                         </colgroup>
                         <thead>
                             <tr>
                                 <th></th>
+                                <th>레벨</th>
+                                <th>성별</th>
+                                <th>포지션</th>
+                                <th>지역</th>
+                                <th>구장명</th>
+                                <th>경기 날짜</th>
+                                <th>남은 <br> 모집인원</th>
                                 <th>로고</th>
-                                <th>팀명</th>
-                                <th>팀 대표자명</th>
                                 <th>글 상태</th>
                             </tr>
                         </thead>
                         <tbody id="list">
-                            <!-- <tr>
+                            <tr>
                                 <td class="num">1</td>
+                                <td class="level">브론즈</td>
+                                <td class="gender">남자</td>
+                                <td class="gender">가드</td>
+                                <td class="courtAddress">Address</td>
+                                <td class="courtName"><a href="#">courtName</a></td>
+                                <td class="gameDate">2020-10-10</td>
+                                <td class="recruitment">5</td>
                                 <td class="logo">
                                     <div>
-                                        <img src="../resources/img/teamLogo/team_logo01.jpg" alt="">
+                                        <img src="/logo/team_logo01.jpg" alt="">
                                     </div>
                                 </td>
-                                <td class="teamNikName">
-                                    <a href="#">팀1</a>
-                                </td>
-                                <td class="reader">admin</td>
                                 <td>공개</td>
-                            </tr> -->
-                            <!-- <tr>
+                            </tr>
+                            <tr>
                                 <td class="num">1</td>
+                                <td class="level">브론즈</td>
+                                <td class="gender">남자</td>
+                                <td class="gender">가드</td>
+                                <td class="courtAddress">Address</td>
+                                <td class="courtName"><a href="#">courtName</a></td>
+                                <td class="gameDate">2020-10-10</td>
+                                <td class="recruitment">5</td>
                                 <td class="logo">
                                     <div>
-                                        <img src="../resources/img/teamLogo/team_logo01.jpg" alt="">
+                                        <img src="/logo/team_logo01.jpg" alt="">
                                     </div>
                                 </td>
-                                <td class="teamNikName"><a href="#">팀1</a></td>
-                                <td class="reader">admin</td>
                                 <td>공개</td>
-                            </tr> -->
+                            </tr>
                         </tbody>
                         <tfoot>
-							<tr>
-								<td colspan="7">
-									<div class="container">
-										<nav aria-label="Page navigation" style="text-align: center">
-											<ul class="pagination" id="pagination"></ul>
-										</nav>
-									</div>
-								</td>
-							</tr>
+                            <!-- 페이징 -->
                         </tfoot>
                     </table>
                 </div>
-                
-			                  
             
                 <div class="searchBox">
 	                <select id="searchCategory" >
-				        <option value="teamName">팀 명</option>
-				        <option value="teamLeaderName">팀 대표 명</option>
+				        <option value="teamName">구장 명</option>
+				        <option value="teamLeaderName">팀 명</option>
 				    </select> 
                     <input type="text" id="searchWord" placeholder="검색단어입력"
 						maxlength="20" />
@@ -114,7 +140,7 @@
 
     // 퍼블 영역
     $('.adminHeader .menu li').eq(3).addClass('on');
-    $('.writingTabMenu ul li').eq(1).addClass('on');
+    $('.writingTabMenu ul li').eq(2).addClass('on');
     
     var currentPage = 1;
 	var filterFlag = false;
@@ -158,6 +184,9 @@
 			,data:{
 				'currentPage':currentPage
 				,'address':$('#address').val()
+				,'level':$('#level').val()
+				,'gender':$('#gender').val()
+				,'position':$('#position').val()
 				,'searchCategory':$('#searchCategory').val()
 				,'searchWord':$('#searchWord').val()
 				,'searchFlag':searchFlag

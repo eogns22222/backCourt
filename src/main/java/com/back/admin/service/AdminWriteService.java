@@ -200,6 +200,38 @@ public class AdminWriteService {
 		return result;
 	}
 
+	// 팀 리스트
+	public Map<String, Object> teamList(Map<String, Object> param) {
+		// 시작 페이지
+		int start = (Integer.parseInt((String) param.get("currentPage")) - 1) * 10;
+		
+		param.put("start", start);		
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		// 리스트
+		map.put("list", adminWriteDAO.teamList(param));
+		// 주소 리스트
+		map.put("addressList", processedAddress(adminWriteDAO.addressList()));
+		// 총 페이지
+		int totalPage = adminWriteDAO.totalPage(param);
+		map.put("totalPage", totalPage % 10 > 0 ? totalPage / 10 + 1 : totalPage / 10);
+		
+		return map;
+	}
+
+	// (팀 리스트) 주소 구 단위로 자르고 가나다순 정렬
+	public List<String> processedAddress(List<String> list) {
+		List<String> processedList = new ArrayList<String>();
+		for (String address : list) {
+			if (address.contains(" ")) {
+				processedList.add(address.split(" ")[1]);
+			}
+		}
+		Collections.sort(processedList);
+		return processedList;
+	}
+
 }
 
 
