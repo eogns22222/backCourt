@@ -50,7 +50,7 @@
 		,(SELECT COUNT(j.court_idx)
 			FROM jjim j
 			WHERE j.court_idx = c.court_idx
-			AND j.id = 'admin') AS jjim
+			AND j.id = #{id}) AS jjim
 		,c.court_idx
 		FROM court c
 		WHERE c.court_state = 'true'

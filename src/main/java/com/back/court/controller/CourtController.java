@@ -32,9 +32,10 @@ public class CourtController {
 
 	@RequestMapping(value = "/court/list.ajax", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> callList(@RequestParam Map<String, Object> param) {
+	public Map<String, Object> callList(HttpSession session, @RequestParam Map<String, Object> param) {
 		logger.info("listCall / param = {} / ", param);
-
+		logger.info("loginId = " + session.getAttribute("loginId"));
+		param.put("id", session.getAttribute("loginId"));
 		return courtService.list(param);
 
 	}
@@ -61,6 +62,7 @@ public class CourtController {
 
 //		세션 아이디 받아오
 		String id = (String) session.getAttribute("loginId");
+//		String id = "a";
 		map.put("result", courtService.jjimRemove(id, Integer.parseInt(courtIdx)));
 
 		return map;
