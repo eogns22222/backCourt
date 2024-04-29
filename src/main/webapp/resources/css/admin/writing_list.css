@@ -22,7 +22,7 @@
 .table table{width:100%;}
 .table tr{}
 .table tr th{}
-.table tr td{vertical-align:middle;line-height:5;}
+.table tr td{vertical-align:middle;}
 .table tr td a{display:block;color:blue;}
 
 .table tr .num{}
@@ -51,4 +51,6 @@
 .searchBox{text-align:center;}
 .searchBox input{}
 .searchBox button{}
+
+
 

@@ -193,7 +193,7 @@
 		var content = '';
 		var link = '';
 		for(item of list){
-			link = './official_update.go?official_match_idx=' + item.official_match_idx;
+			link = './team_mamber_update.go?join_team_idx=' + item.join_team_idx;
 			
 			content +=
 				'<tr>'
@@ -204,7 +204,7 @@
             	+'</div>'
             	+'</td>'
             	+'<td class="teamNikName">'
-            	+'<a href="#">' + item.team_name + '</a>'
+            	+'<a href="' + link + '">' + item.team_name + '</a>'
             	+'</td>'
             	+'<td class="reader">' + item.id + '</td>'
             	+'<td>' + item.join_team_state + '</td>'

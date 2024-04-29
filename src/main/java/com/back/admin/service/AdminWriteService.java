@@ -220,7 +220,27 @@ public class AdminWriteService {
 		return map;
 	}
 
-	// (팀 리스트) 주소 구 단위로 자르고 가나다순 정렬
+	public Map<String, Object> guestList(Map<String, Object> param) {
+		// 시작 페이지
+		int start = (Integer.parseInt((String) param.get("currentPage")) - 1) * 10;
+		
+		param.put("start", start);		
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		// 리스트
+		map.put("list", adminWriteDAO.guestList(param));
+		// 주소 리스트
+		map.put("addressList", processedAddress(adminWriteDAO.addressListGuest()));
+		// 총 페이지
+		int totalPage = adminWriteDAO.totalPageGuest(param);
+		logger.info(String.valueOf(totalPage));
+		map.put("totalPage", totalPage % 10 > 0 ? totalPage / 10 + 1 : totalPage / 10);
+		
+		return map;
+	}
+	
+	// (팀 리스트, 게스트 리스트) 주소 구 단위로 자르고 가나다순 정렬
 	public List<String> processedAddress(List<String> list) {
 		List<String> processedList = new ArrayList<String>();
 		for (String address : list) {

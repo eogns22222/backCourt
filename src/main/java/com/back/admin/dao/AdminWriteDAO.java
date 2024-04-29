@@ -30,5 +30,19 @@ public interface AdminWriteDAO {
 
 	int totalPage(Map<String, Object> param);
 
+	List<AdminWriteDTO> guestList(Map<String, Object> param);
+
+	List<String> addressListGuest();
+
+	int totalPageGuest(Map<String, Object> param);
+
 
 }
+
+
+
+
+
+
+
+

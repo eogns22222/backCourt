@@ -68,7 +68,7 @@ public class AdminWriteController {
 
 	}
 	
-	// 공식 경기 리스트 접속
+	// 팀 리스트 접속
 	@RequestMapping(value = "/admin/writing_team_list.go")
 	public String teamListGo() {
 		logger.info("공식 경기 리스트 접속");
@@ -81,6 +81,22 @@ public class AdminWriteController {
 		logger.info("listCall / param = {} / ", param);
 
 		return adminWriteService.teamList(param);
+
+	}
+	
+	// 게스트 리스트 접속
+	@RequestMapping(value = "/admin/writing_guest_list.go")
+	public String guestListGo() {
+		logger.info("공식 경기 리스트 접속");
+		return "/admin/writing_guest_list";
+	}
+	
+	@RequestMapping(value = "/admin/writing_guest_list/list.ajax", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> callGuestList(@RequestParam Map<String, Object> param) {
+		logger.info("listCall / param = {} / ", param);
+
+		return adminWriteService.guestList(param);
 
 	}
 	

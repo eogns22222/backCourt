@@ -40,6 +40,8 @@ public interface OfficialDAO {
 
 	int insertNotice(String idx, String id);
 
+	void addPointList(String idx, String id, int fee);
+
 	
 }
 

@@ -30,23 +30,26 @@
                 </div>
                 <div class="filterCont">
                     <!-- 레벨 -->
-                    <select id="level">
+                    <select id="level" class="filter">
+                        <option value="">전체레벨</option>
                         <option value="브론즈">브론즈</option>
                         <option value="실버">실버</option>
                         <option value="골드">골드</option>
                         <option value="플레티넘">플레티넘</option>
                     </select>
                     <!-- 지역 -->
-                    <select id="address">
+                    <select id="address" class="filter">
                         <option value="">전체 지역</option>
                     </select>
                     <!-- 성별 -->
-                    <select id="gender">
+                    <select id="gender" class="filter">
+                        <option value="">전체 성별</option>
                         <option value="남자">남자</option>
                         <option value="여자">여자</option>
                     </select>
                     <!-- 포지션 -->
-                    <select id="position">
+                    <select id="position" class="filter">
+                        <option value="">전체 포지션</option>
                         <option value="가드">가드</option>
                         <option value="센터">센터</option>
                         <option value="포워드">포워드</option>
@@ -83,7 +86,7 @@
                             </tr>
                         </thead>
                         <tbody id="list">
-                            <tr>
+                            <!-- <tr>
                                 <td class="num">1</td>
                                 <td class="level">브론즈</td>
                                 <td class="gender">남자</td>
@@ -98,8 +101,8 @@
                                     </div>
                                 </td>
                                 <td>공개</td>
-                            </tr>
-                            <tr>
+                            </tr> -->
+                            <!-- <tr>
                                 <td class="num">1</td>
                                 <td class="level">브론즈</td>
                                 <td class="gender">남자</td>
@@ -114,18 +117,26 @@
                                     </div>
                                 </td>
                                 <td>공개</td>
-                            </tr>
+                            </tr> -->
                         </tbody>
                         <tfoot>
-                            <!-- 페이징 -->
+                            <tr>
+								<td colspan="10">
+									<div class="container">
+										<nav aria-label="Page navigation" style="text-align: center">
+											<ul class="pagination" id="pagination"></ul>
+										</nav>
+									</div>
+								</td>
+							</tr>
                         </tfoot>
                     </table>
                 </div>
             
                 <div class="searchBox">
 	                <select id="searchCategory" >
-				        <option value="teamName">구장 명</option>
-				        <option value="teamLeaderName">팀 명</option>
+				        <option value="courtName">구장 명</option>
+				        <option value="teamName">팀 명</option>
 				    </select> 
                     <input type="text" id="searchWord" placeholder="검색단어입력"
 						maxlength="20" />
@@ -180,7 +191,7 @@
 	function callList(currentPage) {
 		$.ajax({
 			type:'POST'
-			,url:'./writing_team_list/list.ajax'
+			,url:'./writing_guest_list/list.ajax'
 			,data:{
 				'currentPage':currentPage
 				,'address':$('#address').val()
@@ -221,22 +232,27 @@
 	function showList(list){
 		var content = '';
 		var link = '';
+		var remainingNum = '';
 		for(item of list){
-			link = './official_update.go?official_match_idx=' + item.official_match_idx;
+			link = './guest_update.go?guest_idx=' + item.guest_idx;
+			remainingNum = item.guest_to - item.currentCount
 			
 			content +=
-				'<tr>'
-            	+'<td class="num">' + item.join_team_idx + '</td>'
+                '<tr>'
+            	+'<td class="num">' + item.guest_idx + '</td>'
+            	+'<td class="level">' + item.guest_level + '</td>'
+            	+'<td class="gender">' + item.guest_gender + '</td>'
+            	+'<td class="position">' + item.guest_position + '</td>'
+            	+'<td class="courtAddress">' + item.court_address + '</td>'
+            	+'<td class="courtName"><a href="' + link + '">' + item.court_name + '</a></td>'
+            	+'<td class="gameDate">' + item.booking_date + '</td>'
+            	+'<td class="recruitment">' + remainingNum + '</td>'
             	+'<td class="logo">'
             	+'<div>'
             	+'<img src="/logo/' + item.logo + '.png" alt="">'
             	+'</div>'
             	+'</td>'
-            	+'<td class="teamNikName">'
-            	+'<a href="#">' + item.team_name + '</a>'
-            	+'</td>'
-            	+'<td class="reader">' + item.id + '</td>'
-            	+'<td>' + item.join_team_state + '</td>'
+            	+'<td>' + item.guest_state + '</td>'
             	+'</tr>';
 			
 		}
