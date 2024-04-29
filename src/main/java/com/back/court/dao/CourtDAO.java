@@ -7,8 +7,6 @@ import com.back.court.dto.CourtDTO;
 
 public interface CourtDAO {
 
-	List<CourtDTO> list();
-
 	void jjim(String id, int courtIdx);
 
 	void jjimRemove(String id, int courtIdx);
@@ -25,8 +23,13 @@ public interface CourtDAO {
 
 	void insertPointHistory(String id, int pointChange, String pointState, String WriteIdx, String WriteType);
 
-
 	void insertBooking(Map<String, Object> insertMap);
 
 	void insertPointHistory(Map<String, Object> insertMap);
+
+	List<String> addressList();
+
+	int totalPage(Map<String, Object> param);
+
+	List<CourtDTO> list(Map<String, Object> param);
 }
