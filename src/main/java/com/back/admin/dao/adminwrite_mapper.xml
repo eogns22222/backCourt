@@ -17,6 +17,25 @@
 		
 	</select>
 	
+	<!-- match_list -->
+	
+	<!-- list -->
+	<select id="officialList" resultType="com.back.admin.dto.AdminWriteDTO">
+		SELECT
+		   	official_match_idx
+		  	,official_match_date
+		  	,(SELECT court_address FROM court c WHERE c.court_idx = o.court_idx) AS court_address
+		  	,official_match_level
+		  	,(SELECT count(official_match_idx) FROM offcial_match_ask_list f 
+		  	WHERE f.official_match_idx = o.official_match_idx) AS currentCount
+		  	,official_match_to
+		  	,official_match_post_state
+			FROM official_match o
+			JOIN court t
+			ON o.court_idx = t.court_idx
+		WHERE t.court_state = 'true'
+	</select>	
+	
 	<select id="callCourtInfo" resultType="com.back.admin.dto.AdminCourtDTO">
 		SELECT
 			court_name AS courtName
@@ -107,3 +126,25 @@
 	WHERE official_match_idx = #{officialIdx}
 	</update>
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

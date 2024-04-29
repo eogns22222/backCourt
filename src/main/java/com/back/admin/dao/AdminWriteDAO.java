@@ -10,6 +10,8 @@ public interface AdminWriteDAO {
 
 	List<AdminCourtDTO> callCourtList();
 
+	List<AdminWriteDTO> officialList();
+
 	AdminCourtDTO callCourtInfo(String courtIdx);
 
 	List<String> fileNameList(String courtIdx);
@@ -21,5 +23,6 @@ public interface AdminWriteDAO {
 	AdminWriteDTO officialUpdateGo(String officialIdx);
 
 	Boolean officialUpdate(Map<String, Object> param);
+
 
 }
