@@ -24,5 +24,25 @@ public interface AdminWriteDAO {
 
 	Boolean officialUpdate(Map<String, Object> param);
 
+	List<AdminWriteDTO> teamList(Map<String, Object> param);
+
+	List<String> addressList();
+
+	int totalPage(Map<String, Object> param);
+
+	List<AdminWriteDTO> guestList(Map<String, Object> param);
+
+	List<String> addressListGuest();
+
+	int totalPageGuest(Map<String, Object> param);
+
 
 }
+
+
+
+
+
+
+
+

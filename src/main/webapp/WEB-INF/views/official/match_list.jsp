@@ -223,7 +223,7 @@
 		var link = '';
 		for(item of list){
 			
-			if(item.currentCount == item.official_match_to){
+			if(item.currentCount >= item.official_match_to){
 				finishClass = 'end';
 				finishClass2 = 'state finish';
 				finishTxt = '모집완료';

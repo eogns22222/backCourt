@@ -124,7 +124,7 @@
 				if(data.pay < fee){
 					cf = confirm("포인트가 부족합니다. 충전페이지로 이동할까요?");
 					if(cf){
-						location.href = '../point_add.go';
+						location.href = '../mypage/point_add.go';
 					}
 				}else{
 					cf = confirm("예약하시겠습니까?");
