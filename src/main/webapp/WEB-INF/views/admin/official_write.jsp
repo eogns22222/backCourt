@@ -124,7 +124,6 @@
 			</header>
 			<div class="adminContainer">
 				<h1>공식경기 등록</h1>
-				<form action="" method="post">
 					<table class="officialWriteTable">
 						<tr>
 							<th class="officialWriteTh">공식 경기 이름</th>
@@ -222,7 +221,6 @@
 					<br/>
 					<input id="officialRegisterCancel" type="button" value="취소 하기" />
 					<input id="officialRegisterSubmit" type="button" value="등록 하기" />
-				</form>
 			</div>
 		</div>
 			<div id="light" class="white_content">
@@ -258,7 +256,7 @@
 		var formattedDate = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1).toString().padStart(2, '0') + "-" + currentDate.getDate().toString().padStart(2, '0');
 		var selectDate = '';
 		var selectTime = '';
-		$('#officialWriteDate').val(formattedDate);
+		$('#officialWriteDate').val('');
 		selectDate = $('#officialWriteDate').val();
 		
 
@@ -375,6 +373,11 @@
 			console.log("callCourtList out");
 		}
 		function callCourtInfo(idx){
+			$('.officialWriteTimeBtn').css('background-color', 'skyblue');
+			
+			$('.officialWriteTimeBtn').each(function() {
+				$(this).prop('disabled', false);
+			});
 			disabledButton();
 			$.ajax({
 				url:'./callCourtInfo.ajax'

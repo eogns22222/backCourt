@@ -207,10 +207,10 @@ public class MypageController {
 
 	@RequestMapping(value = "/mypage/jjim.go")
 	public String jjimGo(HttpSession session) {
-		String loginId = (String) session.getAttribute("loginId");
-		if (loginId.isEmpty()) {
-			return "redirect:/login.go";
-		}
+//		String loginId = (String) session.getAttribute("loginId");
+//		if (loginId.isEmpty()) {
+//			return "redirect:/login.go";
+//		}
 		return "/mypage/jjim";
 	}
 
@@ -218,8 +218,9 @@ public class MypageController {
 	@ResponseBody
 	public Map<String, Object> jjimList(HttpSession session) {
 		logger.info("mypage/jjimList ");
-		// session check 필요
+//		// session check 필요
 		String id = (String) session.getAttribute("loginId"); // id 받아오는 로직으로 수정 필요
+//		String id = "a";
 		return mypageService.jjimList(id);
 	}
 
