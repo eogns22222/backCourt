@@ -73,12 +73,9 @@ FROM point_list pl join member m on pl.id = m.id where m.id = #{param1} ORDER BY
 </select>
 
 <update id="point_update">
-	UPDATE member set point = (SELECT 
-		(
-		(SELECT SUM(point_change) FROM point_list ps where id =#{param1} AND point_state ="충전")-
-		SUM(point_change)
-		)
-	FROM point_list pl where id=#{param1} AND point_state ="환급") where id=#{param1}
+UPDATE member set point = (
+SELECT SUM(point_change)-(SELECT IFNULL(SUM(point_change),0) FROM point_list pl where id =#{param1} AND point_state="환급")
+FROM point_list pl where id =#{param1} AND point_state="충전") where id=#{param1}
 </update>
 
 
@@ -154,5 +151,30 @@ DELETE FROM guest_join_list WHERE id=#{param1} AND guest_join_idx =#{param2}
 <delete id="court_match_list_del">
 DELETE FROM court_booking where id=#{param1} AND court_booking_idx = #{param2}
 </delete>
+
+
+
+<!-- ===================== 신고 리스트 / 수정 ================================== -->
+
+
+<select id="report_detail"  resultType="com.back.mypage.dto.MypageDTO">
+SELECT report_tit,report_content,report_idx,report_feed FROM report r where id =#{param1} AND report_idx=#{param2}
+</select>
+
+<update id="report_modify" parameterType="map">
+UPDATE report SET report_tit=#{report_tit},report_content=#{report_content} WHERE report_idx =#{report_idx}
+</update>
+
+<select id="report_list" resultType="com.back.mypage.dto.MypageDTO">
+	SELECT report_tit
+		,report_date
+		,report_state 
+	FROM report r WHERE id = #{param1} order by report_date desc limit #{param2},#{param3}
+</select>
+
+<!-- 총 페이지 자동 계산 -->
+<select id="totalPages" resultType="Integer">
+	SELECT CEIL(COUNT(report_idx)/#{param1}) FROM report r WHERE id = #{param2}
+</select>
 
 </mapper>

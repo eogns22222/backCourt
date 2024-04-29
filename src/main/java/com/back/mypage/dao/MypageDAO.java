@@ -3,6 +3,8 @@ package com.back.mypage.dao;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import com.back.mypage.dto.MypageDTO;
 import com.back.official.dto.OfficialDTO;
 
@@ -17,7 +19,7 @@ public interface MypageDAO {
 
 	void Charging_do(String loginId, String charging);
 
-	void PointMinus(String loginId, String minus);
+	void PointMinus(String loginId, int min);
 
 	String point(String loginId);
 	
@@ -62,9 +64,20 @@ public interface MypageDAO {
 	int court_match_list_del(String loginId, String idx);
 
 
+	
+//	===================== 신고 리스트 / 수정 ==================================
 
+	
 
+	MypageDTO report_detail(String loginId, int idx);
 
+	int report_modify(Map<String, String> param);
+
+	//신고/문의 리스트
+	List<MypageDTO> report_list(String loginId, int state, int pageSome);
+
+	//총 페이지 자동 계산
+	Object totalPages(int pageSome, String loginId);
 
 
 
