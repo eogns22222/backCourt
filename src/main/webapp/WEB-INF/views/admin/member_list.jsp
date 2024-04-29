@@ -26,7 +26,7 @@
                <li><a href="admin/report_list">신고 관리</a></li>
            </ul>
       </div>
-    </header>
+
     
     <h2>회원 관리</h2>
     <!-- 멤버 계정 상태 -->
