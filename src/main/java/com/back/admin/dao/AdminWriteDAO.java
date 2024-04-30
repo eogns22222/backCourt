@@ -35,6 +35,19 @@ public interface AdminWriteDAO {
 	List<String> addressListGuest();
 
 	int totalPageGuest(Map<String, Object> param);
+	
+	// 게스트 모집글 수정
+	AdminWriteDTO guestUpdateGo(String guestIdx);
+
+	List<AdminCourtDTO> callGuestCourtList();
+
+	AdminCourtDTO callGuestCourtInfo(String courtIdx);
+
+	List<String> bookingStartTimeGuest(String courtIdx, String selectDate);
+
+	Boolean guestUpdate(Map<String, Object> param);
+
+	Boolean guestUpdateCourt(Map<String, Object> param);
 
 
 }

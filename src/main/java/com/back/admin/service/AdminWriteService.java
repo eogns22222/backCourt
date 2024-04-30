@@ -252,6 +252,69 @@ public class AdminWriteService {
 		return processedList;
 	}
 
+	// 게스트 모집글 수정 이동
+	public void guestUpdateGo(Model model, String guestIdx) {
+		AdminWriteDTO dto = adminWriteDAO.guestUpdateGo(guestIdx);
+		model.addAttribute("officialInfo", dto);
+		
+	}
+
+	// 게스트 모집글 수정 - 코트 리스트
+	public Map<String, Object> callGuestCourtList(int currentPage, String searchWord) {
+		int start = (currentPage - 1) * 10;
+		logger.info("::::::::::::callCourtList service in:::::::::::::");
+		logger.info("searchWord = " + searchWord);
+		Map<String, Object> result = new HashMap<String, Object>();
+
+		List<AdminCourtDTO> list = adminWriteDAO.callGuestCourtList();
+		List<AdminCourtDTO> processedList = new ArrayList<AdminCourtDTO>();
+
+		processedList = list;
+
+		if (searchWord.isEmpty() == false) {
+			processedList = addressProcessedList(processedList, searchWord);
+		}
+		for (AdminCourtDTO adminCourtDTO : processedList) {
+			logger.info("processedList Address = " + adminCourtDTO.getCourtAddress());
+		}
+		int totalPage = processedList.size() % 10 > 0 ? processedList.size() / 10 + 1 : processedList.size() / 10;
+		result.put("totalPage", totalPage);
+
+		processedList = pagingList2(processedList, start);
+		result.put("list", processedList);
+
+		logger.info("::::::::::::callCourtList service out:::::::::::::");
+		return result;
+	}
+
+	// 게스트 모집글 수정 - 코트 정보
+	public Map<String, Object> callGuestCourtInfo(String courtIdx, String selectDate) {
+		logger.info("callCourtInfo service in :::::::::::::::::");
+		logger.info("courtIdx = " + courtIdx);
+		logger.info("selectDate = " + selectDate);
+		logger.info("callCourtInfo service in :::::::::::::::::");
+		Map<String, Object> result = new HashMap<String, Object>();
+		AdminCourtDTO dto = adminWriteDAO.callGuestCourtInfo(courtIdx);
+
+		List<String> fileName = adminWriteDAO.fileNameList(courtIdx);
+		List<String> bookingStartTime = adminWriteDAO.bookingStartTimeGuest(courtIdx, selectDate);
+		result.put("fileName", fileName);
+		result.put("courtInfo", dto);
+		for (String string : bookingStartTime) {
+			logger.info("bookingStartTime = " + string);
+		}
+		result.put("bookingStartTime", bookingStartTime);
+		return result;
+	}
+
+	// 게스트 모집글 - 게스트 모집글 - 업데이트 실행
+	public Map<String, Boolean> guestUpdate(Map<String, Object> param) {
+		Map<String, Boolean> result = new HashMap<String, Boolean>();
+		result.put("result", adminWriteDAO.guestUpdate(param));
+		result.put("result2", adminWriteDAO.guestUpdateCourt(param));
+		return result;
+	}
+
 }
 
 
