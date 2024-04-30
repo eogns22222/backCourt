@@ -172,7 +172,7 @@ $('button').on('click',function(){
         location.href="point_minus.go";
     }
     if(butt=='문의 하기'){
-        location.href="report";
+        location.href="report.go?reportWriteIdx=0&reportWirteType='포인트문의'";
     }
 });
 </script>

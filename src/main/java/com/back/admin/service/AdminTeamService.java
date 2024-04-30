@@ -36,6 +36,9 @@ public class AdminTeamService {
 
 	public void teamInfo(String teamIdx, Model model) {
 		List<AdminTeamDTO> list = adminTeamDAO.teammateList(teamIdx, 0);
+		for (AdminTeamDTO adminTeamDTO : list) {
+			logger.info("list id = "+adminTeamDTO.getId());
+		}
 		AdminTeamDTO adminTeamDTO = adminTeamDAO.teamInfo(teamIdx);
 		int totalPage = adminTeamDAO.teammateTotal(teamIdx);
 		model.addAttribute("teamInfo", adminTeamDTO);
@@ -44,4 +47,25 @@ public class AdminTeamService {
 		
 	}
 
+	public Map<String, Object> teammateList(String teamIdx, String currentPage) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		int start = (Integer.parseInt(currentPage) - 1) * 10;
+		map.put("list", adminTeamDAO.teammateList(teamIdx, start));
+		return map;
+	}
+
+	public Map<String, Boolean> teamUpdate(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 }
+
+
+
+
+
+
+
+
+

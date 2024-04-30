@@ -1,161 +1,236 @@
-	<%@ page language="java" contentType="text/html; charset=UTF-8"
-		pageEncoding="UTF-8"%>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-	<html>
-	<head>
-	<meta charset="UTF-8">
-	<title>제목 입력</title>
-	<link rel="stylesheet" href="../resources/css/common/reset.css">
-	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-	<script src="../resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
-	<link rel="stylesheet" href="../resources/css/header/header.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
-	<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-	<style>
-		.teammateUpdateTable, .teammateUpdateTh, .teammateUpdateTd {
-			border: 1px solid black;
-			border-collapse: collapse;
-		}
-		
-		.teammateUpdateTh, .teammateUpdateTd {
-			padding: 5px 10px;
-		}
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>제목 입력</title>
+<link rel="stylesheet" href="../resources/css/common/reset.css">
+<link rel="stylesheet"
+	href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script
+	src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<script src="../resources/js/jquery.twbsPagination.js"
+	type="text/javascript"></script>
+<link rel="stylesheet" href="../resources/css/header/header.css">
 
-		#datepicker {
-			margin-bottom: 20px;
-		}
-		
-		#teammateUpdateInfo {
-			resize: none;
-			width: 500px;
-			height: 150px;
-		}
-		.swiper-container {
-			width: 50%;
-			height: 50%; 
-		}
-		.swiper-slide {
-			font-size: 18px;
-			background: #fff;	
-		}
-		.swiper-pagination-bullet {
-			width: 12px;
-			height: 12px; 
-			border: 1px solid pink; 
-			opacity: 1; 
-		}
-		.swiper-pagination-bullet-active { 
-			width: 40px; 
-			transition: width .5s; 
-			border-radius: 5px; 
-			background: pink; 
-			border: 1px solid; 
-		}
-		.swiper-container {
-			overflow: hidden; /* 테이블 셀에서 넘치는 부분을 잘라냄 */
-			position: relative; /* 상대적인 위치 설정 */
-		}
-		.swiper-button-prev, .swiper-button-next, .swiper-pagination {
-			position: absolute; /* 절대적인 위치 설정 */
-			z-index: 1; /* 다른 요소 위로 배치 */
-		}
+<style>
+.imgBox {
+	width: 50%; /* 원하는 크기로 조절합니다. */
+	max-width: 300px; /* 최대 너비를 설정합니다. */
+	margin: 10px auto; /* 가운데 정렬을 위해 margin을 조절합니다. */
+}
 
-		.teammateUpdateTimeBtn{
-			background-color : skyblue;
-		}
-	.black_overlay{
-		display: none;
-		position: absolute;
-		top: 0%;
-		left: 0%;
-		width: 100%;
-		height: 100%;
-		background-color: black;
-		z-index:1001;
-		-moz-opacity: 0.8;
-		opacity:.80;
-		filter: alpha(opacity=80);
-	}
+/* 이미지에 대한 스타일 */
+.teamLogo {
+	width: 100%; /* 부모 요소의 너비에 맞게 이미지의 크기를 조절합니다. */
+	height: auto; /* 가로 세로 비율을 유지하면서 이미지의 크기를 조절합니다. */
+}
 
-	.white_content {
-		display: none;
-		position: absolute;
-		top: 25%;
-		left: 25%;
-		width: 50%;
-		height: 50%;
-		padding: 16px;
-		border: 1px solid black;
-		background-color: white;
-		z-index:1002;
-		overflow: auto;
-	}
-		.teammateTable{
-				width: 100%;
-		}
-		.teammateTable, .teammateTh, .teammateTd {
+.leftCont {
+	background: lightgray;
+	display: flex;
+	flex-direction: column;
+	margin-top: 20px;
+	align-items: flex-start; /* 왼쪽 정렬 */
+}
 
-			border: 1px solid black;
-			border-collapse: collapse;
-		}
-		
-		.teammateTh, .teammateTd {
-			padding: 5px 10px;
-		}
-	</style>
-	</head>
-	<body>
-		<div class="adminBody">
-			<header class="adminHeader">
-				<div class="headerCont">
-					<a href="../admin_logout.do" class="logout">로그아웃</a>
-					<ul class="menu">
-						<li><a href="../admin/member_list">회원 관리</a></li>
-						<li><a href="../admin/team_list">팀 관리</a></li>
-						<li><a href="../admin/teammate_list">공식 경기 관리</a></li>
-						<li><a href="../admin/writing_list">글 관리</a></li>
-						<li><a href="../admin/report_list">신고 관리</a></li>
-					</ul>
-				</div>
-			</header>
-			<div class="adminContainer">
-				<h1>팀 관리</h1>
+.teamInfoContainer {
+	margin-left: 50%; /* 로고 오른쪽으로 이동 */
+	font-size: 15px;
+	font-weight: bold;
+	margin-top: 10px
+}
+
+.buttonContainer {
+	margin-top: 10px; /* 버튼과 팀 이름 사이 간격 조절 */
+	margin-left: 10px;
+}
+
+.leftCont2 {
+	background: lightgray;
+	flex-direction: column;
+	margin-top: 10px;
+}
+
+.cont2 {
+	margin-left: 10px;
+	margin-top: 10px;
+}
+
+.leftCont3 {
+	background: lightgray;
+	flex-direction: column;
+	margin-top: 10px;
+}
+
+.cont3, .info {
+	margin-top: 10px;
+	margin-left: 10px;
+}
+
+.info {
+	resize: none;
+	width: 70%;
+	height: auto;
+}
+
+.rightCont {
+	border: 2px solid;
+	border-collapse: collapse;
+	align-items: flex-end; /* 오른쪽 정렬 */
+}
+
+.rightContth {
+	background-color: gainsboro;
+}
+
+.rightContth, .teammateListTd {
+	border: 2px solid;
+	padding: 10px 30px;
+	text-align: center;
+}
+
+.teammateListTr:hover {
+	background-color: lightgray;
+}
+</style>
+</head>
+<body>
+	<div class="adminBody">
+		<jsp:include page="../header/header_admin.jsp" />
+		<div class="adminContainer">
+			<div class="left">
 				<div class="leftCont">
-				    <div class="teammateinfocont">
-				        <div class="flexBox">
-				            <div class="logo">
-				<%--                 <img class="teammateLogo" src="../resources/img/teamLogo/${teammateDetail.logo}.jpg" alt="teammateLogo">> --%>
-				                <img class="teammateLogo" src="/logo/${teammateDetail.logo}.jpg" alt="teammateLogo">>
-				            </div>
-				            <div>
-				                <a class="teammateReportBtn">신고하기</a>
-				                <h3 class="teamName">${teammateDetail.team_name}</h3>
-				                <p class="teamLeader"><span>${teammateDetail.id}</span></p>
-				            </div>
-				        </div>
-				
-				        <p class="teamAddress">지역: <span>${teammateDetail.team_address}</span></p>
-				        <p class="teammateLevel">모집 레벨: <span>${teammateDetail.join_team_level}</span></p>
-				        <p class="teammateGender">모집 성별: <span>${teammateDetail.join_to_gender}</span></p>
-				        <p class="teammatePositions">모집 포지션: <span>${teammateDetail.join_team_position}</span></p>
-				        <p class="tj">
-				        <a class="teammateJoinBtn">가입 신청하기</a>
-				        </p>
-   					 </div>
+					<div class="imgContainer">
+						<div class="imgBox" id="imgBox">
+							<img class="teamLogo" src="/logo/${teamInfo.logo}.jpg" alt="" />
+						</div>
+					</div>
+					<div class="teamInfoContainer">
+						<input type="text" class="teamName" id="teamName" value="${teamInfo.team_name}">
+					</div>
+					<div class="buttonContainer">
+						<button type="button" class="siteLogo">기본 로고로 변경</button>
+					</div>
+				</div>
+				<div class="leftCont2">
+					<div class="cont2" id="teamLevel">
+						팀 레벨: <select class="select" name="team_level" id="level">
+							<option value="브론즈">브론즈</option>
+							<option value="실버">실버</option>
+							<option value="골드">골드</option>
+							<option value="플레티넘">플래티넘</option>
+						</select>
+					</div>
+					<div class="cont2" id="teamAddress">
+						지역: <input type="text" class="address" id="teamAddress"
+							value="${teamInfo.team_address}">
+					</div>
+				</div>
+				<div class="leftCont3">
+					<div class=cont3>팀 소개:</div>
+					<textarea name="teamInfo" class="info" id="team_info"
+						maxlength="300">
+				</textarea>
+				</div>
+			</div>
+			<div class="right">
+				<table class="rightCont">
+					<thead>
+						<tr>
+							<th class="rightContth">팀원</th>
+							<th class="rightContth">팀장 체크</th>
+						</tr>
+					</thead>
+					<tbody id="teamDetailList"></tbody>
+				</table>
+				<div class="container">
+					<nav aria-label="Page navigation" style="text-align: center">
+						<ul class="pagination" id="pagination"></ul>
+					</nav>
+				</div>
+				<div>
+					<input type="button" id="cancle" value="취소"/>
+					<input type="button" id="submit" value="수정"/>
+				</div>
 			</div>
 		</div>
-	</body>
-	<script>
+	</div>
+</body>
+<script>
 		var teammateIdx = '${teamInfo.team_idx}';
 		var currentPage = 1;
-		console.log('${teamInfo.team_idx}');
+// 		console.log('${teamInfo.team_idx}');
 		console.log('${list[0].teamjang}');
 		console.log('${list[0].id}');
 		console.log('${totalPage}');
+		var teamList1 = []; // JSON 형식으로 데이터를 받아옴
+		var totalPage = '${totalPage}';
+		var logoFlag = false;	
+		
+		$(document).ready(function() {
+	        // 로고 선택 버튼 클릭 시
+	        $('.siteLogo').on('click', function() {
+	            // 기본 이미지 URL로 변경합니다.
+	            logoFlag = true;
+	            $('#imgBox').html('<img class="teamLogo" src="/logo/defaultLogo.png" alt="" />');
+	        });
+	    });
+		
+		
+		<c:forEach var="teamList" items="${list}">
+		    var item = {}; // 객체로 초기화합니다.
+		    item.id = '${teamList.id}'; // id 속성에 값을 할당합니다.
+		    item.teamjang = '${teamList.teamjang}'; // teamjang 속성에 값을 할당합니다.
+		    console.log('${teamList.id}');
+		    teamList1.push(item); // 배열에 객체를 추가합니다.
+		</c:forEach>
+
+	    
+		showList(teamList1);
+		paging();
+		document.getElementById("team_info").value = '${teamInfo.team_info}';
+		
+		$('#cancle').on('click', function(){
+			if(confirm('취소하시겠습니까?') == false){
+				return;
+			}
+			window.location.href='./team_list.go';
+		});
+		
+		$('#submit').on('click', function(){
+			if(confirm('수정하시겠습니까?') == false){
+				return;
+			}
+			$.ajax({
+				url:'./teamUpdate.ajax'
+				,type:'post'
+				,dataType:'json'
+				,data:{
+					"teamName":$('#teamName').val()
+					,"teamLevel":$('#level').val()
+					,"teamAddress":$('#teamAddress').val()
+					,"teamInfo":$('#team_info').html()
+					,"logoFlag":logoFlag
+				}
+				,success:function(data){
+					console.log(data);
+					if(data.result == false){
+						alert('수정 실패했습니다.');
+						return ;
+					}else{
+						alert('수정 성공');
+						window.location.href='./team_list.go';
+					}
+					
+				}
+				,error:function(error){
+					console.log(error);
+				}
+			});
+		});
 		
 		function callteammateList(currentPage) {
 			$.ajax({
@@ -164,20 +239,12 @@
 				,dataType:'json'
 				,data:{
 					"currentPage":currentPage
+					,"teamIdx":teammateIdx
 				}
 				,success:function(data){
 					console.log(data);
 					showList(data.list);
-					$('#pagination').twbsPagination({
-						startPage:1
-						,totalPages:data.totalPage
-						,visiblePages:5	
-						,onPageClick:function(evt,pg){
-							currentPage = pg;
-							callteammateList(currentPage);
-						}
-						
-					});
+// 					paging();
 				}
 				,error: function(xhr, status, error) {
 					console.error("AJAX request failed:", status, error);
@@ -186,49 +253,44 @@
 
 		}
 
-
+		function paging(){
+			$('#pagination').twbsPagination({
+				startPage:1
+				,totalPages:totalPage
+				,visiblePages:5	
+				,onPageClick:function(evt,pg){
+					currentPage = pg;
+					callteammateList(currentPage);
+				}
+				
+			});
+		}
 		
-
+		function showList(list){
+// 			console.log(list);
+			var content = '';
+			for(item of list){
+				console.log(item);
+				content +=
+					'<tr class="teammateListTr">'
+					+'<td class="teammateListTd">'+item.id+'</td>'
+					+'<td class="teammateListTd">'+item.teamjang+'</td>'
+					+'</tr>';
+			}
+			$('#teamDetailList').html(content);
+			
+		}
+		
 		$('#teammateRegisterCancel').on('click',function(){
 			if(confirm('정말 취소 하시겠습니까?')){
 				alert('취소되었습니다.');
 				window.location.href = "./teammateList.go";
 			}
 		});
-
-		
-		function showList(list){
-			console.log(list);
-			var content = '';
-			for(item of list){
-				content +=
-					'<tr class="teammateListTr">'
-					+'<td class="teammateListTd">'+item.teammateIdx+'</td>'
-					+'<td class="teammateListTd">'+item.teammateName+'</td>'
-					+'<td class="teammateListTd">'+item.teammateAddress.split(' ')[1]+'</td>'
-					+'</tr>';
-			}
-			$('#list').html(content);
-		    $('.teammateListTr').hover(function() {
-		        $(this).css('background-color', 'lightgray');
-		    }, function() {
-		        $(this).css('background-color', '');
-		    });
-		    $('.teammateListTr').click(function() {
-		        teammateIdx = $(this).find('.teammateListTd:first').text();
-				$('#light').css('display', 'none');
-				$('#fade').css('display', 'none');
-		        callteammateInfo(teammateIdx);
-		        console.log('선택한 행의 idx:', teammateIdx);
-		    });
-			
-		}
-		
-		
 			
 		
 
 		
 	</script>
 
-	</html>
+</html>

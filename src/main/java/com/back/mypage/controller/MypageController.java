@@ -175,27 +175,32 @@ public class MypageController {
 
 	// ============================================
 
-	@RequestMapping(value = "/mypage/report")
-	public String reportGo() {
+	@RequestMapping(value = "/mypage/report.go")
+	public String reportGo(String reportWirteType, Model model, String reportWriteIdx) {
 		logger.info("제발");
+		model.addAttribute("report_write_type",reportWirteType);
+		model.addAttribute("report_write_idx",reportWriteIdx);
 		return "/mypage/report";
 	}
 
 	@RequestMapping(value = "/mypage/report.do", method = RequestMethod.POST)
-	public String report(Model model, HttpSession session, String title, String contents) {
+	public String report(Model model, HttpSession session, String title, String contents, String reperenceType,
+			String reperenceIdx){
 		logger.info("report title :{}, contents : {}", title, contents);
 		String page = "/mypage/report";
 		// 받아온 아이디 getsession하기
-		String id = "admin";
+		String id = (String)session.getAttribute("loginId");
+		
+		
 		// 전에 페이지에서 받아온 글구분이랑, 글번호 변경
-		String report_write_type = "신고";
-		int report_write_idx = 1;
+		String report_write_type = reperenceType;
+		int reportwriteidx = Integer.parseInt(reperenceIdx);
 		Map<String, Object> map = new HashMap<>();
 		map.put("id", id);
 		map.put("report_tit", title);
 		map.put("report_content", contents);
 		map.put("report_write_type", report_write_type);
-		map.put("report_write_idx", report_write_idx);
+		map.put("report_write_idx", reportwriteidx);
 		int row = mypageService.report(map);
 
 		if (row >= 1) {

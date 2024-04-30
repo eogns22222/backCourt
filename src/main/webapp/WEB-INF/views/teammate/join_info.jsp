@@ -41,7 +41,7 @@
 </body>
 <script>
 $('.teammateReportBtn').on('click',function(){
-	window.location.href = '../mypage/report.go?join_team_idx='+${join_team_idx}+'&reportWirteType="팀원모집신고"';
+	window.location.href = '../mypage/report.go?reportWriteIdx='+${join_team_idx}+'&reportWirteType="팀원모집신고"';
 });
 
 var joinTeamIdx = ${join_team_idx};

@@ -20,30 +20,49 @@ import com.back.admin.service.AdminTeamService;
 public class AdminTeamController {
 
 	Logger logger = LoggerFactory.getLogger(getClass());
-	@Autowired AdminTeamService adminTeamService;
-	
-	@RequestMapping(value ="/admin/team_list.go")
+	@Autowired
+	AdminTeamService adminTeamService;
+
+	@RequestMapping(value = "/admin/team_list.go")
 	public String listGo() {
 		logger.info("팀관리 리스트 페이지 접속");
 		return "/admin/team_list";
 	}
-	
+
 	@RequestMapping(value = "/admin/teamList.ajax")
 	@ResponseBody
-	public Map<String, Object> teamList(@RequestParam Map<String, Object> param){
-		logger.info("팀리스트 in param : {}",param);
+	public Map<String, Object> teamList(@RequestParam Map<String, Object> param) {
+		logger.info("팀리스트 in param : {}", param);
 		return adminTeamService.teamList(param);
 	}
-	
-	
-	@RequestMapping(value="/admin/team_detail.go")
+
+	@RequestMapping(value = "/admin/team_detail.go")
 	public String detailGo(HttpSession session, String teamIdx, Model model) {
 		logger.info("teamDetailPage Controller 접속");
 		adminTeamService.teamInfo(teamIdx, model);
 		return "/admin/team_detail";
 	}
+
+	@RequestMapping(value = "/admin/teammateList.ajax")
+	@ResponseBody
+	public Map<String, Object> teammateList(String teamIdx, String currentPage) {
+		return adminTeamService.teammateList(teamIdx, currentPage);
+	}
 	
+	
+	@RequestMapping(value = "/admin/teamUpdate.ajax")
+	@ResponseBody
+	public Map<String, Boolean> teamUpdate(@RequestParam Map<String, Object> param){
+		logger.info("teamUpdate param : {}",param);
+		return adminTeamService.teamUpdate(param);
+	}
 }
+
+
+
+
+
+
 
 
 
