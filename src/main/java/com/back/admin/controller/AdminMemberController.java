@@ -64,7 +64,7 @@ public class AdminMemberController {
 	// 회원정보 수정페이지 불러오기
 	@RequestMapping(value = "/admin/memberDetail.ajax", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, AdminMemberDTO> teammateModify(String memberId) {
+	public Map<String, AdminMemberDTO> memberModify(String memberId) {
 
 		logger.info("수정페이지 memberId : " + memberId);
 
@@ -82,5 +82,31 @@ public class AdminMemberController {
 		logger.info("memberUpdate " + memberState+ " " + memberId);
 		return memberService.writeUpdate(memberName, memberPass, memberLevel, memberAddress, memberGender,
 														memberPosition, memberState, memberId);
+	}
+	// 회원 포인트 내역 불러오기
+	@RequestMapping(value = "/admin/memberPoint")
+	
+	public String DetailGo(Model model, String memberId) {
+
+		logger.info(memberId);
+		memberService.pointDetail(model, memberId);
+		return "/admin/member_point";
+	}
+
+	// 포인트 관리 리스트 페이징
+	@RequestMapping(value = "/admin/adminPoint.ajax", method = RequestMethod.POST)
+	@ResponseBody // response 객체로 반환
+	public Map<String, Object> pointPage(String currentPage) {
+		
+		logger.info("listCall= "+ currentPage);
+		int page = Integer.parseInt(currentPage);
+		return memberService.pointPage(page);
+	}
+	// 회원 포인트 수정페이지 작성완료
+	@RequestMapping(value = "/admin/pointUpdate.ajax", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> pointUpdate(String id, String pointVal,String pointState) {
+		logger.info("memberUpdate =" +id);
+		return memberService.pointUpdate(id, pointVal, pointState);
 	}
 }

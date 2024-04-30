@@ -27,5 +27,21 @@ public interface AdminMemberDAO {
 	void writeUpdate(String memberName, String memberPass, String memberLevel, String memberAddress,
 			String memberGender, String memberPosition, String memberState, String memberId);
 
+	List<AdminMemberDTO> pointDetail(String id);
+
+	AdminMemberDTO memberPoint(String id);
+
+	List<AdminMemberDTO> pointAllList();
+
+	int pointAllCount();
+
+	List<AdminMemberDTO> pointList(int start);
+
+	void pointPlusUpdate(String id, String pointVal);
+
+	void pointMinusUpdate(String id, String pointVal);
+
+	void pointInsert(String id, String pointVal, String pointState);
+
 
 }

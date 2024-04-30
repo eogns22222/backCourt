@@ -9,26 +9,20 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="../resources/css/header/header.css">
+<link rel="stylesheet" href="../resources/css/admin/member_detail.css" type ="text/css">
 <style>
 </style>
 </head>
 <body>
     <div class="adminBody">
     <jsp:include page="../header/header_admin.jsp"/>
-            <div class="adminContainer">
-                <a href="../admin_logout.do" class="logout">로그아웃</a>
-                <ul class="menu">
-                    <li><a href="../admin/member_list">회원 관리</a></li>
-                    <li><a href="../admin/team_list">팀 관리</a></li>
-                    <li><a href="../admin/court_list">구장 관리</a></li>
-                    <li><a href="../admin/writing_list">글 관리</a></li>
-                    <li><a href="../admin/report_list">신고 관리</a></li>
-                </ul>
-            </div>
-
+           <div>
+           <h2>회원 상세 내역</h2>
+           
         <div class="content-wrapper">
         <div class="content">아이디 : ${memberId}</div>
         </div>
+        <br/>
         <div class="content-wrapper">
 			<div class="content">이름 : </div>
 			<textarea name="memberName" class="textarea" id="memberName" maxlength="20">${memberDetail.name}</textarea>
@@ -113,6 +107,7 @@
 			<input type="submit" value="수정 취소" id="cancel" class="submit"/>
 			<input type="submit" value="수정 완료" id="finish" class="submit"/>
 		</div>
+		</div>
     </div>
 </body>
 <script>
@@ -120,7 +115,7 @@ var memberId = '${memberId}';
 console.log(memberId);
 
 $('#pointChange').on('click', function(){
-	window.location.href = './memberPoint.go';
+	window.location.href = './memberPoint.go?memberId=' + memberId;
 });
 
 
