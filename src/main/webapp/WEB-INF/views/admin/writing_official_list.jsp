@@ -196,7 +196,7 @@
 		var finishTxt = '모집중';
 		var link = '';
 		for(item of list){
-			link = './official_update.go?official_match_idx=' + item.official_match_idx;
+			link = './officialUpdate.go?officialIdx=' + item.official_match_idx;
 			if(item.currentCount >= item.official_match_to){
 				finishClass2 = 'state finish';
 				finishTxt = '모집완료';

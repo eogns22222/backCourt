@@ -80,7 +80,7 @@ allPoint();
 	        }, //보낼 파라미터 값이 있을때
 	        dataType:'JSON', //아작스 타입
 	        success:function(data){//리턴된 값을 받는 곳
-	           drawList(data.list); //drawList 라는 이름으로 data에 있는 값을 넣어서 넣어준다.
+	           drawList(data.list,data.start); //drawList 라는 이름으로 data에 있는 값을 넣어서 넣어준다.
 	           allPoint(data.point);
 	            console.log("총페이지수",data); 
 	           
@@ -123,12 +123,14 @@ function allPoint(){
 	
 
 //리스트를 출력
-function drawList(list){
+function drawList(list,count){
     var con = '';
+    var count = count;
     for (lists of list) {
+    	count = count+1;
         //console.log(lists);
         con += '<tr>';
-        con += '<td>'+lists.point_idx+'</td>';
+        con += '<td>'+count+'</td>';
         var date = new Date(lists.point_date);
         var dateStr = date.toLocaleDateString("ko-KR");
         con += '<td>'+dateStr+'</td>';

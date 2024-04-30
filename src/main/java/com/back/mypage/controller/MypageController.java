@@ -29,149 +29,146 @@ public class MypageController {
 
 	// ============== 내 포인트 리스트 ===================
 
-	// 내 포인트 리스트 이동 (일반 리스트 타입)
-	@RequestMapping(value = "/mypage/point.go")
-	public String pointGo(Model model, HttpSession session) {
-		logger.info("내 포인트 리스트 접속");
-		String page = "redirect:/login";
+			// 내 포인트 리스트 이동 (일반 리스트 타입)
+			@RequestMapping(value = "/mypage/point.go")
+			public String pointGo(Model model, HttpSession session) {
+				logger.info("내 포인트 리스트 접속");
+				String page = "redirect:/login";
 
-		// 로그인 회원 아이디 가져오기
-		String loginId = (String) session.getAttribute("loginId");
+				// 로그인 회원 아이디 가져오기
+				String loginId = (String) session.getAttribute("loginId");
 
-		if (loginId != null) {
-			logger.info("로그인 아이디 : " + loginId);
+				if (loginId != null) {
+					logger.info("로그인 아이디 : " + loginId);
 
-			page = "/mypage/point";
+					page = "/mypage/point";
 
-		}
+				}
 
-		return page;
-	}
+				return page;
+			}
 
-	// 포인트 리스트 출력(아작스 버전)
-	// 비동기 방식 : 일단 페이지에 토착한다음
-	@RequestMapping(value = "/mypage/point.ajax", method = RequestMethod.POST)
-	@ResponseBody // response 객체로 ㅂㄴ환 하는 데........
-	// 아자그 하고 그나마 비슷한거
-	public Map<String, Object> listCall(HttpSession session, String page, String cnt) {
-		logger.info("페이지당 보여줄 갯수 : " + cnt);
-		logger.info("요청 페이지 :" + page);
+			// 포인트 리스트 출력(아작스 버전)
+			// 비동기 방식 : 일단 페이지에 토착한다음
+			@RequestMapping(value = "/mypage/point.ajax", method = RequestMethod.POST)
+			@ResponseBody // response 객체로 ㅂㄴ환 하는 데........
+			// 아자그 하고 그나마 비슷한거
+			public Map<String, Object> listCall(HttpSession session, String page, String cnt) {
+				logger.info("페이지당 보여줄 갯수 : " + cnt);
+				logger.info("요청 페이지 :" + page);
 
-		int currPage = Integer.parseInt(page); // 문자를 숫자로 변환
-		int pageParCnt = Integer.parseInt(cnt);
+				int currPage = Integer.parseInt(page); // 문자를 숫자로 변환
+				int pageParCnt = Integer.parseInt(cnt);
 
-		String loginId = (String) session.getAttribute("loginId");
-		logger.info("아잨스 에서 세션 아이디 : " + loginId);
-		Map<String, Object> map = mypageService.point_list_ajax(loginId, currPage, pageParCnt);
+				String loginId = (String) session.getAttribute("loginId");
+				logger.info("아잨스 에서 세션 아이디 : " + loginId);
+				Map<String, Object> map = mypageService.point_list_ajax(loginId, currPage, pageParCnt);
 
-		return map;// 여기에서 처리된 데이처를 리턴 해준다.
-	}
+				return map;// 여기에서 처리된 데이처를 리턴 해준다.
+			}
 
-	// 내 지갑 사정 (아작스)
-	@RequestMapping(value = "/mypage/my_allpoint.ajax")
-	@ResponseBody
-	public Map<String, Object> my_allpoint_ajax(HttpSession session) {
-		logger.info("내 지갑 사정(아작스) ");
+			// 내 지갑 사정 (아작스)
+			@RequestMapping(value = "/mypage/my_allpoint.ajax")
+			@ResponseBody
+			public Map<String, Object> my_allpoint_ajax(HttpSession session) {
+				logger.info("내 지갑 사정(아작스) ");
 
-		String loginId = (String) session.getAttribute("loginId");
-		logger.info("아잨스 에서 세션 아이디 : " + loginId);
+				String loginId = (String) session.getAttribute("loginId");
+				logger.info("아잨스 에서 세션 아이디 : " + loginId);
 
-		Map<String, Object> map = mypageService.my_allpoint_ajax(loginId);
+				Map<String, Object> map = mypageService.my_allpoint_ajax(loginId);
 
-		return map;
-	}
+				return map;
+			}
 
-	// 포인트 충전 페이지 이동
-	@RequestMapping(value = "/mypage/point_add.go")
-	public String ponitAdd(Model model, HttpSession session) {
-		logger.info("포인트 충전 페이지 이동");
-		String page = "redirect:/login";
+			// 포인트 충전 페이지 이동
+			@RequestMapping(value = "/mypage/point_add.go")
+			public String ponitAdd(Model model, HttpSession session) {
+				logger.info("포인트 충전 페이지 이동");
+				String page = "redirect:/login";
 
-		// 로그인 회원 아이디 가져오기
-		String loginId = (String) session.getAttribute("loginId");
-		logger.info("loginId" + loginId);
+				// 로그인 회원 아이디 가져오기
+				String loginId = (String) session.getAttribute("loginId");
+				logger.info("loginId" + loginId);
 
-		if (loginId != null) {
+				if (loginId != null) {
 
-			page = "mypage/point_add";
+					page = "mypage/point_add";
 
-		}
+				}
 
-		return page;
-	}
+				return page;
+			}
 
-	// 충전 하기
-	@RequestMapping(value = "/mypage/point_add.do")
-	public String ChargingDo(String Charging, HttpSession session) {
-		logger.info("충전 처리중...");
-		logger.info("충전 내역 : {}", Charging);
+			// 충전 하기
+			@RequestMapping(value = "/mypage/point_add.do")
+			public String ChargingDo(String Charging, HttpSession session) {
+				logger.info("충전 처리중...");
+				logger.info("충전 내역 : {}", Charging);
 
-		// 로그인 회원 아이디 가져오기
-		String loginId = (String) session.getAttribute("loginId");
-		logger.info("loginId" + loginId);
+				// 로그인 회원 아이디 가져오기
+				String loginId = (String) session.getAttribute("loginId");
+				logger.info("loginId" + loginId);
 
-		mypageService.Charging_do(loginId, Charging);
+				mypageService.Charging_do(loginId, Charging);
 
-		// 정보 업데이트
-		mypageService.point_update(loginId);
-		return "redirect:/mypage/point.go";
-	}
+				// 정보 업데이트
+				mypageService.point_plus_update(loginId);
+				return "redirect:/mypage/point.go";
+			}
 
-	// 포인트 환급 페이지 이동
-	@RequestMapping(value = "/mypage/point_minus.go")
-	public String pointMins(Model model, HttpSession session) {
-		logger.info("환급 페이지 이동");
+			// 포인트 환급 페이지 이동
+			@RequestMapping(value = "/mypage/point_minus.go")
+			public String pointMins(Model model, HttpSession session) {
+				logger.info("환급 페이지 이동");
 
-		String page = "redirect:/login";
-		// 로그인 회원 아이디 가져오기
-		String loginId = (String) session.getAttribute("loginId");
-		logger.info("loginId" + loginId);
+				String page = "redirect:/login";
+				// 로그인 회원 아이디 가져오기
+				String loginId = (String) session.getAttribute("loginId");
+				logger.info("loginId" + loginId);
+				Map<String, Object> allpoint =  mypageService.my_allpoint_ajax(loginId);
 
-		if (loginId != null) {
-			model.addAttribute("sum",mypageService.my_allpoint_ajax(loginId));
-			page = "mypage/point_minus";
+				if (loginId != null) {
+					model.addAttribute("sum",allpoint);
+					page = "mypage/point_minus";
 
-		}
+				}
 
-		return page;
-	}
+				return page;
+			}
 
-	// 환급 페이지 처리
-	@RequestMapping(value = "/mypage/point_minus.do")
-	public String PointMinus(String minus, HttpSession session, Model model) {
-		logger.info("------------------  환급 처리 컨트롤러  ----------------------");
-		logger.info("환급 중...");
-		logger.info("환급 금액 : " + minus);
+			// 환급 페이지 처리
+			@RequestMapping(value = "/mypage/point_minus.do")
+			public String PointMinus(String minus, HttpSession session, Model model) {
+				logger.info("------------------  환급 처리 컨트롤러  ----------------------");
+				logger.info("환급 중...");
+				logger.info("환급 금액 : " + minus);
 
-		String page = "mypage/point_minus";
+				String page = "mypage/point_minus";
 
-		// 로그인 회원 아이디 가져오기
-		String loginId = (String) session.getAttribute("loginId");
-		logger.info("로그인 중인 사람 : " + loginId);
+				// 로그인 회원 아이디 가져오기
+				String loginId = (String) session.getAttribute("loginId");
+				logger.info("로그인 중인 사람 : " + loginId);
 
-		logger.info("로그인 중인 사람 : " + loginId);
+				logger.info("로그인 중인 사람 : " + loginId);
 
-		Map<String, Object> point = mypageService.my_allpoint_ajax(loginId);
-		logger.info("내 지갑 포인트 : " + point.get("point"));
-		int poin = Integer.parseInt((String) point.get("point"));
-		int min = Integer.parseInt(minus);
-		int sum = poin - min;
-		logger.info("총 지갑 : "+sum);
+				Map<String, Object> point = mypageService.my_allpoint_ajax(loginId);
+				logger.info("내 지갑 포인트 : " + point.get("point"));
+				int poin = Integer.parseInt((String) point.get("point"));
+				int min = Integer.parseInt(minus);
+				int sum = poin - min;
+				logger.info("총 지갑 : "+sum);
 
-		if (sum > 0) {
-			mypageService.PointMinus(loginId, min);
+				if (sum > 0) {
+					mypageService.PointMinus(loginId, min);
 
-			// 포인트 정보 업데이트
-			mypageService.point_update(loginId);
-//			page = "redirect:/mypage/point.go";
-		} else {
-//			page = "mypage/point_minus";
-//			model.addAttribute("sum", sum);
-		}
+					// 포인트 정보 업데이트
+					mypageService.point_minus_update(loginId);
+					page = "redirect:/mypage/point.go";
+				}
 
-		return page;
-		// return null;
-	}
+				return page;
+			}
 
 	// ============================================
 
@@ -204,7 +201,8 @@ public class MypageController {
 		int row = mypageService.report(map);
 
 		if (row >= 1) {
-			page = "index";
+			page = "redirect:/mypage/report_list.go";
+			
 		}
 
 		return page;
@@ -236,174 +234,195 @@ public class MypageController {
 		return mypageService.jjimDel(selectedIdxList);
 	}
 
-// ============ 신청/예약 리스트 ==================
+	// ============ 신청/예약 리스트 ==================
 
-// 신청/예약  리스트 이동
-	@RequestMapping(value = "/mypage/match_ask_list.go")
-	public String matchAskListGo() {
-		return "mypage/match_ask_list";
-	}
+	// 신청/예약  리스트 이동
+		@RequestMapping(value = "/mypage/match_ask_list.go")
+		public String matchAskListGo() {
+			return "mypage/match_ask_list";
+		}
 
-// 신청/예약 리스트(아작스)
-	@RequestMapping(value = "/mypage/match_ask_list.ajax")
-	@ResponseBody
-	public Map<String, Object> match_ask_list_ajax(String Choice, String page, String num, HttpSession session) {
-		logger.info("아작스 접근");
-		logger.info("선택 버튼 : {}", Choice);
-		logger.info("n번 부터 : {}", page);
-		logger.info("n개 :  {} ", num);
+	// 신청/예약 리스트(아작스)
+		@RequestMapping(value = "/mypage/match_ask_list.ajax")
+		@ResponseBody
+		public Map<String, Object> match_ask_list_ajax(String Choice, String page, String num, HttpSession session) {
+			logger.info("아작스 접근");
+			logger.info("선택 버튼 : {}", Choice);
+			logger.info("n번 부터 : {}", page);
+			logger.info("n개 :  {} ", num);
 
-		// 로그인 중인 아이디
-		String loginId = (String) session.getAttribute("loginId");
-		logger.info("로그인 아이디 : {}", loginId);
+			// 로그인 중인 아이디
+			String loginId = (String) session.getAttribute("loginId");
+			logger.info("로그인 아이디 : {}", loginId);
 
-		// 값 변환
-		int currPage = Integer.parseInt(page); // n번 부터
-		int pageParnum = Integer.parseInt(num); // n개
+			// 값 변환
+			int currPage = Integer.parseInt(page); // n번 부터
+			int pageParnum = Integer.parseInt(num); // n개
 
-		// 아작스를 컨트롤러에서 처리 하지 않고 서비스로 보낸다.
-		Map<String, Object> map = mypageService.match_ask_list_ajax(loginId, Choice, currPage, pageParnum);
+			// 아작스를 컨트롤러에서 처리 하지 않고 서비스로 보낸다.
+			Map<String, Object> map = mypageService.match_ask_list_ajax(loginId, Choice, currPage, pageParnum);
 
-		return map;
-	}
+			return map;
+		}
 
-	// 아작스 리스트 삭제 (공식 경기 삭제)
-	@RequestMapping(value = "/mypage/official_match_list_del.ajax", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> match_ask_list_del(String idx, HttpSession session) {
-		logger.info("아작스 리스트 삭제 중...");
-		logger.info("idx : {}", idx);
+		// 아작스 리스트 삭제 (공식 경기 삭제)
+		@RequestMapping(value = "/mypage/official_match_list_del.ajax", method = RequestMethod.POST)
+		@ResponseBody
+		public Map<String, Object> match_ask_list_del(String idx, HttpSession session) {
+			logger.info("아작스 리스트 삭제 중...");
+			logger.info("idx : {}", idx);
 
-		// 로그인 중인 아이디
-		String loginId = (String) session.getAttribute("loginId");
-		logger.info("로그인 아이디 : {}", loginId);
+			// 로그인 중인 아이디
+			String loginId = (String) session.getAttribute("loginId");
+			logger.info("로그인 아이디 : {}", loginId);
+//			신정한 곳에 데이터를 뽑아내 포인트 상테만 바꾼다음 인썰트 한다
+			mypageService.official_Cancellation(loginId,idx);
+//			버튼을 누르면 리스트에 로우를 삭제한다
+			Map<String, Object> map = mypageService.match_ask_list_del(loginId, idx);
+//			취소 했을시 환급을 해준다
+			mypageService.point_plus_update(loginId);
 
-		Map<String, Object> map = mypageService.match_ask_list_del(loginId, idx);
+			return map;
+		}
 
-		return map;
-	}
+		// 아작스 (게스트 리스트 삭제)
+		@RequestMapping(value = "/mypage/guset_match_list_del.ajax")
+		@ResponseBody
+		public Map<String, Object> guset_match_list_del(String idx, HttpSession session) {
+			logger.info("아작스(게스트 리스트 삭제 접속)");
 
-	// 아작스 (게스트 리스트 삭제)
-	@RequestMapping(value = "/mypage/guset_match_list_del.ajax")
-	@ResponseBody
-	public Map<String, Object> guset_match_list_del(String idx, HttpSession session) {
-		logger.info("아작스(게스트 리스트 삭제 접속)");
+			// 로그인 중인 아이디
+			String loginId = (String) session.getAttribute("loginId");
+			logger.info("로그인 아이디 : {}", loginId);
 
-		// 로그인 중인 아이디
-		String loginId = (String) session.getAttribute("loginId");
-		logger.info("로그인 아이디 : {}", loginId);
+			Map<String, Object> map = mypageService.guset_match_list_del(loginId, idx);
 
-		Map<String, Object> map = mypageService.guset_match_list_del(loginId, idx);
+			return map;
+		}
 
-		return map;
-	}
+		// 아작스 (구장 리스트 삭제)
+		@RequestMapping(value = "/mypage/court_match_list_del")
+		@ResponseBody
+		public Map<String, Object> court_match_list_del(String idx, HttpSession session) {
+			logger.info("아작스 (구장 리스트 삭제) 접근");
 
-	// 아작스 (구장 리스트 삭제)
-	@RequestMapping(value = "/mypage/court_match_list_del")
-	@ResponseBody
-	public Map<String, Object> court_match_list_del(String idx, HttpSession session) {
-		logger.info("아작스 (구장 리스트 삭제) 접근");
-
-		// 로그인 중인 아이디
-		String loginId = (String) session.getAttribute("loginId");
-		logger.info("로그인 아이디 : {}", loginId);
-
-		Map<String, Object> map = mypageService.court_match_list_del(loginId, idx);
-
-		return map;
-	}
-	
-//	=================== 신고 리스트 / 수정 ==================================
-	
-	
-	
-	//-----------------------  신고 내용 수정/상세보기 -----------------------------------
-	
-	//신고 내용 수정 상세보기 이동
-	@RequestMapping(value = "/mypage/report_modify.go")
-	public String report_detail(HttpSession session,Model model) {
-		logger.info("================== 신고 내용 수정 ====================");
-		logger.info("신고 내용 수정 상세보기");
-		
-//		나중에 풀거
-//		String loginId = (String) session.getAttribute("loginId");
-//		logger.info("현제 로그인 중인 아이디"+loginId);
-		
-//		테스트 정보
-		String loginId = "a";
-		int idx = 18;
-		
-		
-		//수정이기 때문에 데이터를 보낸다
-		MypageDTO report_detail = mypageService.report_detail(loginId,idx);
-		logger.info("데이터 수정 접속 : ",report_detail);
-		model.addAttribute("report",report_detail);
-		
-		
-		return "/mypage/report_modify";
-	}
-	
-	
-//	신고 수정 하기
-	@RequestMapping(value = "/mypage/report_modify.do", method = RequestMethod.POST)
-	public String report_modify(HttpSession session,@RequestParam Map<String,String> param) {
-		logger.info("수정중....");
-		
-		String page = "";
-		
-//		나중에 풀거
-//		String loginId = (String) session.getAttribute("loginId");
-//		logger.info("현제 로그인 중인 아이디"+loginId);
-		
-		int row = mypageService.report_modify(param);
-		logger.info("param : {}",param);
-		logger.info("row : ",row);
-		
-		if (row >0) {
-			logger.info("변경 성공");
-			page = "redirect:/mypage/report_list.go";
+			// 로그인 중인 아이디
+			String loginId = (String) session.getAttribute("loginId");
+			logger.info("로그인 아이디 : {}", loginId);
 			
-		}else {
-			logger.info("변경 실패");
-			page = "redirect:/mypage/report_modify.go";
+			mypageService.court_Cancellation(loginId,idx);
+
+			Map<String, Object> map = mypageService.court_match_list_del(loginId, idx);
+			
+//			취소 했을시 환급을 해준다
+			mypageService.point_plus_update(loginId);
+
+			return map;
 		}
 		
-		return page;
-	}
-	
-//	-------------------------------------- 신고글 리스트 ---------------------------------------------------------
-	
-	
-//	신고 / 문의 리스트로 가기
-	@RequestMapping(value = "/mypage/report_list.go")
-	public String report_list_go() {
-		return "mypage/report_list";
-	}
-	
-	
-//	신고 / 문의 리스트(ajax)
-	@RequestMapping(value = "/mypage/report_list.ajax")
-	@ResponseBody
-	public Map<String,Object> report_list(String page,String cnt,HttpSession session){
-		logger.info("================ 리스트 출력(ajax) ========================");
-		
-		logger.info("n번 부터 : {}",page);
-		logger.info("n개 보여줘 : {}",cnt);
-		
-		int currPage = Integer.parseInt(page);
-		int pageSome = Integer.parseInt(cnt);
-		
-		//나중에 풀거
-//		String loginId = (String) session.getAttribute("loginId");
-//		logger.info("현재 로그인 중인 아이디 : ",loginId);
-		
-		String loginId = "a";
-		
-		Map<String, Object> map = mypageService.report_list_ajax(loginId,currPage,pageSome);
+//		=================== 신고 리스트 / 수정 ==================================
 		
 		
-		return map;
-	}
-	
+		
+		//-----------------------  신고 내용 수정/상세보기 -----------------------------------
+		
+		//신고 내용 수정 상세보기 이동
+		@RequestMapping(value = "/mypage/report_modify.go")
+		public String report_detail(HttpSession session,Model model,String idx) {
+			logger.info("================== 신고 내용 수정 ====================");
+			logger.info("신고 내용 수정 상세보기");
+			logger.info("id : "+idx);
+			
+//			나중에 풀거
+			String loginId = (String) session.getAttribute("loginId");
+			logger.info("현제 로그인 중인 아이디"+loginId);
+			
 
-}
+			
+			
+			//수정이기 때문에 데이터를 보낸다
+			MypageDTO report_detail = mypageService.report_detail(loginId,idx);
+			logger.info("데이터 수정 접속 : ",report_detail);
+			model.addAttribute("report",report_detail);
+			
+			
+			return "/mypage/report_modify";
+		}
+		
+		
+//		신고 수정 하기
+		@RequestMapping(value = "/mypage/report_modify.do", method = RequestMethod.POST)
+		public String report_modify(HttpSession session,@RequestParam Map<String,String> param) {
+			logger.info("수정중....");
+			
+			String page = "";
+			
+//			나중에 풀거
+//			String loginId = (String) session.getAttribute("loginId");
+//			logger.info("현제 로그인 중인 아이디"+loginId);
+			
+			int row = mypageService.report_modify(param);
+			logger.info("param : {}",param);
+			logger.info("row : ",row);
+			
+			if (row >0) {
+				logger.info("변경 성공");
+				page = "redirect:/mypage/report_list.go";
+				
+			}else {
+				logger.info("변경 실패");
+				page = "redirect:/mypage/report_modify.go";
+			}
+			
+			return page;
+		}
+		
+//		-------------------------------------- 신고글 리스트 ---------------------------------------------------------
+		
+		
+//		신고 / 문의 리스트로 가기
+		@RequestMapping(value = "/mypage/report_list.go")
+		public String report_list_go() {
+			return "mypage/report_list";
+		}
+		
+		
+//		신고 / 문의 리스트(ajax)
+		@RequestMapping(value = "/mypage/report_list.ajax")
+		@ResponseBody
+		public Map<String,Object> report_list(String page,String cnt,HttpSession session){
+			logger.info("================ 리스트 출력(ajax) ========================");
+			
+			logger.info("n번 부터 : {}",page);
+			logger.info("n개 보여줘 : {}",cnt);
+			
+			int currPage = Integer.parseInt(page);
+			int pageSome = Integer.parseInt(cnt);
+			
+			//나중에 풀거
+			String loginId = (String) session.getAttribute("loginId");
+			logger.info("현재 로그인 중인 아이디 : ",loginId);
+			
+			
+			Map<String, Object> map = mypageService.report_list_ajax(loginId,currPage,pageSome);
+			
+			
+			return map;
+		}
+		
+//		-------------------------------- 신고글 삭제 ---------------------------------
+		@RequestMapping(value = "/mypage/report_del.ajax")
+		@ResponseBody
+		public Map<String, Object> report_del_ajax(String idx,HttpSession session){
+			logger.info("idx : "+idx);
+			
+			String loginId = (String) session.getAttribute("loginId");
+			logger.info("loginId : "+loginId);
+
+			mypageService.report_del_ajax(loginId,idx);
+			
+			return null;
+		}
+		
+
+	}

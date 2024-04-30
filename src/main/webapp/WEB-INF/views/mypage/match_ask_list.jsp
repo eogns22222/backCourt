@@ -280,6 +280,7 @@ function gusetList(list,start,siz){
 			Content += '<td class="match_list_td">'+ModifyDate+'</td>';
 			Content += '<td class="match_list_td">'+guset.guest_time+'</td>';
 			var state = guset.guest_join_state;
+			console.log(state);
 			var styleButton = '';
 			if (state == '확인중') {
 				styleButton = 'match_list_Checking';
@@ -312,7 +313,7 @@ function courtList(list,start,siz){
     	Content += '<td class="match_list_td">'+count+'</td>';
         Content += '<td class="match_list_td">'+court.court_name+'</td>';
      	// 날짜 오류 수정
-    	var date = new Date(official.official_match_date);
+    	var date = new Date(court.booking_date);
         var ModifyDate = date.toLocaleDateString("ko-KR");
         Content += '<td class="match_list_td">'+ModifyDate+'<br/>'+court.court_time+'</td>';
         Content += '<td class="match_list_td"><button  class="match_list_del_button" onclick="court_match_list_del('+court.court_booking_idx +')">신청 취소</button></td>';
