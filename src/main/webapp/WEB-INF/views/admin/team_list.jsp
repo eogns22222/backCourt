@@ -58,7 +58,7 @@
 			<table class="adminteamListTable">
 				<thead>
 					<tr>
-						<th class="adminteamListTh">팀사진</th>
+						<th class="adminteamListTh">팀로고</th>
 						<th class="adminteamListTh">팀이름</th>
 						<th class="adminteamListTh">지역</th>
 						<th class="adminteamListTh">팀장명</th>

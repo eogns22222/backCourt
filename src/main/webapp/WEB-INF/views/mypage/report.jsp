@@ -31,6 +31,8 @@
                 <input type="submit" value="취소" id="cancel" class="submit">
                 <input type="submit" value="제출" class="submit">
             </div>
+            <input type="text" value="" name="reperenceType"/>
+            <input type="text" value="${report_write_idx}" name="reperenceIdx"/>
         </form>
     </div>
 </body>
@@ -44,7 +46,9 @@
 	        this.action = "submit_report.php?type=inquiry";
 	    }
 	}); */
-    
+    var writeType = ${report_write_type};
+    $('input[name="reperenceType"]').val(writeType);
+	
 	document.querySelector('input[type="submit"][value="제출"]').addEventListener("click", function(event) {
 	    var name = document.getElementById("name").value;
 	    var message = document.getElementById("message").value;
