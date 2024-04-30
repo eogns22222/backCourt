@@ -300,19 +300,19 @@
 	</select>
 	
 	<select id="teammateDetail" resultType="com.back.teammate.dto.TeammateDTO">
-	SELECT
-		t.logo
-		,t.team_name
-		,t.id
-		,t.team_address
-		,tj.join_team_level
-		,tj.join_team_gender
-		,tj.join_team_position
-		,tj.join_team_content
-	FROM team t
-	JOIN team_join tj
-	ON t.team_idx = tj.team_idx
-	WHERE tj.join_team_idx = #{param1}
+		SELECT
+			t.logo
+			,t.team_name
+			,t.id
+			,t.team_address
+			,tj.join_team_level
+			,tj.join_team_gender
+			,tj.join_team_position
+			,tj.join_team_content
+		FROM team t
+		JOIN team_join tj
+		ON t.team_idx = tj.team_idx
+		WHERE tj.join_team_idx = #{param1}
 	</select>
 	
 	<insert id="teammateJoin" parameterType="String">

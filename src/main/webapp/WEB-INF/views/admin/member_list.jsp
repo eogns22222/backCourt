@@ -16,20 +16,8 @@
 <body>
     <div class="adminBody">
     <jsp:include page="../header/header_admin.jsp"/>
-    <header class="adminContainer">
-      <div class="headerCont">
-          	<a href="admin_logout.do" class="logout">로그아웃</a>
-          	<ul class="menu">
-               <li><a href="admin/member_list">회원 관리</a></li>
-               <li><a href="admin/team_list">팀 관리</a></li>
-               <li><a href="admin/court_list">구장 관리</a></li>
-               <li><a href="admin/writing_list">글 관리</a></li>
-               <li><a href="admin/report_list">신고 관리</a></li>
-           </ul>
-      </div>
-    </header>
-    
-    <h2>회원 관리</h2>
+    <div>
+    <h2>회원 관리 리스트</h2>
     <!-- 멤버 계정 상태 -->
     <select id="memberState">
         <option value="">전체</option>
@@ -68,6 +56,7 @@
                </td>
            </tr>
         </table>
+        </div>
         </div>
         </div>
     <br/>
