@@ -42,7 +42,7 @@
             <tr>
                 <!-- 플러그인 사용법 --> 
                    <td colspan="4">
-                       <div class="container">                           
+                       <div class="container" >                           
                         <nav aria-label="Page navigation" style="text-align:center">
                            <ul class="pagination" id="pagination"></ul>
                         </nav>               
@@ -55,10 +55,11 @@
 <script>
     var showPage = 1; //n번부터
     var pagePerNum = 3; //n개 보여줌
+
 	listCall(showPage);
     
 	//리스트 호출
-    function listCall(page,perNum){
+    function listCall(page){
     	$.ajax({
     		type:'post',
             url:'./report_list.ajax',
@@ -68,7 +69,7 @@
             },
             dataType:'JSON',
             success:function(data){
-            	reportList(data.list);
+            	reportList(data.list,data.state);
 				console.log(data);
 				
 		         // 플러그인
@@ -90,13 +91,15 @@
 
 
     	});
+    	
     }
     
- function reportList(list){
+ function reportList(list,count){
 	 var content = '';
-	 var count = 0;
+	 var count = count;
 	for (report of list) {
-		count++;
+		console.log(report);
+		count = count +1;
 		content += '<tr class="report_list_tbody">';
 		content +='<td class="report_list_td" >'+count+'</td>';
        	content +='<td class="report_list_td">'+report.report_tit+'</td>'; 
@@ -105,14 +108,57 @@
        	var ModifyDate = date.toLocaleDateString("ko-KR");
        	content +='<td class="report_list_td">'+ModifyDate+'</td>';
        	var state = report.report_state;
-       	console.log("처리 내용 :",state);
-        content +='<td class="report_list_td"><button disabled id="match_list_Checking">'+report.report_state+'</button></td>';    
-        content +='<th class="report_list_td"><button class="button" id="report_modify">수정</button></th>';    
-       	content +='<th class="report_list_td"><button class="button" id="report_del">삭제</button></th>';   
+       	var css = '';
+       	if (state=='처리전') {
+			css = 'match_list_Checking';
+		}else if (state=='처리중') {
+			css = 'match_list_Pr';
+		}else if (state=='완료') {
+			css = 'match_list_Yes';
+		}
+        content +='<td class="report_list_td"><button disabled id="'+css+'">'+report.report_state+'</button></td>';    
+        content +='<th class="report_list_td"><button class="button" id="report_modify" onclick="report_Modify('+report.report_idx+')">수정</button></th>';    
+       	content +='<th class="report_list_td"><button class="button" id="report_del" onclick="report_del('+report.report_idx+')">삭제</button></th>';   
         content +='</tr>';
 	} 
 	$('#list').html(content);
+	
  }
+ 
+ // 수정
+ function report_Modify(idx){
+	 console.log(idx);
+	 var id = idx;
+	 location.href="./report_modify.go?idx="+id;
+ }
+ 
+ 
+ // 삭제
+ function report_del(idx){
+	 var cancell = confirm('신청을 취소하시겠습니까?');
+	 if (cancell) {
+		
+	 var id = idx;
+	 console.log(id);
+     $.ajax({
+         type:'post',
+         url:'./report_del.ajax',
+         data:{
+				'idx':idx
+         },
+         dataType:'JSON',
+         success:function(data){
+         },
+         error:function(error){
+             console.log(error);
+         }
+     });
+     
+	}
+        	    $('#pagination').twbsPagination('destroy');
+        	    listCall(showPage);
+ }
+ 
 
 </script>
 </html>

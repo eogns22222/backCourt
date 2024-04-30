@@ -31,7 +31,12 @@
                 <br/>
                 <div class="but">
                     <input type="button" value="취소" id="cancel" class="submit"/>
-                    <input type="button" value="수정" id="Modify" class="submit"/>
+            	<c:if test="${report.report_feed!=null}">
+					<input type="hidden" value="수정" id="Modify" class="submit" />
+				</c:if>
+				<c:if test="${report.report_feed==null}">
+					<input type="button" value="수정" id="Modify" class="submit" />
+				</c:if>
                 </div>
             </form>
         </div>
@@ -44,47 +49,7 @@
         </div>
     </body>
     <script>
-        // 다른 유형에 대한 처리 추가
-        /* document.getElementById("reportForm").addEventListener("submit", function(event) {
-            var category = document.getElementById("category").value;
-            if (category === "report") {
-                this.action = "submit_report.php?type=report";
-            } else if (category === "inquiry") {
-                this.action = "submit_report.php?type=inquiry";
-            }
-        }); */
         
-        // document.querySelector('input[type="button"][value="수정"]').addEventListener("click", function(event) {
-        //     var name = document.getElementById("name").value;
-        //     console.log(name);
-        //     var message = document.getElementById("message").value;
-        
-        //     if (name.trim() === '' || message.trim() === '') {
-        //         alert("제목과 내용을 모두 입력해주세요.");
-        //         event.preventDefault();// 폼 제출 동작을 중지함
-        //     }else{
-        //     	var confirmed = confirm("정말로 제출하시겠습니까?"); // 확인 창을 띄움
-                
-        //     	if (!confirmed) {
-        //             event.preventDefault(	); // 확인 버튼을 누르지 않은 경우에만 폼 제출 동작을 중지함
-        //         }
-        //     }
-        // });
-    
-        // // 취소(submit) 버튼 클릭 시 처리
-        // document.querySelector('input[type="button"][value="취소"]').addEventListener("click", function(event) {
-        //     var cancelConfirmed = confirm("작성한 내용을 취소하시겠습니까?"); // 취소 확인 창을 띄움
-    
-        //     if (!cancelConfirmed) {
-        //         event.preventDefault(); // 사용자가 확인을 눌렀을 경우에만 기본 동작을 중지함
-        //     }
-        //  // 사용자가 확인을 누른 경우에는 이전 페이지로 이동
-        //     else {
-        //         history.back();
-        //     }
-        // });
-    
-         //J_Q
     //버튼을 클릭 했을때
     $('input[type="button"]').on('click',function(){
         var Choice = $(this).val();
@@ -105,7 +70,7 @@
         }
         if(Choice == '취소'){
             console.log(Choice);
-            location.href="report_list";
+            location.href="./report_list.go";
         }
     });
     

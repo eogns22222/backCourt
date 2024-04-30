@@ -70,7 +70,7 @@ function Point(point){
 	var point = point;
 	var content = '';
 	console.log(point);
-	if (point == null) {
+	if (point == 0) {
 		content = '<td id="point">0 원</td>';
 	}else {
 		content = '<td id="point">'+point+' 원</td>';

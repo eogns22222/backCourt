@@ -6,8 +6,8 @@
 <mapper namespace="com.back.mypage.dao.MypageDAO">
 
 	<insert id="report" parameterType="map">
-	INSERT INTO report (id, report_tit, report_content, report_write_idx, report_write_type)
-		VALUES (#{id},#{report_tit}, #{report_content}, #{report_write_idx}, #{report_write_type})
+	INSERT INTO report (id, report_tit, report_content, report_write_idx, report_write_type,report_state)
+		VALUES (#{id},#{report_tit}, #{report_content}, #{report_write_idx}, #{report_write_type},"처리전")
 	</insert>
 	
 	<select id="jjimList" resultType="com.back.mypage.dto.MypageDTO">
@@ -72,10 +72,20 @@ FROM point_list pl join member m on pl.id = m.id where m.id = #{param1} ORDER BY
 	SELECT CEIL(COUNT(id)/#{param1}) AS pages FROM point_list where id = #{param2}
 </select>
 
-<update id="point_update">
-UPDATE member set point = (
-SELECT SUM(point_change)-(SELECT IFNULL(SUM(point_change),0) FROM point_list pl where id =#{param1} AND point_state="환급")
-FROM point_list pl where id =#{param1} AND point_state="충전") where id=#{param1}
+<update id="point_plus_update">
+UPDATE member SET 
+	point= (SELECT point+
+					(SELECT point_change FROM  point_list pl where id=#{param1} order by point_idx DESC limit 0,1) 
+			   FROM member m where id=#{param1})
+	where id=#{param1}
+</update>
+
+<update id="point_minus_update">
+UPDATE member SET 
+	point= (SELECT point-
+					(SELECT point_change FROM  point_list pl where id=#{param1} order by point_idx DESC limit 0,1) 
+			   FROM member m where id=#{param1})
+	where id=#{param1}
 </update>
 
 
@@ -138,15 +148,38 @@ SELECT CEIL(COUNT(court_booking_idx)/#{param1}) FROM court_booking cb where id =
 </select>
 
 
+<insert id="official_Cancellation">
+	INSERT into point_list(id,
+	point_change,
+	point_state,
+	write_idx,
+	write_type)
+select id,point_change,"취소",write_idx,write_type 
+FROM point_list where point_idx = (SELECT point_idx FROM point_list pl where id = #{param1} and point_state = "대기" and write_idx = (SELECT official_match_idx FROM offcial_match_ask_list where id = #{param1} AND official_match_ask_idx = #{param2}))
+</insert>
+
+
 <!-- 공식 경기 리스 트 삭제 -->
 <delete id="match_ask_list_del" >
 DELETE FROM offcial_match_ask_list where id = #{param1} and official_match_ask_idx=#{param2}
 </delete>
 
+
+
 <!-- 게스트 리스트 삭제 -->
 <delete id="guset_match_list_del">
 DELETE FROM guest_join_list WHERE id=#{param1} AND guest_join_idx =#{param2}
 </delete>
+
+
+<insert id="court_Cancellation">
+INSERT into point_list(id,
+point_change,
+point_state,
+write_idx,
+write_type)select id,point_change,"취소",write_idx,write_type FROM point_list where point_idx =(SELECT point_idx FROM point_list pl where id = #{param1} AND point_state = "예약" AND write_type ="구장예약" and write_idx = (SELECT court_idx FROM court_booking c where id = #{param1} AND court_booking_idx = #{param2}))
+</insert>
+
 
 <delete id="court_match_list_del">
 DELETE FROM court_booking where id=#{param1} AND court_booking_idx = #{param2}
@@ -166,7 +199,8 @@ UPDATE report SET report_tit=#{report_tit},report_content=#{report_content} WHER
 </update>
 
 <select id="report_list" resultType="com.back.mypage.dto.MypageDTO">
-	SELECT report_tit
+	SELECT report_idx
+		,report_tit
 		,report_date
 		,report_state 
 	FROM report r WHERE id = #{param1} order by report_date desc limit #{param2},#{param3}
@@ -176,5 +210,9 @@ UPDATE report SET report_tit=#{report_tit},report_content=#{report_content} WHER
 <select id="totalPages" resultType="Integer">
 	SELECT CEIL(COUNT(report_idx)/#{param1}) FROM report r WHERE id = #{param2}
 </select>
+
+<delete id="report_del_ajax">
+	DELETE FROM report where id = #{param1} AND report_idx = #{param2}
+</delete>
 
 </mapper>
