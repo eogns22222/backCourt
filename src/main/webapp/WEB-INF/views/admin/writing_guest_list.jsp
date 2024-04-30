@@ -234,7 +234,7 @@
 		var link = '';
 		var remainingNum = '';
 		for(item of list){
-			link = './guest_update.go?guest_idx=' + item.guest_idx;
+			link = './guestUpdate.go?guestIdx=' + item.guest_idx;
 			remainingNum = item.guest_to - item.currentCount
 			
 			content +=

@@ -1,10 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>제목 입력</title>
+<title>Insert title here</title>
 <link rel="stylesheet" href="../resources/css/common/reset.css">
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -109,30 +108,19 @@
 </style>
 </head>
 <body>
-	<div class="adminBody">
-		<header class="adminHeader">
-			<div class="headerCont">
-				<a href="../admin_logout.do" class="logout">로그아웃</a>
-				<ul class="menu">
-					<li><a href="../admin/member_list">회원 관리</a></li>
-					<li><a href="../admin/team_list">팀 관리</a></li>
-					<li><a href="../admin/official_list">공식 경기 관리</a></li>
-					<li><a href="../admin/writing_list">글 관리</a></li>
-					<li><a href="../admin/report_list">신고 관리</a></li>
-				</ul>
-			</div>
-		</header>
+    <div class="adminBody">
+        <jsp:include page="../header/header_admin.jsp"/>
 		<div class="adminContainer">
-			<h1>공식경기 수정</h1>
+			<h1>게스트 모집 수정</h1>
 				<table class="officialUpdateTable">
 					<tr>
-						<th class="officialUpdateTh">공식 경기 이름</th>
+						<th class="officialUpdateTh">게스트 모집 번호</th>
 						<td class="officialUpdateTd">
 							<input type="text" id="officialUpdateName" disabled/>
 						</td>
 					</tr>
 					<tr>
-						<th class="officialUpdateTh">공식 경기 사진</th>
+						<th class="officialUpdateTh">게스트 모집 사진</th>
 						<td class="officialUpdateTd">
 							<div class="swiper-container">
 								<!-- Additional required wrapper -->
@@ -152,15 +140,15 @@
 						</td>
 					</tr>
 					<tr>
-						<th class="officialUpdateTh">공식 경기 가격</th>
+						<th class="officialUpdateTh">게스트 모집 가격</th>
 						<td class="officialUpdateTd">
-							<input type="text" id="officialUpdatePrice" value="${officialInfo.officialPrice}" />
+							<input type="text" id="officialUpdatePrice" value="${officialInfo.guest_fee}" />
 						</td>
 					</tr>
 					<tr>
-						<th class="officialUpdateTh">공식 경기 날짜</th>
+						<th class="officialUpdateTh">게스트 모집 날짜</th>
 						<td class="officialUpdateTd">
-							<input id="officialUpdateDate" type="text" value="${officialInfo.officialDate}"/>
+							<input id="officialUpdateDate" type="text" value="${officialInfo.booking_date}"/>
 							<br/>
 							<input class="officialUpdateTimeBtn" id="0" type="button" value="00~02">
 							<input class="officialUpdateTimeBtn" id="2" type="button" value="02~04">
@@ -177,7 +165,7 @@
 						</td>
 					</tr>
 					<tr>
-						<th class="officialUpdateTh">공식 경기 레벨</th>
+						<th class="officialUpdateTh">게스트 모집 레벨</th>
 						<td class="officialUpdateTd">
 							<select id="officialUpdateLevel" >
 								<option value="">레벨을 선택해 주세요</option>
@@ -189,7 +177,7 @@
 						</td>
 					</tr>
 					<tr>
-						<th class="officialUpdateTh">공식 경기 성별</th>
+						<th class="officialUpdateTh">게스트 모집 성별</th>
 						<td class="officialUpdateTd">
 							<select id="officialUpdateGender">
 								<option value="">성별을 선택해 주세요</option>
@@ -199,72 +187,74 @@
 						</td>
 					</tr>
 					<tr>
-						<th class="officialUpdateTh">공식 경기 모집인원</th>
+						<th class="officialUpdateTh">게스트 모집 모집인원</th>
 						<td class="officialUpdateTd">
-							<input type="number" id="officialUpdateTo" value="${officialInfo.officialTO}"/>
+							<input type="number" id="officialUpdateTo" value="${officialInfo.guest_to}"/>
 						</td>
 					</tr>
 					<tr>
-						<th class="officialUpdateTh">공식 경기 정보</th>
+						<th class="officialUpdateTh">게스트 모집 정보</th>
 						<td class="officialUpdateTd"><textarea id="officialUpdateInfo"
-								maxlength="300">${officialInfo.officialInfo}</textarea></td>
+								maxlength="300">${officialInfo.guest_info}</textarea></td>
 					</tr>
 					<tr>
-						<th class="officialUpdateTh">공식 경기 위치</th>
+						<th class="officialUpdateTh">게스트 경기 위치</th>
 						<td class="officialUpdateTd">
 							<input type="text" id="officialUpdateAddress" maxlength="300" disabled/></td>
 					</tr>
 				</table>
 				<br /> 
 				<input type="checkbox" name="" id="officialIsDisabled"> 
-				<label for="officialIsDisabled">공식 경기 비활성</label>
+				<label for="officialIsDisabled">게스트 모집 비활성</label>
 				<br/>
 				<input id="officialRegisterCancel" type="button" value="취소 하기" />
 				<input id="officialRegisterSubmit" type="button" value="등록 하기" />
 		</div>
-	</div>
-		<div id="light" class="white_content">
-			<input type="text" id="officialCourtListSearch" placeholder="(검색)주소를 입력"/>
-			<br/>
-			<br/>
-			<table class="officialCourtTable">
-				<thead>
-					<tr>
-						<th class="officialCourtTh">구장 번호</th>
-						<th class="officialCourtTh">구장 이름</th>
-						<th class="officialCourtTh">구장 지역</th>
-					</tr>
-				</thead>
-				<tbody id="list">
-				</tbody>
-
-
-			</table>
-						<div class="container">                           
-							<nav aria-label="Page navigation" style="text-align:center">
-								<ul class="pagination" id="pagination"></ul>
-							</nav>               
-						</div>
-
+    </div>
+    <div id="light" class="white_content">
+		<input type="text" id="officialCourtListSearch" placeholder="(검색)주소를 입력"/>
+		<br/>
+		<br/>
+		<table class="officialCourtTable">
+			<thead>
+				<tr>
+					<th class="officialCourtTh">구장 번호</th>
+					<th class="officialCourtTh">구장 이름</th>
+					<th class="officialCourtTh">구장 지역</th>
+				</tr>
+			</thead>
+			<tbody id="list">
+			
+			</tbody>
+		</table>
+		<div class="container">                           
+			<nav aria-label="Page navigation" style="text-align:center">
+				<ul class="pagination" id="pagination"></ul>
+			</nav>               
 		</div>
-		<div id="fade" class="black_overlay"></div>
+	</div>
+	<div id="fade" class="black_overlay"></div>
 </body>
 <script>
-	var courtIdx = '${officialInfo.courtIdx}';
+	//퍼블 영역
+	$('.adminHeader .menu li').eq(3).addClass('on');
+
+	var courtIdx = '${officialInfo.court_idx}';
 	var currentPage = 1;
 	var currentDate = new Date();
 	var formattedDate = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1).toString().padStart(2, '0') + "-" + currentDate.getDate().toString().padStart(2, '0');
 	var selectDate = '';
 	var selectTime = '';
-	var originalCourtIdx = '${officialInfo.courtIdx}';
-	var originalSelectTime = '${officialInfo.officialStartTime}';
+	var originalCourtIdx = '${officialInfo.court_idx}';
+	var originalSelectTime = '${officialInfo.booking_start_time}';
+	var courtBookingIdx = '${officialInfo.court_booking_idx}';
 	
-	$('#officialUpdateDate').val('${officialInfo.officialDate}');
+	$('#officialUpdateDate').val('${officialInfo.booking_date}');
 	selectDate = $('#officialUpdateDate').val();
-	selectTime = '${officialInfo.officialStartTime}';
+	selectTime = '${officialInfo.booking_start_time}';
 
-	$('#officialUpdateLevel').val('${officialInfo.officialLevel}');
-	$('#officialUpdateGender').val('${officialInfo.officialGender}');
+	$('#officialUpdateLevel').val('${officialInfo.guest_level}');
+	$('#officialUpdateGender').val('${officialInfo.guest_gender}');
 	
 	callCourtInfo(courtIdx);
 	disabledButton();
@@ -308,26 +298,27 @@
 		}
 		if(confirm('정말로 수정 하시겠습니까?')){
 			$.ajax({
-				url:'./officialUpdate.ajax'
+				url:'./guestUpdate.ajax'
 				,type:'post'
 				,dataType:'json'
 				,data:{
-					'officialState':officialIsDisabled
+					'courtBookingIdx':courtBookingIdx
+					,'officialState':officialIsDisabled
 					,'officialPrice':officialCourtPrice
 					,'officialLevel':officialLevel
 					,'officialGender':officialGender
 					,'officialTO':officialTO
 					,'officialInfo':officialInfo
 					,'officialStartTime':selectTime
-					,'officialEndTime':selectTime+2
+					,'officialEndTime':parseInt(selectTime)+2
 					,'officialDate':selectDate
 					,'courtIdx':courtIdx
-					,'officialIdx':'${officialIdx}'
+					,'guestIdx':'${guestIdx}'
 				}
 				,success:function(data){
 					console.log(data);
 					if(data.result){
-						window.location.href = './officialList.go';
+						window.location.href = './writing_guest_list.go';
 					}else{
 						alert('경기 수정에 실패 했습니다.');
 					}
@@ -361,7 +352,7 @@
 	function callCourtList(currentPage) {
 
 		$.ajax({
-			url:'./callCourtList.ajax'
+			url:'./callGuestCourtList.ajax'
 			,type:'POST'
 			,dataType:'json'
 			,data:{
@@ -402,7 +393,7 @@
 		disabledButton();
 		
 		$.ajax({
-			url:'./callCourtInfo.ajax'
+			url:'./callGuestCourtInfo.ajax'
 			,type:'POST'
 			,dataType:'json'
 			,data:{
@@ -427,7 +418,6 @@
 				}
 				
 				$('#swiperImage').html(content);
-				console.log(data.bookingStartTime);
 				
 				if(data.bookingStartTime.length > 0){
 					for(item of data.bookingStartTime){
@@ -477,7 +467,7 @@
 	});
 
 	$('.officialUpdateTimeBtn:not([disabled])').click(function() {
-		selectTime = parseInt($(this).attr('id'));
+		selectTime = $(this).attr('id');
 		// 모든 버튼의 배경색을 하늘색으로 초기화
 		$('.officialUpdateTimeBtn:not([disabled])').not(this).css('background-color', 'skyblue');
 
@@ -548,3 +538,15 @@
 	
 </script>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -130,7 +130,48 @@ public class AdminWriteController {
 		return adminWriteService.officialUpdate(param);
 
 	}
+	
+	// 게스트 모집 글 수정 이동
+	@RequestMapping(value = "/admin/guestUpdate.go")
+	public String guestUpdateGo(HttpSession session, Model model, String guestIdx) {
+//		String isAdmin = (String) session.getAttribute("isAdmin");
+//		if (isAdmin == null ||isAdmin.isEmpty()) {
+//			return "redirect:/login.go";
+//		}
+		adminWriteService.guestUpdateGo(model, guestIdx);
+		model.addAttribute("guestIdx", guestIdx);
+		return "/admin/guest_update";
+	}
+	
+	// 게스트 모집 글 수정 - 코트 리스트 부르기
+	@RequestMapping(value = "/admin/callGuestCourtList.ajax", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> callGuestCourtList(String currentPage, String searchWord) {
+		logger.info("::::::::::::callCourtList in:::::::::::::");
+		logger.info("param currentPage = " + currentPage);
+		logger.info("param searchWord = " + searchWord);
 
+		Map<String, Object> map = adminWriteService.callGuestCourtList(Integer.parseInt(currentPage), searchWord);
+
+		logger.info("::::::::::::callCourtList out:::::::::::::");
+		return map;
+	}
+	
+	// 게스트 모집 글 수정 - 코트 정보
+	@RequestMapping(value = "/admin/callGuestCourtInfo.ajax", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> callGuestCourtInfo(String courtIdx, String selectDate) {
+		return adminWriteService.callGuestCourtInfo(courtIdx, selectDate);
+	}
+
+	// 게스트 모집 글 수정 완료시
+	@RequestMapping(value = "/admin/guestUpdate.ajax", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Boolean> guestUpdate(@RequestParam Map<String, Object> param) {
+		logger.info("officialUpdate Contoroller param = {}", param);
+		return adminWriteService.guestUpdate(param);
+
+	}
 }
 
 
