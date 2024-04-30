@@ -27,7 +27,9 @@ public interface MypageDAO {
 
 	Object point_allConut(int pageParCnt, String loginId);
 	
-	void point_update(String loginId);
+	void point_plus_update(String loginId);
+	
+	void point_minus_update(String loginId);
 	
 // ============================================
 
@@ -57,9 +59,16 @@ public interface MypageDAO {
 
 	Object court_match_allConu(int pageParnum, String loginId);
 
+	// 취소시 포인트 환급
+	void official_Cancellation(String loginId, String idx);
+	
 	int match_ask_list_del(String loginId,String idx);
+	
 
 	int guset_match_list_del(String loginId, String idx);
+	
+//	취소 시 리스트에 취소라고 쓰기
+	void court_Cancellation(String loginId, String idx);
 
 	int court_match_list_del(String loginId, String idx);
 
@@ -69,7 +78,7 @@ public interface MypageDAO {
 
 	
 
-	MypageDTO report_detail(String loginId, int idx);
+	MypageDTO report_detail(String loginId, String idx);
 
 	int report_modify(Map<String, String> param);
 
@@ -78,6 +87,15 @@ public interface MypageDAO {
 
 	//총 페이지 자동 계산
 	Object totalPages(int pageSome, String loginId);
+
+	//신고글 삭제
+	void report_del_ajax(String loginId, String idx);
+
+
+
+
+
+
 
 
 

@@ -29,26 +29,28 @@
 </body>
 <script>
 
-var sum = {sum};
-console.log(sum);
+var sum = '${sum.point}';
 
 $('input[type="button"]').on('click',function(){
     //input에 있는 값을 가져온다
     var ch = $('input[name="minus"]').val();
+    console.log(sum);
     console.log(ch);
-    var ss = sum-ch;
-    console.log(ss);
+    var poigt = sum-ch;
+    console.log(poigt);
     //지금 내가 클릭한 버튼의 텍스트를 가져온다
     var tex = $(this).text();
 
     if(ch!=''){
-        if(ss>0){
-        alert('환급이 완료되었습니다');        	
+        if(poigt>0){
+        	alert('환급이 완료되었습니다');
+        	 $('form').submit();
+        	/* location.href="point.go"; */
         }else {
         	 alert('환급이 실패 되었습니다.');	
 		}
         }else{
-            alert('환급이 실패 되었습니다.');
+            alert('환급할 금액을 입력 하세요');
         }
 		
 		
@@ -86,7 +88,7 @@ function Point(point){
 	var point = point;
 	var content = '';
 	console.log(point);
-	if (point == null) {
+	if (point == 0) {
 		content = '<td id="point">0 원</td>';
 	}else {
 		content = '<td id="point">'+point+' 원</td>';

@@ -51,6 +51,7 @@ public class MypageService {
 		result.put("currPage",currPage); //n번부터
 		result.put("siez",list.size()); //리스트 사이즈
 		result.put("point",list.indexOf("point")+1);
+		result.put("start", start);
 		result.put("totalPages", mypageDAO.point_allConut(pageParCnt,loginId)); //총 페이 갯수 계산
 		
 		logger.info("내 지갑 사정 : "+result.get("point"));
@@ -76,8 +77,13 @@ public class MypageService {
 	
 	
 	
-	public void point_update(String loginId) {
-		mypageDAO.point_update(loginId);
+	public void point_plus_update(String loginId) {
+		mypageDAO.point_plus_update(loginId);
+		
+	}
+	
+	public void point_minus_update(String loginId) {
+		mypageDAO.point_minus_update(loginId);
 		
 	}
 	
@@ -161,6 +167,12 @@ public class MypageService {
 		return result;
 	}
 	
+	// 취소시 포인트 환급
+		public void official_Cancellation(String loginId, String idx) {
+			mypageDAO.official_Cancellation(loginId,idx);
+			
+		}
+	
 	//신청/예약 삭지 아작스
 	public Map<String, Object> match_ask_list_del(String loginId,String idx) {
 		int row=0;
@@ -182,6 +194,8 @@ public class MypageService {
 		return result;
 		
 	}
+	
+	
 	
 	
 	//아작스(게스트 리스트 삭제)
@@ -206,6 +220,11 @@ public class MypageService {
 	}
 	
 	
+//	취소 시 리스트에 취소라고 쓰기
+	public void court_Cancellation(String loginId, String idx) {
+		mypageDAO.court_Cancellation(loginId,idx);
+		
+	}
 	
 	//아작스 (구장 리스트 삭제)
 	public Map<String, Object> court_match_list_del(String loginId, String idx) {
@@ -229,7 +248,7 @@ public class MypageService {
 //	===================== 신고 리스트 / 수정 ==================================
 
 
-	public MypageDTO report_detail(String loginId, int idx) {
+	public MypageDTO report_detail(String loginId, String idx) {
 		
 		return mypageDAO.report_detail(loginId,idx);
 	}
@@ -259,6 +278,21 @@ public class MypageService {
 		
 		return result;
 	}
+
+
+	//신고글 삭제
+	public void report_del_ajax(String loginId, String idx) {
+		mypageDAO.report_del_ajax(loginId,idx);
+		
+	}
+
+
+
+
+
+
+
+
 	
 	
 

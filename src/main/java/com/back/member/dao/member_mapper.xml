@@ -14,8 +14,8 @@
 			pw,
 			name,
 			address,
-			gender,position,level)
-		values(#{id},#{pw},#{name},#{address},#{gender},#{position},#{level})
+			gender,position,level,point)
+		values(#{id},#{pw},#{name},#{address},#{gender},#{position},#{level},0)
 	</insert>
 	
 	<select id="overlay" resultType="int">
