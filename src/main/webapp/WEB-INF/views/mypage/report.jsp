@@ -31,8 +31,8 @@
                 <input type="submit" value="취소" id="cancel" class="submit">
                 <input type="submit" value="제출" class="submit">
             </div>
-            <input type="text" value="" name="reperenceType"/>
-            <input type="text" value="${report_write_idx}" name="reperenceIdx"/>
+            <input type="hidden" value="" name="reperenceType"/>
+            <input type="hidden" value="${report_write_idx}" name="reperenceIdx"/>
         </form>
     </div>
 </body>

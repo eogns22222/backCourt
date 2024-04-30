@@ -17,4 +17,10 @@ public interface AdminTeamDAO {
 
 	int teammateTotal(String teamIdx);
 
+	Boolean teamUpdate(Map<String, Object> param);
+
+	String teamLogoName(Map<String, Object> param);
+
+	Boolean teamLogoUpdate(Map<String, Object> param);
+
 }

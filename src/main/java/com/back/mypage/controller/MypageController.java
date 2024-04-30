@@ -175,7 +175,7 @@ public class MypageController {
 
 	// ============================================
 
-	@RequestMapping(value = "/mypage/report.go")
+	@RequestMapping(value = "/mypage/report")
 	public String reportGo(String reportWirteType, Model model, String reportWriteIdx) {
 		logger.info("제발");
 		model.addAttribute("report_write_type",reportWirteType);

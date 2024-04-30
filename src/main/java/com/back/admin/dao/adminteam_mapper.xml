@@ -73,6 +73,29 @@
 		FROM team_list tl
 		where team_idx = #{param1}
 	</select>
+	
+	<update id="teamUpdate" parameterType="map">
+		UPDATE team 
+		set
+			team_name = #{teamName}
+			,team_address = #{teamAddress}
+			,team_level = #{teamLevel}
+			,team_info = #{teamInfo}
+		WHERE team_idx = #{teamIdx}
+	</update>
+	
+	<update id="teamLogoUpdate" parameterType="map">
+		UPDATE team 
+		set
+			logo = 'defaultLogo'
+		WHERE team_idx = #{teamIdx}
+	</update>
+	
+	<select id="teamLogoName" resultType="String">
+		select logo
+		from team
+		where team_idx = #{teamIdx}
+	</select>
 </mapper>
 
 

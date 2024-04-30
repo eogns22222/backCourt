@@ -32,7 +32,6 @@
 	background: lightgray;
 	display: flex;
 	flex-direction: column;
-	margin-top: 20px;
 	align-items: flex-start; /* 왼쪽 정렬 */
 }
 
@@ -77,6 +76,7 @@
 }
 
 .rightCont {
+	width: 500px;
 	border: 2px solid;
 	border-collapse: collapse;
 	align-items: flex-end; /* 오른쪽 정렬 */
@@ -95,67 +95,115 @@
 .teammateListTr:hover {
 	background-color: lightgray;
 }
+
+.button1{
+	padding: 15px 30px;
+	border-radius: 20px;
+	float: center; /* 수정된 부분: 버튼을 오른쪽으로 이동시킵니다. */
+	margin-left: 10px; /* 수정된 부분: 버튼 사이의 간격을 조절합니다. */
+	background: gray;
+	color: white;
+	font-weight: bold;
+	font-size:12px;
+	
+}
+
+.button2{
+	padding: 15px 30px;
+	border-radius: 20px;
+	float: center; /* 수정된 부분: 버튼을 오른쪽으로 이동시킵니다. */
+	margin-left: 10px; /* 수정된 부분: 버튼 사이의 간격을 조절합니다. */
+	background: blue;
+	color: white;
+	font-size:12px;
+	font-weight: bold;
+}
+
+.flexBox{
+	display: flex;
+    margin-top: 30px;
+}
+
+.flexBox .left{
+	width: 500px;
+}
+
+.flexBox .right{
+	margin-left: 50px;
+}
+
+.right .container{
+	width: 400px !important;
+}
+
+.flexBox .right .btnWrap{
+	text-align: center;
+}
+
+
 </style>
-</head>
+</head>	
 <body>
 	<div class="adminBody">
 		<jsp:include page="../header/header_admin.jsp" />
 		<div class="adminContainer">
-			<div class="left">
-				<div class="leftCont">
-					<div class="imgContainer">
-						<div class="imgBox" id="imgBox">
-							<img class="teamLogo" src="/logo/${teamInfo.logo}.jpg" alt="" />
+			<div class="flexBox">
+				<div class="left">
+					<div class="leftCont">
+						<div class="imgContainer">
+							<div class="imgBox" id="imgBox">
+								<img class="teamLogo" src="/logo/${teamInfo.logo}.jpg" alt="" />
+							</div>
+						</div>
+						<div class="teamInfoContainer">
+							<input type="text" class="teamName" id="teamName" value="${teamInfo.team_name}">
+						</div>
+						<div class="buttonContainer">
+							<button type="button" class="siteLogo">기본 로고로 변경</button>
 						</div>
 					</div>
-					<div class="teamInfoContainer">
-						<input type="text" class="teamName" id="teamName" value="${teamInfo.team_name}">
+					<div class="leftCont2">
+						<div class="cont2" id="teamLevel">
+							팀 레벨: 
+							<select class="select" name="team_level" id="level">
+								<option value="브론즈">브론즈</option>
+								<option value="실버">실버</option>
+								<option value="골드">골드</option>
+								<option value="플레티넘">플래티넘</option>
+							</select>
+						</div>
+						<div class="cont2">
+							지역: 
+							<input type="text" class="address" id="teamAddress" value=""/>
+						</div>
 					</div>
-					<div class="buttonContainer">
-						<button type="button" class="siteLogo">기본 로고로 변경</button>
+					<div class="leftCont3">
+						<div class=cont3>팀 소개:</div>
+						<textarea name="teamInfo" class="info" id="team_info" maxlength="300">${teamInfo.team_info}</textarea>
 					</div>
 				</div>
-				<div class="leftCont2">
-					<div class="cont2" id="teamLevel">
-						팀 레벨: <select class="select" name="team_level" id="level">
-							<option value="브론즈">브론즈</option>
-							<option value="실버">실버</option>
-							<option value="골드">골드</option>
-							<option value="플레티넘">플래티넘</option>
-						</select>
+				<div class="right">
+					<table class="rightCont">
+						<thead>
+							<tr>
+								<th class="rightContth">팀원</th>
+								<th class="rightContth">팀장 체크</th>
+							</tr>
+						</thead>
+						<tbody id="teamDetailList"></tbody>
+					</table>
+					<div class="container">
+						<nav aria-label="Page navigation" style="text-align: center">
+							<ul class="pagination" id="pagination"></ul>
+						</nav>
 					</div>
-					<div class="cont2" id="teamAddress">
-						지역: <input type="text" class="address" id="teamAddress"
-							value="${teamInfo.team_address}">
+					<div class="btnWrap">
+						<input type="button" class="button1" id="cancle" value="취소"/>
+						<input type="button" class="button2" id="submit" value="수정"/>
 					</div>
-				</div>
-				<div class="leftCont3">
-					<div class=cont3>팀 소개:</div>
-					<textarea name="teamInfo" class="info" id="team_info"
-						maxlength="300">
-				</textarea>
 				</div>
 			</div>
-			<div class="right">
-				<table class="rightCont">
-					<thead>
-						<tr>
-							<th class="rightContth">팀원</th>
-							<th class="rightContth">팀장 체크</th>
-						</tr>
-					</thead>
-					<tbody id="teamDetailList"></tbody>
-				</table>
-				<div class="container">
-					<nav aria-label="Page navigation" style="text-align: center">
-						<ul class="pagination" id="pagination"></ul>
-					</nav>
-				</div>
-				<div>
-					<input type="button" id="cancle" value="취소"/>
-					<input type="button" id="submit" value="수정"/>
-				</div>
-			</div>
+			
 		</div>
 	</div>
 </body>
@@ -169,13 +217,14 @@
 		var teamList1 = []; // JSON 형식으로 데이터를 받아옴
 		var totalPage = '${totalPage}';
 		var logoFlag = false;	
-		
+		$('#teamAddress').val('${teamInfo.team_address}');
+		$('#level').val('${teamInfo.team_level}');
 		$(document).ready(function() {
 	        // 로고 선택 버튼 클릭 시
 	        $('.siteLogo').on('click', function() {
 	            // 기본 이미지 URL로 변경합니다.
 	            logoFlag = true;
-	            $('#imgBox').html('<img class="teamLogo" src="/logo/defaultLogo.png" alt="" />');
+	            $('#imgBox').html('<img class="teamLogo" src="/logo/defaultLogo.jpg	" alt="" />');
 	        });
 	    });
 		
@@ -191,7 +240,7 @@
 	    
 		showList(teamList1);
 		paging();
-		document.getElementById("team_info").value = '${teamInfo.team_info}';
+// 		document.getElementById("team_info").value = '${teamInfo.team_info}';
 		
 		$('#cancle').on('click', function(){
 			if(confirm('취소하시겠습니까?') == false){
@@ -201,9 +250,15 @@
 		});
 		
 		$('#submit').on('click', function(){
+			var teamAddress = $('#teamAddress').val();
+			var teamInfo = $('#team_info').val();
 			if(confirm('수정하시겠습니까?') == false){
 				return;
 			}
+			console.log($('#level').val());
+			console.log(teamAddress);
+			console.log(logoFlag);
+			console.log(teamInfo);
 			$.ajax({
 				url:'./teamUpdate.ajax'
 				,type:'post'
@@ -212,18 +267,20 @@
 					"teamName":$('#teamName').val()
 					,"teamLevel":$('#level').val()
 					,"teamAddress":$('#teamAddress').val()
-					,"teamInfo":$('#team_info').html()
+					,"teamInfo":teamInfo
 					,"logoFlag":logoFlag
+					,"teamIdx":teammateIdx
 				}
 				,success:function(data){
 					console.log(data);
-					if(data.result == false){
-						alert('수정 실패했습니다.');
-						return ;
-					}else{
-						alert('수정 성공');
-						window.location.href='./team_list.go';
-					}
+					
+// 					if(data.result == false){
+// 						alert('수정 실패했습니다.');
+// 						return ;
+// 					}else{
+// 						alert('수정 성공');
+// // 						window.location.href='./team_list.go';
+// 					}
 					
 				}
 				,error:function(error){
