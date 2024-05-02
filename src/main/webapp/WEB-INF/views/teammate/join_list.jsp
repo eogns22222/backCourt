@@ -11,6 +11,23 @@
 <link rel="stylesheet" href="../resources/css/teammate/teammate_list.css" type ="text/css">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="../resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
+<style>
+/* 수정 - 강대훈 */
+.teammateDIV h2{
+	font-size: 25px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+.teammateTable{
+	margin-top: 10px;
+}
+.searchContainer{
+	text-align: center;
+}
+.searchContainer #searchWord{
+	width: 200px;
+}
+</style>
 </head>
 <body>
     <jsp:include page="../header/header.jsp"/>
@@ -76,15 +93,18 @@
         </div>
     <br/>
     
-
-    <select id="searchCategory">
-        <option value="teamJoinName">팀 명</option>
-        <option value="teamJoinRepresent">팀장명</option>
-        <option value="teamJoinLoc">지역 명</option>
-    </select>
+    <!-- 수정 - 강대훈 : 상위 div 생성 -->
+	<div class="searchContainer">
+		<select id="searchCategory">
+	        <option value="teamJoinName">팀 명</option>
+	        <option value="teamJoinRepresent">팀장명</option>
+	        <option value="teamJoinLoc">지역 명</option>
+	    </select>
+	    
+	    <input type="text" id="searchWord" placeholder="내용을 입력해주세요." maxlength="20"/>
+	    <input type="button" id="searchBtn" value="검색" />
+	</div>
     
-    <input type="text" id="searchWord" placeholder="내용을 입력해주세요." maxlength="20"/>
-    <input type="button" id="searchBtn" value="검색" />
 
     <br/>
    

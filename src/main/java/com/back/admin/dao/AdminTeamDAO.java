@@ -23,4 +23,8 @@ public interface AdminTeamDAO {
 
 	Boolean teamLogoUpdate(Map<String, Object> param);
 
+	AdminTeamDTO teamMemberDetail(String join_team_idx);
+
+	int teamMemberUpdate(String join_team_idx, String requInfo, String level, String teamIsDisabled);
+
 }

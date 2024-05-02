@@ -193,7 +193,7 @@
 		var content = '';
 		var link = '';
 		for(item of list){
-			link = './team_mamber_update.go?join_team_idx=' + item.join_team_idx;
+			link = './team_member_update.go?join_team_idx=' + item.join_team_idx;
 			
 			content +=
 				'<tr>'
