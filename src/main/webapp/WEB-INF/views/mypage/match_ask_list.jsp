@@ -13,6 +13,17 @@
       <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
       <script src="../resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
     <title>신청/예약 리스트</title>
+<style>
+	/* 수정 - 강대훈 */
+	.match_ask_list{
+    	width: 1280px;
+    	margin: 40px auto 0;
+    	padding:initial;
+	}
+	.match_list{
+		width:100%;
+	}
+</style>
 </head>
 <body>
 	<jsp:include page="../header/header.jsp"/>

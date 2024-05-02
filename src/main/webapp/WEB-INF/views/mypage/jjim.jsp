@@ -5,11 +5,31 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="../resources/css/header/header.css">
+<link rel="stylesheet" href="../resources/css/common/reset.css" type="text/css">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="../resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style>
+	/* 수정 - 강대훈 */
+	.jjimContainer{
+		width: 1280px;
+    	margin: 0 auto;
+	}
+	
+	.jjimContainer h2{
+		font-size: 30px;
+    	font-weight: 600;
+    	margin: 20px 0;
+	}
+	
+	.jjimContainer .deleteBtn{
+		margin-bottom: 20px;
+    	font-size: 20px;
+	}
+
     .jjimTable{
+    	width:100%;
          border: 2px solid;
         border-collapse: collapse;
     }
@@ -28,33 +48,36 @@
 </head>
 <body>
     
-	<div>헤더</div>
-	<h2>찜 내역</h2>
-    <input type="button" value="선택 삭제">
-    <table class="jjimTable">
-        <thead>
-            <tr>
-                <th class="jjimTh"><input type="checkbox" id="allCheck"/></th>
-                <th class="jjimTh">No.</th>
-                <th class="jjimTh">이름</th>
-                <th class="jjimTh">위치</th>
-                <th class="jjimTh">가격</th>
-            </tr>
-        </thead>
-        <tbody class="jjimList">
-
-        </tbody>
-        <tr>
-			<td colspan="5">
-				<div class="container">                           
-				  <nav aria-label="Page navigation" style="text-align:center">
-					  <ul class="pagination" id="pagination"></ul>
-				  </nav>               
-				 </div>
-			</td>
-		</tr>
-    </table>
-	<div>푸터</div>
+	<jsp:include page="../header/header.jsp"/>
+	<!-- 수정 - 강대훈 - 상위 div 생성 -->
+	<div class="jjimContainer">
+		<h2>찜 내역</h2>
+	    <input type="button" value="선택 삭제" class="deleteBtn">
+	    <table class="jjimTable">
+	        <thead>
+	            <tr>
+	                <th class="jjimTh"><input type="checkbox" id="allCheck"/></th>
+	                <th class="jjimTh">No.</th>
+	                <th class="jjimTh">이름</th>
+	                <th class="jjimTh">위치</th>
+	                <th class="jjimTh">가격</th>
+	            </tr>
+	        </thead>
+	        <tbody class="jjimList">
+	
+	        </tbody>
+	        <tr>
+				<td colspan="5">
+					<div class="container">                           
+					  <nav aria-label="Page navigation" style="text-align:center">
+						  <ul class="pagination" id="pagination"></ul>
+					  </nav>               
+					 </div>
+				</td>
+			</tr>
+	    </table>
+	</div>
+	
 </body>
 <script>
     var currentPage = 1;

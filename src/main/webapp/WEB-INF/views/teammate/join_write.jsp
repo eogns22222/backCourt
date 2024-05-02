@@ -12,6 +12,18 @@
 	type="text/css">
 <link rel="stylesheet" href="../resources/css/header/header.css"
 	type="text/css">
+	
+<style>
+	/* 수정 - 강대훈 */
+	.wrapper {
+	    padding: 20px 200px;
+	    box-sizing: border-box;
+	}
+	.textarea{
+		width: 100%;
+    	max-width: 66%;
+	}
+</style>
 </head>
 <body>
 <jsp:include page="../header/header.jsp"/>

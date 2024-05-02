@@ -12,6 +12,24 @@
 	type="text/css">
 <link rel="stylesheet" href="../resources/css/header/header.css"
 	type="text/css">
+<style>
+	/* 수정 - 강대훈 */
+	#guestForm{
+		width: 500px;
+    	margin: 0 auto;
+	}
+	.content-wrapper{
+		margin-bottom: 10px;
+	}
+	.content-wrapper .content{
+	    width: 115px;
+	    text-align: left;
+	}
+	.textarea{
+		width: 100%;
+    	max-width: 66%;
+	}
+</style>
 </head>
 <body>
 <jsp:include page="../header/header.jsp"/>
