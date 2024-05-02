@@ -1,6 +1,5 @@
 package com.back.mypage.controller;
 
-import java.lang.ProcessBuilder.Redirect;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -219,12 +218,12 @@ public class MypageController {
 
 	@RequestMapping(value = "/mypage/jjimList.ajax")
 	@ResponseBody
-	public Map<String, Object> jjimList(HttpSession session) {
+	public Map<String, Object> jjimList(HttpSession session, String currentPage) {
 		logger.info("mypage/jjimList ");
 //		// session check 필요
 		String id = (String) session.getAttribute("loginId"); // id 받아오는 로직으로 수정 필요
 //		String id = "a";
-		return mypageService.jjimList(id);
+		return mypageService.jjimList(id, currentPage);
 	}
 
 	@RequestMapping(value = "/mypage/jjimDel.ajax")

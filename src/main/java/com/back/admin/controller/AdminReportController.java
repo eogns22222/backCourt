@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.back.admin.dto.AdminReportDTO;
@@ -25,31 +26,28 @@ public class AdminReportController {
 
 	@RequestMapping(value = "/admin/reportList.go")
 	public String reportListGo(HttpSession session) {
-		String isAdmin = (String) session.getAttribute("isAdmin");
-		if (isAdmin == null ||isAdmin.isEmpty()) {
-			return "redirect:/login.go";
-		}
+//		String isAdmin = (String) session.getAttribute("isAdmin");
+//		if (isAdmin == null || isAdmin.isEmpty()) {
+//			return "redirect:/login.go";
+//		}
 		return "/admin/report_list";
 	}
 
 	@RequestMapping(value = "/admin/reportList.ajax", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> callList(String reportState, String currentPage, String reportSearch,
-			String searchFlag) {
-		logger.info("listCall / currentPage = {} /  ", currentPage);
-		logger.info(searchFlag);
-		int page = Integer.parseInt(currentPage);
+	public Map<String, Object> callList(@RequestParam Map<String, Object> param) {
+//		logger.info("callList / param = {} /  ", param);
 
-		return adminReportService.list(reportState, page, reportSearch, searchFlag);
+		return adminReportService.list(param);
 
 	}
 
 	@RequestMapping(value = "/admin/reportDetail.go")
 	public String reportDetailGo(HttpSession session, Model model, String reportIdx) {
-		String isAdmin = (String) session.getAttribute("isAdmin");
-		if (isAdmin == null ||isAdmin.isEmpty()) {
-			return "redirect:/login.go";
-		}
+//		String isAdmin = (String) session.getAttribute("isAdmin");
+//		if (isAdmin == null || isAdmin.isEmpty()) {
+//			return "redirect:/login.go";
+//		}
 		logger.info("reportDetailGo " + reportIdx);
 		model.addAttribute("reportIdx", reportIdx);
 		return "/admin/feed";

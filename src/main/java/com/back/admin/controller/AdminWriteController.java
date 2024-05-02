@@ -126,7 +126,7 @@ public class AdminWriteController {
 	@RequestMapping(value = "/admin/officialUpdate.ajax", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Boolean> officialUpdate(@RequestParam Map<String, Object> param) {
-		logger.info("officialUpdate Contoroller param = {}", param);
+		logger.info("officialUpdate Controller param = {}", param);
 		return adminWriteService.officialUpdate(param);
 
 	}

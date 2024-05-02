@@ -30,57 +30,50 @@
     </style>
 </head>
 <body>
-	<div class="adminBody">
-    	<header class="adminHeader">
-        	<div class="headerCont">
-            	<a href="admin_logout.do" class="logout">로그아웃</a>
-            	<ul class="menu">
-	                <li><a href="admin/member_list">회원 관리</a></li>
-	                <li><a href="admin/team_list">팀 관리</a></li>
-	                <li><a href="admin/court_list">구장 관리</a></li>
-	                <li><a href="admin/writing_list">글 관리</a></li>
-	                <li><a href="admin/report_list">신고 관리</a></li>
-	            </ul>
-	        </div>
-	    </header>
-    <div class="adminContainer">
-    	<select id="address">
-            <option value="">전체지역</option>
-        </select>
-        <div><input type="button" id="courtRegist" value="구장 등록"/></div>
-        <table class="adminCourtListTable">
-            <thead>
-	            <tr>
-	                <th class="adminCourtListTh">구장번호</th>
-	                <th class="adminCourtListTh">구장이름</th>
-	                <th class="adminCourtListTh">지역</th>
-	                <th class="adminCourtListTh">활성여부</th>
-            	</tr>
-            </thead>
-            <tbody id="admincourtList"></tbody>
-        </table>
+<div class="adminBody">
+	<jsp:include page="../header/header_admin.jsp"/>
+	<div class="adminContainer">
+		<select id="address">
+			<option value="">전체지역</option>
+		</select>
+		<div>
+			<input type="button" id="courtRegist" value="구장 등록"/>
+		</div>
+		<table class="adminCourtListTable">
+			<thead>
+				<tr>
+					<th class="adminCourtListTh">구장번호</th>
+					<th class="adminCourtListTh">구장이름</th>
+					<th class="adminCourtListTh">지역</th>
+					<th class="adminCourtListTh">활성여부</th>
+				</tr>
+			</thead>
+			<tbody id="admincourtList"></tbody>
+		</table>
 		<div class="container">                           
 			<nav aria-label="Page navigation" style="text-align:center">
 				<ul class="pagination" id="pagination"></ul>
 			</nav>               
 		</div>
-        <select id="searchCategory" >
-            <option value="courtName">코트 명</option>
-            <option value="courtAddress">지역 명</option>
-        </select>
-        
-        <input type="text" id="searchWord" placeholder="검색단어입력" maxlength="20"/>
-        <!-- 이거 누르면 아작스 하는걸로 -->
-        <input type="button" id="searchBtn" value="검색" />
-    
-    </div>
-    </div>
+		<select id="searchCategory" >
+			<option value="courtName">코트 명</option>
+			<option value="courtAddress">지역 명</option>
+		</select>
+		      
+		<input type="text" id="searchWord" placeholder="검색단어입력" maxlength="20"/>
+		<input type="button" id="searchBtn" value="검색" />
+	</div>
+</div>
+	
 </body>
 <script>
 	var currentPage = 1;
 	var filterFlag = false;
 	var searchFlag = false;
-	
+	var isFirstCall = true;
+    callList(currentPage);
+
+
 	$('#courtRegist').on('click', function(){
 		window.location.href = './courtWrite.go';
 	});
@@ -90,18 +83,27 @@
 		window.location.href = './courtDetail.go?courtIdx=' + courtIdx;
 	});
 
-	$(document).ready(function() {
-	    // 페이지 로드 시 callList 호출
-	    callList(currentPage);
+	$('#searchWord').on('keydown',function(evt){
+		if(evt.keyCode == 13){
+			if($(this).val() == ''){
+				alert('검색단어를 입력해주세요');
+				return;
+			}
+			currentPage = 1;
+			isFirstCall = true;
+			$('#pagination').twbsPagination('destroy');
+			searchFlag = true;
+			callList(currentPage);
+		}
 	});
 
 	$('#searchBtn').on('click', function(){
-	    if($('#searchWord').val() == ''){
+	    if($(this).val() == ''){
 	        alert('검색단어를 입력해주세요');
 	        return;
 	    }
 	    currentPage = 1;
-
+	    isFirstCall = true;
 	    $('#pagination').twbsPagination('destroy');
 	    searchFlag = true;
 	    callList(currentPage);
@@ -109,6 +111,7 @@
 	});	
 	
 	$('#address').on('change',function(){
+		isFirstCall = true;
 		$('#pagination').twbsPagination('destroy');
 		searchFlag = false
 		callList(currentPage);
@@ -118,7 +121,6 @@
 	
 	
 	function callList(currentPage) {
-		
 		$.ajax({
 			type:'POST'
 			,url:'./courtList.ajax'
@@ -131,36 +133,36 @@
 			}
 			,dataType:'json'
 			,success:function(data){
-				console.log(data.list);
-// 				console.log(data.totalPage);
+				console.log(data.totalPage);
+
 				showList(data.list);
+				
 				if(filterFlag == false){
-					showFilterList(data.allList);
+					showFilterList(data.addressList);
 					filterFlag = true;
 				}
-				var totalPage = data.totalPage/10 > 1 ? data.totalPage/10:1;
-				showPagination(totalPage);
 				
+				$('#pagination').twbsPagination({
+					startPage:1
+					,totalPages:data.totalPage
+					,visiblePages:5	
+					,onPageClick:function(evt,pg){
+						currentPage = pg;
+						if(isFirstCall == false){
+							callList(currentPage);							
+						}
+						isFirstCall = false;
+					}
+					
+				});
 			}
 			,error:function(error){
 				console.log(error);
 			}
 		});
 	}
-	function showPagination(totalPage) {
-		$('#pagination').twbsPagination({
-				startPage:1
-				,totalPages:totalPage
-				,visiblePages:5	
-				,onPageClick:function(evt,pg){
-// 					console.log(pg);
-				
-					currentPage = pg;
-					callList(currentPage);
-				}
-				
-		});
-	}
+	
+
 	function showList(list){
 		var content = '';
 		for(item of list){
@@ -177,20 +179,14 @@
 
 	function showFilterList(list) {
 		var content = '';
-		var allAddress = [];
-		var address = [];
-		for(item of list){
-			allAddress.push(item.courtAddress.split(' ')[1]);			
-		}
-		address = Array.from(new Set(allAddress));
-		address.sort();
+		
 		content = '<option value="">전체 지역</option>';
-		for(item of address){
+		
+		for(item of list){
 			content += '<option value="'+item+'">'+item+'</option>';
 		}
-
-		$('#address').html(content);
 		
+		$('#address').html(content);
 	}
 </script>
 </html>

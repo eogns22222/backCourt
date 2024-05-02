@@ -12,6 +12,7 @@
 		WHERE court_state = 'true'
 		AND court_official = 'false'
 		GROUP BY court_address
+		ORDER BY court_address
 	</select>
 	
 	<select id="totalPage" resultType="int">

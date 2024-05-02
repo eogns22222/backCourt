@@ -1,7 +1,6 @@
 package com.back.admin.service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -19,29 +18,25 @@ public class AdminReportService {
 	@Autowired
 	AdminReportDAO adminReportDAO;
 
-	public Map<String, Object> list(String reportState, int page, String reportSearch, String searchFlag) {
+	public Map<String, Object> list(Map<String, Object> param) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<AdminReportDTO> list;
 
-		int start = (page - 1) * 10;
+		int start = (Integer.parseInt((String) param.get("currentPage")) - 1) * 10;
+		param.put("start", start);
+		logger.info("list param = {}", param);
+		
+		result.put("list", adminReportDAO.list(param));
+		logger.info(result.get("list") + "");
+		int totalPage = adminReportDAO.totalPage(param);
 
-		if (searchFlag.equals("true")) {
-			logger.info(searchFlag + "service 1st if");
-			list = adminReportDAO.searchList(start, reportSearch);
-			result.put("totalPage", adminReportDAO.searchReportCount(reportSearch));
+		if (totalPage / 10 == 0) {
+			totalPage = 1;
+		} else if (totalPage % 10 > 0) {
+			totalPage = totalPage / 10 + 1;
 		} else {
-			if (reportState.equals("")) {
-				logger.info(searchFlag + "service 2nd if");
-				list = adminReportDAO.list(start);
-				result.put("totalPage", adminReportDAO.allReportCount());
-			} else {
-				logger.info(searchFlag + "service 2nd else");
-				list = adminReportDAO.filteringList(start, reportState);
-				result.put("totalPage", adminReportDAO.categoryReportCount(reportState));
-			}
-
+			totalPage = totalPage / 10;
 		}
-		result.put("list", list);
+		result.put("totalPage", totalPage);
 
 		return result;
 	}
@@ -53,12 +48,12 @@ public class AdminReportService {
 		return map;
 	}
 
-	public Map<String, Object> update(String adminId,String reportIdx, String reportState, String reportFeed) {
+	public Map<String, Object> update(String adminId, String reportIdx, String reportState, String reportFeed) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		
+
 		adminReportDAO.update(reportIdx, reportState, reportFeed);
 		try {
-			adminReportDAO.feedInsert(adminId,reportIdx);
+			adminReportDAO.feedInsert(adminId, reportIdx);
 		} catch (Exception e) {
 			map.put("result", false);
 		}

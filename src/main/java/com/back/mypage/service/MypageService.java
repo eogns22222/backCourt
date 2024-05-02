@@ -95,11 +95,25 @@ public class MypageService {
 		
 	}
 
-	public Map<String, Object> jjimList(String id) {
+	public Map<String, Object> jjimList(String id, String currentPage) {
 		logger.info("mypage/jjimList Service ");
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<MypageDTO> list = mypageDAO.jjimList(id);
-		map.put("totalPage", mypageDAO.jjimListCount(id));
+
+		int start = (Integer.parseInt(currentPage) - 1) * 10;
+		
+		List<MypageDTO> list = mypageDAO.jjimList(id, start);
+		
+		int totalPage = mypageDAO.jjimListCount(id);
+		
+		if (totalPage / 10 == 0) {
+			totalPage = 1;
+		} else if (totalPage % 10 > 0) {
+			totalPage = totalPage / 10 + 1;
+		} else {
+			totalPage = totalPage / 10;
+		}
+		
+		map.put("totalPage", totalPage);
 		map.put("list", list);
 		return map;
 	}
@@ -108,14 +122,14 @@ public class MypageService {
 		int delCount = 0;
 		for (String idx : selectedIdxList) {
 			int jjimidx = Integer.parseInt(idx);
-			logger.info(""+jjimidx);
+			logger.info("" + jjimidx);
 			delCount += mypageDAO.jjimDel(jjimidx);
 		}
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("totalDel", delCount);
 		return map;
-	
-}
+
+	}
 	
 // ============= 신청/예약 리스트 ==============
 	

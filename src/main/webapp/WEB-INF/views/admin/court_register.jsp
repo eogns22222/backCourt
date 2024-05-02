@@ -6,12 +6,11 @@
 <meta charset="UTF-8">
 <title>제목 입력</title>
 <link rel="stylesheet" href="../resources/css/common/reset.css">
-<link
-	href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	rel="stylesheet">
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script
-	src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="../resources/css/common/reset.css">
 <link rel="stylesheet" href="../resources/css/header/header.css">
 
 <style>
@@ -32,63 +31,56 @@
 </style>
 </head>
 <body>
-	<div class="adminBody">
-		<header class="adminHeader">
-			<div class="headerCont">
-				<a href="../admin_logout.do" class="logout">로그아웃</a>
-				<ul class="menu">
-					<li><a href="../admin/member_list">회원 관리</a></li>
-					<li><a href="../admin/team_list">팀 관리</a></li>
-					<li><a href="../admin/court_list">구장 관리</a></li>
-					<li><a href="../admin/writing_list">글 관리</a></li>
-					<li><a href="../admin/report_list">신고 관리</a></li>
-				</ul>
-			</div>
-		</header>
-		<div class="adminContainer">
-			<h1>구장 등록</h1>
-			<form action="" method="post">
-				<table class="courtWriteTable">
-					<tr>
-						<th class="courtWriteTh">구장 이름</th>
-						<td class="courtWriteTd"><input type="text"
-							id="courtWriteName" /></td>
-					</tr>
-					<tr>
-						<th class="courtWriteTh">구장 사진</th>
-						<td class="courtWriteTd"><input type="file"
-							id="courtImageUpload" multiple></td>
-					</tr>
-					<tr>
-						<th class="courtWriteTh">구장 정보</th>
-						<td class="courtWriteTd"><textarea id="courtWriteInfo"
-								maxlength="300"></textarea></td>
-					</tr>
-					<tr>
-						<th class="courtWriteTh">구장 가격</th>
-						<td class="courtWriteTd"><input type="number"
-							id="courtWritePrice" /></td>
-					</tr>
-					<tr>
-						<th class="courtWriteTh">구장 위치</th>
-						<td class="courtWriteTd"><input type="text"
-							id="courtWriteAddress" maxlength="300" /></td>
-					</tr>
-				</table>
-				<br /> <input type="checkbox" id="courtIsOfficial" /> <label
-					for="courtIsOfficial">공식 경기 구장</label> <input type="checkbox"
-					name="" id="courtIsDisabled"> <label for="courtIsDisabled">구장
-					비활성</label> <br /> <input id="courtRegisterCancel" type="button"
-					value="취소 하기" /> <input id="courtRegisterSubmit" type="button"
-					value="등록 하기" />
-			</form>
-		</div>
+<div class="adminBody">
+	<jsp:include page="../header/header_admin.jsp"/>
+	<div class="adminContainer">
+		<h1>구장 등록</h1>
+		<table class="courtWriteTable">
+			<tr>
+				<th class="courtWriteTh">구장 이름</th>
+				<td class="courtWriteTd">
+					<input type="text" id="courtWriteName" />
+				</td>
+			</tr>
+			<tr>
+				<th class="courtWriteTh">구장 사진</th>
+				<td class="courtWriteTd">
+					<input type="file" id="courtImageUpload" multiple>
+				</td>
+			</tr>
+			<tr>
+				<th class="courtWriteTh">구장 정보</th>
+				<td class="courtWriteTd">
+					<textarea id="courtWriteInfo" maxlength="300"></textarea>
+				</td>
+			</tr>
+			<tr>
+				<th class="courtWriteTh">구장 가격</th>
+				<td class="courtWriteTd">
+					<input type="number" id="courtWritePrice" />
+				</td>
+			</tr>
+			<tr>
+				<th class="courtWriteTh">구장 위치</th>
+				<td class="courtWriteTd">
+					<input type="text" id="courtWriteAddress" maxlength="300" />
+				</td>
+			</tr>
+		</table>
+		<br/>
+		<input type="checkbox" id="courtIsOfficial" />
+			<label for="courtIsOfficial">공식 경기 구장</label>
+		<input type="checkbox" name="" id="courtIsDisabled">
+			<label for="courtIsDisabled">구장 비활성</label>
+		<br/>
+		<input id="courtRegisterCancel" type="button" value="취소 하기" />
+		<input id="courtRegisterSubmit" type="button" value="등록 하기" />
 	</div>
-
-	<script>
-    $('#courtRegisterSubmit').on('click',function(){
-        var formData = new FormData();
-        var files = $('#courtImageUpload')[0].files;
+</div>
+<script>
+	$('#courtRegisterSubmit').on('click',function(){
+		var formData = new FormData();
+		var files = $('#courtImageUpload')[0].files;
 
         // 파일이 선택되었는지 확인 후 FormData에 추가
         if (files.length > 0) {

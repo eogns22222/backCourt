@@ -8,6 +8,8 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="../resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
+<link rel="stylesheet" href="../resources/css/common/reset.css">
+<link rel="stylesheet" href="../resources/css/header/header.css">
 <style>
     .reportFeedTable,.reportFeedTh,.reportFeedTd {
         border: 1px solid black;
@@ -35,52 +37,57 @@
     </style>
 </head>
 <body>
-    <h1>신고/문의 상세보기</h1>
-    <table class="reportFeedTable">
-        <tr>
-            <th class="reportFeedTh">유형</th>
-            <td class="reportFeedTd">글 유형 : <span id="reportCategory">null</span>&nbsp;| 글 번호: <span id="reportCategoryIdx">null</span></td>
-        </tr>
-        <tr>
-            <th class="reportFeedTh">제목</th>
-            <td class="reportFeedTd"><input type="text" id="reportSubject" disabled></td>
-        </tr>
-        <tr>
-            <th class="reportFeedTh">신고자ID</th>
-            <td id="reportId" class="reportFeedTd">null</td>
-        </tr>
-        <tr>
-            <th class="reportFeedTh">신고날짜</th>
-            <td id="reportDate" class="reportFeedTd">null</td>
-        </tr>
-        <tr>
-        	<th class="reportFeedTh">처리 상태</th>
-        	<td class="reportFeedTd">
-        		<select id="reportState">
-        			<option value="처리 전">처리 전</option>
-        			<option value="처리 중">처리 중</option>
-        			<option value="처리 완료">처리 완료</option>
-        		</select>
-        	</td>
-        </tr>
-
-        <tr>
-            <th class="reportFeedTh">내용</th>
-            <td class="reportFeedTd"><textarea class="reportFeedTextarea" id="reportContent" disabled></textarea></td>
-        </tr>
-        <tr>
-            <th class="reportFeedTh">피드백</th>
-            <td class="reportFeedTd"><textarea class="reportFeedTextarea" id="reportFeed" maxlength="300"></textarea></td>
-        </tr>
-        <tr>
-            <td class="reportFeedTd" colspan="2">
-                <div id="buttonDiv">
-                    <input class="reportFeedCancel" type="button" value="취소">
-                    <input class="reportFeedSubmit" type="button" value="전송">
-                </div>
-            </td>
-        </tr>
-    </table>
+<div class="adminBody">
+	<jsp:include page="../header/header_admin.jsp"/>
+	<div class="adminContainer">
+		<h1>신고/문의 상세보기</h1>
+		<table class="reportFeedTable">
+		    <tr>
+		        <th class="reportFeedTh">유형</th>
+		        <td class="reportFeedTd">글 유형 : <span id="reportCategory">null</span>&nbsp;| 글 번호: <span id="reportCategoryIdx">null</span></td>
+		    </tr>
+		    <tr>
+		        <th class="reportFeedTh">제목</th>
+		        <td class="reportFeedTd"><input type="text" id="reportSubject" disabled></td>
+		    </tr>
+		    <tr>
+		        <th class="reportFeedTh">신고자ID</th>
+		        <td id="reportId" class="reportFeedTd">null</td>
+		    </tr>
+		    <tr>
+		        <th class="reportFeedTh">신고날짜</th>
+		        <td id="reportDate" class="reportFeedTd">null</td>
+		    </tr>
+		    <tr>
+		    	<th class="reportFeedTh">처리 상태</th>
+		    	<td class="reportFeedTd">
+		    		<select id="reportState">
+		    			<option value="처리 전">처리 전</option>
+		    			<option value="처리 중">처리 중</option>
+		    			<option value="처리 완료">처리 완료</option>
+		    		</select>
+		    	</td>
+		    </tr>
+		
+		    <tr>
+		        <th class="reportFeedTh">내용</th>
+		        <td class="reportFeedTd"><textarea class="reportFeedTextarea" id="reportContent" disabled></textarea></td>
+		    </tr>
+		    <tr>
+		        <th class="reportFeedTh">피드백</th>
+		        <td class="reportFeedTd"><textarea class="reportFeedTextarea" id="reportFeed" maxlength="300"></textarea></td>
+		    </tr>
+		    <tr>
+		        <td class="reportFeedTd" colspan="2">
+		            <div id="buttonDiv">
+		                <input class="reportFeedCancel" type="button" value="취소">
+		                <input class="reportFeedSubmit" type="button" value="전송">
+		            </div>
+		        </td>
+		    </tr>
+		</table>
+	</div>
+ </div>
 </body>
 <script>
 	var reportIdx = ${reportIdx};

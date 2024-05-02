@@ -8,6 +8,7 @@
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="../resources/css/common/reset.css">
 <link rel="stylesheet" href="../resources/css/header/header.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
 <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
@@ -57,81 +58,68 @@
 </style>
 </head>
 <body>
-    <div class="adminBody">
-        <header class="adminHeader">
-            <div class="headerCont">
-                <a href="../admin_logout.do" class="logout">로그아웃</a>
-                <ul class="menu">
-                    <li><a href="../admin/member_list">회원 관리</a></li>
-                    <li><a href="../admin/team_list">팀 관리</a></li>
-                    <li><a href="../admin/court_list">구장 관리</a></li>
-                    <li><a href="../admin/writing_list">글 관리</a></li>
-                    <li><a href="../admin/report_list">신고 관리</a></li>
-                </ul>
-            </div>
-        </header>
-        <div class="adminContainer">
-			<h1>구장 등록</h1>
-			<form action="" method="post">
-            <table class="courtWriteTable">
-                <tr>
-                    <th class="courtWriteTh">구장 이름</th>
-                    <td class="courtWriteTd">
-                        <input type="text" id="courtUpdateName" value="${courtDetail.courtName}"/>
-                    </td>
-                </tr>
-                <tr>
-                    <th class="courtWriteTh">구장 사진</th>
-                    <td class="courtWriteTd">
-	                    <div class="swiper-container">
-					  <!-- Additional required wrapper -->
-					  	<div class="swiper-wrapper" id="swiperImage">
-					    
-					  	</div>
-					  
-					  	<!-- 페이징 필요시 추가 -->
-					  	<div class="swiper-pagination"></div>
-					  <!-- 이전, 다음 버튼 필요시 추가 -->
-					  	<div class="swiper-button-prev"></div>
-					  	<div class="swiper-button-next"></div>
-					
-						</div>
-						<br/>
-                       	<input type="file" id="courtImageUpload" multiple>
-                    </td> 
-                </tr>
-                <tr>
-                    <th class="courtWriteTh">구장 정보</th>
-                    <td class="courtWriteTd">
-                        <textarea id="courtUpdateInfo" maxlength="300">${courtDetail.courtInfo}</textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <th class="courtWriteTh">구장 가격</th>
-                    <td class="courtWriteTd">
-                        <input type="number" id="courtUpdatePrice" value="${courtDetail.courtPrice}"/>
-                    </td>
-                </tr>
-                <tr>
-                    <th class="courtWriteTh">구장 위치</th>
-                    <td class="courtWriteTd">
-                        <input type="text" id="courtUpdateAddress" maxlength="300" value="${courtDetail.courtAddress}"/>
-                    </td>
-                </tr>
-            </table>
-            <br/>
+<div class="adminBody">
+	<jsp:include page="../header/header_admin.jsp"/>
+	<div class="adminContainer">
+		<h1>구장 수정</h1>
+		<table class="courtWriteTable">
+			<tr>
+				<th class="courtWriteTh">구장 이름</th>
+				<td class="courtWriteTd">
+					<input type="text" id="courtUpdateName" value="${courtDetail.courtName}"/>
+				</td>
+			</tr>
+			<tr>
+				<th class="courtWriteTh">구장 사진</th>
+				<td class="courtWriteTd">
+					<div class="swiper-container">
+						<!-- Additional required wrapper -->
+						<div class="swiper-wrapper" id="swiperImage">
 
-            <input type="checkbox" id="courtIsOfficial"/>
-                <label for="courtIsOfficial">공식 경기 구장</label>
-            <input type="checkbox" name="" id="courtIsDisabled">
-                <label for="courtIsDisabled">구장 비활성</label>
-            <br/>
-            <input id="courtRegisterCancel" type="button" value="취소 하기"/>
-            <input id="courtRegisterSubmit" type="button" value="등록 하기"/>
-        </form>
-        </div>
+						</div>
+
+						<!-- 페이징 필요시 추가 -->
+						<div class="swiper-pagination"></div>
+						<!-- 이전, 다음 버튼 필요시 추가 -->
+					 	<div class="swiper-button-prev"></div>
+					 	<div class="swiper-button-next"></div>
+
+					</div>
+					<br/>
+					<input type="file" id="courtImageUpload" multiple>
+				</td> 
+			</tr>
+			<tr>
+				<th class="courtWriteTh">구장 정보</th>
+				<td class="courtWriteTd">
+					<textarea id="courtUpdateInfo" maxlength="300">${courtDetail.courtInfo}</textarea>
+				</td>
+			</tr>
+			<tr>
+				<th class="courtWriteTh">구장 가격</th>
+				<td class="courtWriteTd">
+					<input type="number" id="courtUpdatePrice" value="${courtDetail.courtPrice}"/>
+				</td>
+			</tr>
+			<tr>
+				<th class="courtWriteTh">구장 위치</th>
+				<td class="courtWriteTd">
+					<input type="text" id="courtUpdateAddress" maxlength="300" value="${courtDetail.courtAddress}"/>
+				</td>
+			</tr>
+		</table>
+		<br/>
+
+		<input type="checkbox" id="courtIsOfficial"/>
+			<label for="courtIsOfficial">공식 경기 구장</label>
+		<input type="checkbox" name="" id="courtIsDisabled">
+			<label for="courtIsDisabled">구장 비활성</label>
+		<br/>
+		<input id="courtRegisterCancel" type="button" value="취소 하기"/>
+		<input id="courtRegisterSubmit" type="button" value="등록 하기"/>
 	</div>
-        
+</div>
+    
 <script>
 	var courtState = ${courtDetail.courtState};
 	var courtOfficial = ${courtDetail.courtOfficial};

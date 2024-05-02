@@ -38,7 +38,16 @@ public class CourtService {
 		map.put("addressList", processedAddress(courtDAO.addressList()));
 		// 총 페이지
 		int totalPage = courtDAO.totalPage(param);
-		map.put("totalPage", totalPage % 10 > 0 ? totalPage / 10 + 1 : totalPage / 10);
+		
+		if (totalPage / 10 == 0) {
+			totalPage = 1;
+		} else if (totalPage % 10 > 0) {
+			totalPage = totalPage / 10 + 1;
+		} else {
+			totalPage = totalPage / 10;
+		}
+		
+		map.put("totalPage", totalPage);
 
 		return map;
 	}
@@ -51,7 +60,6 @@ public class CourtService {
 				processedList.add(address.split(" ")[1]);
 			}
 		}
-		Collections.sort(processedList);
 		return processedList;
 	}
 

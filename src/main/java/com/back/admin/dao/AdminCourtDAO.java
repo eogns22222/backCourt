@@ -1,26 +1,13 @@
 package com.back.admin.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.back.admin.dto.AdminCourtDTO;
 
 public interface AdminCourtDAO {
 
-	List<AdminCourtDTO> allList();
-
-	List<AdminCourtDTO> list(int start);
-
-	Object allCourtCount();
-
-	List<AdminCourtDTO> listFilterAddress(int start, String address);
-
-	Object addressFilteringCourtCount(String address);
-
-	List<AdminCourtDTO> addressSearchList(String courtSearchWord, int start);
-
-	List<AdminCourtDTO> nameSearchList(String courtSearchWord, int start);
-
-	Object nameFilteringCourtCount(String courtSearchWord);
+	List<AdminCourtDTO> list(Map<String, Object> param);
 
 	Boolean write(AdminCourtDTO dto);
 
@@ -35,5 +22,9 @@ public interface AdminCourtDAO {
 	Boolean update(AdminCourtDTO dto);
 
 	void deleteFileList(int courtIdx);
+
+	List<String> addressList();
+
+	int totalPage(Map<String, Object> param);
 
 }

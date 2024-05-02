@@ -10,6 +10,7 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 <script src="../resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
+<link rel="stylesheet" href="../resources/css/common/reset.css">
 <link rel="stylesheet" href="../resources/css/header/header.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
 <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
@@ -109,145 +110,132 @@
 </style>
 </head>
 <body>
-	<div class="adminBody">
-		<header class="adminHeader">
-			<div class="headerCont">
-				<a href="../admin_logout.do" class="logout">로그아웃</a>
-				<ul class="menu">
-					<li><a href="../admin/member_list">회원 관리</a></li>
-					<li><a href="../admin/team_list">팀 관리</a></li>
-					<li><a href="../admin/official_list">공식 경기 관리</a></li>
-					<li><a href="../admin/writing_list">글 관리</a></li>
-					<li><a href="../admin/report_list">신고 관리</a></li>
-				</ul>
-			</div>
-		</header>
-		<div class="adminContainer">
-			<h1>공식경기 수정</h1>
-				<table class="officialUpdateTable">
-					<tr>
-						<th class="officialUpdateTh">공식 경기 이름</th>
-						<td class="officialUpdateTd">
-							<input type="text" id="officialUpdateName" disabled/>
-						</td>
-					</tr>
-					<tr>
-						<th class="officialUpdateTh">공식 경기 사진</th>
-						<td class="officialUpdateTd">
-							<div class="swiper-container">
-								<!-- Additional required wrapper -->
-								<div class="swiper-wrapper" id="swiperImage">
-							
-								</div>
-					
-									<!-- 페이징 필요시 추가 -->
-								<div class="swiper-pagination"></div>
-								<!-- 이전, 다음 버튼 필요시 추가 -->
-								<div class="swiper-button-prev"></div>
-								<div class="swiper-button-next"></div>
-					
-							</div>
-							<a id="officialCourtList" >
-							구장 찾기</a>
-						</td>
-					</tr>
-					<tr>
-						<th class="officialUpdateTh">공식 경기 가격</th>
-						<td class="officialUpdateTd">
-							<input type="text" id="officialUpdatePrice" value="${officialInfo.officialPrice}" />
-						</td>
-					</tr>
-					<tr>
-						<th class="officialUpdateTh">공식 경기 날짜</th>
-						<td class="officialUpdateTd">
-							<input id="officialUpdateDate" type="text" value="${officialInfo.officialDate}"/>
-							<br/>
-							<input class="officialUpdateTimeBtn" id="0" type="button" value="00~02">
-							<input class="officialUpdateTimeBtn" id="2" type="button" value="02~04">
-							<input class="officialUpdateTimeBtn" id="4" type="button" value="04~06">
-							<input class="officialUpdateTimeBtn" id="6" type="button" value="06~08">
-							<input class="officialUpdateTimeBtn" id="8" type="button" value="08~10">
-							<input class="officialUpdateTimeBtn" id="10" type="button" value="10~12">
-							<input class="officialUpdateTimeBtn" id="12" type="button" value="12~14">
-							<input class="officialUpdateTimeBtn" id="14" type="button" value="14~16">
-							<input class="officialUpdateTimeBtn" id="16" type="button" value="16~18">
-							<input class="officialUpdateTimeBtn" id="18" type="button" value="18~20">
-							<input class="officialUpdateTimeBtn" id="20" type="button" value="20~22">
-							<input class="officialUpdateTimeBtn" id="22" type="button" value="22~24">
-						</td>
-					</tr>
-					<tr>
-						<th class="officialUpdateTh">공식 경기 레벨</th>
-						<td class="officialUpdateTd">
-							<select id="officialUpdateLevel" >
-								<option value="">레벨을 선택해 주세요</option>
-								<option value="브론즈">브론즈</option>
-								<option value="실버">실버</option>
-								<option value="골드">골드</option>
-								<option value="플레티넘">플레티넘</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<th class="officialUpdateTh">공식 경기 성별</th>
-						<td class="officialUpdateTd">
-							<select id="officialUpdateGender">
-								<option value="">성별을 선택해 주세요</option>
-								<option value="남자">남자</option>
-								<option value="여자">여자</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<th class="officialUpdateTh">공식 경기 모집인원</th>
-						<td class="officialUpdateTd">
-							<input type="number" id="officialUpdateTo" value="${officialInfo.officialTO}"/>
-						</td>
-					</tr>
-					<tr>
-						<th class="officialUpdateTh">공식 경기 정보</th>
-						<td class="officialUpdateTd"><textarea id="officialUpdateInfo"
-								maxlength="300">${officialInfo.officialInfo}</textarea></td>
-					</tr>
-					<tr>
-						<th class="officialUpdateTh">공식 경기 위치</th>
-						<td class="officialUpdateTd">
-							<input type="text" id="officialUpdateAddress" maxlength="300" disabled/></td>
-					</tr>
-				</table>
-				<br /> 
-				<input type="checkbox" name="" id="officialIsDisabled"> 
-				<label for="officialIsDisabled">공식 경기 비활성</label>
-				<br/>
-				<input id="officialRegisterCancel" type="button" value="취소 하기" />
-				<input id="officialRegisterSubmit" type="button" value="등록 하기" />
-		</div>
-	</div>
-		<div id="light" class="white_content">
-			<input type="text" id="officialCourtListSearch" placeholder="(검색)주소를 입력"/>
-			<br/>
-			<br/>
-			<table class="officialCourtTable">
-				<thead>
-					<tr>
-						<th class="officialCourtTh">구장 번호</th>
-						<th class="officialCourtTh">구장 이름</th>
-						<th class="officialCourtTh">구장 지역</th>
-					</tr>
-				</thead>
-				<tbody id="list">
-				</tbody>
+<div class="adminBody">
+	<jsp:include page="../header/header_admin.jsp"/>
+	<div class="adminContainer">
+		<h1>공식경기 수정</h1>
+		<table class="officialUpdateTable">
+			<tr>
+				<th class="officialUpdateTh">공식 경기 이름</th>
+				<td class="officialUpdateTd">
+					<input type="text" id="officialUpdateName" disabled/>
+				</td>
+			</tr>
+			<tr>
+				<th class="officialUpdateTh">공식 경기 사진</th>
+				<td class="officialUpdateTd">
+					<div class="swiper-container">
+						<!-- Additional required wrapper -->
+						<div class="swiper-wrapper" id="swiperImage">
 
-
-			</table>
-						<div class="container">                           
-							<nav aria-label="Page navigation" style="text-align:center">
-								<ul class="pagination" id="pagination"></ul>
-							</nav>               
 						</div>
 
+						<!-- 페이징 필요시 추가 -->
+						<div class="swiper-pagination"></div>
+						<!-- 이전, 다음 버튼 필요시 추가 -->
+						<div class="swiper-button-prev"></div>
+						<div class="swiper-button-next"></div>
+					</div>
+					<a id="officialCourtList" >구장 찾기</a>
+				</td>
+			</tr>
+			<tr>
+				<th class="officialUpdateTh">공식 경기 가격</th>
+				<td class="officialUpdateTd">
+					<input type="text" id="officialUpdatePrice" value="${officialInfo.officialPrice}" />
+				</td>
+			</tr>
+			<tr>
+				<th class="officialUpdateTh">공식 경기 날짜</th>
+				<td class="officialUpdateTd">
+					<input id="officialUpdateDate" type="text" value="${officialInfo.officialDate}"/>
+					<br/>
+					<input class="officialUpdateTimeBtn" id="0" type="button" value="00~02">
+					<input class="officialUpdateTimeBtn" id="2" type="button" value="02~04">
+					<input class="officialUpdateTimeBtn" id="4" type="button" value="04~06">
+					<input class="officialUpdateTimeBtn" id="6" type="button" value="06~08">
+					<input class="officialUpdateTimeBtn" id="8" type="button" value="08~10">
+					<input class="officialUpdateTimeBtn" id="10" type="button" value="10~12">
+					<input class="officialUpdateTimeBtn" id="12" type="button" value="12~14">
+					<input class="officialUpdateTimeBtn" id="14" type="button" value="14~16">
+					<input class="officialUpdateTimeBtn" id="16" type="button" value="16~18">
+					<input class="officialUpdateTimeBtn" id="18" type="button" value="18~20">
+					<input class="officialUpdateTimeBtn" id="20" type="button" value="20~22">
+					<input class="officialUpdateTimeBtn" id="22" type="button" value="22~24">
+				</td>
+			</tr>
+			<tr>
+				<th class="officialUpdateTh">공식 경기 레벨</th>
+				<td class="officialUpdateTd">
+					<select id="officialUpdateLevel" >
+						<option value="">레벨을 선택해 주세요</option>
+						<option value="브론즈">브론즈</option>
+						<option value="실버">실버</option>
+						<option value="골드">골드</option>
+						<option value="플레티넘">플레티넘</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th class="officialUpdateTh">공식 경기 성별</th>
+				<td class="officialUpdateTd">
+					<select id="officialUpdateGender">
+						<option value="">성별을 선택해 주세요</option>
+						<option value="남자">남자</option>
+						<option value="여자">여자</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th class="officialUpdateTh">공식 경기 모집인원</th>
+				<td class="officialUpdateTd">
+					<input type="number" id="officialUpdateTo" value="${officialInfo.officialTO}"/>
+				</td>
+			</tr>
+			<tr>
+				<th class="officialUpdateTh">공식 경기 정보</th>
+				<td class="officialUpdateTd">
+					<textarea id="officialUpdateInfo" maxlength="300">${officialInfo.officialInfo}</textarea>
+				</td>
+			</tr>
+			<tr>
+				<th class="officialUpdateTh">공식 경기 위치</th>
+				<td class="officialUpdateTd">
+					<input type="text" id="officialUpdateAddress" maxlength="300" disabled/>
+				</td>
+			</tr>
+		</table>
+		<br/> 
+		<input type="checkbox" name="" id="officialIsDisabled"> 
+		<label for="officialIsDisabled">공식 경기 비활성</label>
+		<br/>
+		<input id="officialRegisterCancel" type="button" value="취소 하기" />
+		<input id="officialRegisterSubmit" type="button" value="등록 하기" />
+
+		<div id="light" class="white_content">
+		<input type="text" id="officialCourtListSearch" placeholder="(검색)주소를 입력"/>
+		<br/>
+		<br/>
+		<table class="officialCourtTable">
+			<thead>
+				<tr>
+					<th class="officialCourtTh">구장 번호</th>
+					<th class="officialCourtTh">구장 이름</th>
+					<th class="officialCourtTh">구장 지역</th>
+				</tr>
+			</thead>
+			<tbody id="list">
+			</tbody>
+		</table>
 		</div>
-		<div id="fade" class="black_overlay"></div>
+	</div>
+	<div class="container">                           
+		<nav aria-label="Page navigation" style="text-align:center">
+			<ul class="pagination" id="pagination"></ul>
+		</nav>               
+	</div>
+	<div id="fade" class="black_overlay"></div>
+</div>
 </body>
 <script>
 	var courtIdx = '${officialInfo.courtIdx}';
@@ -319,7 +307,7 @@
 					,'officialTO':officialTO
 					,'officialInfo':officialInfo
 					,'officialStartTime':selectTime
-					,'officialEndTime':selectTime+2
+					,'officialEndTime':parseInt(selectTime)+2
 					,'officialDate':selectDate
 					,'courtIdx':courtIdx
 					,'officialIdx':'${officialIdx}'
@@ -477,7 +465,7 @@
 	});
 
 	$('.officialUpdateTimeBtn:not([disabled])').click(function() {
-		selectTime = parseInt($(this).attr('id'));
+		selectTime = $(this).attr('id');
 		// 모든 버튼의 배경색을 하늘색으로 초기화
 		$('.officialUpdateTimeBtn:not([disabled])').not(this).css('background-color', 'skyblue');
 

@@ -8,6 +8,8 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="../resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
+<link rel="stylesheet" href="../resources/css/common/reset.css">
+<link rel="stylesheet" href="../resources/css/header/header.css">
 <style>
     .reportListTable{
         border: 2px solid;
@@ -31,51 +33,41 @@
     </style>
 </head>
 <body>
-	<div class="adminBody">
-    	<header class="adminHeader">
-        	<div class="headerCont">
-            	<a href="admin_logout.do" class="logout">로그아웃</a>
-            	<ul class="menu">
-	                <li><a href="admin/member_list">회원 관리</a></li>
-	                <li><a href="admin/team_list">팀 관리</a></li>
-	                <li><a href="admin/court_list">구장 관리</a></li>
-	                <li><a href="admin/writing_list">글 관리</a></li>
-	                <li><a href="admin/report_list">신고 관리</a></li>
-	            </ul>
-	        </div>
-	    </header>
-    <div class="adminContainer">
-        <h1>신고/문의 내역</h1>
-        <div id="adminReportListDiv">
-            처리유형 
-            <select id="reportState">
-                <option value="">전체</option>
-                <option value="처리 전">처리 전</option>
-                <option value="처리 중">처리 중</option>
-                <option value="처리 완료">처리 완료</option>
-            </select>
-            <input type="text" id="reportSearch" placeholder="신고/문의자 ID 검색"/>
-            <table class="reportListTable">
-                <thead>
-                    <tr>
-                        <th class="reportListTh">no.</th>
-                        <th class="reportListTh">처리상태</th>
-                        <th class="reportListTh">제목</th>
-                        <th class="reportListTh">신고/문의자 ID</th>
-                        <th class="reportListTh">신고/문의 날짜</th>
-                        <th class="reportListTh">관리자</th>
-                    </tr>
-                </thead>
-                <tbody id="reportList"></tbody>
-            </table>
-            <div class="container">                           
-                <nav aria-label="Page navigation" style="text-align:center">
-                    <ul class="pagination" id="pagination"></ul>
-                </nav>               
-            </div>
-        </div>
-    </div>
-    </div>
+<div class="adminBody">
+        <jsp:include page="../header/header_admin.jsp"/>
+        <div class="adminContainer">
+		<h1>신고/문의 내역</h1>
+		<div id="adminReportListDiv"> 
+			처리유형 
+			<select id="reportState">
+				<option value="">전체</option>
+				<option value="처리 전">처리 전</option>
+				<option value="처리 중">처리 중</option>
+				<option value="처리 완료">처리 완료</option>
+			</select>
+			<input type="text" id="reportSearch" placeholder="신고/문의자 ID 검색" />
+			<table class="reportListTable">
+				<thead>
+					<tr>
+						<th class="reportListTh">no.</th>
+						<th class="reportListTh">처리상태</th>
+						<th class="reportListTh">제목</th>
+						<th class="reportListTh">신고/문의자 ID</th>
+						<th class="reportListTh">신고/문의 날짜</th>
+						<th class="reportListTh">관리자</th>
+					</tr>
+				</thead>
+				<tbody id="reportList"></tbody>
+			</table>
+			<div class="container">
+				<nav aria-label="Page navigation" style="text-align: center">
+					<ul class="pagination" id="pagination"></ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+ </div>
+
 </body>
 <script>
 var currentPage = 1;
@@ -116,7 +108,6 @@ var searchFlag = false;
 	
 	
 	function callList(currentPage) {
-		
 		$.ajax({
 			type:'POST'
 			,url:'./reportList.ajax'
@@ -126,14 +117,11 @@ var searchFlag = false;
 				,'reportSearch':$('#reportSearch').val()
 				,'searchFlag':searchFlag
 			}
-			,dataType:'json'
+			,dataType:'JSON'
 			,success:function(data){
-				console.log(data.list);
-// 				console.log(data.totalPage);
+				console.log(data);
 				showList(data.list);
-				var totalPage = data.totalPage/10 > 1 ? data.totalPage/10:1;
-				showPagination(totalPage);
-				
+				showPagination(data.totalPage);
 			}
 			,error:function(error){
 				console.log(error);
@@ -149,7 +137,7 @@ var searchFlag = false;
 // 					console.log(pg);
 				
 					currentPage = pg;
-// 					callList(currentPage);
+					callList(currentPage);
 				}
 				
 		});

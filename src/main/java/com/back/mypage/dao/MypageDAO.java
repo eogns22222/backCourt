@@ -3,8 +3,6 @@ package com.back.mypage.dao;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import com.back.mypage.dto.MypageDTO;
 import com.back.official.dto.OfficialDTO;
 
@@ -35,8 +33,7 @@ public interface MypageDAO {
 
 	int report(Map<String, Object> map);
 
-
-	List<MypageDTO> jjimList(String id);
+	List<MypageDTO> jjimList(String id, int start);
 
 	int jjimListCount(String id);
 

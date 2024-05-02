@@ -4,95 +4,54 @@
 >
 
 <mapper namespace="com.back.admin.dao.AdminCourtDAO">
+
+	<select id="totalPage" resultType="int">
+		SELECT
+			COUNT(court_idx)
+		FROM court
+		<choose>
+			<when test='searchFlag == "true" and searchCategory == "courtName"'>
+				WHERE court_address LIKE CONCAT('%', #{searchWord}, '%')
+			</when>
+			<when test='searchFlag == "true" and searchCategory == "courtAddress"'>
+				WHERE court_name LIKE CONCAT('%', #{searchWord}, '%')
+			</when>
+			<when test='address != null'>
+				WHERE court_address LIKE CONCAT('%', #{address}, '%')
+			</when>
+		</choose>
+	</select>
 	
 	<select id="list" resultType="com.back.admin.dto.AdminCourtDTO">
 		
-		
 		SELECT
 			court_idx AS courtIdx
 			, court_name AS courtName
 			, court_address AS courtAddress
 			, court_state AS courtState
 		FROM court
-		ORDER BY court_address asc LIMIT #{param1}, 10
-	
-	</select>
-	
-	<select id="addressSearchList" resultType="com.back.admin.dto.AdminCourtDTO">
-		
-		
-		SELECT
-			court_idx AS courtIdx
-			, court_name AS courtName
-			, court_address AS courtAddress
-			, court_state AS courtState
-		FROM court
-		WHERE court_address LIKE CONCAT('%', #{param1}, '%')
-		ORDER BY court_address asc LIMIT #{param2}, 10
-	</select>
-	
-	
-	<select id="nameSearchList" resultType="com.back.admin.dto.AdminCourtDTO">
-		
-		
-		SELECT
-			court_idx AS courtIdx
-			, court_name AS courtName
-			, court_address AS courtAddress
-			, court_state AS courtState
-		FROM court
-		WHERE court_name LIKE CONCAT('%', #{param1}, '%')
-		ORDER BY court_address asc LIMIT #{param2}, 10
-	</select>
-	
-	<select id="listFilterAddress" resultType="com.back.admin.dto.AdminCourtDTO">
-		
-		
-		SELECT
-			court_idx AS courtIdx
-			, court_name AS courtName
-			, court_address AS courtAddress
-			, court_state AS courtState
-		FROM court
-		WHERE court_address LIKE CONCAT('%', #{param2}, '%')
-		ORDER BY court_address asc LIMIT #{param1}, 10
-	</select>
-	
-	<select id="allList" resultType="com.back.admin.dto.AdminCourtDTO">
-		
-		
-		SELECT
-			court_idx AS courtIdx
-			, court_name AS courtName
-			, court_address AS courtAddress
-			, court_state AS courtState
-		FROM court
+		<choose>
+			<when test='searchFlag == "true" and searchCategory == "courtAddress"'>
+				WHERE court_address LIKE CONCAT('%', #{searchWord}, '%')
+			</when>
+			<when test='searchFlag == "true" and searchCategory == "courtName"'>
+				WHERE court_name LIKE CONCAT('%', #{searchWord}, '%')
+			</when>
+			<when test='address != null'>
+				WHERE court_address LIKE CONCAT('%', #{address}, '%')
+			</when>
+		</choose>
+		ORDER BY court_address  LIMIT #{start}, 10
 		
 	</select>
 	
-	<select id="allCourtCount" resultType="int">
-	
-		SELECT COUNT(court_idx) AS totalPage
+	<select id="addressList" resultType="String">
+		SELECT court_address
 		FROM court 
-	
+		GROUP BY court_address
+		ORDER BY court_address
 	</select>
 	
-	
-	<select id="addressFilteringCourtCount" resultType="int">
-	
-		SELECT COUNT(court_idx) AS totalPage 
-		FROM court 
-		WHERE court_address LIKE CONCAT('%', #{param1}, '%')
-	
-	</select>
-	
-	<select id="nameFilteringCourtCount" resultType="int">
-	
-		SELECT COUNT(court_idx) AS totalPage 
-		FROM court 
-		WHERE court_name LIKE CONCAT('%', #{param1}, '%')
-	
-	</select>
 	
 	<insert id="write" useGeneratedKeys="true" keyColumn="court_idx"
 		keyProperty="courtIdx" parameterType="com.back.admin.dto.AdminCourtDTO">
@@ -144,29 +103,3 @@
 	</delete>
 	
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

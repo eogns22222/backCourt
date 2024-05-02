@@ -26,36 +26,30 @@ public class AdminCourtController {
 
 	@RequestMapping(value = "/admin/courtList.go")
 	public String listGo(HttpSession session) {
-		String isAdmin = "";
-		isAdmin = (String) session.getAttribute("isAdmin");
-		if (isAdmin == null ||isAdmin.isEmpty()) {
-			return "redirect:/login.go";
-		}
+//		String isAdmin = "";
+//		isAdmin = (String) session.getAttribute("isAdmin");
+//		if (isAdmin == null || isAdmin.isEmpty()) {
+//			return "redirect:/login.go";
+//		}
 		return "/admin/court_list";
 	}
 
 	@RequestMapping(value = "/admin/courtList.ajax", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> callList(String currentPage, String address, String searchCategory, String searchWord,
-			String searchFlag) {
+	public Map<String, Object> callList(@RequestParam Map<String, Object> param) {
 
-		logger.info("listCall / currentPage = {} / address = {} / ", currentPage, address);
-		logger.info(searchFlag);
-		int page = Integer.parseInt(currentPage);
-		if (searchFlag.equals("true")) {
-			return adminCourtService.searchList(searchCategory, searchWord, page, address);
-		} else {
-			return adminCourtService.list(page, address);
-		}
+		logger.info("callList / param = {}", param);
+
+		return adminCourtService.list(param);
 
 	}
 
 	@RequestMapping(value = "/admin/courtWrite.go")
 	public String WriteGo(HttpSession session) {
-		String isAdmin = (String) session.getAttribute("isAdmin");
-		if (isAdmin == null ||isAdmin.isEmpty()) {
-			return "redirect:/login.go";
-		}
+//		String isAdmin = (String) session.getAttribute("isAdmin");
+//		if (isAdmin == null || isAdmin.isEmpty()) {
+//			return "redirect:/login.go";
+//		}
 		return "/admin/court_register";
 	}
 
@@ -89,10 +83,10 @@ public class AdminCourtController {
 
 	@RequestMapping(value = "/admin/courtDetail.go")
 	public String DetailGo(HttpSession session, String courtIdx, Model model) {
-		String isAdmin = (String) session.getAttribute("isAdmin");
-		if (isAdmin == null ||isAdmin.isEmpty()) {
-			return "redirect:/login.go";
-		}
+//		String isAdmin = (String) session.getAttribute("isAdmin");
+//		if (isAdmin == null || isAdmin.isEmpty()) {
+//			return "redirect:/login.go";
+//		}
 		logger.info(courtIdx);
 		adminCourtService.detailLoad(courtIdx, model);
 		return "/admin/court_update";

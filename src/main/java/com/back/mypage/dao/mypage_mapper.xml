@@ -20,6 +20,7 @@
 		JOIN court c 
 		ON j.court_idx = c.court_idx 
 		WHERE j.id = #{param1}
+		LIMIT #{param2}, 10
 	</select>
 	
 	<select id="jjimListCount" resultType="int">

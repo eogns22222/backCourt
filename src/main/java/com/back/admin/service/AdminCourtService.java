@@ -5,11 +5,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.ServletContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,70 +26,44 @@ public class AdminCourtService {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired
 	AdminCourtDAO adminCourtDAO;
-	
+
 	String macRoot = "/Users/chaehyeonpark/Documents/gdj78_backcourt/upload/court/";
-	
+
 	String winRoot = "C:/upload/court/";
 
-	public Map<String, Object> list(int page, String address) {
+	public Map<String, Object> list(Map<String, Object> param) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<AdminCourtDTO> list;
-		List<AdminCourtDTO> allList = adminCourtDAO.allList();
 
-		int start = (page - 1) * 10;
+		int start = (Integer.parseInt((String) param.get("currentPage")) - 1) * 10;
+		param.put("start", start);
+		logger.info("list param = {}", param);
+		result.put("list", adminCourtDAO.list(param));
 
-		if (address.equals("") == true) {
-//			logger.info("servcie.list / address = {} /", address);
-			list = adminCourtDAO.list(start);
-			result.put("totalPage", adminCourtDAO.allCourtCount());
+		result.put("addressList", addressListSplit(adminCourtDAO.addressList()));
+		int totalPage = adminCourtDAO.totalPage(param);
 
+		if (totalPage / 10 == 0) {
+			totalPage = 1;
+		} else if (totalPage % 10 > 0) {
+			totalPage = totalPage / 10 + 1;
 		} else {
-//			logger.info("servcie.list / address = {} /", address);
-			list = adminCourtDAO.listFilterAddress(start, address);
-			result.put("totalPage", adminCourtDAO.addressFilteringCourtCount(address));
-
+			totalPage = totalPage / 10;
 		}
+		result.put("totalPage", totalPage);
 
-		result.put("list", list);
-		result.put("allList", allList);
 		return result;
 	}
 
-	public Map<String, Object> searchList(String courtSearchCategory, String courtSearchWord, int page,
-			String address) {
-
-		Map<String, Object> result = new HashMap<String, Object>();
-		List<AdminCourtDTO> list;
-		List<AdminCourtDTO> allList = adminCourtDAO.allList();
-
-		int start = (page - 1) * 10;
-
-		if (courtSearchCategory.equals("courtAddress")) {
-			list = adminCourtDAO.addressSearchList(courtSearchWord, start);
-			logger.info("서치리스트 코트어드레스 ");
-			result.put("list", list);
-			result.put("totalPage", adminCourtDAO.addressFilteringCourtCount(courtSearchWord));
-		} else if (courtSearchCategory.equals("courtName")) {
-			list = adminCourtDAO.nameSearchList(courtSearchWord, start);
-			logger.info("서치리스트 코트네임 ");
-			result.put("list", list);
-			result.put("totalPage", adminCourtDAO.nameFilteringCourtCount(courtSearchWord));
+	private Object addressListSplit(List<String> addressList) {
+		List<String> splitList = new ArrayList<String>();
+		for (String address : addressList) {
+			if (address.contains(" ")) {
+				splitList.add(address.split(" ")[1]);
+//				logger.info(address);
+			}
 		}
 
-//		if (address.equals("") == true) {
-////			logger.info("servcie.list / address = {} /", address);
-//			list = courtDAO.SearchList(courtSearchCategory,courtSearchWord,start);
-//			result.put("totalPage", courtDAO.allCourtCount());
-//
-//		} else {
-////			logger.info("servcie.list / address = {} /", address);
-//			list = courtDAO.listFilterAddress(start, address);
-//			result.put("totalPage", courtDAO.addressFilteringCourtCount(address));
-//
-//		}
-
-		result.put("allList", allList);
-		return result;
+		return splitList;
 	}
 
 	public Map<String, Boolean> write(MultipartFile[] files, String courtWriteName, String courtWriteInfo,
@@ -187,7 +160,7 @@ public class AdminCourtService {
 
 		map.put("result", adminCourtDAO.update(dto));
 		List<String> fileNameList = adminCourtDAO.fileName(courtIdx);
-		courtImageDelete(Integer.parseInt(courtIdx),fileNameList);
+		courtImageDelete(Integer.parseInt(courtIdx), fileNameList);
 
 		logger.info(map.get("result") + "");
 		courtImageUploading(Integer.parseInt(courtIdx), files);
@@ -195,7 +168,7 @@ public class AdminCourtService {
 		return map;
 	}
 
-	//구장 이미지 테이블에서 제거후 파일 삭제
+	// 구장 이미지 테이블에서 제거후 파일 삭제
 	public void courtImageDelete(int courtIdx, List<String> fileNameList) {
 		adminCourtDAO.deleteFileList(courtIdx);
 		String os = System.getProperty("os.name").toLowerCase();
@@ -212,9 +185,9 @@ public class AdminCourtService {
 			if (file.exists()) {
 				file.delete();
 			}
-			
+
 		}
-		
-		
+
 	}
+
 }
