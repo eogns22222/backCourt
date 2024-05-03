@@ -89,7 +89,11 @@ public interface MypageDAO {
 	void report_del_ajax(String loginId, String idx);
 
 
+	MypageDTO mprofile_detail(String loginId);
 
+	MypageDTO profile_detail_ajax(String loginId);
+
+	void profile_detail_do(Map<String, String> param);
 
 
 

@@ -423,5 +423,60 @@ public class MypageController {
 			return null;
 		}
 		
+		
+//		=====================  회원 수정 ========================
+		
+		
+//		회원 수정 이동
+		@RequestMapping(value = "/mypage/profile_detail.go")
+		public String profile_detail(HttpSession session,Model model) {
+			logger.info("회원 수정 이동");
+			
+			String loginId = (String) session.getAttribute("loginId");
+			
+			MypageDTO dto =  mypageService.profile_detail(loginId);
+			
+			model.addAttribute("dto",dto);
+			
+			logger.info("dto : {} "+dto);
+			
+			return "mypage/profile_detail";
+		}
+		
+		//회원 상세보기 정보 가져오기
+		@RequestMapping(value = "/mypage/profile_detail.ajax")
+		@ResponseBody
+		public Map<String, Object> profile_detail_ajax(HttpSession session){
+			
+			String loginId = (String) session.getAttribute("loginId");
+			
+			Map<String, Object> map = new HashMap<String, Object>(); 
+					
+			MypageDTO profile_dto = mypageService.profile_detail_ajax(loginId);
+			
+			logger.info("상세보기 : {} ",profile_dto);
+			
+			map.put("profile_detail",profile_dto);
+			
+			return map;
+		}
+		
+		
+		//회원 정보 수정 하기
+		@RequestMapping(value = "/mypage/profile_detail.do")
+		public String profile_detail_do(@RequestParam Map<String,String> param,HttpSession session ) {
+			logger.info("회원 정보 수정");
+			logger.info("param : {}",param);
+			
+			
+			logger.info(param.get("id"));
+			
+			mypageService.profile_detail_do(param);
+			
+			return "redirect:/mypage/profile_detail.go";
+		}
+		
 
 	}
+		
+

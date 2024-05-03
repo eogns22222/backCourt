@@ -216,4 +216,16 @@ UPDATE report SET report_tit=#{report_tit},report_content=#{report_content} WHER
 	DELETE FROM report where id = #{param1} AND report_idx = #{param2}
 </delete>
 
+<select id="mprofile_detail" resultType="com.back.mypage.dto.MypageDTO"> 
+	SELECT id,name,point,address,gender,position,level,state FROM member WHERE id = #{param1} 
+</select>
+
+<select id="profile_detail_ajax" resultType="com.back.mypage.dto.MypageDTO">
+	SELECT id,name,point,address,gender,position,level,state FROM member WHERE id = #{param1} 
+</select>
+
+<update id="profile_detail_do" parameterType="map"> 
+	UPDATE member SET name=#{Name}, address=#{Area},gender=#{gender},position=#{Position},level=#{Level} WHERE id =#{id}
+</update>
+
 </mapper>

@@ -195,7 +195,7 @@
 		
 		content += '<li class="topCont">';
 		content += '<div class="profile">';
-		content += '<p class="nik"><a href="../mypage/profile_detail?id=' + info.id + '">' + info.id + '</a></p>';
+		content += '<p class="nik"><a href="../mypage/profile_detail.go?id=' + info.id + '">' + info.id + '</a></p>';
 		content += '<span class="photo"><img src="../resources/img/icon/propile.jpg" alt=""></span>';
 		content += '</div>';
 		content += '<div class="point">';

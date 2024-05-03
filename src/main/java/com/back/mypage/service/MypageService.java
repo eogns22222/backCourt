@@ -299,6 +299,27 @@ public class MypageService {
 		mypageDAO.report_del_ajax(loginId,idx);
 		
 	}
+	
+	//회원 수정
+		public MypageDTO profile_detail(String loginId) {
+			
+			return mypageDAO.mprofile_detail(loginId);
+		}
+
+
+		public MypageDTO profile_detail_ajax(String loginId) {
+			return mypageDAO.profile_detail_ajax(loginId);
+		}
+
+
+		public void profile_detail_do(Map<String, String> param) {
+		
+			logger.info("param : {}",param);
+			
+			mypageDAO.profile_detail_do(param);
+			
+			
+		}
 
 
 
