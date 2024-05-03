@@ -9,6 +9,10 @@
 		SELECT id FROM member WHERE id=#{param1} and pw=#{param2}
 	</select>
 	
+	<select id="loginperm" resultType="String">
+		SELECT perm FROM member WHERE id=#{param1} and pw=#{param2}
+	</select>
+	
 	<insert id="Join" parameterType="map">
 		INSERT INTO member(id,
 			pw,

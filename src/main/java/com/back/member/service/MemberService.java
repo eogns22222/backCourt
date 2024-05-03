@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.back.member.dao.MemberDAO;
+import com.back.mypage.dto.MypageDTO;
 
 @Service
 public class MemberService {
@@ -26,6 +27,12 @@ public class MemberService {
 	
 	public Object overlay(String id) {	
 		return memberDAO.overlay(id);
+	}
+	
+	// 고객, 관리자 구별
+	public String loginperm(String id, String pw) {
+		
+		return memberDAO.loginperm(id,pw);
 	}
 	
 }

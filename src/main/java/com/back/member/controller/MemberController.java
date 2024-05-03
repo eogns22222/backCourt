@@ -36,15 +36,25 @@ public class MemberController {
 	public String login(HttpSession session,String id,String pw,Model model) {
 		logger.info("로그인 정보"+ id,pw);
 		String loginId = memberService.login(id,pw);
+		String loginperm = memberService.loginperm(id,pw);
 		logger.info("loginId : "+loginId);
+		logger.info("loginstate : {}",loginperm);
 		
 		String page = "member/login";
+
 		
 		if (loginId!=null) {
-			session.setAttribute("loginId",loginId);
-			//공식 경기리스트로 가는 주소
-			page = "redirect:/official";
-			//page = "redirect:/point.Go";
+			logger.info("로그인 성공");
+			if (loginperm.equals("고객")) {
+				logger.info("고객 로그인");
+				session.setAttribute("loginId",loginId);
+				page = "redirect:/official";
+			}
+			if (loginperm.equals("관리자")) {
+				logger.info("관리자 로그인");
+				session.setAttribute("loginId",loginId);
+				page = "redirect:/admin/memberList.go";
+			}
 		}else {
 			model.addAttribute("msg","아이디 또는 비빌번호를 확인 해주세요");	
 			

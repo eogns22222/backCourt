@@ -38,7 +38,7 @@
 	                    아이디
 	                </th>
 	                <td>
-	                    <input type="text" name="id"/>
+	                    <input type="text" name="id"  maxlength="15"/>
 	                    <input type="button" value="중복 체크" onclick="overlay()"/>
 	                </td>
 	            </tr>
@@ -47,7 +47,7 @@
 	                    비밀번호
 	                </th>
 	                <td>
-	                    <input type="password" name="pw"/>
+	                    <input type="password" name="pw" maxlength="25" />
 	                </td>
 	            </tr>
 	            <tr>
@@ -147,20 +147,24 @@
 		var $pw = $('input[name="pw"]').val();
 		var $name = $('input[name="name"]').val();
 		var $gender = $('input[name="gender"]:checked').val();
-	    console.log($id,$pw,$name,$gender);
 	
-	    //input에 내용이 ' ' 이라면 실행
-	    // if(overChk==false){ //중복 체크를 안 했다면 false 중복 체크를 해다면 overChk가 true로 변환 되서 다음줄 실행
-		// 	alert('아이디 중복 확인');
-		// 	$id.focus();
-		// }else 
+	   
 	    if($id==''){
 	        alert('아이디를 입력해 주세요');
 			$id.focus();
-	    }else if($pw==''){
+	    }else if ($id.length<5) {
+   		 	alert('최소 5글자를 입력해 주세요');
+			$id.focus();
+		}else if(overChk==false){ //중복 체크를 안 했다면 false 중복 체크를 해다면 overChk가 true로 변환 되서 다음줄 실행
+			 	alert('아이디 중복 확인');
+			 	$id.focus();
+		}else if($pw==''){
 	        alert('비밀번호를 입력해 주세요');
 			$pw.focus();
-	    }else if($name==''){
+	    }else if ($pw.length<8) {
+   		 	alert('최소 8글자를 입력해 주세요');
+   		 	$pw.focus();
+		}else if($name==''){
 	        alert('이름을 입력해 주세요');
 			$name.focus();
 	    }else if($gender==null){
