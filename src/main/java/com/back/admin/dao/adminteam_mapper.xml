@@ -96,6 +96,30 @@
 		from team
 		where team_idx = #{teamIdx}
 	</select>
+	
+	<select id="teamMemberDetail" resultType="com.back.admin.dto.AdminTeamDTO">
+		SELECT 
+			tj.join_team_idx
+			,tj.join_team_state 
+			,t.team_name 
+			,t.team_address 
+			,tj.join_team_content 
+			,tj.join_team_level 
+			,t.team_info 
+			FROM team t
+			JOIN team_join tj
+			ON t.team_idx = tj.team_idx
+			WHERE tj.join_team_idx = #{param1}
+	</select>	
+	
+	<update id="teamMemberUpdate">
+		UPDATE team_join
+			SET join_team_content = #{param2}
+			,join_team_level = #{param3}
+			,join_team_state = #{param4}
+			WHERE join_team_idx = #{param1}
+	</update>
+	
 </mapper>
 
 

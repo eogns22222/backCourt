@@ -91,4 +91,33 @@ public class AdminTeamService {
 
 	}
 
+	public AdminTeamDTO teamMemberDetail(String join_team_idx) {
+		
+		return adminTeamDAO.teamMemberDetail(join_team_idx);
+	}
+
+	public int teamMemberUpdate(String join_team_idx, String requInfo, String level, String teamIsDisabled) {
+		return adminTeamDAO.teamMemberUpdate(join_team_idx, requInfo, level, teamIsDisabled);
+	}
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -25,6 +25,14 @@
 .table tr th {
 	background: lightgray;
 }
+/* 수정 - 강대훈 */
+.guest_join.content{
+	width: 1280px;
+    margin: 0 auto;
+}
+.searchContainer{
+	text-align: center;
+}
 </style>
 </head>
 <body>
@@ -98,15 +106,18 @@
 				</tr>
 			</table>
 		</div>
-
-		<select id="searchCategory">
-			<option value="courtName">코트 명</option>
-			<option value="Address">지역 명</option>
-			<option value="teamName">팀 명</option>
-		</select> <input type="text" id="searchWord" placeholder="검색단어입력"
-			maxlength="20" />
-		<!-- 이거 누르면 아작스 하는걸로 -->
-		<input type="button" id="searchBtn" value="검색" />
+		
+		<!-- 수정 - 강대훈 : 상위 div 생성 -->
+		<div class="searchContainer">
+			<select id="searchCategory">
+				<option value="courtName">코트 명</option>
+				<option value="Address">지역 명</option>
+				<option value="teamName">팀 명</option>
+			</select> <input type="text" id="searchWord" placeholder="검색단어입력"
+				maxlength="20" />
+			<!-- 이거 누르면 아작스 하는걸로 -->
+			<input type="button" id="searchBtn" value="검색" />
+		</div>	
 
 	</div>
 </body>

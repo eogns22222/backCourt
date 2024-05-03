@@ -12,6 +12,36 @@
 	type="text/css">
 <link rel="stylesheet" href="../resources/css/header/header.css"
 	type="text/css">
+<style>
+	/* 수정 - 강대훈 */
+	.wrapper{
+		padding:20px 220px !important;
+		box-sizing: border-box;
+	}
+	.wrapper .content{
+		width:initial !important;
+	}
+	.content-wrapper{
+		margin-bottom: 10px;
+	}
+	.content .tit{
+		display: inline-block;
+		width:105px;
+	}
+	.content .txt{
+	}
+	.content.requ{
+		width:105px !important;
+	}
+	.textarea{
+		width: 100%;
+    	max-width: 70%;
+		margin-left:0;
+	}
+	.update{
+		text-align: center;
+	}
+</style>
 </head>
 <body>
 <jsp:include page="../header/header.jsp"/>
@@ -21,23 +51,33 @@
 		<span>팀원 모집글 수정</span>
 		</div>
 		<br />
+		<!-- 수정 - 강대훈 - 지역이 안찍히는데 확인바람 -->
 		<div class="content-wrapper">
-			<div class="content">팀명 : ${modiDto.team_name}</div>
+			<div class="content">
+				<span class="tit">팀명 :</span> 
+				<span class="txt">${modiDto.team_name}</span>
+			</div>
 		</div>
 		<div class="content-wrapper">
-			<div class="content" id="address">지역 : ${modiDto.team_address}</div>
+			<div class="content" id="address">
+				<span class="tit">지역 :</span> 
+				<span class="txt">${modiDto.team_address}</span>
+			</div>
 		</div>
 		<div class="content-wrapper">
-			<div class="content">팀 설명 : ${modiDto.team_info}</div>
+			<div class="content">
+				<span class="tit">팀 설명 :</span> 
+				<span class="txt">${modiDto.team_info}</span>
+			</div>
 		</div>
 		<div class="content-wrapper">
-			<div class="content">모집내용 : </div>
+			<div class="content requ">모집내용 : </div>
 			<textarea name="teammate_info" class="textarea" id="teammateContent" maxlength="500">
             </textarea>
 			<div id="char-count"></div>
 		</div>
 		<div class="content-wrapper">
-			<div class="content">모집 성별 :</div>
+			<div class="content requ">모집 성별 :</div>
 			<div class="radio-wrapper">
 				<input type="radio" id="male" name="teammateGender" value="남자"> 
 				<label for="male">남자</label> 
@@ -46,7 +86,7 @@
 			</div>
 		</div>
 		<div class="content-wrapper">
-			<div class="content">모집 레벨 : </div>
+			<div class="content requ">모집 레벨 : </div>
 			<div class="radio-wrapper">
 				<input type="radio" id="bronze" name="teammateLevel" value="브론즈">
 					<label for="bronze">브론즈</label> 
@@ -59,7 +99,7 @@
 			</div>
 		</div>
 		<div class="content-wrapper">
-			<div class="content">모집 포지션 :</div>
+			<div class="content requ">모집 포지션 :</div>
 			<select class="select" name="teammatePosition" id="teammatePosition">
 				<option value="">포지션 선택</option>
 				<option value="센터">센터</option>
@@ -67,6 +107,7 @@
 				<option value="가드">가드</option>
 			</select>
 		</div>
+		<!-- 수정 - 강대훈 - 지역이 안찍히는데 확인바람 -->
 		<div class="update">
 			<input type="submit" value="수정 취소" id="cancel" class="submit">
 			<input type="submit" value="수정 완료" id="finish" class="submit">

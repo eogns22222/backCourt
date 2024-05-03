@@ -13,6 +13,12 @@
       <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
       <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <title>포인트 리스트</title>
+<style>
+	/* 수정 - 강대훈 */
+	.pointContainer .container{
+		width: 970px;
+	}
+</style>
 </head>
 <body>
 	<!-- jsp 붙이는 법 -->
@@ -20,44 +26,48 @@
     <div id="style">
         <button id="mon">문의 하기</button>
         <h2 id="title">내 포인트 내역</h2>
-        <div id="he">
-            <h3 class="poin">포인트 내역</h3>
-            <h3 class="point" ></h3>
-            <button class="state">충전</button>
-            <button class="state">환급</button>
+        <!-- 수정 - 강대훈 : 상위 div 생성 -->
+        <div class="pointContainer">
+			<div id="he">
+	            <h3 class="poin">포인트 내역</h3>
+	            <h3 class="point" ></h3>
+	            <button class="state">충전</button>
+	            <button class="state">환급</button>
+	        </div>
+	        <table>
+	        	<colgroup>
+	                    <col width="25%"/>
+	                    <col width="25%"/>
+	                    <col width="25%"/>
+	                    <col width="25%"/>
+	            </colgroup>
+	            <thead>
+	                <tr class="thead_tr">
+	                    <th class="thead_th">ON.</th>
+	                    <th class="thead_th">날짜</th>
+	                    <th class="thead_th">금액</th>
+	                    <th class="thead_th">구분</th>
+	                </tr>
+	            </thead>
+	           	<c:if test="${pont_list.size()<1 }">
+	            	<tr><th colspan="4" class="point_if" >포인트 사용 내역이 없습니다.</th></tr>
+	            </c:if>
+	            <tbody id="list">
+	                
+	            </tbody>
+	            <tr>
+	          <!-- 플러그인 사용법 --> 
+	             <td colspan="4">
+	                 <div class="container">                           
+	                  <nav aria-label="Page navigation" style="text-align:center">
+	                     <ul class="pagination" id="pagination"></ul>
+	                  </nav>               
+	               </div>
+	             </td>
+	          </tr>
+	        </table>
         </div>
-        <table>
-        	<colgroup>
-                    <col width="25%"/>
-                    <col width="25%"/>
-                    <col width="25%"/>
-                    <col width="25%"/>
-            </colgroup>
-            <thead>
-                <tr class="thead_tr">
-                    <th class="thead_th">ON.</th>
-                    <th class="thead_th">날짜</th>
-                    <th class="thead_th">금액</th>
-                    <th class="thead_th">구분</th>
-                </tr>
-            </thead>
-           	<c:if test="${pont_list.size()<1 }">
-            	<tr><th colspan="4" class="point_if" >포인트 사용 내역이 없습니다.</th></tr>
-            </c:if>
-            <tbody id="list">
-                
-            </tbody>
-            <tr>
-          <!-- 플러그인 사용법 --> 
-             <td colspan="4">
-                 <div class="container">                           
-                  <nav aria-label="Page navigation" style="text-align:center">
-                     <ul class="pagination" id="pagination"></ul>
-                  </nav>               
-               </div>
-             </td>
-          </tr>
-        </table>
+        
   </div>
 </body>
 <script>

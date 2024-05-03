@@ -35,49 +35,68 @@
 	.courtListTr:hover {
 		background-color: lightgray;
 	}
+	/* 수정 - 강대훈 */
+	.courtListContainer{
+		width: 1280px;
+    	margin: 15px auto 0;
+	}
+	.courtListContainer .courtListTable{
+		width: 100%;
+	}
+	.searchContainer{
+		text-align: center;
+	}
 
-    </style>
+</style>
 </head>
 <body>
 	<jsp:include page="../header/header.jsp"/>
-    <select id="address">
-    	<option value="">전체 지역</option>
-        <!-- 원래는 반복문 돌리는게 나을꺼 같은데 -->
-    </select>
-    <br/>
-    <br/>
-    <table class="courtListTable">
-		<thead>
-			<tr>
-				<th class="courtListTh">구장 사진</th>
-				<th class="courtListTh">구장 이름</th>
-				<th class="courtListTh">지역</th>
-				<th class="courtListTh">가격</th>
-				<th class="courtListTh">찜</th>
-			</tr>
-		</thead>
-		<tbody id="list">
-			
-		</tbody>
-
-    </table>
-				<div class="container">                           
-				  <nav aria-label="Page navigation" style="text-align:center">
-					  <ul class="pagination" id="pagination"></ul>
-				  </nav>               
-				 </div>
-    <br/>
-
-    <select id="searchCategory" >
-        <option value="courtName">코트 명</option>
-        <option value="courtAddress">지역 명</option>
-    </select>
-    
-    <input type="text" id="searchWord" placeholder="검색단어입력" maxlength="20"/>
-    <!-- 이거 누르면 아작스 하는걸로 -->
-	<input type="button" id="searchBtn" value="검색" />
+	<!-- 수정 - 강대훈 : 상위 div 생성 -->
+	<div class="courtListContainer">
+	    <select id="address">
+	    	<option value="">전체 지역</option>
+	        <!-- 원래는 반복문 돌리는게 나을꺼 같은데 -->
+	    </select>
+	    <br/>
+	    <br/>
+	    <table class="courtListTable">
+			<thead>
+				<tr>
+					<th class="courtListTh">구장 사진</th>
+					<th class="courtListTh">구장 이름</th>
+					<th class="courtListTh">지역</th>
+					<th class="courtListTh">가격</th>
+					<th class="courtListTh">찜</th>
+				</tr>
+			</thead>
+			<tbody id="list">
+				
+			</tbody>
 	
-	<div></div>
+	    </table>
+		<div class="container">                           
+			 <nav aria-label="Page navigation" style="text-align:center">
+			  	<ul class="pagination" id="pagination"></ul>
+			 </nav>               
+		 </div>
+	    <br/>
+	
+		<!-- 수정 - 강대훈 : 상위 div 생성 -->
+		<div class="searchContainer">
+		    <select id="searchCategory" >
+		        <option value="courtName">코트 명</option>
+		        <option value="courtAddress">지역 명</option>
+		    </select>
+		    
+		    <input type="text" id="searchWord" placeholder="검색단어입력" maxlength="20"/>
+		    <!-- 이거 누르면 아작스 하는걸로 -->
+			<input type="button" id="searchBtn" value="검색" />
+			
+			<div></div>
+		</div>
+
+	</div>
+
 </body>
 <script>
 	// 구장 대여
