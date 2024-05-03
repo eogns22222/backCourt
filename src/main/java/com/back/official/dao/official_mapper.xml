@@ -104,6 +104,7 @@
 	<select id="allMatchCount" resultType="int">
 		SELECT CEIL(COUNT(official_match_idx)/10) AS totalPage
 		FROM official_match
+		WHERE official_match_post_state = "공개"
 	</select>
 	
 	<!-- 지역 필터 후 토탈 페이지 수 -->
