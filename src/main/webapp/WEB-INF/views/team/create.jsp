@@ -190,6 +190,11 @@
     	  }
     }
  	
+ 	// 취소 버튼
+ 	$('#cancle').on('click',function(){
+ 		cancle();
+ 	});
+ 	
  	// 완료 버튼 유효성 검사
  	$('#complete').on('click',function(){
  		validChk();
@@ -231,6 +236,15 @@
  			console.log('서버로 요청');
  			
  			$('form').submit();
+ 		}
+ 		
+ 	}
+ 	
+ 	function cancle(){
+ 		var cf = '';
+ 		cf = confirm('취소하시겠습니까?');
+ 		if(cf){
+ 			window.history.back();
  		}
  		
  	}
