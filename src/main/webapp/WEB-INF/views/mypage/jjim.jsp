@@ -81,22 +81,24 @@
 </body>
 <script>
     var currentPage = 1;
-    
+    var jjimListFirstCallFlag = true;
     $('input[value="선택 삭제"]').on('click',function(){
-
+        if ($('.rowCheck:checked').length == 0) {
+            alert('선택된 항목이 없습니다.');
+            return;
+        }
         if(!confirm('선택한 구장을 찜목록에서 삭제하시겠습니까?')){
             return;
         }
 
         // 체크된 체크박스의 data-jjimIdx 값을 저장할 배열
         var selectedIdx = [];
-        
         // .rowCheck 체크박스 중 체크된 것들을 반복하여 처리
         $('.rowCheck:checked').each(function() {
             // 체크된 체크박스의 data-jjimIdx 값을 배열에 추가
             selectedIdx.push($(this).data('jjimidx'));
         });
-        
+        var selectedCount = selectedIdx.length;
         // 선택된 체크박스의 data-jjimIdx 값들을 콘솔에 출력
         console.log(selectedIdx);
         
@@ -111,11 +113,14 @@
         		currentPage = 1;
         		$('#pagination').twbsPagination('destroy');
         		callList(currentPage);
+        		jjimNumber = 1;
+        		alert(selectedCount+'개 가 삭제 되었습니다.');
         	}
         	, error:function(error){
         		
         	}
         });
+    	$('#allCheck').prop('checked', false);
     	
     });
     
@@ -138,14 +143,17 @@
             , dataType:'json'
             , success:function(data){
             	console.log(data);
-                showList(data.list);
+                showList(data.list,currentPage);
                 $('#pagination').twbsPagination({
                     startPage:1
                     , totalPages:data.totalPage
                     , visiblePages:5
                     , onPageClick:function(evt, pg){
-                        currentPage = pg;
-                        callList(currentPage);
+                    	currentPage = pg;
+                        if(jjimListFirstCallFlag == false){
+	                        callList(currentPage);                        	
+                        }
+                        jjimListFirstCallFlag = false;
                     }
                 });
             }
@@ -153,10 +161,12 @@
 
             }
         });
+        console.log(currentPage);
     }
-    function showList(list){
+    function showList(list,currentPage){
         var content = '';
-        var count = 1;
+        var count = 1 + (currentPage-1)*10;
+        console.log(count);
         for (item of list) {
             content +=
                 '<tr>'
@@ -166,7 +176,7 @@
                 + '<td class="jjimTd">'+item.courtAddress.split(' ')[1]+'</td>'
                 + '<td class="jjimTd">'+item.courtPrice+'</td>'
                 + '</tr>';
-            count++;
+			count++;
         }
         $('.jjimList').html(content);
     }
