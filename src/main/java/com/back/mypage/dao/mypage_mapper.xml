@@ -138,7 +138,8 @@ SELECT CEIL(COUNT(guest_join_idx)/#{param1}) FROM guest_join_list where id = #{p
 		c.court_name
 		,cb.court_booking_idx 
 		,cb.booking_date
-		,CONCAT(cb.booking_start_time," ~ ",cb.booking_start_time) as court_time
+		,cb.booking_state 
+		,CONCAT(cb.booking_start_time," ~ ",cb.booking_end_time) as court_time
 	FROM court c join court_booking cb 
 	on c.court_idx=cb.court_idx where cb.id=#{param1} order BY cb.booking_date LIMIT #{param2} offset #{param3}
 </select>
@@ -150,13 +151,20 @@ SELECT CEIL(COUNT(court_booking_idx)/#{param1}) FROM court_booking cb where id =
 
 
 <insert id="official_Cancellation">
-	INSERT into point_list(id,
+INSERT into point_list(id,
 	point_change,
 	point_state,
 	write_idx,
 	write_type)
-select id,point_change,"취소",write_idx,write_type 
-FROM point_list where point_idx = (SELECT point_idx FROM point_list pl where id = #{param1} and point_state = "대기" and write_idx = (SELECT official_match_idx FROM offcial_match_ask_list where id = #{param1} AND official_match_ask_idx = #{param2}))
+select id,
+	(SELECT	official_match_fee 
+	FROM official_match om 
+	where official_match_idx =
+	(SELECT official_match_idx FROM offcial_match_ask_list omal where id = #{param1} AND official_match_ask_idx = #{param2}))
+	,"취소"
+	,write_idx
+	,write_type 
+FROM point_list where point_idx = (SELECT point_idx FROM point_list pl where id = #{param1} and point_state = "대기" and write_idx = (SELECT official_match_idx FROM offcial_match_ask_list where id = #{param1} AND official_match_ask_idx = #{param2})ORDER by point_idx DESC limit 0,1 )
 </insert>
 
 
@@ -175,10 +183,17 @@ DELETE FROM guest_join_list WHERE id=#{param1} AND guest_join_idx =#{param2}
 
 <insert id="court_Cancellation">
 INSERT into point_list(id,
-point_change,
-point_state,
-write_idx,
-write_type)select id,point_change,"취소",write_idx,write_type FROM point_list where point_idx =(SELECT point_idx FROM point_list pl where id = #{param1} AND point_state = "예약" AND write_type ="구장예약" and write_idx = (SELECT court_idx FROM court_booking c where id = #{param1} AND court_booking_idx = #{param2}))
+	point_change,
+	point_state,
+	write_idx,
+	write_type)
+select id
+	,(SELECT court_price FROM  court c where court_idx = (SELECT court_idx FROM court_booking cb where id = #{param1} AND court_booking_idx = #{param2}))
+	,"취소"
+	,write_idx
+	,write_type
+FROM point_list 
+WHERE point_idx =(SELECT point_idx FROM point_list pl where id = #{param1} AND point_state = "예약" AND write_type ="구장예약" and write_idx = (SELECT court_idx FROM court_booking c where id = #{param1} AND court_booking_idx = #{param2})ORDER by point_idx DESC limit 0,1)
 </insert>
 
 

@@ -8,14 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.back.member.dao.MemberDAO;
-import com.back.mypage.dto.MypageDTO;
+import com.back.member.dto.MemberDTO;
 
 @Service
 public class MemberService {
 
 	Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired MemberDAO memberDAO;
+	
 	public String login(String id, String pw) {
+		logger.info("로그인 서비스 접근");
 		String loginId = memberDAO.loginId(id,pw);
 		logger.info("loginId : "+loginId);
 		return loginId;
@@ -30,7 +32,7 @@ public class MemberService {
 	}
 	
 	// 고객, 관리자 구별
-	public String loginperm(String id, String pw) {
+	public MemberDTO loginperm(String id, String pw) {
 		
 		return memberDAO.loginperm(id,pw);
 	}

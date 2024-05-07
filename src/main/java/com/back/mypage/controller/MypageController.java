@@ -105,15 +105,19 @@ public class MypageController {
 				logger.info("충전 처리중...");
 				logger.info("충전 내역 : {}", Charging);
 
+				String page = "redirect:/login";
 				// 로그인 회원 아이디 가져오기
 				String loginId = (String) session.getAttribute("loginId");
 				logger.info("loginId" + loginId);
+				
+				if (loginId !=null) {
+					mypageService.Charging_do(loginId, Charging);
+					// 정보 업데이트
+					mypageService.point_plus_update(loginId);
+					page = "redirect:/mypage/point.go";
+				}
 
-				mypageService.Charging_do(loginId, Charging);
-
-				// 정보 업데이트
-				mypageService.point_plus_update(loginId);
-				return "redirect:/mypage/point.go";
+				return page;
 			}
 
 			// 포인트 환급 페이지 이동
@@ -149,8 +153,6 @@ public class MypageController {
 				String loginId = (String) session.getAttribute("loginId");
 				logger.info("로그인 중인 사람 : " + loginId);
 
-				logger.info("로그인 중인 사람 : " + loginId);
-
 				Map<String, Object> point = mypageService.my_allpoint_ajax(loginId);
 				logger.info("내 지갑 포인트 : " + point.get("point"));
 				int poin = Integer.parseInt((String) point.get("point"));
@@ -158,7 +160,7 @@ public class MypageController {
 				int sum = poin - min;
 				logger.info("총 지갑 : "+sum);
 
-				if (sum > 0) {
+				if (sum >= 0) {
 					mypageService.PointMinus(loginId, min);
 
 					// 포인트 정보 업데이트
@@ -237,8 +239,17 @@ public class MypageController {
 
 	// 신청/예약  리스트 이동
 		@RequestMapping(value = "/mypage/match_ask_list.go")
-		public String matchAskListGo() {
-			return "mypage/match_ask_list";
+		public String matchAskListGo(HttpSession session) {
+			
+			String page = "redirect:/login";
+			
+			String id = (String) session.getAttribute("loginId");
+			
+			if (id != null) {
+				page = "mypage/match_ask_list";
+			}
+			
+			return page;
 		}
 
 	// 신청/예약 리스트(아작스)
@@ -268,7 +279,7 @@ public class MypageController {
 		@RequestMapping(value = "/mypage/official_match_list_del.ajax", method = RequestMethod.POST)
 		@ResponseBody
 		public Map<String, Object> match_ask_list_del(String idx, HttpSession session) {
-			logger.info("아작스 리스트 삭제 중...");
+			logger.info("============= 아작스 리스트 삭제 중... ====================");
 			logger.info("idx : {}", idx);
 
 			// 로그인 중인 아이디
@@ -331,21 +342,24 @@ public class MypageController {
 			logger.info("================== 신고 내용 수정 ====================");
 			logger.info("신고 내용 수정 상세보기");
 			logger.info("id : "+idx);
+
+			String page = "redirect:/login";
 			
 //			나중에 풀거
 			String loginId = (String) session.getAttribute("loginId");
 			logger.info("현제 로그인 중인 아이디"+loginId);
 			
 
+			if (loginId != null) {
+				//수정이기 때문에 데이터를 보낸다
+				MypageDTO report_detail = mypageService.report_detail(loginId,idx);
+				logger.info("데이터 수정 접속 : ",report_detail);
+				model.addAttribute("report",report_detail);
+				page = "/mypage/report_modify";
+				
+			}		
 			
-			
-			//수정이기 때문에 데이터를 보낸다
-			MypageDTO report_detail = mypageService.report_detail(loginId,idx);
-			logger.info("데이터 수정 접속 : ",report_detail);
-			model.addAttribute("report",report_detail);
-			
-			
-			return "/mypage/report_modify";
+			return page;
 		}
 		
 		
@@ -357,8 +371,8 @@ public class MypageController {
 			String page = "";
 			
 //			나중에 풀거
-//			String loginId = (String) session.getAttribute("loginId");
-//			logger.info("현제 로그인 중인 아이디"+loginId);
+			String loginId = (String) session.getAttribute("loginId");
+			logger.info("현제 로그인 중인 아이디"+loginId);
 			
 			int row = mypageService.report_modify(param);
 			logger.info("param : {}",param);
@@ -381,8 +395,17 @@ public class MypageController {
 		
 //		신고 / 문의 리스트로 가기
 		@RequestMapping(value = "/mypage/report_list.go")
-		public String report_list_go() {
-			return "mypage/report_list";
+		public String report_list_go(HttpSession session) {
+			
+			String page = "redirect:/login";
+			
+			String loginId = (String) session.getAttribute("loginId");
+			
+			if (loginId != null) {
+				page = "mypage/report_list";
+			}
+			
+			return page;
 		}
 		
 		
@@ -432,15 +455,23 @@ public class MypageController {
 		public String profile_detail(HttpSession session,Model model) {
 			logger.info("회원 수정 이동");
 			
+			String page = "redirect:/login";
+			
 			String loginId = (String) session.getAttribute("loginId");
 			
-			MypageDTO dto =  mypageService.profile_detail(loginId);
+			if (loginId != null) {
+				MypageDTO dto =  mypageService.profile_detail(loginId);
+				
+				model.addAttribute("dto",dto);
+				
+				logger.info("dto : {} "+dto);
+				
+				page = "mypage/profile_detail";
+				
+			}
 			
-			model.addAttribute("dto",dto);
 			
-			logger.info("dto : {} "+dto);
-			
-			return "mypage/profile_detail";
+			return page;
 		}
 		
 		//회원 상세보기 정보 가져오기

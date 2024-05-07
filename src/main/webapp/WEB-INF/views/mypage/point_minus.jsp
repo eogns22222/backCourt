@@ -34,24 +34,31 @@ var sum = '${sum.point}';
 $('input[type="button"]').on('click',function(){
     //input에 있는 값을 가져온다
     var ch = $('input[name="minus"]').val();
-    console.log(sum);
-    console.log(ch);
     var poigt = sum-ch;
     console.log(poigt);
+    var Normalization = /^\d+$/;
     //지금 내가 클릭한 버튼의 텍스트를 가져온다
     var tex = $(this).text();
 
     if(ch!=''){
-        if(poigt>0){
-        	alert('환급이 완료되었습니다');
-        	 $('form').submit();
-        	/* location.href="point.go"; */
-        }else {
-        	 alert('환급이 실패 되었습니다.');	
+    	if (Normalization.test(ch)) {
+		    if(poigt>=0){
+		    	if (ch == 0) {
+					alert('환급할 금액을 다시 입력해 주세요');
+				}else{
+			        alert('환급이 완료되었습니다');
+			        $('form').submit();
+			        /* location.href="point.go"; */					
+				}
+		    }else {
+		        alert('환급 금액이 부족 합니다.');	
+			}
+		}else{
+			alert('숫자만 입력해 주세요');
 		}
-        }else{
-            alert('환급할 금액을 입력 하세요');
-        }
+    }else{
+        alert('환급할 금액을 입력 하세요');
+    }
 		
 		
 });

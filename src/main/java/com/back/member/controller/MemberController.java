@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.back.member.dto.MemberDTO;
 import com.back.member.service.MemberService;
 
 @Controller
@@ -34,21 +35,28 @@ public class MemberController {
 	//로그인
 	@RequestMapping(value = "/login.do",method = RequestMethod.POST)
 	public String login(HttpSession session,String id,String pw,Model model) {
-		logger.info("로그인 정보"+ id,pw);
+		logger.info("로그인 정보 : "+ id,pw);
 		String loginId = memberService.login(id,pw);
-		String loginperm = memberService.loginperm(id,pw);
+		MemberDTO loginInformation = memberService.loginperm(id,pw);
+		String loginperm = loginInformation.getPerm();
+		String loginstate = loginInformation.getState();
 		logger.info("loginId : "+loginId);
 		logger.info("loginstate : {}",loginperm);
+		logger.info("loginstate : {}",loginstate);
 		
 		String page = "member/login";
 
 		
 		if (loginId!=null) {
-			logger.info("로그인 성공");
+			logger.info("로그인 아이디 정보 있음");
 			if (loginperm.equals("고객")) {
 				logger.info("고객 로그인");
-				session.setAttribute("loginId",loginId);
-				page = "redirect:/official";
+				if (loginstate.equals("정지")) {
+					model.addAttribute("msg","정지된 아이디 입니다");
+				}else{
+					session.setAttribute("loginId",loginId);
+					page = "redirect:/official";				
+				}
 			}
 			if (loginperm.equals("관리자")) {
 				logger.info("관리자 로그인");
