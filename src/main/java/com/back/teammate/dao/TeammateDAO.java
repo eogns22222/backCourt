@@ -73,13 +73,11 @@ public interface TeammateDAO {
 
 	TeammateDTO modifyDetail(int idx);
 
+	String teamName(String joinTeamIdx);
 
+	void sendNotice(String msg, String id);
 
-
-
-
-   
-
+	String teamId(String joinTeamIdx);
 
 
 }

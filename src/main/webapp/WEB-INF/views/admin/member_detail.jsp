@@ -9,8 +9,88 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="../resources/css/header/header.css">
-<link rel="stylesheet" href="../resources/css/admin/member_detail.css" type ="text/css">
-<style>
+<!-- <link rel="stylesheet" href="../resources/css/admin/member_detail.css"> -->
+<style type="text/css">
+
+/* 라디오 버튼 간격 조절 */
+.radio-wrapper input[type="radio"] {
+    margin-right: 10px;
+}
+
+/* 제출 버튼 간격 조절 */
+.update {
+    margin-top: 20px;
+}
+
+/* 전체적인 스타일 개선 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0; /* body의 기본 여백 제거 */
+    padding: 20px; /* 컨텐츠와 페이지 가장자리 사이의 여백 */
+    background-color: #f5f5f5; /* 페이지 배경색 설정 */
+}
+
+
+h2 {
+    background-color: #f5f5f5;
+    padding: 10px;
+    margin-top: 0; /* h2 요소의 위쪽 여백 제거 */
+    border-radius: 5px 5px 0 0; /* h2 요소의 둥근 모서리 설정 */
+}
+
+.content-wrapper {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px; /* 컨텐츠 아래 여백 추가 */
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
+}
+
+.textarea, .select {
+    width: calc(100% - 20px); /* 폭 계산식을 사용하여 패딩 고려 */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* 요소의 전체 크기에 border와 padding을 포함시키기 */
+}
+
+.submit {
+    display: block; /* 블록 수준 요소로 변경하여 여백 적용 */
+    width: 100%; /* 폭을 100%로 설정하여 부모 요소의 너비에 맞춤 */
+    margin-top: 10px; /* 제출 버튼 위 여백 추가 */
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.cancel {
+    display: block; /* 블록 수준 요소로 변경하여 여백 적용 */
+    width: 100%; /* 폭을 100%로 설정하여 부모 요소의 너비에 맞춤 */
+    margin-top: 10px; /* 제출 버튼 위 여백 추가 */
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#pointChange {
+    display: block; /* 블록 수준 요소로 변경하여 여백 적용 */
+    width: 100%; /* 폭을 100%로 설정하여 부모 요소의 너비에 맞춤 */
+    margin-top: 10px; /* 제출 버튼 위 여백 추가 */
+    background-color: grey;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 35px;
+    cursor: pointer;
+}
+
+
 </style>
 </head>
 <body>
@@ -103,8 +183,9 @@
 		</div>
 		<div class="content-wrapper">포인트 : ${memberDetail.point} P</div>
 		<div><input type="button" id="pointChange" value="포인트 변경"/></div>
+		<br/>
 		<div class="update">
-			<input type="submit" value="수정 취소" id="cancel" class="submit"/>
+			<input type="submit" value="수정 취소" id="cancel" class="cancel"/>
 			<input type="submit" value="수정 완료" id="finish" class="submit"/>
 		</div>
 		</div>

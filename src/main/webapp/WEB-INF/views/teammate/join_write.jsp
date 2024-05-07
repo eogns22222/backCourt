@@ -44,8 +44,8 @@
 		<form id="teammateForm" action="join_write.do" method="post">
 		<div class="content-wrapper">
 			<div class="content">모집내용 : </div>
-			<textarea name="teammate_info" class="textarea" id="teammateContent" maxlength="500"
-				placeholder=" 팀원 모집내용(특이사항, 참가비를 받을 개인계좌, 연락처 등)을 자유롭게 입력해주세요.(글자수 제한: 500자)">
+			<textarea name="teammate_info" class="textarea" id="teammateContent" maxlength="300"
+				placeholder=" 팀원 모집내용(특이사항, 참가비를 받을 개인계좌, 연락처 등)을 자유롭게 입력해주세요.(글자수 제한: 300자)">
             </textarea>
 			<div id="char-count"></div>
 		</div>
@@ -135,10 +135,10 @@ var team_idx = '${info.team_idx}';
 	        // 취소 여부 확인
 	        var confirmed = confirm("작성을 취소하시겠습니까?");
 	        if (confirmed) {
-	            // 확인을 누를 경우 이전 페이지로 이동
+	            // 취소를 누르면 작성취소 중지
+	            event.preventDefault();
 	            window.history.back();
-	        } else {
-	            // 취소를 누르면 폼 제출을 중지
+	        }else{
 	            event.preventDefault();
 	        }
 	    });
