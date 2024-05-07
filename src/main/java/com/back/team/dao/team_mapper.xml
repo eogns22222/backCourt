@@ -45,6 +45,7 @@
 			join_team_idx 
 			FROM team_join tj 
 			WHERE team_idx = #{param2})
+			AND tjl.join_state = '대기중'
 			ORDER BY applicant_idx asc LIMIT #{param1}, 10
 	</select>
 	
@@ -55,6 +56,7 @@
 			join_team_idx 
 			FROM team_join tj 
 			WHERE team_idx = #{param1})
+			AND join_state = '대기중'
 	</select>
 	
 	<select id="listWriteTeam" resultType="com.back.team.dto.TeamDTO">
@@ -154,11 +156,11 @@
 		,team_idx) VALUES(#{param2},#{param1})
 	</insert>	
 	
-	<delete id="delJoinList">
+<!-- 	<delete id="delJoinList">
 		DELETE 
 			FROM team_join_list 
 			WHERE applicant_idx = #{param1}
-	</delete>	
+	</delete>	 -->
 	
 	<update id="delTeamWrite">
 		UPDATE 
@@ -216,6 +218,18 @@
 		UPDATE team set
 		logo = #{param1} WHERE team_idx = #{param2}
 	</update>		
+	
+	<update id="updateStateYes">
+		UPDATE team_join_list 
+			SET join_state = '수락' 
+			WHERE applicant_idx = #{param1}
+	</update>		
+	
+	<update id="updateStateNo">
+		UPDATE team_join_list 
+			SET join_state = '거부' 
+			WHERE applicant_idx = #{param1}
+	</update>			
 	
 
 </mapper>

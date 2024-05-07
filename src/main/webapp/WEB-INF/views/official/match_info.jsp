@@ -18,7 +18,7 @@
 	<jsp:include page="../header/header.jsp"/>
     <div class="officialDetail">
         <div class="courtSlide">
-            <h1>국일공고 체육관</h1>
+            <h1>${address.court_name}</h1>
             <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
 					<c:forEach items="${photo}" var="list">

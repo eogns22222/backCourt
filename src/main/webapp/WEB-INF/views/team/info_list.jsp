@@ -221,6 +221,7 @@
 					console.log('신청내역 출력');
 					showAppliList(data.listAppli);
 					totalPage = data.totalPageAppli;
+					console.log(data.totalPageAppli);
 				}else if(tabNum == 2){
 					// 팀 모집글이 이미 있는지 확인하기 위해 사전 진행
 					if(data.listWriteTeam != ''){

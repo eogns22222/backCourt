@@ -76,16 +76,21 @@ public class TeamService {
 	public int appliMember(int team_idx, String userId, int idx, int num) {
 		String teamName = teamDAO.teamName(team_idx);
 		String msg = "";
+		logger.info(String.valueOf(idx));
 		if(num == 1) {
 			msg = teamName + " 팀 신청이 수락되었습니다.";
+			teamDAO.updateStateYes(idx);
 			teamDAO.intoTeam(team_idx, userId);
 			teamDAO.sendNotice(msg, userId);
 		}else {
 			msg = teamName + " 팀 신청이 거부되었습니다.";
+			teamDAO.updateStateNo(idx);
 			teamDAO.sendNotice(msg, userId);
 		}
 		
-		return teamDAO.delJoinList(idx);
+//		teamDAO.delJoinList(idx)
+		
+		return 1;
 	}
 
 	public int delteWrite(int idx, int num) {

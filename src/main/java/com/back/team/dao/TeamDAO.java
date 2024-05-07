@@ -38,7 +38,7 @@ public interface TeamDAO {
 
 	void intoTeam(int team_idx, String userId);
 
-	int delJoinList(int idx);
+//	int delJoinList(int idx);
 
 	int delTeamWrite(int idx);
 
@@ -53,6 +53,10 @@ public interface TeamDAO {
 	int insertTeamList(String id, int idx);
 	
 	void updateLogo(String newFileName, int idx);
+
+	void updateStateYes(int idx);
+
+	void updateStateNo(int idx);
 
 
 }
