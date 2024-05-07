@@ -6,9 +6,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,15 +59,17 @@ public class AdminCourtService {
 	}
 
 	private Object addressListSplit(List<String> addressList) {
-		List<String> splitList = new ArrayList<String>();
+		Set<String> set = new HashSet<String>();
+		List<String> splitList = new ArrayList<String>(set);
 		for (String address : addressList) {
 			if (address.contains(" ")) {
-				splitList.add(address.split(" ")[1]);
+				set.add(address.split(" ")[1]);
 //				logger.info(address);
 			}
 		}
 
-		return splitList;
+		Collections.sort(splitList);
+		return set;
 	}
 
 	public Map<String, Boolean> write(MultipartFile[] files, String courtWriteName, String courtWriteInfo,

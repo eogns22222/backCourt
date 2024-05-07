@@ -134,7 +134,7 @@
 			,dataType:'json'
 			,success:function(data){
 				console.log(data.totalPage);
-
+				console.log(data.addressList);
 				showList(data.list);
 				
 				if(filterFlag == false){
