@@ -94,7 +94,7 @@
     <tr>
         <th class="courtDetailTh">구장 예약 시간</th>
         <td class="courtDetailTd">
-			<input id="courtDetailDate" type="text"/>
+			<input id="courtDetailDate" type="text" readonly/>
             <br/>
             <input class="courtDetailTimeBtn" id="0" type="button" value="00~02">
             <input class="courtDetailTimeBtn" id="2" type="button" value="02~04">
@@ -112,7 +112,7 @@
     </tr>
     <tr>
         <th class="courtDetailTh">구장 정보</th>
-        <td class="courtDetailTd"><textarea id="courtDetailInfo" disabled></textarea></td>
+        <td class="courtDetailTd"><textarea id="courtDetailInfo" readonly></textarea></td>
     </tr>
     <tr>
         <th class="courtDetailTh">구장 가격</th>
@@ -121,7 +121,7 @@
     <tr>
         <th class="courtDetailTh">구장 위치</th>
         <td class="courtDetailTd">
-            <span id="courtDetailAddress"></span>
+            <span id="courtDetailAddress"></span><input type="button" value="복사" />
             <div id="map" style="width:100%;height:350px;"></div>
         </td>
     </tr>
@@ -144,9 +144,17 @@
 
 
 
+	$('input[value="복사"]').on('click', function(){
+		var text = $('#courtDetailAddress').text()
+		console.log(text);
+		navigator.clipboard.writeText(text).then(function() {
+	        alert("주소가 클립보드에 복사되었습니다.");
+	    }, function(error) {
+	        console.error("클립보드 복사 오류:", error);
+	    });
+	});
 
-
-
+	
     $('#courtDetailReport').on('click',function(){
     	window.location.href = '../mypage/report.go?reportWriteIdx='+courtIdx+'&reportWirteType="구장문의"';
     });
@@ -214,6 +222,8 @@
             autoclose: true, // 날짜 선택 후 자동으로 닫힘
             todayHighlight: true, // 오늘 날짜 강조 표시
             startDate: 'today', // 오늘 이후의 날짜만 선택 가능
+        }).on('click', function(){
+            $(this).datepicker('show');
         });
         callDetail();
         
