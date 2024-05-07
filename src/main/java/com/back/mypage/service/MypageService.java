@@ -183,8 +183,8 @@ public class MypageService {
 	
 	// 취소시 포인트 환급
 		public void official_Cancellation(String loginId, String idx) {
+			logger.info("official_Cancellation 접근...");
 			mypageDAO.official_Cancellation(loginId,idx);
-			
 		}
 	
 	//신청/예약 삭지 아작스

@@ -108,17 +108,24 @@
        	var ModifyDate = date.toLocaleDateString("ko-KR");
        	content +='<td class="report_list_td">'+ModifyDate+'</td>';
        	var state = report.report_state;
+       	console.log(state);
        	var css = '';
        	if (state=='처리전') {
-			css = 'match_list_Checking';
-		}else if (state=='처리중') {
+       		css = 'match_list_Checking';
+		}else if (state=='처리 중') {
 			css = 'match_list_Pr';
-		}else if (state=='완료') {
+		}else if (state=='처리 완료') {
 			css = 'match_list_Yes';
 		}
-        content +='<td class="report_list_td"><button disabled id="'+css+'">'+report.report_state+'</button></td>';    
-        content +='<th class="report_list_td"><button class="button" id="report_modify" onclick="report_Modify('+report.report_idx+')">수정</button></th>';    
-       	content +='<th class="report_list_td"><button class="button" id="report_del" onclick="report_del('+report.report_idx+')">삭제</button></th>';   
+        content +='<td class="report_list_td"><button class="button" id="'+css+'">'+report.report_state+'</button></td>';    
+        content +='<th class="report_list_td"><button class="button" id="report_modify" onclick="report_Modify('+report.report_idx+')">수정</button></th>';
+        var style = '';
+		if (state=='처리 완료') {
+			style = 'style="display: none"';
+		}else if (state=='처리 중') {
+			style = 'style="display: none"';
+		}
+       	content +='<th class="report_list_td"><button '+style+' class="button" id="report_del" onclick="report_del('+report.report_idx+')">삭제</button></th>';   
         content +='</tr>';
 	} 
 	$('#list').html(content);

@@ -31,9 +31,15 @@
 $('input[type="button"]').on('click',function(){
     var ch = $('input[name="Charging"]').val();
     var tex = $(this).text();
+    var Normalization = /^\d+$/;
+    console.log(Normalization.test(ch));
     if(ch!=''){
+    	if (Normalization.test(ch)) {
         alert('충전이 완료되었습니다');
-            $('form').submit();
+            $('form').submit();			
+		}else{
+			alert('숫자만 입력해 주세요');
+		}
         }else{
             alert('충전이 실패 되었습니다.');
         }
@@ -77,5 +83,6 @@ function Point(point){
 	}
 	$('#point').html(content);
 }
+
 </script>
 </html>

@@ -85,7 +85,7 @@ $('.button').on('click',function(){
 
 //공식 경리 리스트 삭제
 function official_match_list_del(idx){
-	//console.log('공식 경기 삭제');
+	console.log('공식 경기 삭제');
 	var cancell = confirm('신청을 취소하시겠습니까?');
         if (cancell) {
             alert('신청 취소가 완료되었습니다');
@@ -327,7 +327,7 @@ function courtList(list,start,siz){
     	var date = new Date(court.booking_date);
         var ModifyDate = date.toLocaleDateString("ko-KR");
         Content += '<td class="match_list_td">'+ModifyDate+'<br/>'+court.court_time+'</td>';
-        Content += '<td class="match_list_td"><button  class="match_list_del_button" onclick="court_match_list_del('+court.court_booking_idx +')">신청 취소</button></td>';
+        Content += '<td class="match_list_td"><button  class="match_list_del_button" onclick="court_match_list_del('+court.court_booking_idx+')">신청 취소</button></td>';
         Content += '</tr>';
     	}
     }else{

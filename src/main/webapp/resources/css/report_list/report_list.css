@@ -1,6 +1,6 @@
 .match_ask_list{
     /* border: 1px solid black; */
-	width: 1000px;
+	width: 1500px;
     margin-left: 8%;
     margin-top: 100px;
     padding: 10px 200px 0px 50px;
@@ -68,7 +68,7 @@ border: 0px ;
 border-radius: 10px;
 }
 #match_list_Pr{
-background-color: red;
+background-color: orange;
 width: 100px;
 height: 50px;
 font-weight: 700;

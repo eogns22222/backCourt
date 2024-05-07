@@ -2,7 +2,7 @@ package com.back.member.dao;
 
 import java.util.Map;
 
-import com.back.mypage.dto.MypageDTO;
+import com.back.member.dto.MemberDTO;
 
 public interface MemberDAO {
 
@@ -13,6 +13,6 @@ public interface MemberDAO {
 	int overlay(String id);
 	
 	// 고객, 관리자 구별
-	String loginperm(String id, String pw);
+	MemberDTO loginperm(String id, String pw);
 
 }

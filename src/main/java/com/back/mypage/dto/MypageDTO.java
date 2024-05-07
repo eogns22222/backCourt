@@ -381,4 +381,22 @@ public class MypageDTO {
 			this.name = name;
 		}
 		
+		private String booking_state;
+
+		public String getBooking_state() {
+			return booking_state;
+		}
+		public void setBooking_state(String booking_state) {
+			this.booking_state = booking_state;
+		}
+		
+		private int official_match_ask_idx;
+
+		public int getOfficial_match_ask_idx() {
+			return official_match_ask_idx;
+		}
+		public void setOfficial_match_ask_idx(int official_match_ask_idx) {
+			this.official_match_ask_idx = official_match_ask_idx;
+		}
+		
 }
