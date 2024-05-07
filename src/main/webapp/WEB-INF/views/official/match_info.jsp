@@ -109,6 +109,8 @@
 		alert(msg);
 	}
 	
+	var apliChk = true;
+	
 	// 포인트 신청하기
 	function payment(fee) {
 		
@@ -117,28 +119,37 @@
 			,url:'./payment.ajax'
 			,data:{
 				'fee':fee
+				,'idx':${info.official_match_idx}
 			}
 			,dataType:'json'
 			,success:function(data){
 				var cf;
-				if(data.pay < fee){
-					cf = confirm("포인트가 부족합니다. 충전페이지로 이동할까요?");
-					if(cf){
-						location.href = '../mypage/point_add.go';
+				for(item of data.list){
+					if(item == data.id){
+						alert('이미 신청한 이력이 있습니다.');
+						apliChk = false;
+						break;
 					}
-				}else{
-					cf = confirm("예약하시겠습니까?");
-					if(cf){
-						if(${info.currentCount} == ${info.official_match_to}){
-							alert('인원 모집이 완료되었습니다.');
-						}else{
-							use(fee, ${info.official_match_idx});
-							alert('예약 완료되었습니다.');
-							location.href = '../official';
+				}
+				if(apliChk){
+					if(data.pay < fee){
+						cf = confirm("포인트가 부족합니다. 충전페이지로 이동할까요?");
+						if(cf){
+							location.href = '../mypage/point_add.go';
+						}
+					}else{
+						cf = confirm("예약하시겠습니까?");
+						if(cf){
+							if(${info.currentCount} == ${info.official_match_to}){
+								alert('인원 모집이 완료되었습니다.');
+							}else{
+								use(fee, ${info.official_match_idx});
+								alert('예약 완료되었습니다.');
+								location.href = '../official';
+							}
 						}
 					}
 				}
-				
 			}
 			,error:function(error){
 				console.log(error);

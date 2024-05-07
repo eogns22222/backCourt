@@ -42,6 +42,8 @@ public interface OfficialDAO {
 
 	void addPointList(String idx, String id, int fee);
 
+	List<String> officialApli(int idx);
+
 	
 }
 

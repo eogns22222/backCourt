@@ -80,8 +80,18 @@ public class OfficialService {
 		model.addAttribute("address", address);
 	}
 
-	public int compare(String id) {
-		return officialDAO.compare(id);
+	public Map<String, Object> compare(String id, int idx) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		logger.info(String.valueOf(idx));
+		List<String> nikList = officialDAO.officialApli(idx);
+		logger.info("nikList : {}", nikList);
+		int pay = officialDAO.compare(id);
+		logger.info("pay : {}", pay);
+		result.put("id", id);
+		result.put("pay", pay);
+		result.put("list", nikList);
+		
+		return result;
 	}
 
 	public Map<String, Object> use(String idx, String id, int fee) {

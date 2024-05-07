@@ -22,6 +22,7 @@
 			ON o.court_idx = t.court_idx
 		WHERE t.court_state = 'true'
 		AND o.official_match_post_state = '공개'
+		AND o.official_match_date  > CURDATE()
 		ORDER BY court_address asc LIMIT #{param1}, 10
 	</select>
 	
@@ -41,6 +42,7 @@
 		WHERE t.court_state = 'true'
 		AND o.official_match_post_state = '공개'
 		AND t.court_address LIKE CONCAT('%', #{param2}, '%')
+		AND o.official_match_date  > CURDATE()
 		ORDER BY court_address asc LIMIT #{param1}, 10
 	</select>
 	
@@ -60,6 +62,7 @@
 		WHERE t.court_state = 'true'
 		AND o.official_match_post_state = '공개'
 		AND o.official_match_level LIKE CONCAT('%', #{param2}, '%')
+		AND o.official_match_date  > CURDATE()
 		ORDER BY court_address asc LIMIT #{param1}, 10
 	</select>
 	
@@ -80,6 +83,7 @@
 		AND o.official_match_post_state = '공개'
 		AND t.court_address LIKE CONCAT('%', #{param2}, '%')
 		AND o.official_match_level LIKE CONCAT('%', #{param3}, '%')
+		AND o.official_match_date  > CURDATE()
 		ORDER BY court_address asc LIMIT #{param1}, 10
 	</select>
 	
@@ -98,13 +102,15 @@
 			ON o.court_idx = t.court_idx
 		WHERE t.court_state = 'true'
 		AND o.official_match_post_state = '공개'
+		AND o.official_match_date  > CURDATE()
 	</select>
 	
 	<!-- 토탈 페이지 수 -->
 	<select id="allMatchCount" resultType="int">
 		SELECT CEIL(COUNT(official_match_idx)/10) AS totalPage
-		FROM official_match
+		FROM official_match o
 		WHERE official_match_post_state = "공개"
+		AND o.official_match_date  > CURDATE()
 	</select>
 	
 	<!-- 지역 필터 후 토탈 페이지 수 -->
@@ -114,6 +120,7 @@
 		JOIN court t
 		ON o.court_idx = t.court_idx
 		WHERE court_address LIKE CONCAT('%', #{param1}, '%')
+		AND o.official_match_date  > CURDATE()
 	</select>
 	
 	<!-- 레벨 필터 후 토탈 페이지 수 -->
@@ -123,6 +130,7 @@
 		JOIN court t
 		ON o.court_idx = t.court_idx
 		WHERE official_match_level LIKE CONCAT('%', #{param1}, '%')
+		AND o.official_match_date  > CURDATE()
 	</select>
 	
 	<!-- 지역,레벨 필터 후 토탈 페이지 수 -->
@@ -133,6 +141,7 @@
 		ON o.court_idx = t.court_idx
 		WHERE court_address LIKE CONCAT('%', #{param1}, '%')
 		AND official_match_level LIKE CONCAT('%', #{param2}, '%')
+		AND o.official_match_date  > CURDATE()
 	</select>
 	
 	<!-- 검색 list 출력 -->
@@ -151,6 +160,7 @@
 		WHERE t.court_state = 'true'
 		AND o.official_match_post_state = '공개'
 		AND t.court_address LIKE CONCAT('%', #{param2}, '%')
+		AND o.official_match_date  > CURDATE()
 		ORDER BY court_address asc LIMIT #{param1}, 10
 	</select>
 	
@@ -161,6 +171,8 @@
 		JOIN court t
 		ON o.court_idx = t.court_idx
 		WHERE court_address LIKE CONCAT('%', #{param1}, '%')
+		AND o.official_match_post_state = '공개'
+		AND o.official_match_date  > CURDATE()
 	</select>
 	
 	
@@ -209,6 +221,13 @@
 		WHERE t.court_state = 'true'
 		AND o.official_match_post_state = '공개'
 		and official_match_idx = #{param1}
+	</select>
+	
+	<select id="officialApli" resultType="String">
+		select 
+			id
+			from offcial_match_ask_list omal 
+			where official_match_idx = #{param1}
 	</select>
 	
 	<!-- 내가 가진 포인트 조회 -->
