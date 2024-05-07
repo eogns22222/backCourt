@@ -17,4 +17,6 @@ public interface AdminReportDAO {
 
 	List<AdminReportDTO> list(Map<String, Object> param);
 
+	void noticeInsert(String findUser, String string);
+
 }

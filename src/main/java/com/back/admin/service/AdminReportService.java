@@ -24,7 +24,7 @@ public class AdminReportService {
 		int start = (Integer.parseInt((String) param.get("currentPage")) - 1) * 10;
 		param.put("start", start);
 		logger.info("list param = {}", param);
-		
+
 		result.put("list", adminReportDAO.list(param));
 		logger.info(result.get("list") + "");
 		int totalPage = adminReportDAO.totalPage(param);
@@ -48,12 +48,15 @@ public class AdminReportService {
 		return map;
 	}
 
-	public Map<String, Object> update(String adminId, String reportIdx, String reportState, String reportFeed) {
+	public Map<String, Object> update(String adminId, String reportIdx, String reportState, String reportFeed,
+			String reportId) {
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		adminReportDAO.update(reportIdx, reportState, reportFeed);
+		logger.info("params id = " + reportId + " reportIdx = " + reportIdx);
 		try {
 			adminReportDAO.feedInsert(adminId, reportIdx);
+			adminReportDAO.noticeInsert(reportId, "문의상태가 변경");
 		} catch (Exception e) {
 			map.put("result", false);
 		}

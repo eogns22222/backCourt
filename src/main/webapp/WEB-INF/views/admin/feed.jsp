@@ -102,6 +102,7 @@
 				'reportState':$('#reportState').val()
 				,'reportFeed':$('#reportFeed').val()
 				,'reportIdx':reportIdx
+				,'reportId':$('#reportId').text()
 			}
 			, dataType:'json'
 			, success:function(data){

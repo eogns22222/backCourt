@@ -63,10 +63,10 @@ public class AdminReportController {
 	@RequestMapping(value = "/admin/reportUpdate.ajax", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> reportUpdate(HttpSession session, String reportState, String reportFeed,
-			String reportIdx) {
-
+			String reportIdx, String reportId) {
+		logger.info(reportId);
 		String adminId = (String) session.getAttribute("loginId");
-		return adminReportService.update(adminId, reportIdx, reportState, reportFeed);
+		return adminReportService.update(adminId, reportIdx, reportState, reportFeed,reportId);
 	}
 
 }

@@ -68,4 +68,9 @@
 		INSERT INTO feed(id,report_idx) values(#{param1},#{param2})
 	</insert>
 
+	
+	<insert id="noticeInsert" parameterType="String">
+		INSERT INTO notice(id,report) values(#{param1},#{param2})
+	</insert>
+
 </mapper>
