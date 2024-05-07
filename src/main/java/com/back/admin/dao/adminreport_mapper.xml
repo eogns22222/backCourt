@@ -12,9 +12,9 @@
 			, r.report_tit AS reportSubject
 			, r.id AS reportId
 			, r.report_date AS reportDate
-			, f.id AS reportAdminId
+			, (SELECT f.id from feed f WHERE r.report_idx = f.report_idx
+				ORDER by f.feed_idx DESC limit 1) AS reportAdminId
 		FROM report r
-		LEFT JOIN feed f ON r.report_idx = f.report_idx
 		<choose>
 			<when test='searchFlag == "true"'>
 				 WHERE r.id LIKE CONCAT('%', #{reportSearch}, '%')
@@ -70,7 +70,7 @@
 
 	
 	<insert id="noticeInsert" parameterType="String">
-		INSERT INTO notice(id,report) values(#{param1},#{param2})
+		INSERT INTO notice(id,notice_content) values(#{param1},#{param2})
 	</insert>
 
 </mapper>
