@@ -21,8 +21,6 @@ public interface CourtDAO {
 
 	int myPoint(String id);
 
-	void insertPointHistory(String id, int pointChange, String pointState, String WriteIdx, String WriteType);
-
 	void insertBooking(Map<String, Object> insertMap);
 
 	void insertPointHistory(Map<String, Object> insertMap);
@@ -32,4 +30,6 @@ public interface CourtDAO {
 	int totalPage(Map<String, Object> param);
 
 	List<CourtDTO> list(Map<String, Object> param);
+
+	void updateUserPoint(Map<String, Object> insertMap);
 }

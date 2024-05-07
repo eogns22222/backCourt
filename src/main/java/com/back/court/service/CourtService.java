@@ -136,12 +136,12 @@ public class CourtService {
 
 		return map;
 	}
-
-	@Transactional
+	
 	public void bookingAndPaying(Map<String, Object> insertMap) {
 		try {
 			courtDAO.insertBooking(insertMap);
 			courtDAO.insertPointHistory(insertMap);
+			courtDAO.updateUserPoint(insertMap);
 		} catch (Exception e) {
 			logger.error("insert 실패", e);
 			throw new RuntimeException("insert 실패");

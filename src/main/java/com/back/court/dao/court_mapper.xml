@@ -139,4 +139,10 @@
 			point_list(id,point_change,point_state,write_idx,write_type)
 			VALUES(#{id},#{point_change},#{point_state},#{write_idx},#{write_type})
 	</insert>
+	
+	<update id="updateUserPoint" parameterType="map">
+		UPDATE member
+		SET point = point - #{point_change}
+		WHERE id = #{id}
+	</update>
 </mapper>
