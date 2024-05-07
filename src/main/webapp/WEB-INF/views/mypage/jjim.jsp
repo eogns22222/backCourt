@@ -137,12 +137,11 @@
             }
             , dataType:'json'
             , success:function(data){
+            	console.log(data);
                 showList(data.list);
-                var totalPage = data.totalPage/10 > 1 ? data.totalPage/10:1;
-                console.log(data.totalPage+' '+totalPage);
                 $('#pagination').twbsPagination({
                     startPage:1
-                    , totalPages:totalPage
+                    , totalPages:data.totalPage
                     , visiblePages:5
                     , onPageClick:function(evt, pg){
                         currentPage = pg;
