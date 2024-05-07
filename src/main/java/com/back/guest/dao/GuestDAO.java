@@ -24,5 +24,9 @@ public interface GuestDAO {
 
 	List<String> fileNameList(String guest_idx);
 
+	void guestJoinListInsert(String guest_idx, String id);
+
+	void guestNoticeInsert(String guest_idx);
+
 
 }

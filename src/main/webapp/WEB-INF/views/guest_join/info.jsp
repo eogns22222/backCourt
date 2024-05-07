@@ -81,6 +81,10 @@
         position: absolute; /* 절대적인 위치 설정 */
         z-index: 1; /* 다른 요소 위로 배치 */
     }
+    
+    #court_address {
+    	cursor: pointer;
+    }
 </style>
 </head>
 <body>
@@ -160,11 +164,27 @@
 	console.log(guest_idx);
 	
 	$('.applyButton').on('click',function(){
-		// 확인 창 표시
 	    var confirmation = confirm("정말로 신청하시겠습니까?");
 	    // 확인을 선택한 경우
 	    if (confirmation) {
-	        window.location.href = './list.go';
+	    	$.ajax({
+				type:'post'
+				,url:'./guestJoin.ajax'
+				,datatype:'json'
+				,data:{"guest_idx":guest_idx}
+				,success:function(data){
+					console.log(data);
+					if(data.result){
+						alert('참가신청 성공했습니다.');
+				        window.location.href = './list.go';
+					}else{
+						alert('참가신청 실패했습니다.');
+					}
+				}
+				,error:function(error){
+					console.log(error);
+				}
+			});
 	    } else {
 	        // 취소한 경우, 아무런 작업도 수행하지 않음
 	    }
@@ -179,6 +199,25 @@
 		alert(msg);
 	}
 	
+	$(document).ready(function() {
+	    // 주소를 클릭할 때 이벤트 핸들러 추가
+	    $('#court_address').click(function() {
+	        // 클립보드에 복사할 주소 텍스트 가져오기
+	        var addressText = $(this).text();
+
+	        // 텍스트를 클립보드에 복사하기
+	        navigator.clipboard.writeText(addressText)
+	            .then(function() {
+	                console.log('주소가 클립보드에 복사되었습니다.');
+	                alert('주소가 클립보드에 복사되었습니다.');
+	                // 복사가 성공한 경우 추가적인 알림이나 작업을 할 수 있습니다.
+	            })
+	            .catch(function(err) {
+	                console.error('주소 복사 중 오류가 발생했습니다.', err);
+	                // 복사 오류 메시지를 출력하거나 추가 작업을 수행할 수 있습니다.
+	            });
+	    });
+	});
 	
 	$(document).ready(function(){
 		$.ajax({

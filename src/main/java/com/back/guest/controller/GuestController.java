@@ -36,14 +36,14 @@ public class GuestController {
 	// 글쓰기 작성
 	@RequestMapping(value = "/guest_join/write.do", method = RequestMethod.POST)
 	public String guestWrite(String booking_idx, String guest_info, String guest_level, String guest_position,
-			String guest_gender, String guest_to, String guest_fee) {
+			String guest_gender, String guest_to, String guest_fee, HttpSession session) {
 		logger.info("guest_info:" + guest_info + " guest_level: " + guest_level + " guest_position : " + guest_position
 				+ " guest_gender : " + guest_gender + " guest_to : " + guest_to + " guest_fee : " + guest_fee
 				+ " court_booking : " + booking_idx);
 		// 리스트페이지로 바꿔야함
 		String page = "/guest_join/write";
 		// 아이디 수정필요
-		String id = "admin";
+		String id = (String)session.getAttribute("loginId");
 		int court_booking_idx = Integer.parseInt(booking_idx);
 		// 팀idx 수정 필요
 		int team_idx = guestService.callmyteam(id);
@@ -65,7 +65,7 @@ public class GuestController {
 
 		if (row >= 1) {
 			// 나중에 글 상세보기 페이지로 이동
-			page = "index";
+			page = "redirect:/team/info_list.go?team_idx=" + team_idx;
 		}
 
 		return page;
@@ -105,7 +105,7 @@ public class GuestController {
 	@RequestMapping(value = "/guest_join/modify.ajax", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, GuestDTO> guestModify(String guestIdx) {
-		
+
 		// 팀에서 수정하기 완성되면
 		guestIdx = "4";
 
@@ -120,7 +120,7 @@ public class GuestController {
 	public Map<String, Object> writeUpdate(String guest_info, String guest_level, String guest_position,
 			String guest_gender, String guest_to, int guest_fee, String guestIdx) {
 		logger.info("guestUpate " + guest_level + " " + guest_gender);
-		// 팀에서 수정하기 완성되면 
+		// 팀에서 수정하기 완성되면
 		guestIdx = "4";
 		return guestService.writeUpdate(guest_info, guest_level, guest_position, guest_gender, guest_to, guest_fee,
 				guestIdx);
@@ -139,55 +139,34 @@ public class GuestController {
 	public Map<String, Object> guestList(String address, String position, String currentPage, String gender,
 			String level, String searchCategory, String searchWord, String searchFlag) {
 		logger.info("게스트리스트 아작스 요청");
-		
-		return guestService.guestList(Integer.parseInt(currentPage), searchFlag, searchCategory, searchWord, address, gender, position,
-				level);
+
+		return guestService.guestList(Integer.parseInt(currentPage), searchFlag, searchCategory, searchWord, address,
+				gender, position, level);
 	}
-	
+
 	// 게스트모집 상세 페이지 이동
-	@RequestMapping(value ="/guest_join/info.go")
+	@RequestMapping(value = "/guest_join/info.go")
 	public String detailGo(Model model, String guest_idx) {
 		logger.info(guest_idx);
-		model.addAttribute("guest_idx",guest_idx);
+		model.addAttribute("guest_idx", guest_idx);
 		return "guest_join/info";
 	}
-	
-	
+
 	@RequestMapping(value = "/guest_join/info.ajax", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> detail(String guest_idx){
+	public Map<String, Object> detail(String guest_idx) {
 		logger.info("info.ajax guest_idx = {}", guest_idx);
-		
+
 		return guestService.detail(guest_idx);
 	}
-	
-	
-	
-	
-	
-	
-	
+
+	@RequestMapping(value = "/guest_join/guestJoin.ajax")
+	@ResponseBody
+	public Map<String, Object> guestJoin(String guest_idx, HttpSession session) {
+		logger.info("guestJoin Controller " + guest_idx);
+		String id = (String) session.getAttribute("loginId");
+
+		return guestService.guestJoin(guest_idx, id);
+	}
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

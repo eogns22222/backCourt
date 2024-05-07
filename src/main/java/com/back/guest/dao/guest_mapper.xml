@@ -126,6 +126,31 @@
 	on t.team_idx = gj.team_idx 
 	WHERE gj.guest_state = 'true' and gj.guest_idx = #{param1}
 	</select>
+	
+	<insert id="guestJoinListInsert" parameterType="String">
+		INSERT INTO guest_join_list (
+			id
+			,guest_idx
+			,guest_join_state
+		)
+		VALUES (
+			#{param2}
+			,#{param1}
+			,'신청중'
+		)
+		
+	</insert>
+	
+	<insert id="guestNoticeInsert" parameterType="String">
+		INSERT into notice (
+			id
+			,notice_content
+		)
+		values (
+			(select id from guest_join where guest_idx=#{param1})
+			,'게스트 참가신청이 들어왔습니다.'
+		)
+	</insert>
 </mapper>
 
 
