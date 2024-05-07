@@ -48,7 +48,7 @@
 		    </tr>
 		    <tr>
 		        <th class="reportFeedTh">제목</th>
-		        <td class="reportFeedTd"><input type="text" id="reportSubject" disabled></td>
+		        <td class="reportFeedTd"><input type="text" id="reportSubject" readonly></td>
 		    </tr>
 		    <tr>
 		        <th class="reportFeedTh">신고자ID</th>
@@ -71,7 +71,7 @@
 		
 		    <tr>
 		        <th class="reportFeedTh">내용</th>
-		        <td class="reportFeedTd"><textarea class="reportFeedTextarea" id="reportContent" disabled></textarea></td>
+		        <td class="reportFeedTd"><textarea class="reportFeedTextarea" id="reportContent" readonly></textarea></td>
 		    </tr>
 		    <tr>
 		        <th class="reportFeedTh">피드백</th>
@@ -141,7 +141,7 @@
             	$('#reportId').html(data.reportInfo.reportId);
             	$('#reportDate').html(data.reportInfo.reportDate);
             	$('#reportState').val(data.reportInfo.reportState);
-            	$('#reportSubject').html(data.reportInfo.reportSubject);
+            	$('#reportSubject').val(data.reportInfo.reportSubject);
             	$('#reportContent').html(data.reportInfo.reportContent);
             	$('#reportFeed').html(data.reportInfo.reportFeed);
 				
