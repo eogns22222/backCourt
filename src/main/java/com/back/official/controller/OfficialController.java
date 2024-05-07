@@ -88,7 +88,7 @@ public class OfficialController {
 	
 	@RequestMapping(value = "/official/payment.ajax", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> payment(HttpSession session, Model model, int fee) {
+	public Map<String, Object> payment(HttpSession session, int fee, int idx) {
 		logger.info("결제 시도");
 		logger.info("fee : {} ", fee);
 		String id = "";
@@ -96,10 +96,7 @@ public class OfficialController {
 		
 		if(session.getAttribute("loginId") != null) {
 			id = (String) session.getAttribute("loginId");
-			int pay = officialService.compare(id);
-			map.put("pay", pay);
-		}else {
-			model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
+			map = officialService.compare(id, idx);
 		}
 		
 		return map;
