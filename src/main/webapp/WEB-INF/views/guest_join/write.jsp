@@ -42,14 +42,14 @@
 		<form id="guestForm" action="write.do" method="post">
 		<div class="content-wrapper">
 			<div class="content">지역 :</div>
-			<input type="text" disabled id="address" />
+			<input type="text" readonly id="address" />
 		</div>
 		<div class="content-wrapper">
 			<div class="content">날짜 :</div>
-			<input type="text" id="date" disabled>
+			<input type="text" id="date" readonly>
 		</div>
 		<div class="content-wrapper">
-			<div class="content">구장명 :</div>
+			<div class="content">구장찾기 :</div>
 			<button type="button" id="findCourtButton" class="find-button">구장 찾기</button>
 		</div>
 		<div class="content-wrapper">
@@ -62,13 +62,13 @@
 		<div class="content-wrapper">
 			<div class="content">모집 레벨 :</div>
 			<div class="radio-wrapper">
-				<input type="radio" id="bronze" name="guest_level" value="bronze">
+				<input type="radio" id="bronze" name="guest_level" value="브론즈">
 					<label for="bronze">브론즈</label> 
-				<input type="radio" id="silver"name="guest_level" value="silver">
+				<input type="radio" id="silver"name="guest_level" value="실버">
 				 	<label for="silver">실버</label>
-				<input type="radio" id="gold" name="guest_level" value="gold">
+				<input type="radio" id="gold" name="guest_level" value="골드">
 				 	<label	for="gold">골드</label>
-				<input type="radio" id="platinum" name="guest_level" value="platinum"> 
+				<input type="radio" id="platinum" name="guest_level" value="플레티넘"> 
 					<label for="platinum">플레티넘</label>
 			</div>
 		</div>
@@ -76,17 +76,17 @@
 			<div class="content">모집 포지션 :</div>
 			<select class="select" name="guest_position" id="position">
 				<option value="">포지션 선택</option>
-				<option value="center">센터</option>
-				<option value="forward">포워드</option>
-				<option value="guard">가드</option>
+				<option value="센터">센터</option>
+				<option value="포워드">포워드</option>
+				<option value="가드">가드</option>
 			</select>
 		</div>
 		<div class="content-wrapper">
 			<div class="content">모집 성별 :</div>
 			<div class="radio-wrapper">
-				<input type="radio" id="male" name="guest_gender" value="male"> 
+				<input type="radio" id="male" name="guest_gender" value="남자"> 
 				<label for="male">남자</label> 
-				<input type="radio" id="female" name="guest_gender"	value="female"> 
+				<input type="radio" id="female" name="guest_gender"	value="여자"> 
 				<label for="female">여자</label>
 			</div>
 		</div>
@@ -154,7 +154,11 @@
 			var gameInfo = $('#game-content').val();
 			var fee = $('#feeInput').val();
 			var errorMessage = "";
-
+			var address = $('#address').val();
+			// 구장 찾기 여부 확인
+			if (address == ''){
+				errorMessage += "구장을 선택해주세요.\n";
+			}
 			// 경기 정보 입력 여부 확인
 			if (!gameInfo) {
 				errorMessage += "경기 정보를 입력하세요.\n";

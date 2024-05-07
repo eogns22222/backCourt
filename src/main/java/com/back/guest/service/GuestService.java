@@ -207,6 +207,18 @@ public class GuestService {
 		map.put("fileName", fileName);
 		return map;
 	}
+
+	public Map<String, Object> guestJoin(String guest_idx, String id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			guestDAO.guestJoinListInsert(guest_idx, id);
+			guestDAO.guestNoticeInsert(guest_idx);
+			map.put("result", true);
+		} catch (Exception e) {
+			map.put("result", false);			
+		}
+		return map;
+	}
 	
 	
 }
