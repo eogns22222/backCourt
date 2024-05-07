@@ -1,9 +1,0 @@
-@charset "UTF-8";
-
-
-.content-wrapper {
-        display: block;
-}
-.radio-wrapper {
-    display: inline-block; /* 라디오 버튼을 한 줄에 나타내기 위해 인라인 블록으로 설정 */
-}

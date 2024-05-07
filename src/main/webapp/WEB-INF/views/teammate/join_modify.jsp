@@ -72,7 +72,7 @@
 		</div>
 		<div class="content-wrapper">
 			<div class="content requ">모집내용 : </div>
-			<textarea name="teammate_info" class="textarea" id="teammateContent" maxlength="500">
+			<textarea name="teammate_info" class="textarea" id="teammateContent" maxlength="300">
             </textarea>
 			<div id="char-count"></div>
 		</div>
