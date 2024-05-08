@@ -16,7 +16,7 @@
         <div class="flexBox">
             <div class="logo">
 <%--                 <img class="teammateLogo" src="../resources/img/teamLogo/${teammateDetail.logo}.jpg" alt="teammateLogo">> --%>
-                <img class="teammateLogo" src="/logo/${teammateDetail.logo}.jpg" alt="teammateLogo">>
+                <img class="teammateLogo" src="/logo/${teammateDetail.logo}.png" alt="teammateLogo">>
             </div>
             <div>
                 <a class="teammateReportBtn">신고하기</a>

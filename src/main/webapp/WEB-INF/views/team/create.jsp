@@ -235,7 +235,12 @@
  		}else{
  			console.log('서버로 요청');
  			
- 			$('form').submit();
+ 			var cf = '';
+ 			cf = confirm('팀을 만드시겠습니까?');
+ 			if(cf){
+	 			$('form').submit();
+ 			}
+ 			
  		}
  		
  	}

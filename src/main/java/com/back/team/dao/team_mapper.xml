@@ -123,6 +123,7 @@
 			(SELECT COUNT(guest_idx) FROM guest_join gj WHERE gj.id = #{param2}))/10)
 			AS totalPage
 			FROM guest_join
+			GROUP BY id
 	</select>
 	
 	<select id="listDrop" resultType="com.back.team.dto.TeamDTO">

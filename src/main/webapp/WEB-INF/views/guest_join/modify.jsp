@@ -21,7 +21,6 @@
 				모집글 수정</span>
 		</div>
 		<br />
-		<form id="guestForm" action="modify.do" method="post">
 		<div class="content-wrapper">
 			<div class="content">지역 :</div>
 			<input type="text" id="address" disabled/>
@@ -91,7 +90,6 @@
 			<input type="submit" value="수정 취소" id="cancel" class="submit">
 			<input type="submit" value="수정 완료" id="update" class="submit">
 		</div>
-		</form>
 	</div>
 </body>
 <script>
@@ -123,7 +121,7 @@
 			}
 			, success:function(data){
 					alert("수정 완료되었습니다.");
-					window.location.href = './guest_join/info.go'
+					window.location.href = '../guest_join/list.go'
 			}
 			, error:function(){
 				alert("수정 실패");

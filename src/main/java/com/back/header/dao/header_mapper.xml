@@ -20,6 +20,7 @@
 			notice_time, 
 			notice_content
 			FROM notice where id = #{param1}
+			ORDER BY notice_idx desc
 	</select>
 	
 	<delete id="del">
