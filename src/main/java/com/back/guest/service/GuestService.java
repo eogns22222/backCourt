@@ -12,9 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
-import com.back.court.dto.CourtDTO;
 import com.back.guest.dao.GuestDAO;
 import com.back.guest.dto.GuestDTO;
 
@@ -41,9 +39,9 @@ public class GuestService {
 	}
 
 	// 수정불러오기
-	public Map<String, GuestDTO> guestModify(int guestIdx) {
+	public Map<String, GuestDTO> guestModify(int guest_idx) {
 		Map<String, GuestDTO> map = new HashMap<String, GuestDTO>();
-		GuestDTO dto = guestDAO.guestModify(guestIdx);
+		GuestDTO dto = guestDAO.guestModify(guest_idx);
 		logger.info(dto.getCourt_name() + " ");
 		map.put("guestInfo", dto);
 		return map;
@@ -51,8 +49,8 @@ public class GuestService {
 
 	// 수정하기
 	public Map<String, Object> writeUpdate(String guest_info, String guest_level, String guest_position,
-			String guest_gender, String guest_to, int guest_fee, String guestIdx) {
-		guestDAO.writeUpdate(guest_info, guest_level, guest_position, guest_gender, guest_to, guest_fee, guestIdx);
+			String guest_gender, String guest_to, int guest_fee, String guest_idx) {
+		guestDAO.writeUpdate(guest_info, guest_level, guest_position, guest_gender, guest_to, guest_fee, guest_idx);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("result", true);
 		return map;

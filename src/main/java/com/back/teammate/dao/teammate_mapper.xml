@@ -356,10 +356,11 @@
 	</insert>
 
 	<select id="duplicateChk" resultType="int">
-		SELECT count(tjl.id) FROM team_join_list tjl JOIN team_list tl ON
-		tjl.id = tl.id
-		WHERE join_team_idx = #{param1} AND tjl.id = #{param2} AND (tl.id =
-		#{param2} OR tjl.join_state = '대기중')
+		SELECT count(tjl.id) 
+			FROM team_join_list tjl
+			WHERE join_team_idx = #{param1} 
+			AND tjl.id = #{param2}
+			and tjl.join_state = '대기중' or tjl.join_state = '수락'
 		<!-- SELECT count(id) FROM team_join_list WHERE join_team_idx = #{param1} 
 			AND id = #{param2} AND (join_state = '수락' OR join_state = '대기중') -->
 	</select>

@@ -19,7 +19,7 @@
 			name,
 			address,
 			gender,position,level,point,perm,state)
-		values(#{id},#{pw},#{name},#{address},#{gender},#{position},#{level},0,"고객","")
+		values(#{id},#{pw},#{name},#{address},#{gender},#{position},#{level},0,"고객","일반")
 	</insert>
 	
 	<select id="overlay" resultType="int">

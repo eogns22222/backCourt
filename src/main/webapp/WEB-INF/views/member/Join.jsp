@@ -95,8 +95,8 @@
 	            <tr>
 	                <th>성별</th>
 	                <td>
-	                    <input type="radio" name="gender" value="남"/>남자
-	                    <input type="radio" name="gender" value="여"/>여자
+	                    <input type="radio" name="gender" value="남자"/>남자
+	                    <input type="radio" name="gender" value="여자"/>여자
 	                </td>
 	            </tr>
 	            <tr>
@@ -105,9 +105,9 @@
 	                </th>
 	                <td>
 	                    <select name="position" id="position">
-	                        <option value="Guard">가드</option>
-	                        <option value="Forward">포워드</option>
-	                        <option value="Center">센터</option>
+	                        <option value="가드">가드</option>
+	                        <option value="포워드">포워드</option>
+	                        <option value="센터">센터</option>
 	                    </select>
 	                </td>
 	            </tr>
@@ -117,10 +117,10 @@
 	                </th>
 	                <td>
 	                    <select name="level" id="level">
-	                        <option value="Bronze">브론즈</option>
-	                        <option value="Silver">실버</option>
-	                        <option value="Gold">골드</option>
-	                        <option value="Platinum">플래티넘</option>
+	                        <option value="브론즈">브론즈</option>
+	                        <option value="실버">실버</option>
+	                        <option value="골드">골드</option>
+	                        <option value="플래티넘">플래티넘</option>
 	                    </select>
 	                </td>
 	            </tr>

@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.back.guest.dto.GuestDTO;
@@ -77,7 +76,7 @@ public class GuestController {
 	public Map<String, Object> courtList(HttpSession session, Model model) {
 		logger.info("courtlist 출력");
 
-		String id = "admin";
+		String id = (String)session.getAttribute("loginId");
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<GuestDTO> list = guestService.courtList(id);
@@ -95,35 +94,32 @@ public class GuestController {
 
 	// 수정페이지 접속
 	@RequestMapping(value = "/guest_join/modify.go")
-	public String update() {
+	public String update(String idx, Model model) {
 		logger.info("게스트 모집글 수정페이지 접속");
 
+		model.addAttribute("idx", idx);
+		
 		return "/guest_join/modify";
 	}
 
 	// 수정페이지 글 불러오기
 	@RequestMapping(value = "/guest_join/modify.ajax", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, GuestDTO> guestModify(String guestIdx) {
+	public Map<String, GuestDTO> guestModify(String guest_idx) {
 
-		// 팀에서 수정하기 완성되면
-		guestIdx = "4";
+		logger.info("guestIdx" + guest_idx);
 
-		logger.info("guestIdx" + guestIdx);
-
-		return guestService.guestModify(Integer.parseInt(guestIdx));
+		return guestService.guestModify(Integer.parseInt(guest_idx));
 	}
 
 	// 수정페이지 작성완료
 	@RequestMapping(value = "/guest_join/guestUpdate.ajax", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> writeUpdate(String guest_info, String guest_level, String guest_position,
-			String guest_gender, String guest_to, int guest_fee, String guestIdx) {
+			String guest_gender, String guest_to, int guest_fee, String guest_idx) {
 		logger.info("guestUpate " + guest_level + " " + guest_gender);
-		// 팀에서 수정하기 완성되면
-		guestIdx = "4";
 		return guestService.writeUpdate(guest_info, guest_level, guest_position, guest_gender, guest_to, guest_fee,
-				guestIdx);
+				guest_idx);
 	}
 
 	// 게스트 리스트 접속

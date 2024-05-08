@@ -43,7 +43,11 @@ public class TeamService {
 		}
 		Map<String, Object> result = new HashMap<String, Object>();
 		List<TeamDTO> listTeam = teamDAO.listTeam(start, team_idx);
+		// 팀원 신청내역
 		List<TeamDTO> listAppli = teamDAO.listAppli(start, team_idx);
+		// 게스트 신청내역
+		List<TeamDTO> listAppliGuest = teamDAO.listAppliGuest(start, team_idx);
+		
 		List<TeamDTO> listWriteTeam = teamDAO.listWriteTeam(team_idx, id);
 		List<TeamDTO> listWriteGuest = teamDAO.listWriteGuest(start, team_idx, id, limitNum);
 		List<TeamDTO> listDrop = teamDAO.listDrop(start, team_idx);
@@ -52,6 +56,10 @@ public class TeamService {
 		result.put("totalPageTeam", teamDAO.teamTotal(team_idx));
 		result.put("listAppli", listAppli);
 		result.put("totalPageAppli", teamDAO.appliTotal(team_idx));
+		//
+		result.put("listAppliGuest", listAppliGuest);
+		result.put("totalPageAppliGuest", teamDAO.appliGuestTotal(team_idx));
+		//
 		result.put("listWriteTeam", listWriteTeam);
 		result.put("listWriteGuest", listWriteGuest);
 		result.put("totalPageWrite", teamDAO.writeTotal(team_idx, id));

@@ -58,6 +58,10 @@ public interface TeamDAO {
 
 	void updateStateNo(int idx);
 
+	List<TeamDTO> listAppliGuest(int start, int team_idx);
+
+	int appliGuestTotal(int team_idx);
+
 
 }
 

@@ -135,7 +135,7 @@
         		,data:formData
                 ,contentType:false
                 ,processData:false
-                ,success:function(){
+                ,success:function(data){
                 	if(data.result == true){
 						window.location.href = './courtList.go';                		
                 	}

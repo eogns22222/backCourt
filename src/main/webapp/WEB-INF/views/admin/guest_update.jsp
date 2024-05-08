@@ -172,7 +172,7 @@
 								<option value="브론즈">브론즈</option>
 								<option value="실버">실버</option>
 								<option value="골드">골드</option>
-								<option value="플레티넘">플레티넘</option>
+								<option value="플래티넘">플래티넘</option>
 							</select>
 						</td>
 					</tr>

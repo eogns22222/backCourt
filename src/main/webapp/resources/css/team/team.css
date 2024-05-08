@@ -24,7 +24,7 @@ img{width:100%;margin:0 auto;}
 .teamInfoContainer .rightCont .teamTabMenu .cont li{background:lightgray;}
 .teamInfoContainer .rightCont .teamTabMenu .cont li.on{background:blue;}
 .teamInfoContainer .rightCont .teamTabMenu .cont li:not(:last-child){margin-right:20px;}
-.teamInfoContainer .rightCont .teamTabMenu .cont li a{display:block;padding:15px 20px;color:#fff;font-size:25px;}
+.teamInfoContainer .rightCont .teamTabMenu .cont li a{display:block;padding:15px 20px;color:#fff;font-size:20px;}
 
 /* writeCont */
 .teamInfoContainer .rightCont .writeCont{display:none;float:right;margin-bottom:20px;}
@@ -68,12 +68,12 @@ img{width:100%;margin:0 auto;}
 .teamInfoContainer .rightCont table .modifications .refusalBtn{background:red;}
 
 /* userPop */
-.userPop{display:none;position:absolute;top:calc(50% - 110px);left:calc(50% - 240px);z-index:99;}
+.userPop{display:none;position:absolute;top:calc(50% - 110px);left:calc(50% - 350px);z-index:99;}
 .userPop.on{display:block;}
 .userPop .close{position:absolute;top:-50px;right:-50px;width:50px;}
 .userPop .popWrap{}
 .userPop .popWrap .listCont{}
-.userPop .popWrap .listCont ul{width:480px;border:1px solid #000;background:#fff;box-sizing:border-box;}
+.userPop .popWrap .listCont ul{width:700px;border:1px solid #000;background:#fff;box-sizing:border-box;}
 .userPop .popWrap .listCont ul li{font-size:30px;}
 .userPop .popWrap .listCont ul li:not(:last-child){border-bottom:1px solid lightgray;}
 .userPop .popWrap .listCont ul li p{display:inline-block;padding:20px;}

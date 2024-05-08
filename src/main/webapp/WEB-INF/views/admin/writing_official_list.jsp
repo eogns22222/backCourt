@@ -40,11 +40,11 @@
                         <option value="브론즈">브론즈</option>
                         <option value="실버">실버</option>
                         <option value="골드">골드</option>
-                        <option value="플레티넘">플레티넘</option>
+                        <option value="플래티넘">플래티넘</option>
                     </select>
 
                     <!-- 게시글 작성 -->
-                    <button class="writeBtn" onclick="location.href='./official_write.go'">게시글 작성</button>
+                    <button class="writeBtn" onclick="location.href='./officialWrite.go'">게시글 작성</button>
                 </div>
             
                 <div class="table">

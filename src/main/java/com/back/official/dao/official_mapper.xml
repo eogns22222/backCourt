@@ -21,7 +21,7 @@
 			JOIN court t
 			ON o.court_idx = t.court_idx
 		WHERE t.court_state = 'true'
-		AND o.official_match_post_state = '공개'
+		AND o.official_match_post_state = 'true'
 		AND o.official_match_date  > CURDATE()
 		ORDER BY court_address asc LIMIT #{param1}, 10
 	</select>
@@ -40,7 +40,7 @@
 			JOIN court t
 			ON o.court_idx = t.court_idx
 		WHERE t.court_state = 'true'
-		AND o.official_match_post_state = '공개'
+		AND o.official_match_post_state = 'true'
 		AND t.court_address LIKE CONCAT('%', #{param2}, '%')
 		AND o.official_match_date  > CURDATE()
 		ORDER BY court_address asc LIMIT #{param1}, 10
@@ -60,7 +60,7 @@
 			JOIN court t
 			ON o.court_idx = t.court_idx
 		WHERE t.court_state = 'true'
-		AND o.official_match_post_state = '공개'
+		AND o.official_match_post_state = 'true'
 		AND o.official_match_level LIKE CONCAT('%', #{param2}, '%')
 		AND o.official_match_date  > CURDATE()
 		ORDER BY court_address asc LIMIT #{param1}, 10
@@ -80,7 +80,7 @@
 			JOIN court t
 			ON o.court_idx = t.court_idx
 		WHERE t.court_state = 'true'
-		AND o.official_match_post_state = '공개'
+		AND o.official_match_post_state =true'
 		AND t.court_address LIKE CONCAT('%', #{param2}, '%')
 		AND o.official_match_level LIKE CONCAT('%', #{param3}, '%')
 		AND o.official_match_date  > CURDATE()
@@ -101,7 +101,7 @@
 			JOIN court t
 			ON o.court_idx = t.court_idx
 		WHERE t.court_state = 'true'
-		AND o.official_match_post_state = '공개'
+		AND o.official_match_post_state = 'true'
 		AND o.official_match_date  > CURDATE()
 	</select>
 	
@@ -109,7 +109,7 @@
 	<select id="allMatchCount" resultType="int">
 		SELECT CEIL(COUNT(official_match_idx)/10) AS totalPage
 		FROM official_match o
-		WHERE official_match_post_state = "공개"
+		WHERE official_match_post_state = "true"
 		AND o.official_match_date  > CURDATE()
 	</select>
 	
@@ -158,7 +158,7 @@
 			JOIN court t
 			ON o.court_idx = t.court_idx
 		WHERE t.court_state = 'true'
-		AND o.official_match_post_state = '공개'
+		AND o.official_match_post_state = 'true'
 		AND t.court_address LIKE CONCAT('%', #{param2}, '%')
 		AND o.official_match_date  > CURDATE()
 		ORDER BY court_address asc LIMIT #{param1}, 10
@@ -171,7 +171,7 @@
 		JOIN court t
 		ON o.court_idx = t.court_idx
 		WHERE court_address LIKE CONCAT('%', #{param1}, '%')
-		AND o.official_match_post_state = '공개'
+		AND o.official_match_post_state = 'true'
 		AND o.official_match_date  > CURDATE()
 	</select>
 	
@@ -206,7 +206,7 @@
 			JOIN court t
 			ON o.court_idx = t.court_idx
 		WHERE t.court_state = 'true'
-		AND o.official_match_post_state = '공개'
+		AND o.official_match_post_state = 'true'
 		and official_match_idx = #{param1}
 	</select>
 	
@@ -219,7 +219,7 @@
 			JOIN court t
 			ON o.court_idx = t.court_idx
 		WHERE t.court_state = 'true'
-		AND o.official_match_post_state = '공개'
+		AND o.official_match_post_state = 'true'
 		and official_match_idx = #{param1}
 	</select>
 	

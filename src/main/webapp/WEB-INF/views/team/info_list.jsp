@@ -45,7 +45,8 @@
             <div class="teamTabMenu on">
                 <ul class="cont">
                     <li class="on"><a href="javascript:;" onclick="">팀원</a></li>
-                    <li><a href="javascript:;" onclick="">신청 내역</a></li>
+                    <li><a href="javascript:;" onclick="">팀원 신청 내역</a></li>
+                    <li><a href="javascript:;" onclick="">게스트 신청 내역</a></li>
                     <li><a href="javascript:;" onclick="" id="myWrite">내가 쓴글</a></li>
                     <li><a href="javascript:;" onclick="">탈퇴 회원</a></li>
                 </ul>
@@ -114,7 +115,7 @@
                     </li>
                     <li>
                         <p class="tit">레벨</p>
-                        <p class="txt">플레티넘</p>
+                        <p class="txt">플래티넘</p>
                     </li>
                     <li>
                         <p class="tit">포지션</p>
@@ -218,11 +219,16 @@
 					showTeamList(data.listTeam);
 					totalPage = data.totalPageTeam;
 				}else if(tabNum == 1){
-					console.log('신청내역 출력');
+					console.log('팀원 신청내역 출력');
 					showAppliList(data.listAppli);
 					totalPage = data.totalPageAppli;
 					console.log(data.totalPageAppli);
-				}else if(tabNum == 2){
+				}else if(tabNum == 2){  // 게스트 신청 내역
+					console.log('게스트 신청내역 출력');
+					showAppliListGuest(data.listAppliGuest);
+					totalPage = data.totalPageAppliGuest;
+					console.log(data.totalPageAppliGuest);
+				}else if(tabNum == 3){
 					// 팀 모집글이 이미 있는지 확인하기 위해 사전 진행
 					if(data.listWriteTeam != ''){
 						writeTeam = 1;
@@ -236,7 +242,7 @@
 					showWriteList(data.listWriteTeam, data.listWriteGuest);
 					totalPage = data.totalPageWrite;
 					
-				}else if(tabNum == 3){
+				}else if(tabNum == 4){
 					console.log('탈퇴회원 출력');
 					showDropList(data.listDrop);
 					totalPage = data.totalPageDrop;
@@ -311,7 +317,7 @@
 		$('#thead').html(content);
 		$('#tbody').html(content2);
 	}
-	// 신청 내역 list 그리기
+	// 팀원 신청 내역 list 그리기
 	function showAppliList(list){
 		$('#tableList table').addClass('application').siblings().removeClass('teamMember writeList dropList');
 		
@@ -340,6 +346,43 @@
             	+'<td class="request">'
             	+'<button class="requestBtnY" onclick="confirmMember(\'' +  item.id + '\',\'' + item.applicant_idx + '\',\'' + 1 +'\')">수락</button>'
             	+'<button class="requestBtnN" onclick="confirmMember(\'' +  item.id + '\',\'' + item.applicant_idx + '\',\'' + 2 +'\')">거부</button>'
+            	+'</td>'
+            	+'</tr>';
+
+		}
+		cnt = 0;
+		$('#thead').html(content);
+		$('#tbody').html(content2);
+	}
+	// 게스트 신청 내역 list 그리기
+	function showAppliListGuest(list){
+		$('#tableList table').addClass('application').siblings().removeClass('teamMember writeList dropList');
+		
+		var content = '';
+		var content2 = '';
+		var cnt = 0;
+		
+		content +=
+            '<tr>'
+            +'<th>No.</th>'
+            +'<th>아이디</th>'
+            +'<th>레벨</th>'
+            +'<th>포지션</th>'
+            +'<th></th>'
+            +'</tr>';
+		
+		for(item of list){
+			cnt++;
+			
+			content2 +=
+                '<tr>'
+            	+'<td class="no">' + cnt + '</td>'
+            	+'<td class="user"><a href="javascript:;" class="userDetail" onclick="userPop(\'' +  item.id + '\')">' + item.id + '</a></td>'
+            	+'<td class="userLevel">' + item.level + '</td>'
+            	+'<td class="position">' + item.position + '</td>'
+            	+'<td class="request">'
+            	+'<button class="requestBtnY">수락</button>'
+            	+'<button class="requestBtnN">거부</button>'
             	+'</td>'
             	+'</tr>';
 
@@ -396,7 +439,7 @@
             	+'<td class="userLevel">' + item.guest_level + '</td>'
             	+'<td class="position">' + item.guest_position + '</td>'
             	+'<td class="modifications">'
-            	+'<button class="modifyBtn" onclick="location.href=\'../guest/join_modify?idx=' + item.guest_idx + '\'">수정</button>'
+            	+'<button class="modifyBtn" onclick="location.href=\'../guest_join/modify.go?idx=' + item.guest_idx + '\'">수정</button>'
             	+'<button class="refusalBtn" onclick="deleteWrite(\'' +  item.guest_idx + '\',\'' + 2 +'\')">삭제</button>'
             	+'</td>'
             	+'</tr>';

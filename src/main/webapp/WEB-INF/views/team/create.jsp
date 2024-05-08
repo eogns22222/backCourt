@@ -59,8 +59,8 @@
                     <input class="radio"  type="radio" name="level" id="silver" value="실버">
                     <label for="gold">골드</label>
                     <input class="radio"  type="radio" name="level" id="gold" value="골드">
-                    <label for="platinum">플레티넘</label>
-                    <input class="radio"  type="radio" name="level" id="platinum" value="플레티넘">
+                    <label for="platinum">플래티넘</label>
+                    <input class="radio"  type="radio" name="level" id="platinum" value="플래티넘">
                 </p>
                 <p>
                     <span>팀 설명 : </span>

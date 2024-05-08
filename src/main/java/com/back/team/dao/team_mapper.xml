@@ -49,6 +49,24 @@
 			ORDER BY applicant_idx asc LIMIT #{param1}, 10
 	</select>
 	
+	<select id="listAppliGuest" resultType="com.back.team.dto.TeamDTO">
+		SELECT 
+			guest_idx
+			,id
+			,(SELECT level  FROM member m WHERE m.id = gjl.id) AS level
+			,(SELECT position  FROM member m WHERE m.id = gjl.id) AS position
+			FROM guest_join_list gjl 
+			WHERE guest_join_idx in (SELECT 
+			guest_join_idx 
+			FROM guest_join tj 
+			WHERE guest_idx in (SELECT 
+			guest_idx
+			from guest_join
+			where team_idx = #{param2}))
+			AND gjl.guest_join_state = '대기중' OR gjl.guest_join_state = '신청중'
+			ORDER BY guest_join_idx asc LIMIT #{param1}, 10
+	</select>	
+	
 	<select id="appliTotal" resultType="int">
 		SELECT CEIL(COUNT((SELECT level  FROM member m WHERE m.id = tjl.id))/10) AS totalPage 
 			FROM team_join_list tjl
@@ -58,6 +76,16 @@
 			WHERE team_idx = #{param1})
 			AND join_state = '대기중'
 	</select>
+	
+	<select id="appliGuestTotal" resultType="int">
+		SELECT CEIL(COUNT((SELECT level  FROM member m WHERE m.id = gjl.id))/10) AS totalPage 
+			FROM guest_join_list gjl 
+			WHERE guest_join_idx in (SELECT 
+			guest_join_idx 
+			FROM guest_join gj 
+			WHERE team_idx = #{param1})
+			AND guest_join_state = '대기중'	or guest_join_state = '신청중'
+	</select>	
 	
 	<select id="listWriteTeam" resultType="com.back.team.dto.TeamDTO">
 		SELECT 
@@ -94,8 +122,7 @@
 			where team_idx = #{param1} AND join_team_state = "true") + 
 			(SELECT COUNT(guest_idx) FROM guest_join gj WHERE gj.id = #{param2}))/10)
 			AS totalPage
-			FROM team_join
-			join guest_join gj2 limit 1
+			FROM guest_join
 	</select>
 	
 	<select id="listDrop" resultType="com.back.team.dto.TeamDTO">

@@ -122,8 +122,8 @@ h2 {
 				 	<label for="silver">실버</label>
 				<input type="radio" id="gold" name="memberLevel" value="골드">
 				 	<label	for="gold">골드</label>
-				<input type="radio" id="platinum" name="memberLevel" value="플레티넘"> 
-					<label for="platinum">플레티넘</label>
+				<input type="radio" id="platinum" name="memberLevel" value="플래티넘"> 
+					<label for="platinum">플래티넘</label>
 			</div>
 		</div>
 			<div class="content-wrapper">

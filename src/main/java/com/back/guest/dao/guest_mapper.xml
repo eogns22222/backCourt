@@ -107,7 +107,8 @@
 	<!-- 게스트모집 상세 정보 불러오기 -->
 	<select id="detail" resultType="com.back.guest.dto.GuestDTO">
 		SELECT 
-		gj.guest_idx
+		CONCAT(cb.booking_date, '/', cb.booking_start_time, '~', cb.booking_end_time) AS bookingDate
+		,gj.guest_idx
 		,c.court_name 
 		,c.court_address 
 		,t.team_name 

@@ -50,8 +50,8 @@
 				 	<label for="silver">실버</label>
 				<input type="radio" id="gold" name="guest_level" value="골드">
 				 	<label	for="gold">골드</label>
-				<input type="radio" id="platinum" name="guest_level" value="플레티넘"> 
-					<label for="platinum">플레티넘</label>
+				<input type="radio" id="platinum" name="guest_level" value="플래티넘"> 
+					<label for="platinum">플래티넘</label>
 			</div>
 		</div>
 		<div class="content-wrapper">
@@ -97,7 +97,8 @@
 <script>
 	$('.menu').css('display','none');
 	
-	var guest_idx = ${guest_idx} +'';
+	var guest_idx = ${idx};
+	console.log(guest_idx + 'ddd');
 	
 	
 	$('#update').on('click',function(){

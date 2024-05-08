@@ -104,6 +104,7 @@ public void teammateDetail(String join_team_idx, Model model) {
 }
 
 public Map<String, Object> teammateJoin(String joinTeamIdx, String id, String join_state) {
+	int chk = 0;
     Map<String, Object> result = new HashMap<>();
 	String teamName = teammateDAO.teamName(joinTeamIdx);
 	String teamId = teammateDAO.teamId(joinTeamIdx);
@@ -111,14 +112,13 @@ public Map<String, Object> teammateJoin(String joinTeamIdx, String id, String jo
     String msg = "";
     logger.info("팀원가입 서비스에 들어왔다.");
     logger.info("가입할 팀 = " + joinTeamIdx);
-    int row = teammateDAO.duplicateChk(joinTeamIdx,id);
-    if(row>0) {
+    chk = teammateDAO.duplicateChk(joinTeamIdx,id);
+    logger.info(String.valueOf(chk));
+    if(chk == 0) {
     	msg = teamName + " 팀원 모집글의 가입 신청이 왔습니다.";
     	teammateDAO.sendNotice(msg, teamId);
-    	return result;
+    	result.put("result", teammateDAO.teammateJoin(joinTeamIdx, id, join_state));
     }
-    result.put("result", teammateDAO.teammateJoin(joinTeamIdx, id, join_state));
-    
     
     return result;
 }

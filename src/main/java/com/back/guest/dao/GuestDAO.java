@@ -13,10 +13,10 @@ public interface GuestDAO {
 
 	int callmyteam(String id);
 
-	GuestDTO guestModify(int guestIdx); 
+	GuestDTO guestModify(int guest_idx); 
 
 	void writeUpdate(String guest_info, String guest_level, String guest_position, String guest_gender,
-			String guest_to, int guest_fee, String guestIdx);
+			String guest_to, int guest_fee, String guest_idx);
 
 	List<GuestDTO> guestList();
 

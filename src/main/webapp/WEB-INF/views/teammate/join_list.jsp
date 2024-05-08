@@ -51,7 +51,7 @@
         <option value="브론즈">브론즈</option>
         <option value="실버">실버</option>
         <option value="골드">골드</option>
-        <option value="플레티넘">플레티넘</option>
+        <option value="플래티넘">플래티넘</option>
     </select>
     
     <div class="teammateTable">
@@ -288,7 +288,7 @@ function showList(list){
        content +=
           '<tr class="' + finishClass + '">'
        +'<td class="num">' + item.join_team_idx + '</td>'
-       +'<td class="logo"><img class="teammateImage" src="/logo/${item.logo}.jpg" alt="teammateLogo"></td>'
+       +'<td class="logo"><img class="teammateImage" src="/logo/' + item.logo +'.png" alt="teammateLogo"></td>'
        +'<td class="teamName">' + item.team_name +'</td>'
        +'<td class="representID">' + item.id + '</td>'
        +'<td class="address"><a href="' + link + '">서울시 ' + item.team_address.split(' ')[1] + '</a></td>'

@@ -41,7 +41,7 @@
                                 <option value="브론즈">브론즈</option>
                                 <option value="실버">실버</option>
                                 <option value="골드">골드</option>
-                                <option value="플레티넘">플레티넘</option> --%>
+                                <option value="플래티넘">플래티넘</option> --%>
                             </select>
                         </div>
                     </div>
@@ -94,7 +94,7 @@
     
     // level selectBox 그리기
     function teamJoinLevel(){
-    	var levelArr = ['브론즈', '실버', '골드', '플레티넘'];
+    	var levelArr = ['브론즈', '실버', '골드', '플래티넘'];
     	var content = '';
     	
     	content += '<option value="' + '${info.join_team_level}' + '">' + '${info.join_team_level}' + '</option>'

@@ -180,7 +180,7 @@
 							<option value="브론즈">브론즈</option>
 							<option value="실버">실버</option>
 							<option value="골드">골드</option>
-							<option value="플레티넘">플레티넘</option>
+							<option value="플래티넘">플래티넘</option>
 						</select>
 					</td>
 				</tr>
@@ -302,7 +302,7 @@ $('#officialRegisterSubmit').on('click', function(){
 			}
 			,success:function(data){
 				if(data.result){
-					window.location.href = './officialList.go';
+					window.location.href = './writing_official_list.go';
 				}else{
 					alert('구장등록에 실패 했습니다.');
 				}

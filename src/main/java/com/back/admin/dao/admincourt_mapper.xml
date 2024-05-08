@@ -88,7 +88,7 @@
 	<update id="update" parameterType="com.back.admin.dto.AdminCourtDTO">
 	
 		UPDATE court 
-		SET court_name = #{courtIdx}
+		SET court_name = #{courtName}
 			,court_address = #{courtAddress}
 			,court_info = #{courtInfo}
 			,court_price = #{courtPrice}
