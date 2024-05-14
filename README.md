@@ -29,8 +29,9 @@
 <ul>
   <li>OS : macOS Sonoma 14.4.1</li>
   <li>DB : mariaDB 11.3.2</li>
-  <li></li>
-  <li>BACKEND : JAVA, JavaScript, Spring Framework</li>
+  <li>SERVER : Apache Tomcat 9.0, AWS</li>
+  <li>FRONTEND : JavaScript, HTML, CSS, JQuery</li>
+  <li>BACKEND : JAVA, Spring Framework</li>
   <li>TOOL : git(sourceTree), github, STS3, DBeaver</li>
 </ul>
 <h2>구현 기능</h2>
